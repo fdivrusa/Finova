@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- NuGet Package Configuration -->
+    <PackageId>BankingHelper.Core</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Florian</Authors>
+    <Company>BankingHelper</Company>
+    <Description>Core library for banking operations including IBAN validation, payment reference generation, and ISO 11649 support. Provides interfaces and utilities for building country-specific banking services.</Description>
+    <PackageTags>banking;payment;IBAN;ISO11649;payment-reference;modulo97;financial;fintech</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/yourusername/BankingHelper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/yourusername/BankingHelper</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+</Project>

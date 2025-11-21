@@ -1,0 +1,85 @@
+name: CD - Publish NuGet Packages
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Get version
+      id: get_version
+      run: |
+        if [ "${{ github.event_name }}" = "release" ]; then
+          VERSION="${{ github.event.release.tag_name }}"
+          VERSION="${VERSION#v}"  # Remove 'v' prefix if present
+        else
+          VERSION="${{ github.event.inputs.version }}"
+        fi
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        echo "Building version: $VERSION"
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore -p:Version=${{ steps.get_version.outputs.VERSION }}
+
+    - name: Test
+      run: dotnet test --configuration Release --no-build --verbosity normal
+
+    - name: Pack BankingHelper.Core
+      run: dotnet pack src/BankingHelper.Core/BankingHelper.Core.csproj --configuration Release --no-build --output ./packages -p:PackageVersion=${{ steps.get_version.outputs.VERSION }}
+
+    - name: Pack BankingHelper.Belgium
+      run: dotnet pack src/BankingHelper.Belgium/BankingHelper.Belgium.csproj --configuration Release --no-build --output ./packages -p:PackageVersion=${{ steps.get_version.outputs.VERSION }}
+
+    - name: Publish to NuGet.org
+      run: |
+        dotnet nuget push ./packages/BankingHelper.Core.${{ steps.get_version.outputs.VERSION }}.nupkg \
+          --api-key ${{ secrets.NUGET_API_KEY }} \
+          --source https://api.nuget.org/v3/index.json \
+          --skip-duplicate
+        dotnet nuget push ./packages/BankingHelper.Belgium.${{ steps.get_version.outputs.VERSION }}.nupkg \
+          --api-key ${{ secrets.NUGET_API_KEY }} \
+          --source https://api.nuget.org/v3/index.json \
+          --skip-duplicate
+
+    - name: Publish to GitHub Packages
+      run: |
+        dotnet nuget push ./packages/BankingHelper.Core.${{ steps.get_version.outputs.VERSION }}.nupkg \
+          --api-key ${{ secrets.GITHUB_TOKEN }} \
+          --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json \
+          --skip-duplicate
+        dotnet nuget push ./packages/BankingHelper.Belgium.${{ steps.get_version.outputs.VERSION }}.nupkg \
+          --api-key ${{ secrets.GITHUB_TOKEN }} \
+          --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json \
+          --skip-duplicate
+
+    - name: Upload packages as artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget-packages-${{ steps.get_version.outputs.VERSION }}
+        path: ./packages/*.nupkg
+        retention-days: 30

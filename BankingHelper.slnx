@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BankingHelper.Belgium/BankingHelper.Belgium.csproj" />
+    <Project Path="src/BankingHelper.Core/BankingHelper.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BankingHelper.UnitTests/BankingHelper.UnitTests.csproj" />
+  </Folder>
+</Solution>
