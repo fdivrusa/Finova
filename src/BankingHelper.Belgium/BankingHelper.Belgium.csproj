@@ -7,9 +7,9 @@
     
     <!-- NuGet Package Configuration -->
     <PackageId>BankingHelper</PackageId>
-    <Version>1.0.0</Version>
     <Authors>Florian Di Vrusa</Authors>
     <Company>BankingHelper</Company>
+    <Product>BankingHelper</Product>
     <Description>A comprehensive .NET library for banking operations including payment reference generation, validation, and country-specific utilities. Supports Belgian OGM/VCS structured communication and ISO 11649 (RF) international payment references with automatic check digit calculation.</Description>
     <PackageTags>banking;belgium;ogm;vcs;payment;payment-reference;structured-communication;ISO11649;IBAN;modulo97;financial;fintech;belgian-banking</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -17,10 +17,15 @@
     <RepositoryUrl>https://github.com/fdivrusa/BankingHelper</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReleaseNotes>See https://github.com/fdivrusa/BankingHelper/releases for release notes.</PackageReleaseNotes>
+    <Copyright>Copyright (c) 2025 Florian Di Vrusa</Copyright>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,6 +38,9 @@
     
     <!-- Include README.md in the package -->
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    
+    <!-- Include package icon (optional - add icon.png to root folder) -->
+    <None Include="..\..\icon.png" Pack="true" PackagePath="\" Condition="Exists('..\..\icon.png')" />
   </ItemGroup>
 
   <!-- Include Core DLL in the package -->
