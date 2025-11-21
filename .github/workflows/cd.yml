@@ -33,6 +33,7 @@ jobs:
           # Release from tag
           VERSION="${{ github.event.release.tag_name }}"
           VERSION="${VERSION#v}"  # Remove 'v' prefix if present
+          PACKAGE_VERSION="$VERSION"
         else
           # Auto-generate version based on current branch
           COMMIT_COUNT=$(git rev-list --count HEAD)
@@ -42,12 +43,16 @@ jobs:
           if [ "$BRANCH_NAME" = "develop" ]; then
             # Alpha version for develop branch
             VERSION="${BASE_VERSION}-alpha.${COMMIT_COUNT}+${SHORT_SHA}"
+            # NuGet normalizes version by removing +metadata from filename
+            PACKAGE_VERSION="${BASE_VERSION}-alpha.${COMMIT_COUNT}"
           else
             # Release version for master branch
             VERSION="${BASE_VERSION}.${COMMIT_COUNT}"
+            PACKAGE_VERSION="$VERSION"
           fi
         fi
         echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
         echo "Building version: $VERSION from branch ${{ github.ref_name }}"
 
     - name: Restore dependencies
@@ -64,14 +69,14 @@ jobs:
 
     - name: Publish to NuGet.org
       run: |
-        dotnet nuget push ./packages/BankingHelper.${{ steps.get_version.outputs.VERSION }}.nupkg \
+        dotnet nuget push ./packages/BankingHelper.${{ steps.get_version.outputs.PACKAGE_VERSION }}.nupkg \
           --api-key ${{ secrets.NUGET_API_KEY }} \
           --source https://api.nuget.org/v3/index.json \
           --skip-duplicate
 
     - name: Publish to GitHub Packages
       run: |
-        dotnet nuget push ./packages/BankingHelper.${{ steps.get_version.outputs.VERSION }}.nupkg \
+        dotnet nuget push ./packages/BankingHelper.${{ steps.get_version.outputs.PACKAGE_VERSION }}.nupkg \
           --api-key ${{ secrets.GITHUB_TOKEN }} \
           --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json \
           --skip-duplicate
