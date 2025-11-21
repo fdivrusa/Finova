@@ -1,7 +1,14 @@
 # BankingHelper
 
-[![CI](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml)
-[![CD](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml/badge.svg)](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml)
+## Build Status
+
+| Branch | CI | CD |
+|--------|----|----|
+| **master** | [![CI - master](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml?query=branch%3Amaster) | [![CD](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml/badge.svg)](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml) |
+| **develop** | [![CI - develop](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml?query=branch%3Adevelop) | Manual Trigger |
+
+## Package Status
+
 [![NuGet](https://img.shields.io/nuget/v/BankingHelper.svg)](https://www.nuget.org/packages/BankingHelper/)
 [![NuGet Pre-release](https://img.shields.io/nuget/vpre/BankingHelper.svg?label=nuget-pre)](https://www.nuget.org/packages/BankingHelper/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -185,16 +192,23 @@ dotnet test
 This project uses GitHub Actions for continuous integration and deployment:
 
 ### Continuous Integration (CI)
-- **Triggers**: Push or PR to `master` or `develop` branches
-- **Actions**: Build, test, and code coverage analysis
-- **Badge**: [![CI](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml)
+
+CI runs automatically on every push or pull request:
+
+| Branch | Status | Trigger | Actions |
+|--------|--------|---------|---------|
+| **master** | [![CI - master](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml?query=branch%3Amaster) | Push or PR to `master` | Build, test, code coverage |
+| **develop** | [![CI - develop](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml?query=branch%3Adevelop) | Push or PR to `develop` | Build, test, code coverage |
 
 ### Continuous Deployment (CD)
+
+CD runs manually or on GitHub releases:
+
 - **Triggers**: 
-  - Manual workflow dispatch (choose version and branch type)
-  - GitHub release (tagged version)
+  - ⚙️ Manual workflow dispatch (choose version and branch type)
+  - 🏷️ GitHub release (tagged version)
 - **Destinations**: NuGet.org and GitHub Packages
-- **Badge**: [![CD](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml/badge.svg)](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml)
+- **Status**: [![CD](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml/badge.svg)](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml)
 
 ### Versioning Strategy
 
@@ -207,10 +221,10 @@ See [VERSIONING.md](VERSIONING.md) for detailed information about the versioning
 4. Optionally specify a custom version
 5. Click "Run workflow"
 
-| Type | Version Format | Example | Status |
-|------|----------------|---------|--------|
-| Stable (master) | `{base}.{commits}` | `1.0.0.123` | [![NuGet](https://img.shields.io/nuget/v/BankingHelper.svg)](https://www.nuget.org/packages/BankingHelper/) |
-| Alpha (develop) | `{base}-alpha.{commits}+{sha}` | `1.0.0-alpha.42+a1b2c3d` | [![NuGet Pre-release](https://img.shields.io/nuget/vpre/BankingHelper.svg?label=nuget-pre)](https://www.nuget.org/packages/BankingHelper/) |
+| Branch Type | Version Format | Example | Package Status |
+|-------------|----------------|---------|----------------|
+| **master** (stable) | `{base}.{commits}` | `1.0.0.123` | [![NuGet](https://img.shields.io/nuget/v/BankingHelper.svg)](https://www.nuget.org/packages/BankingHelper/) |
+| **develop** (alpha) | `{base}-alpha.{commits}+{sha}` | `1.0.0-alpha.42+a1b2c3d` | [![NuGet Pre-release](https://img.shields.io/nuget/vpre/BankingHelper.svg?label=nuget-pre)](https://www.nuget.org/packages/BankingHelper/) |
 
 ## 🔧 Supported Formats
 
