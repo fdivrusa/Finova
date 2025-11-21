@@ -63,7 +63,7 @@ namespace BankingHelper.UnitTests.Core.Internals
             result3.Should().StartWith("RF");
             result4.Should().StartWith("RF");
             result5.Should().StartWith("RF");
-            
+
             // These generated references should be valid
             IsoReferenceValidator.IsValid(result3).Should().BeTrue();
             IsoReferenceValidator.IsValid(result4).Should().BeTrue();

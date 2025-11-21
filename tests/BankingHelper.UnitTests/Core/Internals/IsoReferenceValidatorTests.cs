@@ -12,7 +12,7 @@ namespace BankingHelper.UnitTests.Core.Internals
             // Arrange - Use generated references which we know are valid
             var reference1 = IsoReferenceHelper.Generate("539007547034");
             var reference2 = IsoReferenceHelper.Generate("123456789012");
-            
+
             // Act
             var result1 = IsoReferenceValidator.IsValid(reference1);
             var result2 = IsoReferenceValidator.IsValid(reference2);
@@ -121,7 +121,7 @@ namespace BankingHelper.UnitTests.Core.Internals
             // Arrange - Generate valid alphanumeric references
             var reference1 = IsoReferenceHelper.Generate("INVOICE123");
             var reference2 = IsoReferenceHelper.Generate("ABC123XYZ");
-            
+
             // Act
             var result1 = IsoReferenceValidator.IsValid(reference1);
             var result2 = IsoReferenceValidator.IsValid(reference2);
@@ -163,7 +163,7 @@ namespace BankingHelper.UnitTests.Core.Internals
         {
             // Arrange - Generate a valid reference and test with various spacing
             var reference = IsoReferenceHelper.Generate("539007547034");
-            var withSpaces1 = reference.Insert(4, " ");  
+            var withSpaces1 = reference.Insert(4, " ");
             var withSpaces2 = reference.Substring(0, 4) + " " + reference.Substring(4, 4) + " " + reference.Substring(8);
 
             // Act
@@ -194,7 +194,7 @@ namespace BankingHelper.UnitTests.Core.Internals
             // Arrange - The validator only removes spaces, other chars remain and might still validate
             // if the overall structure and checksum still work out
             var validReference = IsoReferenceHelper.Generate("539007547034");
-            
+
             // Create variations with special characters
             var withDash = validReference.Insert(6, "-");
             var withSlash = validReference.Insert(6, "/");

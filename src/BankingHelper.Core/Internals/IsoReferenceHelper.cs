@@ -13,7 +13,7 @@ namespace BankingHelper.Core.Internals
             {
                 throw new ArgumentException("Raw reference cannot be empty for ISO generation.", nameof(rawReference));
             }
-    
+
             // 1. Clean and standardize the input reference (max 25 alphanumeric chars)
             // Note: For simplicity, we just use the raw reference, but a real implementation 
             // would clean it up to only alphanumeric characters.

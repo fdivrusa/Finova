@@ -37,7 +37,7 @@ namespace BankingHelper.UnitTests.Belgium.Extensions
             // Assert
             var service1 = serviceProvider.GetService<IPaymentReferenceGenerator>();
             var service2 = serviceProvider.GetService<IPaymentReferenceGenerator>();
-            
+
             service1.Should().NotBeNull();
             service2.Should().NotBeNull();
             service1.Should().BeSameAs(service2);
