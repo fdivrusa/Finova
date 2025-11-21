@@ -119,5 +119,17 @@ namespace BankingHelper.UnitTests.Core.Internals
             // Assert
             result.Should().Be(expectedResult);
         }
+
+        //Test for very large number that is exactly divisible by 97
+        [Fact]
+        public void Calculate_WithVeryLargeNumberDivisibleBy97_ReturnsZero()
+        {
+            // Arrange - A very large number that is exactly divisible by 97
+            var input = "970000000000000000000000000000";
+            // Act
+            var result = Modulo97Helper.Calculate(input);
+            // Assert
+            result.Should().Be(0);
+        }
     }
 }

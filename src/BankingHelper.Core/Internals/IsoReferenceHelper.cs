@@ -59,10 +59,6 @@ namespace BankingHelper.Core.Internals
                     // 'A' becomes 10, 'B' becomes 11, etc.
                     sb.Append(c - 55);
                 }
-                else
-                {
-                    // Ignore other characters for this calculation
-                }
             }
             return sb.ToString();
         }

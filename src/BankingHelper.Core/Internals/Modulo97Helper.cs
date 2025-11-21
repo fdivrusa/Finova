@@ -14,11 +14,6 @@ namespace BankingHelper.Core.Internals
                 throw new ArgumentException("Input must contain only digits.", nameof(numericString));
             }
 
-            if (!BigInteger.TryParse(numericString, out var number))
-            {
-                throw new ArgumentException("Number is too large or invalid.");
-            }
-
             return (int)(number % 97);
         }
     }
