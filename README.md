@@ -5,7 +5,7 @@
 | Branch | CI | CD |
 |--------|----|----|
 | **master** | [![CI - master](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml?query=branch%3Amaster) | [![CD](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml/badge.svg)](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml) |
-| **develop** | [![CI - develop](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml?query=branch%3Adevelop) | Manual Trigger |
+| **develop** | [![CI - develop](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/fdivrusa/BankingHelper/actions/workflows/ci.yml?query=branch%3Adevelop) | [![CD - develop](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml/badge.svg?branch=develop)](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml?query=branch%3Adevelop) |
 
 ## Package Status
 
