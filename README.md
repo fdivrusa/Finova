@@ -9,9 +9,9 @@
 
 ## Package Status
 
-[![NuGet](https://img.shields.io/nuget/v/BankingHelper.svg)](https://www.nuget.org/packages/BankingHelper/)
-[![NuGet Pre-release](https://img.shields.io/nuget/vpre/BankingHelper.svg?label=nuget-pre)](https://www.nuget.org/packages/BankingHelper/)
-[![NuGet Downloads](https://img.shields.io/nuget/dt/BankingHelper.svg)](https://www.nuget.org/packages/BankingHelper/)
+[![NuGet](https://img.shields.io/nuget/v/BankingHelper.svg?label=NuGet)](https://www.nuget.org/packages/BankingHelper/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/BankingHelper.svg?label=Downloads)](https://www.nuget.org/packages/BankingHelper/)
+[![GitHub Package](https://img.shields.io/badge/GitHub-Package-blue?logo=github)](https://github.com/fdivrusa/BankingHelper/packages)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Code Coverage
