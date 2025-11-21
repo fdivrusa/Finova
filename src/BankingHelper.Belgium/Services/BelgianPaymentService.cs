@@ -30,7 +30,10 @@ namespace BankingHelper.Belgium.Services
 
         public bool IsValid(string communication)
         {
-            if (string.IsNullOrWhiteSpace(communication)) return false;
+            if (string.IsNullOrWhiteSpace(communication))
+            {
+                return false;
+            }
 
             // 1. Quick check for ISO RF format (Starts with 'RF')
             if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
@@ -49,7 +52,9 @@ namespace BankingHelper.Belgium.Services
         {
             var cleanRef = DigitsOnlyRegex().Replace(rawReference, "");
             if (cleanRef.Length > 10)
+            {
                 throw new ArgumentException("OGM reference data cannot exceed 10 digits.");
+            }
 
             // Pad the reference to 10 digits
             var paddedRef = cleanRef.PadLeft(10, '0');
@@ -64,16 +69,19 @@ namespace BankingHelper.Belgium.Services
             var fullNumber = $"{paddedRef}{checkDigit}";
 
             // Format: +++XXX/XXXX/XXXXX+++ (12 digits total)
-            return $"+++{fullNumber.Substring(0, 3)}/{fullNumber.Substring(3, 4)}/{fullNumber.Substring(7, 5)}+++";
+            return $"+++{fullNumber[..3]}/{fullNumber.Substring(3, 4)}/{fullNumber.Substring(7, 5)}+++";
         }
 
         private static bool ValidateOgm(string communication)
         {
             var digits = DigitsOnlyRegex().Replace(communication, "");
 
-            if (digits.Length != OgmTotalLength) return false;
+            if (digits.Length != OgmTotalLength)
+            {
+                return false;
+            }
 
-            var data = digits.Substring(0, 10);
+            var data = digits[..10];
             var checkDigitStr = digits.Substring(10, 2);
 
             // Calculate expected check digit

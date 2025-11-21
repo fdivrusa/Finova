@@ -1,30 +1,25 @@
 # Versioning Strategy
 
-This project uses versioning based on manual workflow dispatch or GitHub releases.
+This project uses automatic branch-based versioning for manual deployments and tagged releases.
 
 ## Version Formats
 
 ### Develop Branch (Alpha Packages)
 - **Format**: `{BASE_VERSION}-alpha.{COMMIT_COUNT}+{SHORT_SHA}`
 - **Example**: `1.0.0-alpha.42+a1b2c3d`
-- **Trigger**: Manual workflow dispatch with "develop" branch selected
+- **Trigger**: Manual workflow dispatch from `develop` branch
 - **Purpose**: Pre-release testing and validation
 
 ### Master Branch (Release Packages)
 - **Format**: `{BASE_VERSION}.{COMMIT_COUNT}`
 - **Example**: `1.0.0.123`
-- **Trigger**: Manual workflow dispatch with "master" branch selected (default)
+- **Trigger**: Manual workflow dispatch from `master` branch
 - **Purpose**: Stable production releases
 
 ### Tagged Releases
 - **Format**: Version from git tag (e.g., `v1.2.0` → `1.2.0`)
 - **Trigger**: GitHub release published
 - **Purpose**: Official versioned releases
-
-### Custom Version
-- **Format**: User-specified version
-- **Trigger**: Manual workflow run with custom version input
-- **Purpose**: Special version deployment (e.g., hotfixes, special releases)
 
 ## How It Works
 
@@ -43,17 +38,23 @@ This project uses versioning based on manual workflow dispatch or GitHub release
 
 ## Publishing a Package
 
-### Option 1: Manual Workflow Dispatch (Recommended)
+### Manual Workflow Dispatch
 
 1. Go to [GitHub Actions → CD - Publish NuGet Packages](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml)
 2. Click "Run workflow" button
-3. Select options:
-   - **Branch**: Choose the branch to run from (usually `master` or `develop`)
-   - **Branch type**: Select `master` for stable release or `develop` for alpha
-   - **Version** (optional): Leave empty for auto-generated version, or specify custom (e.g., `1.2.0` or `1.2.0-beta.1`)
+3. **Select the branch** from the dropdown:
+   - Choose `master` for stable release
+   - Choose `develop` for alpha pre-release
 4. Click "Run workflow"
+5. The version is **automatically generated** based on the selected branch
 
-### Option 2: GitHub Release
+**No manual version input needed!** The workflow automatically:
+- Counts commits in the branch
+- Generates the version format based on branch name
+- For `develop`: adds alpha suffix and commit SHA
+- For `master`: creates stable version number
+
+### GitHub Release
 
 1. Create a new release on GitHub
 2. Tag it with version (e.g., `v1.2.0`)
@@ -88,7 +89,7 @@ git push origin develop
 # Publish alpha version (manual)
 # Go to GitHub Actions → CD workflow
 # Click "Run workflow"
-# Select branch: develop, Branch type: develop
+# Select branch: develop
 # → Publishes: 1.0.0-alpha.42+a1b2c3d
 
 # Merge to master for release
@@ -102,7 +103,7 @@ git push origin master
 # Publish stable version (manual)
 # Go to GitHub Actions → CD workflow
 # Click "Run workflow"
-# Select branch: master, Branch type: master
+# Select branch: master
 # → Publishes: 1.0.0.43
 
 # Create official release (optional)

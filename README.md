@@ -11,14 +11,15 @@
 
 [![NuGet](https://img.shields.io/nuget/v/BankingHelper.svg)](https://www.nuget.org/packages/BankingHelper/)
 [![NuGet Pre-release](https://img.shields.io/nuget/vpre/BankingHelper.svg?label=nuget-pre)](https://www.nuget.org/packages/BankingHelper/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/BankingHelper.svg)](https://www.nuget.org/packages/BankingHelper/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Code Coverage
 
-| Branch | Coverage | Graph |
-|--------|----------|-------|
-| **master** | [![codecov](https://codecov.io/gh/fdivrusa/BankingHelper/branch/master/graph/badge.svg)](https://codecov.io/gh/fdivrusa/BankingHelper/branch/master) | [![codecov graph](https://codecov.io/gh/fdivrusa/BankingHelper/branch/master/graphs/sunburst.svg?width=200&height=200)](https://codecov.io/gh/fdivrusa/BankingHelper/branch/master) |
-| **develop** | [![codecov](https://codecov.io/gh/fdivrusa/BankingHelper/branch/develop/graph/badge.svg)](https://codecov.io/gh/fdivrusa/BankingHelper/branch/develop) | [![codecov graph](https://codecov.io/gh/fdivrusa/BankingHelper/branch/develop/graphs/sunburst.svg?width=200&height=200)](https://codecov.io/gh/fdivrusa/BankingHelper/branch/develop) |
+| Branch | Coverage | Details |
+|--------|----------|---------|
+| **master** | [![codecov](https://codecov.io/gh/fdivrusa/BankingHelper/branch/master/graph/badge.svg)](https://codecov.io/gh/fdivrusa/BankingHelper/branch/master) | [View Report](https://codecov.io/gh/fdivrusa/BankingHelper/branch/master) |
+| **develop** | [![codecov](https://codecov.io/gh/fdivrusa/BankingHelper/branch/develop/graph/badge.svg)](https://codecov.io/gh/fdivrusa/BankingHelper/branch/develop) | [View Report](https://codecov.io/gh/fdivrusa/BankingHelper/branch/develop) |
 
 ---
 
@@ -211,10 +212,10 @@ CI runs automatically on every push or pull request:
 
 ### Continuous Deployment (CD)
 
-CD runs manually or on GitHub releases:
+CD runs manually from the branch you want to publish:
 
 - **Triggers**: 
-  - ⚙️ Manual workflow dispatch (choose version and branch type)
+  - ⚙️ Manual workflow dispatch from any branch (automatic branch-based versioning)
   - 🏷️ GitHub release (tagged version)
 - **Destinations**: NuGet.org and GitHub Packages
 - **Status**: [![CD](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml/badge.svg)](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml)
@@ -224,11 +225,14 @@ CD runs manually or on GitHub releases:
 See [VERSIONING.md](VERSIONING.md) for detailed information about the versioning strategy.
 
 **To publish a package:**
-1. Go to [Actions → CD - Publish NuGet Packages](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml)
-2. Click "Run workflow"
-3. Choose branch type (master for stable, develop for alpha)
-4. Optionally specify a custom version
+1. Switch to the branch you want to publish (`master` or `develop`)
+2. Go to [Actions → CD - Publish NuGet Packages](https://github.com/fdivrusa/BankingHelper/actions/workflows/cd.yml)
+3. Click "Run workflow"
+4. Select the branch (dropdown at top)
 5. Click "Run workflow"
+6. Version is automatically determined by the branch:
+   - `master` → Stable version (e.g., `1.0.0.123`)
+   - `develop` → Alpha version (e.g., `1.0.0-alpha.42+sha`)
 
 | Branch Type | Version Format | Example | Package Status |
 |-------------|----------------|---------|----------------|
