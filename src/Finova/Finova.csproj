@@ -32,6 +32,8 @@
     <!-- Include all regional implementations with PrivateAssets to embed them -->
     <ProjectReference Include="..\Finova.Core\Finova.Core.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\Finova.Belgium\Finova.Belgium.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\Finova.Netherlands\Finova.Netherlands.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\Finova.Luxembourg\Finova.Luxembourg.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

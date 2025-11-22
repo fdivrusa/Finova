@@ -11,18 +11,23 @@ namespace Finova.Core.Internals
         /// </summary>
         public static bool IsValid(string reference)
         {
-            if (string.IsNullOrWhiteSpace(reference)) return false;
+            if (string.IsNullOrWhiteSpace(reference))
+            {
+                return false;
+            }
 
             // 1. Clean and normalize (remove spaces, uppercase)
             var cleanReference = reference.Replace(" ", "").ToUpperInvariant();
 
             // 2. Check prefix and minimum length
             if (!cleanReference.StartsWith(IsoPrefix) || cleanReference.Length < 6) // Minimum RFxx + 2 body chars
+            {
                 return false;
+            }
 
             // 3. Rearrangement for Checksum Calculation (ISO 7064/13616):
             //    Move the first 4 characters (RFxx) to the end of the string.
-            var bodyAndPrefix = cleanReference.Substring(4) + cleanReference.Substring(0, 4);
+            var bodyAndPrefix = string.Concat(cleanReference.AsSpan(4), cleanReference.AsSpan(0, 4));
 
             // 4. Convert letters to numbers (A=10, B=11, ..., Z=35)
             var numericReference = ConvertLettersToDigits(bodyAndPrefix);

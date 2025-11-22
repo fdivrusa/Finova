@@ -5,6 +5,10 @@ using System.Text.RegularExpressions;
 
 namespace Finova.Belgium.Services
 {
+    /// <summary>
+    /// Service for generating and validating Belgian payment references.
+    /// Supports both instance methods (for DI) and static methods (for direct usage).
+    /// </summary>
     public partial class BelgianPaymentReferenceService : IPaymentReferenceGenerator
     {
         public string CountryCode => "BE";
@@ -13,6 +17,8 @@ namespace Finova.Belgium.Services
         private static partial Regex DigitsOnlyRegex();
 
         private const int OgmTotalLength = 12;
+
+        #region Instance Methods (for Dependency Injection)
 
         public string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.Domestic)
         {
@@ -46,7 +52,63 @@ namespace Finova.Belgium.Services
             return ValidateOgm(communication);
         }
 
-        // --- Private OGM/VCS Logic ---
+        #endregion
+
+        #region Static Methods (for Direct Usage)
+
+        /// <summary>
+        /// Generates a Belgian OGM/VCS structured communication (+++XXX/XXXX/XXXXX+++) from a raw reference.
+        /// </summary>
+        /// <param name="rawReference">The raw reference data (max 10 digits)</param>
+        /// <returns>Formatted Belgian OGM/VCS reference</returns>
+        public static string GenerateOgmStatic(string rawReference)
+        {
+            return GenerateOgm(rawReference);
+        }
+
+        /// <summary>
+        /// Generates an ISO 11649 (RF) international payment reference.
+        /// </summary>
+        /// <param name="rawReference">The raw reference data</param>
+        /// <returns>ISO 11649 formatted reference (RFxx...)</returns>
+        public static string GenerateIsoReferenceStatic(string rawReference)
+        {
+            return IsoReferenceHelper.Generate(rawReference);
+        }
+
+        /// <summary>
+        /// Validates a Belgian payment reference (supports both OGM/VCS and ISO RF formats).
+        /// </summary>
+        /// <param name="communication">The payment reference to validate</param>
+        /// <returns>True if valid, false otherwise</returns>
+        public static bool ValidateStatic(string communication)
+        {
+            if (string.IsNullOrWhiteSpace(communication))
+            {
+                return false;
+            }
+
+            if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+            {
+                return IsoReferenceValidator.IsValid(communication);
+            }
+
+            return ValidateOgm(communication);
+        }
+
+        /// <summary>
+        /// Validates a Belgian OGM/VCS structured communication specifically.
+        /// </summary>
+        /// <param name="communication">The OGM/VCS reference to validate</param>
+        /// <returns>True if valid, false otherwise</returns>
+        public static bool ValidateOgmStatic(string communication)
+        {
+            return ValidateOgm(communication);
+        }
+
+        #endregion
+
+        #region Private Helper Methods
 
         private static string GenerateOgm(string rawReference)
         {
@@ -68,7 +130,6 @@ namespace Finova.Belgium.Services
 
             var fullNumber = $"{paddedRef}{checkDigit}";
 
-            // Format: +++XXX/XXXX/XXXXX+++ (12 digits total)
             return $"+++{fullNumber[..3]}/{fullNumber.Substring(3, 4)}/{fullNumber.Substring(7, 5)}+++";
         }
 
@@ -95,5 +156,7 @@ namespace Finova.Belgium.Services
 
             return false;
         }
+
+        #endregion
     }
 }

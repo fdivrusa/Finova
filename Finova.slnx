@@ -2,6 +2,8 @@
   <Folder Name="/src/">
     <Project Path="src/Finova.Core/Finova.Core.csproj" />
     <Project Path="src/Finova.Belgium/Finova.Belgium.csproj" />
+    <Project Path="src/Finova.Netherlands/Finova.Netherlands.csproj" />
+    <Project Path="src/Finova.Luxembourg/Finova.Luxembourg.csproj" />
     <Project Path="src/Finova/Finova.csproj" />
   </Folder>
   <Folder Name="/tests/">

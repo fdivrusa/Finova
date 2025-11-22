@@ -26,19 +26,71 @@
 
 ## 🌟 About Finova
 
-**Finova** is a comprehensive financial operations library for .NET, designed for modern applications requiring financial validation, payment processing, and e-invoicing capabilities. Built with European and international standards in mind, Finova provides production-ready tools for banking, tax, and invoicing operations.
+**Finova** is a comprehensive **offline** financial validation library for .NET, designed for applications requiring fast, local validation of financial data. Built with European and international standards in mind, Finova provides production-ready tools for banking, tax, and invoicing operations.
+
+### ⚡ Offline Validation Only
+
+> **Important:** Finova performs **100% offline validation** based on format and checksum algorithms. It does **NOT** contact external services, APIs, or partners.
+
+**What Finova Does (Offline):**
+- ✅ Validates IBAN format and checksum (modulo 97)
+- ✅ Generates payment references (OGM/VCS, ISO 11649)
+- ✅ Validates KBO/BCE and VAT numbers (format + checksum)
+- ✅ Extracts bank codes from IBAN structure
+
+**What Finova Does NOT Do:**
+- ❌ Does NOT verify if bank codes actually exist
+- ❌ Does NOT verify if accounts actually exist
+- ❌ Does NOT contact external APIs or services
+- ❌ Does NOT require internet connection
 
 ### Why Finova?
 
-- ✅ **Production-Ready** - Battle-tested with 100+ unit tests and >95% code coverage
-- ✅ **Standards-Compliant** - ISO 11649, EN 16931, PEPPOL, UBL, SEPA
-- ✅ **International** - Multi-country support with extensible architecture
+- ✅ **100% Offline** - No external API calls, no internet required
+- ✅ **Lightning Fast** - Instant validation (0-1ms per operation)
+- ✅ **Production-Ready** - Battle-tested with 456+ unit tests and >95% code coverage
+- ✅ **Standards-Compliant** - ISO 13616 (IBAN), ISO 11649 (RF), ISO 7064 (MOD 97)
+- ✅ **International** - Multi-country support (Belgium, Netherlands, Luxembourg)
 - ✅ **Modern** - Built for .NET 10.0+ with dependency injection support
 - ✅ **Open Source** - MIT licensed, community-driven development
+- ✅ **Zero Dependencies** - No external packages required
 
 ---
 
 ## 🚀 Features
+
+### 💳 **IBAN Validation (Offline)** *(Available Now)*
+
+Finova provides fast, offline IBAN validation for Benelux countries:
+
+- **Belgian IBANs (BE)**
+  - ✅ Format validation (16 characters: BE + 2 check + 12 digits)
+  - ✅ Modulo 97 checksum validation (ISO 7064)
+  - ✅ Bank code extraction (3 digits)
+  - ✅ IBAN formatting with spaces
+  - ❌ Does NOT verify if bank code exists
+  
+- **Dutch IBANs (NL)**
+  - ✅ Format validation (18 characters: NL + 2 check + 4 letters + 10 digits)
+  - ✅ Bank code format validation (4 letters only)
+  - ✅ Account number format validation (10 digits only)
+  - ✅ Modulo 97 checksum validation
+  - ✅ Bank code extraction
+  - ❌ Does NOT verify if bank code exists (e.g., ABNA, INGB, RABO)
+  
+- **Luxembourg IBANs (LU)**
+  - ✅ Format validation (20 characters: LU + 2 check + 3 digits + 13 digits)
+  - ✅ Bank code format validation (3 digits only)
+  - ✅ Account number format validation (13 digits only)
+  - ✅ Modulo 97 checksum validation
+  - ✅ Bank code extraction
+  - ❌ Does NOT verify if bank code exists
+
+- **Generic IBAN (Any Country)**
+  - ✅ Universal IBAN validation (ISO 13616)
+  - ✅ Country code extraction
+  - ✅ Check digits extraction
+  - ✅ IBAN normalization and formatting
 
 ### 💳 **Belgian Banking & Payments** *(Available Now)*
 
@@ -57,6 +109,13 @@ Finova provides comprehensive Belgian banking support with production-ready impl
   - ✅ Full validation with checksum verification
   - ✅ Display format support (with spaces)
 
+- **Belgian Business Numbers (Offline)**
+  - ✅ KBO/BCE enterprise number validation (format + modulo 97)
+  - ✅ VAT number validation (format + checksum)
+  - ✅ Formatting with dots: `0403.170.701` or `BE0403.170.701`
+  - ✅ Normalization (remove spaces, dots, BE prefix)
+  - ❌ Does NOT verify if enterprise/VAT actually exists
+
 - **Core Financial Utilities**
   - ✅ Modulo 97 calculations (ISO 7064)
   - ✅ Arbitrary-length numeric string support
@@ -65,56 +124,65 @@ Finova provides comprehensive Belgian banking support with production-ready impl
 
 - **Dependency Injection Support**
   - ✅ ASP.NET Core integration via `AddBelgianPaymentReference()`
-  - ✅ Interface-based design (`IPaymentReferenceGenerator`)
+  - ✅ Interface-based design (`IPaymentReferenceGenerator`, `IBankAccountValidator`)
   - ✅ Easy to extend for custom implementations
   - ✅ Singleton service registration
 
 ### 🏗️ **Architecture & Design**
 
-- **Modular Design** - Separation of core (Finova.Core) and regional (Finova.Belgium) features
+- **100% Offline** - All validation done locally, no external API calls
+- **Modular Design** - Separation of core (Finova.Core) and regional features
 - **Interface-Based** - `IPaymentReferenceGenerator`, `IBankAccountValidator` for extensibility
-- **Standards-Compliant** - ISO 11649, ISO 7064, Belgian banking standards
-- **Production-Ready** - 106+ unit tests, >95% code coverage
+- **Standards-Compliant** - ISO 13616 (IBAN), ISO 11649 (RF), ISO 7064 (MOD 97)
+- **Production-Ready** - 456+ unit tests, >95% code coverage
 - **Type-Safe** - Strong typing with comprehensive enums and models
 
-### 🌍 **International Support** *(Coming Soon)*
+### � **What Requires External Services** *(Not in NuGet)*
 
-- **IBAN Validation** - v1.1.0 (Q1 2026)
-  - Multi-country support (BE, NL, FR, DE, LU, UK, etc.)
-  - Country-specific validation rules
-  - Format normalization and BIC lookup
+The following features require real-time verification with external partners and are **NOT** included in the NuGet package:
+
+- ❌ **Bank Code Existence Verification** - Checking if "ABNA" is a real Dutch bank
+- ❌ **Account Existence Verification** - Checking if an IBAN actually exists
+- ❌ **Bank Information Lookup** - Getting bank name, BIC, address
+- ❌ **KBO/BCE Real-time Verification** - Checking if enterprise is registered
+- ❌ **VAT VIES Verification** - EU VAT number cross-border validation
+- ❌ **Third-party API Integration** - Any external validation services
+
+> **Note:** For real-time validation with external partners, consider building a separate API service that wraps Finova with external data sources.
+
+### 🌍 **Future Offline Support** *(Roadmap)*
+
+Additional offline validation features planned:
+
+- **More IBAN Countries** - v1.1.0 (Q1 2026)
+  - France (FR) format and checksum validation
+  - Germany (DE) format and checksum validation
+  - UK (GB) format and checksum validation
+  - All offline, no external API calls
   
-- **VAT & Tax** - v1.2.0 (Q2 2026)
-  - EU VAT number validation
-  - VIES real-time integration
-  - Enterprise number validation (KBO/BCE)
-  - Tax identifier validation
+- **VAT Format Validation** - v1.2.0 (Q2 2026)
+  - EU VAT number format validation (offline)
+  - Format: country prefix + digits + check digit
+  - Checksum validation where applicable
+  - Note: Real-time VIES verification requires external API
 
-### 📄 **E-Invoicing & PEPPOL** *(Roadmap)*
+- **Payment File Generation** - v1.3.0 (Q3 2026)
+  - SEPA Credit Transfer (pain.001) XML generation
+  - SEPA Direct Debit (pain.008) XML generation
+  - All offline, no API calls
 
-- **PEPPOL** - v1.4.0+ (Q4 2026)
-  - Participant ID validation
-  - Document type validation
-  - PEPPOL BIS 3.0 support
-  
-- **UBL 2.1** - v2.0.0+ (Q1 2027)
-  - Invoice generation
-  - EN 16931 compliance
-  - Credit notes and debit notes
-  
-- **SEPA** - v1.3.0 (Q3 2026)
-  - SEPA Credit Transfer (pain.001)
-  - SEPA Direct Debit (pain.008)
-  - XML file generation
+### 📄 **Features NOT Planned for NuGet** *(Require External Services)*
 
-### 🏗️ **Architecture**
+The following features require real-time integration with external partners and will **NOT** be added to this offline NuGet package:
 
-- **Modular Design** - Separation of core, regional, and specialized features
-- **Dependency Injection** - Full ASP.NET Core integration
-- **Extensible** - Easy to add custom validators and generators
-- **Type-Safe** - Strong typing with comprehensive interfaces
+- ❌ **VIES Real-time VAT Verification** - Requires EU VIES API
+- ❌ **PEPPOL Integration** - Requires access point registration
+- ❌ **UBL Document Exchange** - Requires document routing
+- ❌ **Bank Registry Lookups** - Requires bank database access
+- ❌ **Account Existence Checks** - Requires banking API access
+- ❌ **Partner Integrations** - Any external service connectivity
 
-- **Type-Safe** - Strong typing with comprehensive interfaces
+> **Important:** Finova is designed as a **pure offline validation library** with zero dependencies and no external service integrations. For online features, you'll need to build a separate integration layer.
 
 ---
 
@@ -130,6 +198,13 @@ Or via Package Manager Console:
 ```powershell
 Install-Package Finova
 ```
+
+### Requirements
+
+- **.NET 10.0** or higher
+- **No external dependencies**
+- **No internet connection required**
+- **100% offline** - All validation runs locally
 
 ### Pre-release/Alpha
 
@@ -149,6 +224,47 @@ Install-Package Finova -PreRelease
 ---
 
 ## 📖 Quick Start
+
+> **⚡ Important: Offline Validation Only**
+> 
+> Finova performs **100% offline validation** based on mathematical algorithms (modulo 97, format checks).
+> - ✅ Validates format and checksum
+> - ❌ Does NOT contact external APIs or partners
+> - ❌ Does NOT verify if banks/accounts actually exist
+> - ❌ Does NOT require internet connection
+> - ❌ Does NOT include any partner integrations
+
+### IBAN Validation (Offline)
+
+```csharp
+using Finova.Belgium.Validators;
+using Finova.Netherlands.Validators;
+using Finova.Luxembourg.Validators;
+using Finova.Core.Accounts;
+
+// Belgian IBAN - format and checksum only
+bool isValid = BelgianBankAccountValidator.ValidateBelgianIban("BE68539007547034");
+// Returns: true (valid format + checksum)
+
+// Extract bank code (structure only, doesn't verify bank exists)
+string? bankCode = BelgianBankAccountValidator.GetBankCode("BE68539007547034");
+// Returns: "539" (extracted from IBAN, existence NOT verified)
+
+// Dutch IBAN - validates format, bank code structure (4 letters), checksum
+bool isValid = DutchBankAccountValidator.ValidateDutchIban("NL91ABNA0417164300");
+string? bankCode = DutchBankAccountValidator.GetBankCode("NL91ABNA0417164300");
+// Returns: "ABNA" (extracted, does NOT verify if ABNA bank exists)
+
+// Luxembourg IBAN - validates format, bank code structure (3 digits), checksum
+bool isValid = LuxembourgBankAccountValidator.ValidateLuxembourgIban("LU280019400644750000");
+string? bankCode = LuxembourgBankAccountValidator.GetBankCode("LU280019400644750000");
+// Returns: "001" (extracted, does NOT verify if bank 001 exists)
+
+// Generic IBAN - any country (format + checksum only)
+bool isValid = IbanHelper.IsValidIban("FR1420041010050500013M02606");
+string countryCode = IbanHelper.GetCountryCode("FR1420041010050500013M02606");
+// Returns: "FR"
+```
 
 ### Belgian Payment References
 
