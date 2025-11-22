@@ -65,7 +65,7 @@ jobs:
       run: dotnet test --configuration Release --no-build --verbosity normal
 
     - name: Pack Finova
-      run: dotnet pack src/Finova/Finova.csproj --configuration Release --no-build --output ./packages -p:PackageVersion=${{ steps.get_version.outputs.VERSION }}
+      run: dotnet pack src/Finova/Finova.csproj --configuration Release --output ./packages -p:PackageVersion=${{ steps.get_version.outputs.VERSION }}
 
     - name: Publish to NuGet.org
       run: |
