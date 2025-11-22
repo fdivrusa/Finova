@@ -2,14 +2,18 @@
 
 <div align="center">
 
-**Innovative financial toolkit for .NET**
+**Offline financial validation toolkit for .NET**
 
-*IBAN validation · Payment references · VAT validation · PEPPOL · UBL · SEPA*
+*IBAN · Payment References · KBO/VAT · Business Numbers*
 
 [![NuGet](https://img.shields.io/nuget/v/Finova.svg?label=NuGet)](https://www.nuget.org/packages/Finova/)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Finova.svg?label=Downloads)](https://www.nuget.org/packages/Finova/)
 [![GitHub Package](https://img.shields.io/badge/GitHub-Package-blue?logo=github)](https://github.com/fdivrusa/Finova/packages)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**🇧🇪 Belgium · 🇳🇱 Netherlands · 🇱🇺 Luxembourg**
+
+*100% Offline | Zero Dependencies | Lightning Fast*
 
 </div>
 
@@ -152,24 +156,182 @@ The following features require real-time verification with external partners and
 
 ### 🌍 **Future Offline Support** *(Roadmap)*
 
-Additional offline validation features planned:
+All features rely on **pure algorithms, file parsing, and logic** - no external APIs or partner integrations required!
 
-- **More IBAN Countries** - v1.1.0 (Q1 2026)
-  - France (FR) format and checksum validation
-  - Germany (DE) format and checksum validation
-  - UK (GB) format and checksum validation
-  - All offline, no external API calls
+---
+
+#### 💳 **v1.1.0 - Payment Card Validation** (Q1 2026) 🌍
+Validate credit/debit cards using Luhn algorithm!
+
+**Features:**
+- ✅ **Credit Card Validation** - Luhn algorithm (Visa, Mastercard, Amex, etc.)
+- ✅ **Card Type Detection** - Identify issuer from BIN ranges
+- ✅ **CVV Validation** - Format validation (3 or 4 digits)
+- ✅ **Expiry Date Validation** - Format and logic checks
+- ✅ **Card Formatting** - Display format (XXXX XXXX XXXX XXXX)
+- ✅ **Supported Cards** - Visa, Mastercard, Amex, Discover, Maestro, JCB, UnionPay
+
+**Pure Offline:** BIN ranges hardcoded, Luhn is pure math!
+
+---
+
+#### 🔢 **v1.2.0 - Check Digit Algorithms** (Q2 2026) 🌍
+Universal check digit validation suite!
+
+**Features:**
+- ✅ **ISBN Validation** - ISBN-10 and ISBN-13 (books)
+- ✅ **EAN/UPC Validation** - EAN-8, EAN-13, UPC-A, UPC-E (barcodes)
+- ✅ **GTIN Validation** - GTIN-8, GTIN-12, GTIN-13, GTIN-14 (trade items)
+- ✅ **ISSN Validation** - ISSN (magazines/journals)
+- ✅ **IBAN Generation** - Generate IBAN from legacy account numbers
+- ✅ **Algorithm Library** - Reusable Luhn, Modulo 10, Modulo 11, Modulo 97
+
+**Use Cases:**
+- Retail/POS systems
+- Inventory management
+- Publishing platforms
+- E-commerce
+
+**Pure Offline:** All check digit algorithms are mathematical!
+
+---
+
+#### 🇪🇺 **v1.3.0 - Benelux Expansion** (Q3 2026) 🇧🇪 🇳🇱 🇱🇺
+Enhanced Benelux-specific validators!
+
+**Features:**
+- ✅ **Belgian National Number** - Rijksregisternummer validation (11-proef)
+  - Extract birth date, gender, sequence number
+  - Format: YY.MM.DD-SSS.CC
+- ✅ **Dutch BSN** - Burgerservicenummer validation (11-proef)
+  - Format: 9 digits with check digit
+- ✅ **Luxembourg Matricule** - National ID validation
+  - Format: YYYY MM DD XXXXX
+- ✅ **SEPA Direct Debit Mandates** - Benelux mandate format validation
+- ✅ **Bank Holiday Calendars** - Business day calculations (BE, NL, LU)
+
+**Focus:** Deep Benelux integration before expanding to other countries!
+
+---
+
+#### 🇫🇷 🇩🇪 🇬🇧 **v1.4.0 - European Expansion** (Q4 2026)
+Expand to France, Germany, UK!
+
+**Features:**
+- ✅ **France**
+  - IBAN validation (FR format)
+  - INSEE/NIR validation (French social security number)
+  - SIRET/SIREN validation (business numbers)
+  - French VAT format validation
   
-- **VAT Format Validation** - v1.2.0 (Q2 2026)
-  - EU VAT number format validation (offline)
-  - Format: country prefix + digits + check digit
-  - Checksum validation where applicable
-  - Note: Real-time VIES verification requires external API
+- ✅ **Germany**
+  - IBAN validation (DE format)
+  - Tax ID validation (Steuer-IdNr)
+  - VAT format validation (USt-IdNr)
+  
+- ✅ **United Kingdom**
+  - IBAN validation (GB format)
+  - Sort Code validation
+  - National Insurance Number (NINO) validation
+  - UK VAT format validation
 
-- **Payment File Generation** - v1.3.0 (Q3 2026)
-  - SEPA Credit Transfer (pain.001) XML generation
-  - SEPA Direct Debit (pain.008) XML generation
-  - All offline, no API calls
+---
+
+#### 📄 **v1.6.0 - SEPA XML Suite** (Q1 2027) 🇪🇺
+Complete SEPA payment file handling!
+
+**Features:**
+- ✅ **SEPA XML Validation** - Validate pain.001 / pain.008 structure
+- ✅ **SEPA XML Generation** - Create compliant payment files
+- ✅ **Batch IBAN Validation** - Validate all IBANs in XML
+- ✅ **Control Sum Verification** - Verify totals match transactions
+- ✅ **XSD Schema Validation** - ISO 20022 compliance check
+- ✅ **XML Parsing** - Extract transactions from SEPA files
+
+**Pure Offline:** XSD validation + XML parsing, no API calls!
+
+---
+
+#### � **v1.5.0 - SEPA XML Suite** (Q1 2027) 🇪🇺
+Complete SEPA payment file handling!
+
+**Features:**
+- ✅ **SEPA XML Validation** - Validate pain.001 / pain.008 structure
+- ✅ **SEPA XML Generation** - Create compliant payment files
+- ✅ **Batch IBAN Validation** - Validate all IBANs in XML
+- ✅ **Control Sum Verification** - Verify totals match transactions
+- ✅ **XSD Schema Validation** - ISO 20022 compliance check
+- ✅ **XML Parsing** - Extract transactions from SEPA files
+
+**Pure Offline:** XSD validation + XML parsing, no API calls!
+
+---
+
+#### �💰 **v1.6.0 - Financial Calculations** (Q2 2027) 🇪🇺
+Offline tax and financial calculators!
+
+**Features:**
+- ✅ **VAT Calculator** - Calculate/reverse VAT (configurable rates per country)
+- ✅ **Currency Validation** - ISO 4217 currency code validation
+- ✅ **Amount Formatting** - Currency-specific rounding and display
+- ✅ **Business Day Calculator** - Working days between dates (per country)
+- ✅ **Payment Terms** - Due date calculation (Net 30, Net 60, etc.)
+- ✅ **Interest Calculation** - Simple and compound interest
+- ✅ **Invoice Number Generation** - Sequential, year-based, custom formats
+
+**Countries:** Belgium, Netherlands, Luxembourg, France, Germany, UK
+
+---
+
+#### 🏦 **v1.7.0 - CODA File Parser** (Q3 2027) 🇧�
+Parse Belgian CODA banking files and extract transaction data!
+
+**Features:**
+- ✅ **CODA File Parsing** - Parse CODA 2.x format files (Belgian bank statements)
+- ✅ **Transaction Extraction** - Extract all transactions with full details
+- ✅ **Statement Statistics** - Account summaries, balances, totals in JSON
+- ✅ **Movement Analysis** - Categorize debits, credits, transfers
+- ✅ **Structured Communication Detection** - Identify OGM/VCS references automatically
+- ✅ **Multi-Statement Support** - Parse files with multiple account statements
+- ✅ **Validation** - Verify file integrity and record checksums
+
+**Use Cases:**
+- Accounting software integration
+- Transaction reconciliation
+- Financial reporting
+- Payment matching
+
+**Pure Offline:** No API calls, just file parsing logic!
+
+---
+
+#### �🇮🇹 🇪🇸 🇵🇹 **v1.8.0 - Southern Europe** (Q4 2027)
+Italy, Spain, Portugal expansion!
+
+**Features:**
+- ✅ **Italy** - IBAN (IT), Codice Fiscale, Partita IVA
+- ✅ **Spain** - IBAN (ES), NIE/DNI, CIF validation
+- ✅ **Portugal** - IBAN (PT), NIF validation
+
+---
+
+### 📊 **Roadmap Summary**
+
+| Version | Focus | Release | Countries |
+|---------|-------|---------|-----------|
+| **v1.0.0** | Core Benelux | ✅ Released | 🇧🇪 🇳🇱 🇱🇺 |
+| **v1.1.0** | Payment Cards | Q1 2026 | 🌍 |
+| **v1.2.0** | Check Digits | Q2 2026 | 🌍 |
+| **v1.3.0** | Benelux Deep Dive | Q3 2026 | 🇧🇪 🇳🇱 🇱🇺 |
+| **v1.4.0** | FR/DE/GB | Q4 2026 | 🇫🇷 🇩🇪 🇬🇧 |
+| **v1.5.0** | SEPA XML | Q1 2027 | 🇪🇺 |
+| **v1.6.0** | Financial Calc | Q2 2027 | 🇪🇺 |
+| **v1.7.0** | CODA Parser | Q3 2027 | 🇧🇪 |
+| **v1.8.0** | IT/ES/PT | Q4 2027 | 🇮🇹 🇪🇸 🇵🇹 |
+
+**All features:** ✅ 100% offline | ⚡ Pure algorithms | 🔒 No external dependencies | 🚀 Zero API calls
+
+---
 
 ### 📄 **Features NOT Planned for NuGet** *(Require External Services)*
 
