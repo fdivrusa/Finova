@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Finova.Belgium.Validators
 {
@@ -21,7 +22,7 @@ namespace Finova.Belgium.Validators
         /// </summary>
         /// <param name="vat">The VAT number to validate</param>
         /// <returns>True if valid, false otherwise</returns>
-        public static bool IsValid(string vat)
+        public static bool IsValid([NotNullWhen(true)] string? vat)
         {
             if (string.IsNullOrWhiteSpace(vat))
             {
@@ -45,7 +46,7 @@ namespace Finova.Belgium.Validators
         /// <param name="vat">The VAT number to format</param>
         /// <returns>Formatted VAT number</returns>
         /// <exception cref="ArgumentException">If the VAT number is invalid</exception>
-        public static string Format(string vat)
+        public static string Format(string? vat)
         {
             if (!IsValid(vat))
             {
@@ -56,7 +57,7 @@ namespace Finova.Belgium.Validators
             var cleaned = vat.Trim().ToUpperInvariant();
             if (cleaned.StartsWith(VatPrefix))
             {
-                cleaned = cleaned.Substring(VatPrefix.Length);
+                cleaned = cleaned[VatPrefix.Length..];
             }
 
             var digits = DigitsOnlyRegex().Replace(cleaned, "");
@@ -70,7 +71,7 @@ namespace Finova.Belgium.Validators
         /// </summary>
         /// <param name="vat">The VAT number to normalize</param>
         /// <returns>Normalized VAT number (BExxxxxxxxxx)</returns>
-        public static string Normalize(string vat)
+        public static string Normalize(string? vat)
         {
             if (string.IsNullOrWhiteSpace(vat))
             {
@@ -93,7 +94,7 @@ namespace Finova.Belgium.Validators
         /// </summary>
         /// <param name="vat">The VAT number</param>
         /// <returns>The corresponding KBO/BCE number or null if invalid</returns>
-        public static string? GetEnterpriseNumber(string vat)
+        public static string? GetEnterpriseNumber(string? vat)
         {
             if (!IsValid(vat))
             {
@@ -103,7 +104,7 @@ namespace Finova.Belgium.Validators
             var cleaned = vat.Trim().ToUpperInvariant();
             if (cleaned.StartsWith(VatPrefix))
             {
-                cleaned = cleaned.Substring(VatPrefix.Length);
+                cleaned = cleaned[VatPrefix.Length..];
             }
 
             return BelgianEnterpriseValidator.Normalize(cleaned);

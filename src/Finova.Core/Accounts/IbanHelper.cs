@@ -1,6 +1,7 @@
 using Finova.Core.Internals;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Finova.Core.Accounts
 {
@@ -21,7 +22,7 @@ namespace Finova.Core.Accounts
         /// </summary>
         /// <param name="iban">The IBAN to validate</param>
         /// <returns>True if valid, false otherwise</returns>
-        public static bool IsValidIban(string iban)
+        public static bool IsValidIban([NotNullWhen(true)] string? iban)
         {
             if (string.IsNullOrWhiteSpace(iban))
             {
@@ -56,7 +57,7 @@ namespace Finova.Core.Accounts
         /// </summary>
         /// <param name="iban">The IBAN to normalize</param>
         /// <returns>Normalized IBAN</returns>
-        public static string NormalizeIban(string iban)
+        public static string NormalizeIban(string? iban)
         {
             if (string.IsNullOrWhiteSpace(iban))
             {
@@ -71,7 +72,7 @@ namespace Finova.Core.Accounts
         /// </summary>
         /// <param name="iban">The IBAN to format</param>
         /// <returns>Formatted IBAN (e.g., "BE68 5390 0754 7034")</returns>
-        public static string FormatIban(string iban)
+        public static string FormatIban(string? iban)
         {
             var normalized = NormalizeIban(iban);
             if (string.IsNullOrEmpty(normalized))
@@ -97,7 +98,7 @@ namespace Finova.Core.Accounts
         /// </summary>
         /// <param name="iban">The IBAN</param>
         /// <returns>Two-letter country code or empty string if invalid</returns>
-        public static string GetCountryCode(string iban)
+        public static string GetCountryCode(string? iban)
         {
             var normalized = NormalizeIban(iban);
             if (normalized.Length < 2)
@@ -113,7 +114,7 @@ namespace Finova.Core.Accounts
         /// </summary>
         /// <param name="iban">The IBAN</param>
         /// <returns>Check digits (0-97) or 0 if invalid</returns>
-        public static int GetCheckDigits(string iban)
+        public static int GetCheckDigits(string? iban)
         {
             var normalized = NormalizeIban(iban);
             if (normalized.Length < 4)
@@ -121,7 +122,7 @@ namespace Finova.Core.Accounts
                 return 0;
             }
 
-            if (int.TryParse(normalized.Substring(2, 2), out var checkDigits))
+            if (int.TryParse(normalized.AsSpan(2, 2), out var checkDigits))
             {
                 return checkDigits;
             }
@@ -134,7 +135,7 @@ namespace Finova.Core.Accounts
         /// </summary>
         /// <param name="iban">The normalized IBAN</param>
         /// <returns>True if checksum is valid, false otherwise</returns>
-        public static bool ValidateChecksum(string iban)
+        public static bool ValidateChecksum([NotNullWhen(true)] string? iban)
         {
             if (string.IsNullOrWhiteSpace(iban) || iban.Length < 4)
             {

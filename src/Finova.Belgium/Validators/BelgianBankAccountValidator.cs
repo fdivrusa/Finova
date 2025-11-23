@@ -1,5 +1,6 @@
 using Finova.Core.Accounts;
 using Finova.Core.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Finova.Belgium.Validators
 {
@@ -17,7 +18,7 @@ namespace Finova.Belgium.Validators
 
         #region Instance Methods (for Dependency Injection)
 
-        public bool IsValidIban(string iban)
+        public bool IsValidIban(string? iban)
         {
             return ValidateBelgianIban(iban);
         }
@@ -31,7 +32,7 @@ namespace Finova.Belgium.Validators
         /// </summary>
         /// <param name="iban">The IBAN to validate</param>
         /// <returns>True if valid Belgian IBAN, false otherwise</returns>
-        public static bool ValidateBelgianIban(string iban)
+        public static bool ValidateBelgianIban([NotNullWhen(true)] string? iban)
         {
             if (string.IsNullOrWhiteSpace(iban))
             {
@@ -61,7 +62,7 @@ namespace Finova.Belgium.Validators
         /// </summary>
         /// <param name="iban">The IBAN to format</param>
         /// <returns>Formatted IBAN (e.g., "BE68 5390 0754 7034")</returns>
-        public static string FormatBelgianIban(string iban)
+        public static string FormatBelgianIban(string? iban)
         {
             if (!ValidateBelgianIban(iban))
             {

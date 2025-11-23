@@ -1,5 +1,6 @@
 using Finova.Core.Accounts;
 using Finova.Core.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Finova.Netherlands.Validators
 {
@@ -17,7 +18,7 @@ namespace Finova.Netherlands.Validators
 
         #region Instance Methods (for Dependency Injection)
 
-        public bool IsValidIban(string iban)
+        public bool IsValidIban(string? iban)
         {
             return ValidateDutchIban(iban);
         }
@@ -31,7 +32,7 @@ namespace Finova.Netherlands.Validators
         /// </summary>
         /// <param name="iban">The IBAN to validate</param>
         /// <returns>True if valid Dutch IBAN, false otherwise</returns>
-        public static bool ValidateDutchIban(string iban)
+        public static bool ValidateDutchIban([NotNullWhen(true)] string? iban)
         {
             if (string.IsNullOrWhiteSpace(iban))
             {
@@ -77,7 +78,7 @@ namespace Finova.Netherlands.Validators
         /// </summary>
         /// <param name="iban">The IBAN to extract from</param>
         /// <returns>The 4-character bank code (e.g., "ABNA", "RABO")</returns>
-        public static string? GetBankCode(string iban)
+        public static string? GetBankCode(string? iban)
         {
             if (!ValidateDutchIban(iban))
             {
@@ -93,7 +94,7 @@ namespace Finova.Netherlands.Validators
         /// </summary>
         /// <param name="iban">The IBAN to format</param>
         /// <returns>Formatted IBAN (e.g., "NL91 ABNA 0417 1643 00")</returns>
-        public static string FormatDutchIban(string iban)
+        public static string FormatDutchIban(string? iban)
         {
             if (!ValidateDutchIban(iban))
             {

@@ -1,5 +1,6 @@
 using Finova.Core.Accounts;
 using Finova.Core.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Finova.Luxembourg.Validators
 {
@@ -17,7 +18,7 @@ namespace Finova.Luxembourg.Validators
 
         #region Instance Methods (for Dependency Injection)
 
-        public bool IsValidIban(string iban)
+        public bool IsValidIban(string? iban)
         {
             return ValidateLuxembourgIban(iban);
         }
@@ -31,7 +32,7 @@ namespace Finova.Luxembourg.Validators
         /// </summary>
         /// <param name="iban">The IBAN to validate</param>
         /// <returns>True if valid Luxembourg IBAN, false otherwise</returns>
-        public static bool ValidateLuxembourgIban(string iban)
+        public static bool ValidateLuxembourgIban([NotNullWhen(true)] string? iban)
         {
             if (string.IsNullOrWhiteSpace(iban))
             {
@@ -61,7 +62,7 @@ namespace Finova.Luxembourg.Validators
         /// </summary>
         /// <param name="iban">The IBAN to format</param>
         /// <returns>Formatted IBAN (e.g., "LU28 0019 4006 4475 0000")</returns>
-        public static string FormatLuxembourgIban(string iban)
+        public static string FormatLuxembourgIban(string? iban)
         {
             if (!ValidateLuxembourgIban(iban))
             {

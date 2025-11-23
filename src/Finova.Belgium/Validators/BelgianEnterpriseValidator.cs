@@ -1,5 +1,6 @@
 using Finova.Core.Internals;
 using System.Text.RegularExpressions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Finova.Belgium.Validators
 {
@@ -21,7 +22,7 @@ namespace Finova.Belgium.Validators
         /// </summary>
         /// <param name="kbo">The KBO/BCE number to validate</param>
         /// <returns>True if valid, false otherwise</returns>
-        public static bool IsValid(string kbo)
+        public static bool IsValid([NotNullWhen(true)] string? kbo)
         {
             if (string.IsNullOrWhiteSpace(kbo))
             {
@@ -67,7 +68,7 @@ namespace Finova.Belgium.Validators
         /// <param name="kbo">The KBO/BCE number to format</param>
         /// <returns>Formatted KBO number</returns>
         /// <exception cref="ArgumentException">If the KBO number is invalid</exception>
-        public static string Format(string kbo)
+        public static string Format(string? kbo)
         {
             if (!IsValid(kbo))
             {
@@ -85,7 +86,7 @@ namespace Finova.Belgium.Validators
         /// </summary>
         /// <param name="kbo">The KBO/BCE number to normalize</param>
         /// <returns>Normalized 10-digit KBO number</returns>
-        public static string Normalize(string kbo)
+        public static string Normalize(string? kbo)
         {
             if (string.IsNullOrWhiteSpace(kbo))
             {
