@@ -24,6 +24,7 @@
 	</Description>
 	<PackageTags>finova;finance;banking;offline;privacy;zero-dependency;iban;bic;swift;credit-card;luhn;payment-reference;ogm;vcs;iso11649;belgium;france;germany;uk;netherlands;fintech;validation;mod97</PackageTags> 
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <ProjectUrl>https://finovapackage.netlify.app</ProjectUrl>
     <PackageProjectUrl>https://github.com/fdivrusa/Finova</PackageProjectUrl>
     <RepositoryUrl>https://github.com/fdivrusa/Finova</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
