@@ -1,73 +1,69 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    
-    <!-- NuGet Package Configuration -->
-    <PackageId>Finova</PackageId>
-    <Authors>Florian Di Vrusa</Authors>
-    <Company>Finova</Company>
-    <Product>Finova</Product>
+	<IsPackable>true</IsPackable>
+	<PackageId>Finova</PackageId>
+	<Title>Finova - Banking &amp; Payment Validation Toolkit (IBAN, BIC, Luhn)</Title>
+	<Product>Finova SDK</Product>
+	<Authors>Florian Di Vrusa</Authors>
+	<Company>Finova</Company>
 	<Description>
 	  The high-performance, 100% offline financial validation toolkit for .NET.
 
-	  Key Features:
-	  - IBAN Validation: Specific rules for Belgium, Netherlands, France, Germany, UK, and Luxembourg (plus generic ISO 13616).
-	  - Payment Cards: Zero-allocation Luhn algorithm check, brand detection (Visa, MC, Amex), and secure formatting.
-	  - Payment References: Generate and Validate Belgian OGM/VCS and International ISO 11649 (RF).
-	  - Corporate Identity: Foundation for VAT and Enterprise number validation.
-	  - Structure: BIC/SWIFT format validation (ISO 9362).
+	  Features:
+	  ✔️ IBAN Validation: Specific rules for Belgium, Netherlands, France, Germany, UK, and Luxembourg.
+	  ✔️ Payment Cards: Zero-allocation Luhn algorithm check, brand detection.
+	  ✔️ Payment References: Generate/Validate Belgian OGM/VCS and ISO 11649 (RF).
+	  ✔️ Structure: BIC/SWIFT format validation.
 
-	  Designed for FinTechs and SaaS: Zero dependencies, zero network latency, and privacy-first (no external API calls).
+	  Designed for FinTechs and SaaS. Zero dependencies.
+	  Compatible with .NET 8 and .NET 10.
 	</Description>
-	<PackageTags>finova;finance;banking;offline;privacy;zero-dependency;iban;bic;swift;credit-card;luhn;payment-reference;ogm;vcs;iso11649;belgium;france;germany;uk;netherlands;fintech;validation;mod97</PackageTags> 
+
+	<PackageTags>finova;csharp;dotnet;iban;bic;swift;credit-card;luhn;payment;ogm;vcs;iso11649;validation;banking;fintech;offline</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <ProjectUrl>https://finovapackage.netlify.app</ProjectUrl>
-    <PackageProjectUrl>https://github.com/fdivrusa/Finova</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/fdivrusa/Finova</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageReleaseNotes>See https://github.com/fdivrusa/Finova/releases for release notes.</PackageReleaseNotes>
-    <Copyright>Copyright (c) 2025 Florian Di Vrusa</Copyright>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <NeutralLanguage>en</NeutralLanguage>
+
+	<ProjectUrl>https://finovapackage.netlify.app</ProjectUrl>
+	<PackageProjectUrl>https://github.com/fdivrusa/Finova</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/fdivrusa/Finova</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageIcon>icon.png</PackageIcon>
+
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<IncludeSymbols>true</IncludeSymbols>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+	<IncludeBuildOutput>true</IncludeBuildOutput>
+
+	<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Include all regional implementations with PrivateAssets to embed them -->
-    <ProjectReference Include="..\Finova.Core\Finova.Core.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\Finova.Belgium\Finova.Belgium.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\Finova.Netherlands\Finova.Netherlands.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\Finova.Luxembourg\Finova.Luxembourg.csproj" PrivateAssets="all" />
+	<ProjectReference Include="..\Finova.Core\Finova.Core.csproj" PrivateAssets="all" />
+	<ProjectReference Include="..\Finova.Belgium\Finova.Belgium.csproj" PrivateAssets="all" />
+	<ProjectReference Include="..\Finova.Netherlands\Finova.Netherlands.csproj" PrivateAssets="all" />
+	<ProjectReference Include="..\Finova.Luxembourg\Finova.Luxembourg.csproj" PrivateAssets="all" />
 	<ProjectReference Include="..\Finova.France\Finova.France.csproj" PrivateAssets="all" />
 	<ProjectReference Include="..\Finova.Germany\Finova.Germany.csproj" PrivateAssets="all" />
 	<ProjectReference Include="..\Finova.UnitedKingdom\Finova.UnitedKingdom.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Include README.md in the package -->
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
-    
-    <!-- Include package icon -->
-    <None Include="..\..\icon.png" Pack="true" PackagePath="\" Condition="Exists('..\..\icon.png')" />
+	<None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
+	<None Include="..\..\icon.png" Pack="true" PackagePath="icon.png" Condition="Exists('..\..\icon.png')" />
   </ItemGroup>
 
-  <!-- Include all referenced project DLLs in the package lib folder -->
   <PropertyGroup>
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+	<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
-  
+
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
-    <ItemGroup>
-      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
-    </ItemGroup>
+	<ItemGroup>
+	  <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+	</ItemGroup>
   </Target>
 
 </Project>

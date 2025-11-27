@@ -4,8 +4,10 @@
     <Project Path="src/Finova.Core/Finova.Core.csproj" />
     <Project Path="src/Finova.France/Finova.France.csproj" Id="e3a4904a-95b4-4bd3-85dc-063185bd72f0" />
     <Project Path="src/Finova.Germany/Finova.Germany.csproj" Id="bcd102f8-6aa8-4e60-adb3-623a018a0c08" />
+    <Project Path="src/Finova.Italy/Finova.Italy.csproj" Id="6b13df47-b932-4c2d-936a-334d4c635501" />
     <Project Path="src/Finova.Luxembourg/Finova.Luxembourg.csproj" />
     <Project Path="src/Finova.Netherlands/Finova.Netherlands.csproj" />
+    <Project Path="src/Finova.Spain/Finova.Spain.csproj" Id="4a4fac82-17f4-4530-90d1-d69ce5a218d3" />
     <Project Path="src/Finova.UnitedKingdom/Finova.UnitedKingdom.csproj" Id="5bbd74cd-121b-44a6-a796-5667ff3966b6" />
     <Project Path="src/Finova/Finova.csproj" />
   </Folder>
