@@ -6,11 +6,11 @@ namespace Finova.Tests.Luxembourg.Validators
 {
     public class LuxembourgBankAccountValidatorTests
     {
-        private readonly LuxembourgBankAccountValidator _validator;
+        private readonly LuxembourgIbanValidator _validator;
 
         public LuxembourgBankAccountValidatorTests()
         {
-            _validator = new LuxembourgBankAccountValidator();
+            _validator = new LuxembourgIbanValidator();
         }
 
         #region Instance Method Tests
@@ -78,7 +78,7 @@ namespace Finova.Tests.Luxembourg.Validators
         public void ValidateLuxembourgIban_WithValidIbans_ReturnsTrue(string iban)
         {
             // Act
-            var result = LuxembourgBankAccountValidator.ValidateLuxembourgIban(iban);
+            var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
             // Assert
             result.Should().BeTrue();
@@ -91,7 +91,7 @@ namespace Finova.Tests.Luxembourg.Validators
         public void ValidateLuxembourgIban_WithFormattedIbans_ReturnsTrue(string iban)
         {
             // Act
-            var result = LuxembourgBankAccountValidator.ValidateLuxembourgIban(iban);
+            var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
             // Assert
             result.Should().BeTrue();
@@ -110,7 +110,7 @@ namespace Finova.Tests.Luxembourg.Validators
         public void ValidateLuxembourgIban_WithInvalidIbans_ReturnsFalse(string? iban)
         {
             // Act
-            var result = LuxembourgBankAccountValidator.ValidateLuxembourgIban(iban);
+            var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
             // Assert
             result.Should().BeFalse();
@@ -123,43 +123,10 @@ namespace Finova.Tests.Luxembourg.Validators
             var invalidIban = "BE280019400644750000"; // 20 chars, starts with BE
 
             // Act
-            var result = LuxembourgBankAccountValidator.ValidateLuxembourgIban(invalidIban);
+            var result = LuxembourgIbanValidator.ValidateLuxembourgIban(invalidIban);
 
             // Assert
             result.Should().BeFalse();
-        }
-
-        #endregion
-
-        #region Static Method Tests - FormatLuxembourgIban
-
-        [Theory]
-        [InlineData("LU280019400644750000", "LU28 0019 4006 4475 0000")]
-        [InlineData("LU120010001234567891", "LU12 0010 0012 3456 7891")]
-        [InlineData("lu280019400644750000", "LU28 0019 4006 4475 0000")] // Lowercase
-        [InlineData("LU28 0019 4006 4475 0000", "LU28 0019 4006 4475 0000")] // Already formatted
-        public void FormatLuxembourgIban_WithValidIbans_ReturnsFormattedString(string iban, string expected)
-        {
-            // Act
-            var result = LuxembourgBankAccountValidator.FormatLuxembourgIban(iban);
-
-            // Assert
-            result.Should().Be(expected);
-        }
-
-        [Theory]
-        [InlineData("LU000019400644750000")] // Wrong check digits
-        [InlineData("NL91ABNA0417164300")] // Wrong country
-        [InlineData("LU28001940064475")] // Too short
-        [InlineData("")] // Empty
-        [InlineData(null)] // Null
-        public void FormatLuxembourgIban_WithInvalidIbans_ThrowsArgumentException(string? iban)
-        {
-            // Act
-            Action act = () => LuxembourgBankAccountValidator.FormatLuxembourgIban(iban);
-
-            // Assert
-            act.Should().Throw<ArgumentException>();
         }
 
         #endregion
@@ -172,7 +139,7 @@ namespace Finova.Tests.Luxembourg.Validators
         public void ValidateLuxembourgIban_WithKnownBankCodes_ReturnsTrue(string iban)
         {
             // Act
-            var result = LuxembourgBankAccountValidator.ValidateLuxembourgIban(iban);
+            var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
             // Assert
             result.Should().BeTrue();
@@ -191,9 +158,9 @@ namespace Finova.Tests.Luxembourg.Validators
             var correct = "LU280019400644750000"; // 20 chars
 
             // Act
-            var shortResult = LuxembourgBankAccountValidator.ValidateLuxembourgIban(tooShort);
-            var longResult = LuxembourgBankAccountValidator.ValidateLuxembourgIban(tooLong);
-            var correctResult = LuxembourgBankAccountValidator.ValidateLuxembourgIban(correct);
+            var shortResult = LuxembourgIbanValidator.ValidateLuxembourgIban(tooShort);
+            var longResult = LuxembourgIbanValidator.ValidateLuxembourgIban(tooLong);
+            var correctResult = LuxembourgIbanValidator.ValidateLuxembourgIban(correct);
 
             // Assert
             shortResult.Should().BeFalse();
@@ -213,7 +180,7 @@ namespace Finova.Tests.Luxembourg.Validators
             // Structure: LU (country) + 28 (check) + 001 (bank) + 9400644750000 (account)
 
             // Act
-            var result = LuxembourgBankAccountValidator.ValidateLuxembourgIban(validIban);
+            var result = LuxembourgIbanValidator.ValidateLuxembourgIban(validIban);
 
             // Assert
             result.Should().BeTrue();
@@ -226,7 +193,7 @@ namespace Finova.Tests.Luxembourg.Validators
         public void ValidateLuxembourgIban_BankAndAccountMustBeDigits_ReturnsFalse(string iban)
         {
             // Act
-            var result = LuxembourgBankAccountValidator.ValidateLuxembourgIban(iban);
+            var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
             // Assert
             result.Should().BeFalse();
@@ -243,7 +210,7 @@ namespace Finova.Tests.Luxembourg.Validators
         public void ValidateLuxembourgIban_ValidatesChecksum(string iban, bool expected)
         {
             // Act
-            var result = LuxembourgBankAccountValidator.ValidateLuxembourgIban(iban);
+            var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
             // Assert
             result.Should().Be(expected);
@@ -260,25 +227,10 @@ namespace Finova.Tests.Luxembourg.Validators
             var iban = "LU00000000000000000000";
 
             // Act
-            var result = LuxembourgBankAccountValidator.ValidateLuxembourgIban(iban);
+            var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
             // Assert
             result.Should().BeFalse();
-        }
-
-        [Fact]
-        public void FormatLuxembourgIban_FirstGroupIsSixCharacters()
-        {
-            // Arrange
-            var iban = "LU280019400644750000";
-
-            // Act
-            var result = LuxembourgBankAccountValidator.FormatLuxembourgIban(iban);
-
-            // Assert
-            // Format: "LU28 0019 4006 4475 0000"
-            // Groups: 4 chars, 4 chars, 4 chars, 4 chars, 4 chars
-            result.Should().MatchRegex(@"^[A-Z]{2}\d{2}( \d{4}){4}$");
         }
 
         #endregion
@@ -291,7 +243,7 @@ namespace Finova.Tests.Luxembourg.Validators
         public void ValidateLuxembourgIban_RejectsBelgianAndDutchIbans(string iban)
         {
             // Act
-            var result = LuxembourgBankAccountValidator.ValidateLuxembourgIban(iban);
+            var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
             // Assert
             result.Should().BeFalse();

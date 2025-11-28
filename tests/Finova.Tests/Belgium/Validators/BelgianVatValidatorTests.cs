@@ -14,7 +14,7 @@ namespace Finova.Tests.Belgium.Validators
         public void IsValid_WithValidVatNumbers_ReturnsTrue(string vat)
         {
             // Act
-            var result = BelgianVatValidator.IsValid(vat);
+            var result = BelgiumVatValidator.IsValid(vat);
 
             // Assert
             result.Should().BeTrue();
@@ -28,7 +28,7 @@ namespace Finova.Tests.Belgium.Validators
         public void IsValid_WithFormattedVatNumbers_ReturnsTrue(string vat)
         {
             // Act
-            var result = BelgianVatValidator.IsValid(vat);
+            var result = BelgiumVatValidator.IsValid(vat);
 
             // Assert
             result.Should().BeTrue();
@@ -39,7 +39,7 @@ namespace Finova.Tests.Belgium.Validators
         public void IsValid_WithoutBEPrefix_ReturnsTrue(string vat)
         {
             // Act
-            var result = BelgianVatValidator.IsValid(vat);
+            var result = BelgiumVatValidator.IsValid(vat);
 
             // Assert
             result.Should().BeTrue();
@@ -58,7 +58,7 @@ namespace Finova.Tests.Belgium.Validators
         public void IsValid_WithInvalidVatNumbers_ReturnsFalse(string? vat)
         {
             // Act
-            var result = BelgianVatValidator.IsValid(vat);
+            var result = BelgiumVatValidator.IsValid(vat);
 
             // Assert
             result.Should().BeFalse();
@@ -74,7 +74,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Format_WithValidVatNumbers_ReturnsFormattedString(string vat, string expected)
         {
             // Act
-            var result = BelgianVatValidator.Format(vat);
+            var result = BelgiumVatValidator.Format(vat);
 
             // Assert
             result.Should().Be(expected);
@@ -88,7 +88,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Format_WithVariousInputs_ReturnsConsistentFormat(string vat, string expected)
         {
             // Act
-            var result = BelgianVatValidator.Format(vat);
+            var result = BelgiumVatValidator.Format(vat);
 
             // Assert
             result.Should().Be(expected);
@@ -102,7 +102,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Format_WithInvalidVatNumbers_ThrowsArgumentException(string? vat)
         {
             // Act
-            Action act = () => BelgianVatValidator.Format(vat);
+            Action act = () => BelgiumVatValidator.Format(vat);
 
             // Assert
             act.Should().Throw<ArgumentException>();
@@ -121,7 +121,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Normalize_ConvertsToStandardFormat(string input, string expected)
         {
             // Act
-            var result = BelgianVatValidator.Normalize(input);
+            var result = BelgiumVatValidator.Normalize(input);
 
             // Assert
             result.Should().Be(expected);
@@ -134,7 +134,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Normalize_WithEmptyInput_ReturnsEmpty(string? input)
         {
             // Act
-            var result = BelgianVatValidator.Normalize(input);
+            var result = BelgiumVatValidator.Normalize(input);
 
             // Assert
             result.Should().BeEmpty();
@@ -152,7 +152,7 @@ namespace Finova.Tests.Belgium.Validators
         public void GetEnterpriseNumber_ExtractsKboNumber(string vat, string expected)
         {
             // Act
-            var result = BelgianVatValidator.GetEnterpriseNumber(vat);
+            var result = BelgiumVatValidator.GetEnterpriseNumber(vat);
 
             // Assert
             result.Should().Be(expected);
@@ -165,7 +165,7 @@ namespace Finova.Tests.Belgium.Validators
         public void GetEnterpriseNumber_WithInvalidVat_ReturnsNull(string? vat)
         {
             // Act
-            var result = BelgianVatValidator.GetEnterpriseNumber(vat);
+            var result = BelgiumVatValidator.GetEnterpriseNumber(vat);
 
             // Assert
             result.Should().BeNull();
@@ -180,7 +180,7 @@ namespace Finova.Tests.Belgium.Validators
         public void IsValid_WithRealVatNumbers_ReturnsTrue(string vat)
         {
             // Act
-            var result = BelgianVatValidator.IsValid(vat);
+            var result = BelgiumVatValidator.IsValid(vat);
 
             // Assert
             result.Should().BeTrue();
@@ -191,7 +191,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Format_WithRealVatNumbers_ReturnsFormattedString(string vat, string expected)
         {
             // Act
-            var result = BelgianVatValidator.Format(vat);
+            var result = BelgiumVatValidator.Format(vat);
 
             // Assert
             result.Should().Be(expected);
@@ -206,9 +206,9 @@ namespace Finova.Tests.Belgium.Validators
         public void VatNumber_IsEquivalentToKboNumber(string vat, string kbo)
         {
             // Act
-            var vatValid = BelgianVatValidator.IsValid(vat);
-            var kboValid = BelgianEnterpriseValidator.IsValid(kbo);
-            var extractedKbo = BelgianVatValidator.GetEnterpriseNumber(vat);
+            var vatValid = BelgiumVatValidator.IsValid(vat);
+            var kboValid = BelgiumEnterpriseValidator.IsValid(kbo);
+            var extractedKbo = BelgiumVatValidator.GetEnterpriseNumber(vat);
 
             // Assert
             vatValid.Should().BeTrue();
@@ -224,8 +224,8 @@ namespace Finova.Tests.Belgium.Validators
             var vat = "BE" + kbo;
 
             // Act
-            var kboResult = BelgianEnterpriseValidator.IsValid(kbo);
-            var vatResult = BelgianVatValidator.IsValid(vat);
+            var kboResult = BelgiumEnterpriseValidator.IsValid(kbo);
+            var vatResult = BelgiumVatValidator.IsValid(vat);
 
             // Assert
             kboResult.Should().Be(vatResult);
@@ -242,7 +242,7 @@ namespace Finova.Tests.Belgium.Validators
             var vat = "BE";
 
             // Act
-            var result = BelgianVatValidator.IsValid(vat);
+            var result = BelgiumVatValidator.IsValid(vat);
 
             // Assert
             result.Should().BeFalse();
@@ -255,7 +255,7 @@ namespace Finova.Tests.Belgium.Validators
             var vat = "BE0123456749";
 
             // Act
-            var result = BelgianVatValidator.Format(vat);
+            var result = BelgiumVatValidator.Format(vat);
 
             // Assert
             result.Should().Be("BE 0123.456.749");
@@ -269,7 +269,7 @@ namespace Finova.Tests.Belgium.Validators
             var vat = "BE0123456749";
 
             // Act
-            var kbo = BelgianVatValidator.GetEnterpriseNumber(vat);
+            var kbo = BelgiumVatValidator.GetEnterpriseNumber(vat);
 
             // Assert
             kbo.Should().NotContain("BE");

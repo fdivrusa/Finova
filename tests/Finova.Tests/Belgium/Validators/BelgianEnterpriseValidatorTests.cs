@@ -14,7 +14,7 @@ namespace Finova.Tests.Belgium.Validators
         public void IsValid_WithValidKboNumbers_ReturnsTrue(string kbo)
         {
             // Act
-            var result = BelgianEnterpriseValidator.IsValid(kbo);
+            var result = BelgiumEnterpriseValidator.IsValid(kbo);
 
             // Assert
             result.Should().BeTrue();
@@ -28,7 +28,7 @@ namespace Finova.Tests.Belgium.Validators
         public void IsValid_WithFormattedKboNumbers_ReturnsTrue(string kbo)
         {
             // Act
-            var result = BelgianEnterpriseValidator.IsValid(kbo);
+            var result = BelgiumEnterpriseValidator.IsValid(kbo);
 
             // Assert
             result.Should().BeTrue();
@@ -48,7 +48,7 @@ namespace Finova.Tests.Belgium.Validators
         public void IsValid_WithInvalidKboNumbers_ReturnsFalse(string? kbo)
         {
             // Act
-            var result = BelgianEnterpriseValidator.IsValid(kbo);
+            var result = BelgiumEnterpriseValidator.IsValid(kbo);
 
             // Assert
             result.Should().BeFalse();
@@ -64,7 +64,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Format_WithValidKboNumbers_ReturnsFormattedString(string kbo, string expected)
         {
             // Act
-            var result = BelgianEnterpriseValidator.Format(kbo);
+            var result = BelgiumEnterpriseValidator.Format(kbo);
 
             // Assert
             result.Should().Be(expected);
@@ -77,7 +77,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Format_WithFormattedInput_ReturnsConsistentFormat(string kbo, string expected)
         {
             // Act
-            var result = BelgianEnterpriseValidator.Format(kbo);
+            var result = BelgiumEnterpriseValidator.Format(kbo);
 
             // Assert
             result.Should().Be(expected);
@@ -91,7 +91,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Format_WithInvalidKboNumbers_ThrowsArgumentException(string? kbo)
         {
             // Act
-            Action act = () => BelgianEnterpriseValidator.Format(kbo);
+            Action act = () => BelgiumEnterpriseValidator.Format(kbo);
 
             // Assert
             act.Should().Throw<ArgumentException>();
@@ -110,7 +110,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Normalize_RemovesBEPrefixDotsAndSpaces(string input, string expected)
         {
             // Act
-            var result = BelgianEnterpriseValidator.Normalize(input);
+            var result = BelgiumEnterpriseValidator.Normalize(input);
 
             // Assert
             result.Should().Be(expected);
@@ -123,7 +123,7 @@ namespace Finova.Tests.Belgium.Validators
         public void Normalize_WithEmptyInput_ReturnsEmpty(string? input)
         {
             // Act
-            var result = BelgianEnterpriseValidator.Normalize(input);
+            var result = BelgiumEnterpriseValidator.Normalize(input);
 
             // Assert
             result.Should().BeEmpty();
@@ -144,7 +144,7 @@ namespace Finova.Tests.Belgium.Validators
             var validKbo = baseNumber + checkDigits;
 
             // Act
-            var result = BelgianEnterpriseValidator.IsValid(validKbo);
+            var result = BelgiumEnterpriseValidator.IsValid(validKbo);
 
             // Assert
             result.Should().BeTrue();
@@ -161,7 +161,7 @@ namespace Finova.Tests.Belgium.Validators
             var invalidKbo = baseNumber + incorrectCheckDigits.ToString("D2");
 
             // Act
-            var result = BelgianEnterpriseValidator.IsValid(invalidKbo);
+            var result = BelgiumEnterpriseValidator.IsValid(invalidKbo);
 
             // Assert
             result.Should().BeFalse();
@@ -176,7 +176,7 @@ namespace Finova.Tests.Belgium.Validators
         public void IsValid_WithRealKboNumbers_ReturnsTrue(string kbo)
         {
             // Act
-            var result = BelgianEnterpriseValidator.IsValid(kbo);
+            var result = BelgiumEnterpriseValidator.IsValid(kbo);
 
             // Assert
             result.Should().BeTrue();
@@ -194,7 +194,7 @@ namespace Finova.Tests.Belgium.Validators
             var kbo = "1019755159";
 
             // Act
-            var result = BelgianEnterpriseValidator.IsValid(kbo);
+            var result = BelgiumEnterpriseValidator.IsValid(kbo);
 
             // Assert
             result.Should().BeTrue();
@@ -208,7 +208,7 @@ namespace Finova.Tests.Belgium.Validators
             var kbo = baseNumber + "97";
 
             // Act
-            var result = BelgianEnterpriseValidator.IsValid(kbo);
+            var result = BelgiumEnterpriseValidator.IsValid(kbo);
 
             // Assert
             result.Should().BeTrue();
@@ -221,7 +221,7 @@ namespace Finova.Tests.Belgium.Validators
             var kbo = "0123456749"; // Valid one from our test data
 
             // Act
-            var result = BelgianEnterpriseValidator.Format(kbo);
+            var result = BelgiumEnterpriseValidator.Format(kbo);
 
             // Assert
             result.Should().Be("0123.456.749");

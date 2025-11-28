@@ -4,16 +4,18 @@
 
 **The Offline Financial Validation Toolkit for .NET**
 
-*IBAN · Payment References · KBO/VAT · Business Numbers*
+*IBAN · Payment References · Cards · VAT · Business Numbers*
 
 [![NuGet Version](https://img.shields.io/nuget/v/Finova.svg?style=flat&logo=nuget)](https://www.nuget.org/packages/Finova/)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Finova.svg?style=flat&logo=nuget)](https://www.nuget.org/packages/Finova/)
 [![Build Status](https://github.com/fdivrusa/Finova/actions/workflows/ci.yml/badge.svg)](https://github.com/fdivrusa/Finova/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**🇧🇪 Belgium · 🇳🇱 Netherlands · 🇱🇺 Luxembourg**
+**🇧🇪 Belgium · 🇳🇱 Netherlands · 🇱🇺 Luxembourg · 🇫🇷 France · 🇩🇪 Germany · 🇬🇧 UK**
 
 *100% Offline | Zero Dependencies | Lightning Fast*
+
+[**Visit the Official Website**](https://finovapackage.netlify.app/)
 
 </div>
 
@@ -21,7 +23,9 @@
 
 ## 🌟 About Finova
 
-**Finova** is a comprehensive **offline** financial validation library for .NET. It allows you to validate financial data (IBANs, VAT numbers, Payment References) using official checksum algorithms (Mod97, ISO 7064) and regex patterns directly on your server.
+**Finova** is a comprehensive **offline** financial validation library for .NET. It allows you to validate financial data (IBANs, Credit Cards, VAT numbers, Payment References) using official checksum algorithms (Luhn, Mod97, ISO 7064) and regex patterns directly on your server.
+
+👉 **Visit the [Official Website](https://finovapackage.netlify.app/) for full documentation and feature details.**
 
 ### ⚡ Offline Validation Only
 
@@ -29,9 +33,10 @@
 
 **What Finova Does (Offline):**
 - ✅ Validates IBAN format and checksum (ISO 7064 Mod 97)
+- ✅ Validates Payment Cards (Luhn Algorithm + Brand Detection)
 - ✅ Generates and validates payment references (OGM/VCS, ISO 11649)
 - ✅ Validates KBO/BCE and VAT numbers (Syntax + Checksum)
-- ✅ Extracts bank codes from IBAN structure
+- ✅ Validates BIC/SWIFT Structure (ISO 9362)
 
 **What Finova Does NOT Do:**
 - ❌ Does NOT verify if an account/IBAN actually exists at the bank
@@ -43,20 +48,28 @@
 
 ## 🚀 Features
 
-### 💳 **IBAN Validation**
-Fast, offline regex and checksum validation for Benelux and International formats.
-- **Belgium (BE):** Format + Mod97 + Bank Code extraction.
-- **Netherlands (NL):** Format + Mod97 + Bank Code extraction (4-letter codes).
-- **Luxembourg (LU):** Format + Mod97 + Account number structure.
-- **Generic (ISO 13616):** Supports parsing and validating checksums for all ISO-compliant countries.
+### 💳 **Banking & Cards**
+Fast, offline regex and checksum validation for European and International formats.
+- **IBAN Validation:**
+    - **Belgium (BE):** Format + Mod97 + Bank Code extraction.
+    - **Netherlands (NL):** Format + Mod97 + Bank Code (4-letter).
+    - **France (FR):** Format + Mod97 + RIB Key + Bank Code.
+    - **Germany (DE):** Format + Mod97 + BLZ extraction.
+    - **UK (GB):** Format + Mod97 + Sort Code extraction.
+    - **Generic:** Supports parsing and validating checksums for all ISO-compliant countries.
+- **Payment Cards:**
+    - **Luhn Algorithm:** Mod 10 validation for PAN numbers.
+    - **Brand Detection:** Identifies Visa, Mastercard, Amex, Discover.
+    - **Secure CVV Check:** Format-only validation (Safe for PCI-DSS).
+- **BIC/SWIFT:** Structural validation (ISO 9362) & Cross-check with IBAN country code.
 
 ### 🧾 **Payment References**
 - **Belgian OGM/VCS:** Generates and validates the `+++XXX/XXXX/XXXXX+++` format with automatic check digits.
 - **ISO 11649 (RF):** Generates and validates international `RF` creditor references.
 
 ### 🏢 **Business Numbers**
-- **Enterprise Numbers (KBO/BCE):** Validates Belgian company numbers via Mod97.
-- **VAT Numbers:** Validates formatting and check digits.
+- **Enterprise Numbers:** Validates Belgian KBO/BCE (Mod97) & French SIRET/SIREN (Luhn).
+- **VAT Numbers:** Validates formatting and check digits for EU-27 countries.
 
 ---
 
@@ -92,7 +105,21 @@ if (isValid)
 }
 ```
 
-### 2\. Generate a Payment Reference
+### 2\. Validate a Payment Card
+
+```csharp
+using Finova.PaymentCards;
+
+// Validates checksum (Luhn) and detects brand
+var result = PaymentCardValidator.Validate("4532123456789012");
+
+if (result.IsValid)
+{
+    Console.WriteLine($"Valid {result.Brand} Card"); // Output: Valid Visa Card
+}
+```
+
+### 3\. Generate a Payment Reference
 
 ```csharp
 using Finova.Belgium.Services;
@@ -107,71 +134,59 @@ string ogm = service.Generate("123456", PaymentReferenceFormat.Domestic);
 string isoRef = service.Generate("INVOICE2024", PaymentReferenceFormat.IsoRf);
 ```
 
-### 3\. Dependency Injection (ASP.NET Core)
-
-```csharp
-// Program.cs
-builder.Services.AddBelgianPaymentReference();
-
-// Service
-public class InvoiceService(IPaymentReferenceGenerator generator)
-{
-    public string CreateRef(string id) => generator.Generate(id);
-}
-```
-
 -----
 
-## 🗺️ Roadmap
+# 🗺️ Roadmap
 
-Finova is strictly offline. Future updates focus on **schema compliance**, **file generation**, and **mathematical validation**.
+Finova is strictly offline. Future updates focus on schema compliance, developer experience, and mathematical validation.
 
-### ✅ v1.0.0 - Foundation (Released)
+---
 
-  - Belgian payment references (OGM/VCS)
-  - ISO 11649 international references
-  - Comprehensive testing and CI/CD
+## ✅ v1.0.0 — Foundation *(Released)*
+- Belgian payment references (OGM/VCS)  
+- ISO 11649 international references  
+- Comprehensive testing and CI/CD  
 
-### 🔄 v1.1.0 - European Banking (Q1 2026)
+---
 
-  - IBAN validation rules (BE, NL, FR, DE, LU, UK)
-  - BIC/SWIFT format validation (Regex)
-  - Local Bank Code extraction logic
-  - Legacy account conversion algorithms
+## ✅ v1.1.0 — Core Expansion *(Released)*
+- **IBAN Expansion:** Italy (IT) & Spain (ES) specific rules  
+- **BIC/SWIFT:** Structural format validation (ISO 9362)  
+- **Payment Cards:** Luhn Algorithm & Brand Detection (Visa/MC/Amex)  
+- **Reference Validator:** RF Creditor Reference (ISO 11649)  
 
-### 📋 v1.2.0 - Tax & Business (Q2 2026)
+---
 
-  - VAT number syntax & checksums (EU-27)
-  - **Offline** VIES syntax compliance checks
-  - Enterprise number validation (KBO/BCE)
-  - National Tax ID checksums
+## 🔄 v1.2.0 — European Unification *(In Progress)*
+- **Finova.Europe:** Unified wrapper package for all SEPA countries  
+- **Smart Routing:** Auto-detect country rules via `EuropeValidator`  
+- **Extensions:** FluentValidation integration package  
 
-### 📋 v1.3.0 - SEPA File Standards (Q3 2026)
+---
 
-  - SEPA Credit Transfer (pain.001) **Schema Validation**
-  - SEPA Direct Debit (pain.008) **Structure Checks**
-  - Offline XML Builder (String Generation)
-  - Batch file structure verification
+## 📋 v1.3.0 — Corporate Identity *(Planned)*
+- **VAT Numbers:** EU VAT checksums (VIES offline syntax)  
+- **Enterprise Numbers:** French SIRET/SIREN, Belgian KBO/BCE  
+- **National IDs:** Netherlands KVK, Spain NIF/CIF  
 
-### 📋 v1.4.0 - PEPPOL Compliance (Q4 2026)
+---
 
-  - Participant ID syntax validation
-  - Document type identifier parsing
-  - PEPPOL BIS 3.0 **XSD Verification**
-  - Offline Scheme ID checks
+## 🔮 v1.4.0 — Modern Payment Strings *(Future)*
+- **EPC QR Code:** Payload builder for SEPA Credit Transfer  
+- **Swiss QR:** Bill string parsing logic  
 
-### 📋 v2.0.0 - E-Invoicing Suite (Q1 2027)
+---
 
-  - UBL 2.1 invoice XML generation
-  - EN 16931 structure compliance
-  - Offline Credit & Debit note creation
-  - Cross Industry Invoice (CII) support
+## 🔮 v1.5.0 — Global Routing *(Future)*
+- **USA:** ABA routing number checksums  
+- **Canada:** Transit number validation  
+- **Australia:** BSB number validation  
 
-### 📋 v2.1.0+ - Country Expansion (Q2+ 2027)
+---
 
-  - Local E-Invoicing Formats (XRechnung, Factur-X)
-  - Expanded EU-27 Validation Rules
-  - Global ID Formats (US, AU, SG)
+## 🔭 Horizon *(Undetermined)*
+- WASM support for Blazor  
+- AI-assisted anomaly detection  
 
 -----
 
@@ -184,6 +199,7 @@ We welcome contributions\! Please see [CONTRIBUTING.md](https://www.google.com/s
 This project is licensed under the **MIT License**.
 
 -----
+
 **Made with ❤️ for the .NET Community**
 
 [GitHub](https://github.com/fdivrusa/Finova) • [Issues](https://github.com/fdivrusa/Finova/issues)

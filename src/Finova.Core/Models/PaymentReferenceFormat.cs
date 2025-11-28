@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Finova.Core.Models
 {
     public enum PaymentReferenceFormat
@@ -9,7 +5,7 @@ namespace Finova.Core.Models
         /// <summary>
         /// Specific format used in Belgium (ex: 123/4567/89012).
         /// </summary>
-        Domestic,
+        LocalBelgian,
 
         /// <summary>
         /// ISO standard format (ex: RF18 1234 5678 9012).

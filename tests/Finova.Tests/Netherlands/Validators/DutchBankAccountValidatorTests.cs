@@ -6,11 +6,11 @@ namespace Finova.Tests.Netherlands.Validators
 {
     public class DutchBankAccountValidatorTests
     {
-        private readonly DutchBankAccountValidator _validator;
+        private readonly NetherlandsIbanValidator _validator;
 
         public DutchBankAccountValidatorTests()
         {
-            _validator = new DutchBankAccountValidator();
+            _validator = new NetherlandsIbanValidator();
         }
 
         #region Instance Method Tests
@@ -77,7 +77,7 @@ namespace Finova.Tests.Netherlands.Validators
         public void ValidateDutchIban_WithValidIbans_ReturnsTrue(string iban)
         {
             // Act
-            var result = DutchBankAccountValidator.ValidateDutchIban(iban);
+            var result = NetherlandsIbanValidator.ValidateDutchIban(iban);
 
             // Assert
             result.Should().BeTrue();
@@ -90,7 +90,7 @@ namespace Finova.Tests.Netherlands.Validators
         public void ValidateDutchIban_WithFormattedIbans_ReturnsTrue(string iban)
         {
             // Act
-            var result = DutchBankAccountValidator.ValidateDutchIban(iban);
+            var result = NetherlandsIbanValidator.ValidateDutchIban(iban);
 
             // Assert
             result.Should().BeTrue();
@@ -110,83 +110,10 @@ namespace Finova.Tests.Netherlands.Validators
         public void ValidateDutchIban_WithInvalidIbans_ReturnsFalse(string? iban)
         {
             // Act
-            var result = DutchBankAccountValidator.ValidateDutchIban(iban);
+            var result = NetherlandsIbanValidator.ValidateDutchIban(iban);
 
             // Assert
             result.Should().BeFalse();
-        }
-
-        #endregion
-
-        #region Static Method Tests - GetBankCode
-
-        [Theory]
-        [InlineData("NL91ABNA0417164300", "ABNA")]
-        public void GetBankCode_WithValidIbans_ReturnsCorrectBankCode(string iban, string expectedBankCode)
-        {
-            // Act
-            var result = DutchBankAccountValidator.GetBankCode(iban);
-
-            // Assert
-            result.Should().Be(expectedBankCode);
-        }
-
-        [Theory]
-        [InlineData("NL91 ABNA 0417 1643 00", "ABNA")] // With spaces
-        [InlineData("nl91abna0417164300", "ABNA")] // Lowercase - returns uppercase
-        public void GetBankCode_WithFormattedIbans_ReturnsNormalizedBankCode(string iban, string expectedBankCode)
-        {
-            // Act
-            var result = DutchBankAccountValidator.GetBankCode(iban);
-
-            // Assert
-            result.Should().Be(expectedBankCode);
-        }
-
-        [Theory]
-        [InlineData("NL00ABNA0417164300")] // Invalid IBAN
-        [InlineData("BE68539007547034")] // Wrong country
-        [InlineData("")] // Empty
-        [InlineData(null)] // Null
-        public void GetBankCode_WithInvalidIbans_ReturnsNull(string? iban)
-        {
-            // Act
-            var result = DutchBankAccountValidator.GetBankCode(iban);
-
-            // Assert
-            result.Should().BeNull();
-        }
-
-        #endregion
-
-        #region Static Method Tests - FormatDutchIban
-
-        [Theory]
-        [InlineData("NL91ABNA0417164300", "NL91 ABNA 0417 1643 00")]
-        [InlineData("nl91abna0417164300", "NL91 ABNA 0417 1643 00")] // Lowercase
-        [InlineData("NL91 ABNA 0417 1643 00", "NL91 ABNA 0417 1643 00")] // Already formatted
-        public void FormatDutchIban_WithValidIbans_ReturnsFormattedString(string iban, string expected)
-        {
-            // Act
-            var result = DutchBankAccountValidator.FormatDutchIban(iban);
-
-            // Assert
-            result.Should().Be(expected);
-        }
-
-        [Theory]
-        [InlineData("NL00ABNA0417164300")] // Wrong check digits
-        [InlineData("BE68539007547034")] // Wrong country
-        [InlineData("NL91ABNA04171643")] // Too short
-        [InlineData("")] // Empty
-        [InlineData(null)] // Null
-        public void FormatDutchIban_WithInvalidIbans_ThrowsArgumentException(string? iban)
-        {
-            // Act
-            Action act = () => DutchBankAccountValidator.FormatDutchIban(iban);
-
-            // Assert
-            act.Should().Throw<ArgumentException>();
         }
 
         #endregion
@@ -198,7 +125,7 @@ namespace Finova.Tests.Netherlands.Validators
         public void ValidateDutchIban_BankCodeMustBeLetters_ReturnsTrue(string iban)
         {
             // Act
-            var result = DutchBankAccountValidator.ValidateDutchIban(iban);
+            var result = NetherlandsIbanValidator.ValidateDutchIban(iban);
 
             // Assert
             result.Should().BeTrue();
@@ -212,7 +139,7 @@ namespace Finova.Tests.Netherlands.Validators
         public void ValidateDutchIban_BankCodeWithDigits_ReturnsFalse(string iban)
         {
             // Act
-            var result = DutchBankAccountValidator.ValidateDutchIban(iban);
+            var result = NetherlandsIbanValidator.ValidateDutchIban(iban);
 
             // Assert
             result.Should().BeFalse();
@@ -227,7 +154,7 @@ namespace Finova.Tests.Netherlands.Validators
         public void ValidateDutchIban_AccountNumberMustBeDigits_ReturnsTrue(string iban)
         {
             // Act
-            var result = DutchBankAccountValidator.ValidateDutchIban(iban);
+            var result = NetherlandsIbanValidator.ValidateDutchIban(iban);
 
             // Assert
             result.Should().BeTrue();
@@ -240,25 +167,10 @@ namespace Finova.Tests.Netherlands.Validators
         public void ValidateDutchIban_AccountNumberWithLetters_ReturnsFalse(string iban)
         {
             // Act
-            var result = DutchBankAccountValidator.ValidateDutchIban(iban);
+            var result = NetherlandsIbanValidator.ValidateDutchIban(iban);
 
             // Assert
             result.Should().BeFalse();
-        }
-
-        #endregion
-
-        #region Common Dutch Banks
-
-        [Theory]
-        [InlineData("NL91ABNA0417164300", "ABNA")] // ABN AMRO
-        public void GetBankCode_IdentifiesCommonDutchBanks(string iban, string expectedBank)
-        {
-            // Act
-            var bankCode = DutchBankAccountValidator.GetBankCode(iban);
-
-            // Assert
-            bankCode.Should().Be(expectedBank);
         }
 
         #endregion
@@ -272,25 +184,11 @@ namespace Finova.Tests.Netherlands.Validators
             var iban = "NL00ABNA0000000000";
 
             // Act
-            var result = DutchBankAccountValidator.ValidateDutchIban(iban);
+            var result = NetherlandsIbanValidator.ValidateDutchIban(iban);
 
             // Assert
             result.Should().BeFalse(); // Invalid checksum
         }
-
-        [Fact]
-        public void GetBankCode_ReturnsExactlyFourCharacters()
-        {
-            // Arrange
-            var iban = "NL91ABNA0417164300";
-
-            // Act
-            var bankCode = DutchBankAccountValidator.GetBankCode(iban);
-
-            // Assert
-            bankCode.Should().HaveLength(4);
-        }
-
         #endregion
     }
 }

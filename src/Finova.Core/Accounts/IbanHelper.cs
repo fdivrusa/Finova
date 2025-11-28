@@ -1,7 +1,6 @@
 using Finova.Core.Internals;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace Finova.Core.Accounts
 {
@@ -11,9 +10,6 @@ namespace Finova.Core.Accounts
     /// </summary>
     public static partial class IbanHelper
     {
-        [GeneratedRegex(@"[^A-Z0-9]")]
-        private static partial Regex NonAlphanumericRegex();
-
         private const int MinIbanLength = 15;
         private const int MaxIbanLength = 34;
 
@@ -48,15 +44,18 @@ namespace Finova.Core.Accounts
                 return false;
             }
 
+            foreach (char c in normalized)
+            {
+                if (!char.IsLetterOrDigit(c))
+                {
+                    return false; // Invalid character found, IBAN must be alphanumeric
+                }
+            }
+
             // Validate checksum
             return ValidateChecksum(normalized);
         }
 
-        /// <summary>
-        /// Normalizes an IBAN by removing spaces and converting to uppercase.
-        /// </summary>
-        /// <param name="iban">The IBAN to normalize</param>
-        /// <returns>Normalized IBAN</returns>
         public static string NormalizeIban(string? iban)
         {
             if (string.IsNullOrWhiteSpace(iban))
@@ -64,7 +63,7 @@ namespace Finova.Core.Accounts
                 return string.Empty;
             }
 
-            return NonAlphanumericRegex().Replace(iban.ToUpperInvariant(), "");
+            return iban.Replace(" ", "").ToUpperInvariant();
         }
 
         /// <summary>
@@ -187,6 +186,12 @@ namespace Finova.Core.Accounts
             }
 
             return sb.ToString();
+        }
+
+        public static int CalculateMod97(string rearranged)
+        {
+            var numericString = ConvertLettersToDigits(rearranged);
+            return Modulo97Helper.Calculate(numericString);
         }
     }
 }

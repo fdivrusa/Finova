@@ -10,13 +10,19 @@ namespace Finova.Belgium.Extensions
         /// <summary>
         /// Registers all Belgian banking and validation services into the .NET DI container.
         /// </summary>
-        public static IServiceCollection AddBelgianPaymentReference(this IServiceCollection services)
+        public static IServiceCollection AddFinovaBelgium(this IServiceCollection services)
         {
             // Payment reference generation and validation
-            services.AddSingleton<IPaymentReferenceGenerator, BelgianPaymentReferenceService>();
+            services.AddSingleton<BelgiumPaymentReferenceService>();
+            services.AddSingleton<IPaymentReferenceGenerator>(sp => sp.GetRequiredService<BelgiumPaymentReferenceService>());
 
-            // IBAN validation
-            services.AddSingleton<IBankAccountValidator, BelgianBankAccountValidator>();
+            // IBAN validation - Register concrete class and interface
+            services.AddSingleton<BelgiumIbanValidator>();
+            services.AddSingleton<IIbanValidator>(sp => sp.GetRequiredService<BelgiumIbanValidator>());
+
+            // IBAN parsing - Depends on BelgiumIbanValidator
+            services.AddSingleton<BelgiumIbanParser>();
+            services.AddSingleton<IIbanParser>(sp => sp.GetRequiredService<BelgiumIbanParser>());
 
             return services;
         }

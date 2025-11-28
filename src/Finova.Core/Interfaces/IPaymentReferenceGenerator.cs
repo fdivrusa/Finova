@@ -11,7 +11,7 @@ namespace Finova.Core.Interfaces
         /// </summary>
         /// <param name="rawReference">The invoice or customer ID.</param>
         /// <param name="format">The desired format (defaults to Domestic).</param>
-        string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.Domestic);
+        string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.IsoRf);
 
         /// <summary>
         /// Attempts to validate the reference, regardless of its specific format.

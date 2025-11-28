@@ -1,0 +1,70 @@
+using Finova.Core.Accounts;
+using Finova.Core.Interfaces;
+using System.Diagnostics.CodeAnalysis;
+
+namespace Finova.Belgium.Validators
+{
+    /// <summary>
+    /// Validator for Belgian IBAN bank accounts.
+    /// Belgian IBAN format: BE + 2 check digits + 12 digits (16 characters total).
+    /// Example: BE68539007547034 or formatted: BE68 5390 0754 7034
+    /// </summary>
+    public class BelgiumIbanValidator : IIbanValidator
+    {
+        public string CountryCode => "BE";
+
+        private const int BelgianIbanLength = 16;
+        private const string BelgianCountryCode = "BE";
+
+        #region Instance Methods (for Dependency Injection)
+
+        public bool IsValidIban(string? iban)
+        {
+            return ValidateBelgianIban(iban);
+        }
+
+        #endregion
+
+        #region Static Methods (for Direct Usage)
+
+        /// <summary>
+        /// Validates a Belgian IBAN.
+        /// </summary>
+        /// <param name="iban">The IBAN to validate</param>
+        /// <returns>True if valid Belgian IBAN, false otherwise</returns>
+        public static bool ValidateBelgianIban([NotNullWhen(true)] string? iban)
+        {
+            if (string.IsNullOrWhiteSpace(iban))
+            {
+                return false;
+            }
+
+            var normalized = IbanHelper.NormalizeIban(iban);
+
+            // Check length (Belgian IBAN is exactly 16 characters)
+            if (normalized.Length != BelgianIbanLength)
+            {
+                return false;
+            }
+
+            // Check country code
+            if (!normalized.StartsWith(BelgianCountryCode, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            for (int i = 2; i < 16; i++)
+            {
+                if (!char.IsDigit(normalized[i]))
+                {
+                    return false;
+                }
+            }
+
+            // Validate structure and checksum
+            return IbanHelper.IsValidIban(normalized);
+        }
+
+        #endregion
+    }
+}

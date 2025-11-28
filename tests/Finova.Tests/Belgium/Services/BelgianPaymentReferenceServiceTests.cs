@@ -8,11 +8,11 @@ namespace Finova.Tests.Belgium.Services
 {
     public class BelgianPaymentReferenceServiceTests
     {
-        private readonly BelgianPaymentReferenceService _service;
+        private readonly BelgiumPaymentReferenceService _service;
 
         public BelgianPaymentReferenceServiceTests()
         {
-            _service = new BelgianPaymentReferenceService();
+            _service = new BelgiumPaymentReferenceService();
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace Finova.Tests.Belgium.Services
         public void Generate_WithDomesticFormat_ReturnsValidOgm(string rawReference, string expected)
         {
             // Act
-            var result = _service.Generate(rawReference, PaymentReferenceFormat.Domestic);
+            var result = _service.Generate(rawReference, PaymentReferenceFormat.LocalBelgian);
 
             // Assert
             result.Should().Be(expected);
@@ -47,7 +47,7 @@ namespace Finova.Tests.Belgium.Services
             var rawReference = "123456";
 
             // Act
-            var result = _service.Generate(rawReference, PaymentReferenceFormat.Domestic);
+            var result = _service.Generate(rawReference, PaymentReferenceFormat.LocalBelgian);
 
             // Assert
             result.Should().MatchRegex(@"^\+\+\+\d{3}/\d{4}/\d{5}\+\+\+$");
@@ -61,7 +61,7 @@ namespace Finova.Tests.Belgium.Services
             var rawReference = "INV-1234-ABC";
 
             // Act
-            var result = _service.Generate(rawReference, PaymentReferenceFormat.Domestic);
+            var result = _service.Generate(rawReference, PaymentReferenceFormat.LocalBelgian);
 
             // Assert
             // Should extract "1234" from the string
@@ -76,7 +76,7 @@ namespace Finova.Tests.Belgium.Services
             var rawReference = "12345678901"; // 11 digits
 
             // Act
-            Action act = () => _service.Generate(rawReference, PaymentReferenceFormat.Domestic);
+            Action act = () => _service.Generate(rawReference, PaymentReferenceFormat.LocalBelgian);
 
             // Assert
             act.Should().Throw<ArgumentException>()
@@ -90,7 +90,7 @@ namespace Finova.Tests.Belgium.Services
             var rawReference = "";
 
             // Act
-            var result = _service.Generate(rawReference, PaymentReferenceFormat.Domestic);
+            var result = _service.Generate(rawReference, PaymentReferenceFormat.LocalBelgian);
 
             // Assert
             // Should generate OGM with all zeros padded
@@ -253,7 +253,7 @@ namespace Finova.Tests.Belgium.Services
             var rawReference = "ABC-123/XYZ-456";
 
             // Act
-            var result = _service.Generate(rawReference, PaymentReferenceFormat.Domestic);
+            var result = _service.Generate(rawReference, PaymentReferenceFormat.LocalBelgian);
 
             // Assert
             result.Should().MatchRegex(@"^\+\+\+\d{3}/\d{4}/\d{5}\+\+\+$");
@@ -306,7 +306,7 @@ namespace Finova.Tests.Belgium.Services
             var rawReference = "0";
 
             // Act
-            var result = _service.Generate(rawReference, PaymentReferenceFormat.Domestic);
+            var result = _service.Generate(rawReference, PaymentReferenceFormat.LocalBelgian);
 
             // Assert
             result.Should().MatchRegex(@"^\+\+\+\d{3}/\d{4}/\d{5}\+\+\+$");
@@ -320,7 +320,7 @@ namespace Finova.Tests.Belgium.Services
             var rawReference = "9999999999"; // 10 digits - max allowed
 
             // Act
-            var result = _service.Generate(rawReference, PaymentReferenceFormat.Domestic);
+            var result = _service.Generate(rawReference, PaymentReferenceFormat.LocalBelgian);
 
             // Assert
             result.Should().MatchRegex(@"^\+\+\+\d{3}/\d{4}/\d{5}\+\+\+$");
@@ -338,7 +338,7 @@ namespace Finova.Tests.Belgium.Services
             var rawReference = "123456789";
 
             // Act
-            var generated = _service.Generate(rawReference, PaymentReferenceFormat.Domestic);
+            var generated = _service.Generate(rawReference, PaymentReferenceFormat.LocalBelgian);
             var isValid = _service.IsValid(generated);
 
             // Assert

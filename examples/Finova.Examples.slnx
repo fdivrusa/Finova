@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/examples/">
+    <Project Path="Finova.Examples.Console/Finova.Examples.Console.csproj" />
+  </Folder>
+</Solution>

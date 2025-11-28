@@ -6,11 +6,11 @@ namespace Finova.Tests.Belgium.Validators
 {
     public class BelgianBankAccountValidatorTests
     {
-        private readonly BelgianBankAccountValidator _validator;
+        private readonly BelgiumIbanValidator _validator;
 
         public BelgianBankAccountValidatorTests()
         {
-            _validator = new BelgianBankAccountValidator();
+            _validator = new BelgiumIbanValidator();
         }
 
         #region Instance Method Tests
@@ -80,7 +80,7 @@ namespace Finova.Tests.Belgium.Validators
         public void ValidateBelgianIban_WithValidIbans_ReturnsTrue(string iban)
         {
             // Act
-            var result = BelgianBankAccountValidator.ValidateBelgianIban(iban);
+            var result = BelgiumIbanValidator.ValidateBelgianIban(iban);
 
             // Assert
             result.Should().BeTrue();
@@ -93,7 +93,7 @@ namespace Finova.Tests.Belgium.Validators
         public void ValidateBelgianIban_WithFormattedIbans_ReturnsTrue(string iban)
         {
             // Act
-            var result = BelgianBankAccountValidator.ValidateBelgianIban(iban);
+            var result = BelgiumIbanValidator.ValidateBelgianIban(iban);
 
             // Assert
             result.Should().BeTrue();
@@ -112,43 +112,10 @@ namespace Finova.Tests.Belgium.Validators
         public void ValidateBelgianIban_WithInvalidIbans_ReturnsFalse(string? iban)
         {
             // Act
-            var result = BelgianBankAccountValidator.ValidateBelgianIban(iban);
+            var result = BelgiumIbanValidator.ValidateBelgianIban(iban);
 
             // Assert
             result.Should().BeFalse();
-        }
-
-        #endregion
-
-        #region Static Method Tests - FormatBelgianIban
-
-        [Theory]
-        [InlineData("BE68539007547034", "BE68 5390 0754 7034")]
-        [InlineData("BE71096123456769", "BE71 0961 2345 6769")]
-        [InlineData("be68539007547034", "BE68 5390 0754 7034")] // Lowercase
-        [InlineData("BE68 5390 0754 7034", "BE68 5390 0754 7034")] // Already formatted
-        public void FormatBelgianIban_WithValidIbans_ReturnsFormattedString(string iban, string expected)
-        {
-            // Act
-            var result = BelgianBankAccountValidator.FormatBelgianIban(iban);
-
-            // Assert
-            result.Should().Be(expected);
-        }
-
-        [Theory]
-        [InlineData("BE00539007547034")] // Wrong check digits
-        [InlineData("NL91ABNA0417164300")] // Wrong country
-        [InlineData("BE685390075470")] // Too short
-        [InlineData("")] // Empty
-        [InlineData(null)] // Null
-        public void FormatBelgianIban_WithInvalidIbans_ThrowsArgumentException(string? iban)
-        {
-            // Act
-            Action act = () => BelgianBankAccountValidator.FormatBelgianIban(iban);
-
-            // Assert
-            act.Should().Throw<ArgumentException>();
         }
 
         #endregion
@@ -162,7 +129,7 @@ namespace Finova.Tests.Belgium.Validators
             var iban = "BE00000000000000";
 
             // Act
-            var result = BelgianBankAccountValidator.ValidateBelgianIban(iban);
+            var result = BelgiumIbanValidator.ValidateBelgianIban(iban);
 
             // Assert
             result.Should().BeFalse();
@@ -175,7 +142,7 @@ namespace Finova.Tests.Belgium.Validators
             var iban = "BEABCDEFGHIJKLMN";
 
             // Act
-            var result = BelgianBankAccountValidator.ValidateBelgianIban(iban);
+            var result = BelgiumIbanValidator.ValidateBelgianIban(iban);
 
             // Assert
             result.Should().BeFalse();
@@ -188,7 +155,7 @@ namespace Finova.Tests.Belgium.Validators
             var iban = "BE68!539@0754#7034";
 
             // Act
-            var result = BelgianBankAccountValidator.ValidateBelgianIban(iban);
+            var result = BelgiumIbanValidator.ValidateBelgianIban(iban);
 
             // Assert
             result.Should().BeFalse();
