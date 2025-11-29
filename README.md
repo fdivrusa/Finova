@@ -97,7 +97,7 @@ Install-Package Finova
 using Finova.Belgium.Validators;
 
 // Validates format and checksum (Does NOT check if account exists)
-bool isValid = BelgianBankAccountValidator.ValidateBelgianIban("BE68539007547034");
+bool isValid = BelgianBankAccountValidator.ValidateBelgiumIban("BE68539007547034");
 
 if (isValid) 
 {

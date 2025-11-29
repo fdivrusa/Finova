@@ -1,71 +1,41 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	<IsPackable>true</IsPackable>
-	<PackageId>Finova</PackageId>
-	<Title>Finova: IBAN Validator, Payment &amp; Financial Toolkit</Title>
-	<Product>Finova SDK</Product>
-	<Authors>Florian Di Vrusa</Authors>
-	<Company>Finova</Company>
-	<Description>
-	  The high-performance, 100% offline financial validation toolkit for .NET.
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
 
-	  Features:
-	  ✔️ IBAN Validation: Specific rules for Belgium, Netherlands, France, Germany, UK, and Luxembourg.
-	  ✔️ Payment Cards: Zero-allocation Luhn algorithm check, brand detection.
-	  ✔️ Payment References: Generate/Validate Belgian OGM/VCS and ISO 11649 (RF).
-	  ✔️ Structure: BIC/SWIFT format validation.
+        <PackageId>Finova</PackageId>
+        <Title>Finova: Financial Validation Toolkit (IBAN, BIC, Cards)</Title>
+        <Product>Finova SDK</Product>
+        <Description>
+            The high-performance, 100% offline financial validation toolkit for .NET.
 
-	  Designed for FinTechs and SaaS. Zero dependencies.
-	  Compatible with .NET 8 and .NET 10.
-	</Description>
+            Features:
+            ✔️ Universal IBAN Parser: Auto-detects and validates rules for Europe (DE, IT, ES, FR, BE, NL, UK) and Global formats.
+            ✔️ Payment Cards: Zero-allocation Luhn algorithm check, brand detection, and security validation.
+            ✔️ Payment References: Generate/Validate ISO 11649 (RF) and Belgian OGM/VCS.
+            ✔️ Bank Codes: BIC/SWIFT structure validation (ISO 9362).
 
-	<PackageTags>finova;iban;validator;parser;sepa;banking;finance;fintech;bic;swift;luhn;credit-card;payment;iso11649;ogm;vcs;offline;check-digits</PackageTags>
-	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+            Designed for FinTechs and SaaS. Zero dependencies.
+        </Description>
+        <PackageTags>finova;iban;validator;parser;sepa;banking;finance;fintech;bic;swift;luhn;credit-card;payment;iso11649;ogm;vcs;offline;check-digits</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
 
-	<ProjectUrl>https://finovapackage.netlify.app</ProjectUrl>
-	<PackageProjectUrl>https://github.com/fdivrusa/Finova</PackageProjectUrl>
-	<RepositoryUrl>https://github.com/fdivrusa/Finova</RepositoryUrl>
-	<RepositoryType>git</RepositoryType>
+        <ProjectUrl>https://finovapackage.netlify.app</ProjectUrl>
+        <RepositoryUrl>https://github.com/fdivrusa/Finova</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
 
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<PackageIcon>icon.png</PackageIcon>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    </PropertyGroup>
 
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	<IncludeSymbols>true</IncludeSymbols>
-	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ItemGroup>
+        <ProjectReference Include="..\Finova.Core\Finova.Core.csproj" />
+    </ItemGroup>
 
-	<IncludeBuildOutput>true</IncludeBuildOutput>
-
-	<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-  </PropertyGroup>
-
-  <ItemGroup>
-	<ProjectReference Include="..\Finova.Core\Finova.Core.csproj" PrivateAssets="all" />
-	<ProjectReference Include="..\Finova.Belgium\Finova.Belgium.csproj" PrivateAssets="all" />
-	<ProjectReference Include="..\Finova.Netherlands\Finova.Netherlands.csproj" PrivateAssets="all" />
-	<ProjectReference Include="..\Finova.Luxembourg\Finova.Luxembourg.csproj" PrivateAssets="all" />
-	<ProjectReference Include="..\Finova.France\Finova.France.csproj" PrivateAssets="all" />
-	<ProjectReference Include="..\Finova.Germany\Finova.Germany.csproj" PrivateAssets="all" />
-	<ProjectReference Include="..\Finova.UnitedKingdom\Finova.UnitedKingdom.csproj" PrivateAssets="all" />
-	<ProjectReference Include="..\Finova.Spain\Finova.Spain.csproj" PrivateAssets="all" />
-	<ProjectReference Include="..\Finova.Italy\Finova.Italy.csproj" PrivateAssets="all" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
-	<None Include="..\..\icon.png" Pack="true" PackagePath="icon.png" Condition="Exists('..\..\icon.png')" />
-  </ItemGroup>
-
-  <PropertyGroup>
-	<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
-  </PropertyGroup>
-
-  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
-	<ItemGroup>
-	  <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
-	</ItemGroup>
-  </Target>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    </ItemGroup>
 
 </Project>

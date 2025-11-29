@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+
+        <PackageId>Finova.Extensions.FluentValidation</PackageId>
+        <Title>Finova Extensions for FluentValidation</Title>
+        <Description>
+            FluentValidation extensions for the Finova financial toolkit.
+            Easily validate IBANs, BICs, and Payment Cards using .MustBeValidIban() syntax.
+        </Description>
+        <PackageTags>finova;fluentvalidation;validation;extensions;banking</PackageTags>
+
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Finova\Finova.csproj" />
+
+    </ItemGroup>
+
+</Project>
