@@ -1,5 +1,5 @@
-using System.Text.RegularExpressions;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 
 namespace Finova.Belgium.Validators;
 

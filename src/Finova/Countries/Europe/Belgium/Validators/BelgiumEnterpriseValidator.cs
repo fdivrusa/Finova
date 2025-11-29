@@ -1,6 +1,6 @@
-using Finova.Core.Internals;
-using System.Text.RegularExpressions;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
+using Finova.Core.Internals;
 
 namespace Finova.Belgium.Validators;
 

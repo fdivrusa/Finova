@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using Finova.Core.Accounts;
 using Finova.Core.Interfaces;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Finova.Countries.Europe.Belgium.Validators;
 

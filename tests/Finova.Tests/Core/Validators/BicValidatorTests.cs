@@ -1,5 +1,5 @@
-using Finova.Core.Validators;
 using Finova.Core.Models;
+using Finova.Core.Validators;
 using FluentAssertions;
 using Xunit;
 

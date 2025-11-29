@@ -1,7 +1,7 @@
+using System.Text.RegularExpressions;
 using Finova.Core.Interfaces;
 using Finova.Core.Internals;
 using Finova.Core.Models;
-using System.Text.RegularExpressions;
 
 namespace Finova.Belgium.Services;
 

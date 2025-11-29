@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using Finova.Core.Interfaces;
 using Finova.Core.Models;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Finova.Core.Validators;
 

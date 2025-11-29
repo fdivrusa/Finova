@@ -1,9 +1,9 @@
-using FluentAssertions;
-using FluentValidation;
 using Finova.Core.Accounts;
 using Finova.Core.Models;
 using Finova.Core.Services;
 using Finova.Extensions.FluentValidation;
+using FluentAssertions;
+using FluentValidation;
 using Xunit;
 
 namespace Finova.Tests.Integration;

@@ -1,6 +1,6 @@
-using Finova.Core.Internals;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Finova.Core.Internals;
 
 namespace Finova.Core.Accounts;
 
