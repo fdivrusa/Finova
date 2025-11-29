@@ -1,19 +1,20 @@
-﻿using Finova.Belgium.Extensions;
+using Finova.Belgium.Services;
 using Finova.Belgium.Validators;
-using Finova.Core.Extensions;
+using Finova.Countries.Europe.Belgium.Validators;
+using Finova.Countries.Europe.France.Validators;
+using Finova.Countries.Europe.Germany.Validators;
+using Finova.Countries.Europe.Italy.Validators;
+using Finova.Countries.Europe.Luxembourg.Validators;
+using Finova.Countries.Europe.Netherlands.Validators;
+using Finova.Countries.Europe.Spain.Validators;
+using Finova.Countries.Europe.UnitedKingdom.Validators;
 using Finova.Core.Interfaces;
 using Finova.Core.Models;
 using Finova.Core.Validators;
-using Finova.France.Extensions;
-using Finova.France.Validators;
-using Finova.Germany.Extensions;
-using Finova.Germany.Validators;
-using Finova.Italy.Extensions;
-using Finova.Italy.Validators;
-using Finova.Netherlands.Extensions;
-using Finova.Netherlands.Validators;
-using Finova.Spain.Extensions;
-using Finova.Spain.Validators;
+using Finova.Extensions;
+using Finova.Extensions.FluentValidation;
+using Finova.Services;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -67,7 +68,7 @@ void WriteResult(string label, string value, bool isValid, string? extra = null)
     Console.Write($"      {label}: ");
     Console.ForegroundColor = ConsoleColor.White;
     Console.Write($"{value,-32} ");
-    
+
     if (isValid)
     {
         Console.ForegroundColor = ConsoleColor.Green;
@@ -78,13 +79,13 @@ void WriteResult(string label, string value, bool isValid, string? extra = null)
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Write("✗ Invalid");
     }
-    
+
     if (!string.IsNullOrEmpty(extra))
     {
         Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.Write($" [{extra}]");
     }
-    
+
     Console.ResetColor();
     Console.WriteLine();
 }
@@ -93,7 +94,7 @@ void WriteSimpleResult(string value, bool isValid, string? extra = null)
 {
     Console.ForegroundColor = ConsoleColor.White;
     Console.Write($"      {value,-35} ");
-    
+
     if (isValid)
     {
         Console.ForegroundColor = ConsoleColor.Green;
@@ -104,13 +105,13 @@ void WriteSimpleResult(string value, bool isValid, string? extra = null)
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Write("✗ Invalid");
     }
-    
+
     if (!string.IsNullOrEmpty(extra))
     {
         Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.Write($" [{extra}]");
     }
-    
+
     Console.ResetColor();
     Console.WriteLine();
 }
@@ -162,108 +163,162 @@ WriteSectionHeader("PART 1: STATIC USAGE (Direct, High-Performance)");
 // ─────────────────────────────────────────
 // 1. BIC/SWIFT Code Validation
 // ─────────────────────────────────────────
-WriteSubHeader("1", "BIC/SWIFT Code Validation");
+WriteSubHeader("1", "BIC/SWIFT Code Validation (ISO 9362)");
 
-string[] bicCodes = [
-    "GEBABEBB",      // BNP Paribas Fortis (Belgium)
-    "KREDBEBB",      // KBC Bank (Belgium)
-    "BNPAFRPP",      // BNP Paribas (France)
-    "COBADEFF",      // Commerzbank (Germany)
-    "ABNANL2A",      // ABN AMRO (Netherlands)
-    "GEBABEBB021",   // With branch code
-    "INVALID",       // Invalid
-    "ABC"            // Too short
+string[] bicCodes =
+[
+    "GEBABEBB",       // BNP Paribas Fortis (Belgium)
+    "KREDBEBB",       // KBC Bank (Belgium)
+    "BNPAFRPP",       // BNP Paribas (France)
+    "COBADEFF",       // Commerzbank (Germany)
+    "ABNANL2A",       // ABN AMRO (Netherlands)
+    "BCITITMM",       // Intesa Sanpaolo (Italy)
+    "BABORULU",       // Banque Raiffeisen (Luxembourg) - Invalid country code!
+    "BGLLLULL",       // Banque de Luxembourg
+    "CABORUBEXXX",    // Invalid - RU country code mismatch
+    "NWBKGB2L",       // NatWest (United Kingdom)
+    "CAIXESBB",       // CaixaBank (Spain)
+    "GEBABEBB021",    // With branch code (11 chars)
+    "INVALID",        // Invalid
+    "ABC"             // Too short
 ];
 
 foreach (var bic in bicCodes)
 {
-    bool isValid = BicValidator.IsValid(bic);
+    bool isValid = BicValidator.Validate(bic);
     WriteSimpleResult(bic, isValid);
 }
 
 Console.WriteLine();
 
 // ─────────────────────────────────────────
-// 2. Multi-Country IBAN Validation
+// 2. Multi-Country IBAN Validation (8 Countries)
 // ─────────────────────────────────────────
-WriteSubHeader("2", "Multi-Country IBAN Validation");
+WriteSubHeader("2", "Multi-Country IBAN Validation (8 Countries)");
 
-// Belgium
-WriteCountryHeader("🇧🇪", "Belgium");
-string[] belgianIbans = ["BE68539007547034", "BE68 5390 0754 7034", "BE00123456789012"];
+// Belgium 🇧🇪
+WriteCountryHeader("🇧🇪", "Belgium (BE - 16 characters)");
+string[] belgianIbans = ["BE68539007547034", "BE68 5390 0754 7034", "BE71096123456769", "BE00123456789012"];
 foreach (var iban in belgianIbans)
 {
-    WriteSimpleResult(iban, BelgiumIbanValidator.ValidateBelgianIban(iban));
+    WriteSimpleResult(iban, BelgiumIbanValidator.ValidateBelgiumIban(iban));
 }
 
-// France
-WriteCountryHeader("🇫🇷", "France");
-string[] frenchIbans = ["FR1420041010050500013M02606", "FR14 2004 1010 0505 0001 3M02 606", "FR0012345678901234567890123"];
+// France 🇫🇷
+WriteCountryHeader("🇫🇷", "France (FR - 27 characters)");
+string[] frenchIbans = ["FR7630006000011234567890189", "FR14 2004 1010 0505 0001 3M02 606", "FR0012345678901234567890123"];
 foreach (var iban in frenchIbans)
 {
     WriteSimpleResult(iban, FranceIbanValidator.ValidateFranceIban(iban));
 }
 
-// Germany
-WriteCountryHeader("🇩🇪", "Germany");
+// Germany 🇩🇪
+WriteCountryHeader("🇩🇪", "Germany (DE - 22 characters)");
 string[] germanIbans = ["DE89370400440532013000", "DE89 3704 0044 0532 0130 00", "DE00123456789012345678"];
 foreach (var iban in germanIbans)
 {
     WriteSimpleResult(iban, GermanyIbanValidator.ValidateGermanyIban(iban));
 }
 
-// Netherlands
-WriteCountryHeader("🇳🇱", "Netherlands");
-string[] dutchIbans = ["NL91ABNA0417164300", "NL91 ABNA 0417 1643 00", "NL20INGB0001234567", "NL00XXXX0000000000"];
-foreach (var iban in dutchIbans)
-{
-    WriteSimpleResult(iban, NetherlandsIbanValidator.ValidateDutchIban(iban));
-}
-
-// Italy
-WriteCountryHeader("🇮🇹", "Italy");
+// Italy 🇮🇹
+WriteCountryHeader("🇮🇹", "Italy (IT - 27 characters)");
 string[] italianIbans = ["IT60X0542811101000000123456", "IT60 X054 2811 1010 0000 0123 456", "IT00X0000000000000000000000"];
 foreach (var iban in italianIbans)
 {
     WriteSimpleResult(iban, ItalyIbanValidator.ValidateItalyIban(iban));
 }
 
-// Spain
-WriteCountryHeader("🇪🇸", "Spain");
-string[] spanishIbans = ["ES9121000418450200051332", "ES91 2100 0418 4502 0005 1332", "ES0000000000000000000000"];
+// Luxembourg 🇱🇺
+WriteCountryHeader("🇱🇺", "Luxembourg (LU - 20 characters)");
+string[] luxembourgIbans = ["LU280019400644750000", "LU28 0019 4006 4475 0000", "LU120010001234567891", "LU00000000000000000"];
+foreach (var iban in luxembourgIbans)
+{
+    WriteSimpleResult(iban, LuxembourgIbanValidator.ValidateLuxembourgIban(iban));
+}
+
+// Netherlands 🇳🇱
+WriteCountryHeader("🇳🇱", "Netherlands (NL - 18 characters)");
+string[] dutchIbans = ["NL91ABNA0417164300", "NL91 ABNA 0417 1643 00", "NL20INGB0001234567", "NL00XXXX0000000000"];
+foreach (var iban in dutchIbans)
+{
+    WriteSimpleResult(iban, NetherlandsIbanValidator.ValidateNetherlandsIban(iban));
+}
+
+// Spain 🇪🇸
+WriteCountryHeader("🇪🇸", "Spain (ES - 24 characters)");
+string[] spanishIbans = ["ES9121000418450200051332", "ES91 2100 0418 4502 0005 1332", "ES7921000813610123456789", "ES0000000000000000000000"];
 foreach (var iban in spanishIbans)
 {
     WriteSimpleResult(iban, SpainIbanValidator.ValidateSpainIban(iban));
 }
 
+// United Kingdom 🇬🇧
+WriteCountryHeader("🇬🇧", "United Kingdom (GB - 22 characters)");
+string[] ukIbans = ["GB29NWBK60161331926819", "GB29 NWBK 6016 1331 9268 19", "GB82WEST12345698765432", "GB00XXXX00000000000000"];
+foreach (var iban in ukIbans)
+{
+    WriteSimpleResult(iban, UnitedKingdomIbanValidator.ValidateUnitedKingdomIban(iban));
+}
+
 Console.WriteLine();
 
 // ─────────────────────────────────────────
-// 3. Payment Card Validation
+// 3. EuropeIbanValidator (Auto-Detection)
 // ─────────────────────────────────────────
-WriteSubHeader("3", "Payment Card Validation (Luhn Algorithm)");
+WriteSubHeader("3", "EuropeIbanValidator (Auto-Detects Country)");
+
+string[] europeanIbans =
+[
+    "BE68539007547034",           // Belgium
+    "FR7630006000011234567890189", // France
+    "DE89370400440532013000",     // Germany
+    "IT60X0542811101000000123456", // Italy
+    "LU280019400644750000",       // Luxembourg
+    "NL91ABNA0417164300",         // Netherlands
+    "ES9121000418450200051332",   // Spain
+    "GB29NWBK60161331926819",     // United Kingdom
+    "XX00123456789012"            // Unknown country
+];
+
+foreach (var iban in europeanIbans)
+{
+    bool isValid = EuropeIbanValidator.Validate(iban);
+    string country = iban.Length >= 2 ? iban[..2] : "??";
+    WriteSimpleResult(iban, isValid, country);
+}
+
+Console.WriteLine();
+
+// ─────────────────────────────────────────
+// 4. Payment Card Validation
+// ─────────────────────────────────────────
+WriteSubHeader("4", "Payment Card Validation (Luhn Algorithm)");
 
 var testCards = new (string Number, string Description)[]
 {
     ("4111111111111111", "Visa"),
     ("4111 1111 1111 1111", "Visa (spaces)"),
+    ("4532015112830366", "Visa"),
     ("5500000000000004", "Mastercard"),
+    ("5425233430109903", "Mastercard"),
     ("340000000000009", "Amex"),
+    ("378282246310005", "Amex"),
     ("6011000000000004", "Discover"),
     ("3530111333300000", "JCB"),
+    ("36000000000008", "Diners Club"),
     ("1234567890123456", "Invalid"),
 };
 
 foreach (var (number, desc) in testCards)
 {
-    bool isValid = PaymentCardValidator.IsValidLuhn(number);
+    bool isValid = PaymentCardValidator.Validate(number);
     var brand = PaymentCardValidator.GetBrand(number);
-    
+
     Console.ForegroundColor = ConsoleColor.DarkGray;
     Console.Write($"      {desc,-15} ");
     Console.ForegroundColor = ConsoleColor.White;
     Console.Write($"{number,-22} ");
-    
+
     if (isValid)
     {
         Console.ForegroundColor = ConsoleColor.Green;
@@ -274,7 +329,7 @@ foreach (var (number, desc) in testCards)
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Write("✗ Invalid ");
     }
-    
+
     Console.ForegroundColor = ConsoleColor.DarkYellow;
     Console.WriteLine($"[{brand}]");
     Console.ResetColor();
@@ -283,11 +338,16 @@ foreach (var (number, desc) in testCards)
 Console.WriteLine();
 
 // ─────────────────────────────────────────
-// 4. ISO 11649 Payment Reference (RF)
+// 5. ISO 11649 Payment Reference (RF)
 // ─────────────────────────────────────────
-WriteSubHeader("4", "ISO 11649 Payment Reference (RF)");
+WriteSubHeader("5", "ISO 11649 Payment Reference (RF)");
 
-string[] references = ["RF18539007547034", "RF18 5390 0754 7034", "RF00123456789", "INVALID"];
+// Generate valid RF references for testing
+string validRf1 = PaymentReferenceValidator.Generate("539007547034");
+string validRf2 = PaymentReferenceValidator.Generate("INV2024001234");
+string validRf3 = PaymentReferenceValidator.Generate("ABC123");
+
+string[] references = [validRf1, validRf2, validRf3, "RF00123456789", "INVALID"];
 foreach (var reference in references)
 {
     WriteSimpleResult(reference, PaymentReferenceValidator.IsValid(reference));
@@ -295,15 +355,15 @@ foreach (var reference in references)
 
 Console.WriteLine();
 Console.ForegroundColor = ConsoleColor.DarkCyan;
-Console.WriteLine("      Generate RF Reference:");
+Console.WriteLine("      Generate RF Reference from arbitrary input:");
 Console.ResetColor();
 
 try
 {
-    string generated = PaymentReferenceValidator.Generate("INV2024001234");
-    WriteInfo("Input", "INV2024001234");
+    string generated = PaymentReferenceValidator.Generate("INVOICE2024ABC");
+    WriteInfo("Input", "INVOICE2024ABC");
     WriteInfo("Generated", generated);
-    WriteSuccess($"Validation passed");
+    WriteSuccess($"Validation passed: {PaymentReferenceValidator.IsValid(generated)}");
 }
 catch (Exception ex)
 {
@@ -313,11 +373,43 @@ catch (Exception ex)
 Console.WriteLine();
 
 // ─────────────────────────────────────────
-// 5. Belgian VAT & Enterprise Number
+// 6. Belgian Structured Payment Reference (OGM/VCS)
 // ─────────────────────────────────────────
-WriteSubHeader("5", "Belgian VAT & Enterprise Number");
+WriteSubHeader("6", "Belgian Structured Payment Reference (OGM/VCS)");
 
-string[] vatNumbers = ["BE0764117795", "BE 0764.117.795", "0764117795", "BE9999999999"];
+Console.ForegroundColor = ConsoleColor.DarkCyan;
+Console.WriteLine("      Generate Belgian OGM from communication number:");
+Console.ResetColor();
+
+try
+{
+    var belgiumRefService = new BelgiumPaymentReferenceService();
+
+    // Generate from different inputs (max 10 digits for OGM)
+    string ogm1 = belgiumRefService.Generate("1234567890");
+    string ogm2 = belgiumRefService.Generate("1");
+    string ogm3 = belgiumRefService.Generate("9999999999");
+
+    WriteInfo("Input 1234567890", $"→ {ogm1}");
+    WriteInfo("Input 0000000001", $"→ {ogm2}");
+    WriteInfo("Input 9999999999", $"→ {ogm3}");
+
+    // Validate
+    WriteSimpleResult($"Validate: {ogm1}", belgiumRefService.IsValid(ogm1));
+}
+catch (Exception ex)
+{
+    WriteError(ex.Message);
+}
+
+Console.WriteLine();
+
+// ─────────────────────────────────────────
+// 7. Belgian VAT & Enterprise Number
+// ─────────────────────────────────────────
+WriteSubHeader("7", "Belgian VAT & Enterprise Number");
+
+string[] vatNumbers = ["BE0764117795", "BE 0764.117.795", "0764117795", "BE0123456789", "BE9999999999"];
 foreach (var vat in vatNumbers)
 {
     WriteResult("VAT", vat, BelgiumVatValidator.IsValid(vat));
@@ -345,22 +437,16 @@ WriteSectionHeader("PART 2: DEPENDENCY INJECTION USAGE");
 
 // Setup DI Container
 var services = new ServiceCollection();
-services.AddFinovaCoreServices();
-services.AddFinovaBelgium();
-services.AddFinovaFrance();
-services.AddFinovaGermany();
-services.AddFinovaNetherlands();
-services.AddFinovaItaly();
-services.AddFinovaSpain();
+services.AddFinova();
 var serviceProvider = services.BuildServiceProvider();
 
 // ─────────────────────────────────────────
-// 6. IBicValidator via DI
+// 8. IBicValidator via DI
 // ─────────────────────────────────────────
-WriteSubHeader("6", "IBicValidator via DI");
+WriteSubHeader("8", "IBicValidator via DI");
 
 var bicValidator = serviceProvider.GetRequiredService<IBicValidator>();
-string[] testBics = ["GEBABEBB", "BNPAFRPP", "INVALID"];
+string[] testBics = ["GEBABEBB", "BNPAFRPP", "NWBKGB2L", "INVALID"];
 
 foreach (var bic in testBics)
 {
@@ -370,13 +456,13 @@ foreach (var bic in testBics)
 Console.WriteLine();
 
 // ─────────────────────────────────────────
-// 7. IPaymentCardValidator via DI
+// 9. IPaymentCardValidator via DI
 // ─────────────────────────────────────────
-WriteSubHeader("7", "IPaymentCardValidator via DI");
+WriteSubHeader("9", "IPaymentCardValidator via DI");
 
 var cardValidator = serviceProvider.GetRequiredService<IPaymentCardValidator>();
 
-var diTestCards = new[] { "4111111111111111", "5500000000000004", "1234567890123456" };
+var diTestCards = new[] { "4111111111111111", "5500000000000004", "378282246310005", "1234567890123456" };
 foreach (var card in diTestCards)
 {
     bool isValid = cardValidator.IsValidLuhn(card);
@@ -403,59 +489,306 @@ WriteSimpleResult("13/2025 (bad month)", cardValidator.IsValidExpiration(13, 202
 Console.WriteLine();
 
 // ─────────────────────────────────────────
-// 8. IIbanValidator via DI (Multi-Country)
+// 10. IIbanValidator via DI (EuropeIbanValidator)
 // ─────────────────────────────────────────
-WriteSubHeader("8", "IIbanValidator via DI (Multi-Country)");
+WriteSubHeader("10", "IIbanValidator via DI (EuropeIbanValidator)");
 
-var ibanValidators = serviceProvider.GetServices<IIbanValidator>().ToList();
+var ibanValidator = serviceProvider.GetRequiredService<IIbanValidator>();
 
 Console.ForegroundColor = ConsoleColor.DarkCyan;
-Console.WriteLine($"      Registered validators: {ibanValidators.Count}");
+Console.WriteLine($"      Registered validator: {ibanValidator.GetType().Name}");
 Console.ResetColor();
 
-foreach (var validator in ibanValidators)
+Console.WriteLine();
+Console.ForegroundColor = ConsoleColor.DarkCyan;
+Console.WriteLine("      Multi-country validation via single interface:");
+Console.ResetColor();
+
+var multiCountryIbans = new (string Iban, string Country)[]
 {
-    Console.ForegroundColor = ConsoleColor.DarkGray;
-    Console.Write("        → ");
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.Write(validator.GetType().Name);
-    Console.ForegroundColor = ConsoleColor.DarkYellow;
-    Console.WriteLine($" ({validator.CountryCode})");
-    Console.ResetColor();
+    ("BE68539007547034", "Belgium"),
+    ("FR7630006000011234567890189", "France"),
+    ("DE89370400440532013000", "Germany"),
+    ("IT60X0542811101000000123456", "Italy"),
+    ("LU280019400644750000", "Luxembourg"),
+    ("NL91ABNA0417164300", "Netherlands"),
+    ("ES9121000418450200051332", "Spain"),
+    ("GB29NWBK60161331926819", "United Kingdom"),
+};
+
+foreach (var (iban, country) in multiCountryIbans)
+{
+    WriteResult(country[..2], iban, ibanValidator.IsValidIban(iban));
 }
 
 Console.WriteLine();
-Console.ForegroundColor = ConsoleColor.DarkCyan;
-Console.WriteLine("      Country-specific validation:");
-Console.ResetColor();
-
-var belgiumValidator = serviceProvider.GetRequiredService<BelgiumIbanValidator>();
-var franceValidator = serviceProvider.GetRequiredService<FranceIbanValidator>();
-var germanyValidator = serviceProvider.GetRequiredService<GermanyIbanValidator>();
-var netherlandsValidator = serviceProvider.GetRequiredService<NetherlandsIbanValidator>();
-var italyValidator = serviceProvider.GetRequiredService<ItalyIbanValidator>();
-var spainValidator = serviceProvider.GetRequiredService<SpainIbanValidator>();
-
-WriteResult("BE", "BE68539007547034", belgiumValidator.IsValidIban("BE68539007547034"));
-WriteResult("FR", "FR1420041010050500013M02606", franceValidator.IsValidIban("FR1420041010050500013M02606"));
-WriteResult("DE", "DE89370400440532013000", germanyValidator.IsValidIban("DE89370400440532013000"));
-WriteResult("NL", "NL91ABNA0417164300", netherlandsValidator.IsValidIban("NL91ABNA0417164300"));
-WriteResult("IT", "IT60X0542811101000000123456", italyValidator.IsValidIban("IT60X0542811101000000123456"));
-WriteResult("ES", "ES9121000418450200051332", spainValidator.IsValidIban("ES9121000418450200051332"));
-
-Console.WriteLine();
 
 // ─────────────────────────────────────────
-// 9. IPaymentReferenceValidator via DI
+// 11. IPaymentReferenceValidator via DI
 // ─────────────────────────────────────────
-WriteSubHeader("9", "IPaymentReferenceValidator via DI");
+WriteSubHeader("11", "IPaymentReferenceValidator via DI");
 
 var refValidator = serviceProvider.GetRequiredService<IPaymentReferenceValidator>();
-string[] diRefs = ["RF18539007547034", "RF00INVALID"];
+
+string validRef = refValidator.Generate("PAYMENT123");
+string[] diRefs = [validRef, "RF00INVALID", "NOT_RF_FORMAT"];
 
 foreach (var reference in diRefs)
 {
     WriteSimpleResult(reference, refValidator.IsValid(reference));
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// PART 3: FLUENTVALIDATION INTEGRATION
+// ══════════════════════════════════════════════════════════════════════════════
+WriteSectionHeader("PART 3: FLUENTVALIDATION INTEGRATION");
+
+// ─────────────────────────────────────────
+// 12. FluentValidation Extension Methods Overview
+// ─────────────────────────────────────────
+WriteSubHeader("12", "FluentValidation Extension Methods (Finova.Extensions.FluentValidation)");
+
+Console.ForegroundColor = ConsoleColor.Cyan;
+Console.WriteLine("      Available extension methods from FinovaValidators:");
+Console.ResetColor();
+Console.WriteLine();
+
+Console.ForegroundColor = ConsoleColor.Yellow;
+Console.WriteLine("      ┌─────────────────────────────────────────────────────────────────────┐");
+Console.WriteLine("      │  Extension Method              │  Purpose                           │");
+Console.WriteLine("      ├─────────────────────────────────────────────────────────────────────┤");
+Console.WriteLine("      │  .MustBeValidIban()            │  Validates IBAN (any EU country)   │");
+Console.WriteLine("      │  .MustBeValidBic()             │  Validates BIC/SWIFT code          │");
+Console.WriteLine("      │  .MustBeValidPaymentCard()     │  Validates card (Luhn algorithm)   │");
+Console.WriteLine("      │  .MustMatchIbanCountry(iban)   │  BIC country must match IBAN       │");
+Console.WriteLine("      └─────────────────────────────────────────────────────────────────────┘");
+Console.ResetColor();
+Console.WriteLine();
+
+// Demo: MustBeValidIban()
+Console.ForegroundColor = ConsoleColor.Magenta;
+Console.WriteLine("      ► MustBeValidIban() - Validates IBAN format and checksum");
+Console.ResetColor();
+
+var ibanDemoValidator = new InlineValidator<string>();
+ibanDemoValidator.RuleFor(x => x).MustBeValidIban().WithMessage("Invalid IBAN");
+
+string[] ibanTestCases = ["BE68539007547034", "FR7630006000011234567890189", "INVALID123"];
+foreach (var iban in ibanTestCases)
+{
+    var result = ibanDemoValidator.Validate(iban);
+    WriteSimpleResult(iban, result.IsValid);
+}
+Console.WriteLine();
+
+// Demo: MustBeValidBic()
+Console.ForegroundColor = ConsoleColor.Magenta;
+Console.WriteLine("      ► MustBeValidBic() - Validates BIC/SWIFT code format");
+Console.ResetColor();
+
+var bicDemoValidator = new InlineValidator<string>();
+bicDemoValidator.RuleFor(x => x).MustBeValidBic().WithMessage("Invalid BIC");
+
+string[] bicTestCases = ["KREDBEBB", "COBADEFF", "NWBKGB2L", "INVALID"];
+foreach (var bic in bicTestCases)
+{
+    var result = bicDemoValidator.Validate(bic);
+    WriteSimpleResult(bic, result.IsValid);
+}
+Console.WriteLine();
+
+// Demo: MustBeValidPaymentCard()
+Console.ForegroundColor = ConsoleColor.Magenta;
+Console.WriteLine("      ► MustBeValidPaymentCard() - Validates card using Luhn algorithm");
+Console.ResetColor();
+
+var cardDemoValidator = new InlineValidator<string>();
+cardDemoValidator.RuleFor(x => x).MustBeValidPaymentCard().WithMessage("Invalid card");
+
+string[] cardTestCases = ["4111111111111111", "5500000000000004", "1234567890123456"];
+foreach (var card in cardTestCases)
+{
+    var result = cardDemoValidator.Validate(card);
+    WriteSimpleResult(card, result.IsValid);
+}
+Console.WriteLine();
+
+// Demo: MustMatchIbanCountry()
+Console.ForegroundColor = ConsoleColor.Magenta;
+Console.WriteLine("      ► MustMatchIbanCountry(iban) - Validates BIC country matches IBAN country");
+Console.ResetColor();
+
+var bicCountryTests = new[]
+{
+    new { Bic = "KREDBEBB", Iban = "BE68539007547034", Desc = "Belgian BIC + Belgian IBAN" },
+    new { Bic = "COBADEFF", Iban = "DE89370400440532013000", Desc = "German BIC + German IBAN" },
+    new { Bic = "KREDBEBB", Iban = "DE89370400440532013000", Desc = "Belgian BIC + German IBAN (mismatch!)" }
+};
+
+foreach (var test in bicCountryTests)
+{
+    var bicCountryValidator = new InlineValidator<(string Bic, string Iban)>();
+    bicCountryValidator.RuleFor(x => x.Bic)
+        .MustMatchIbanCountry(x => x.Iban)
+        .WithMessage("BIC country must match IBAN country");
+
+    var result = bicCountryValidator.Validate((test.Bic, test.Iban));
+    var status = result.IsValid ? "✓" : "✗";
+    var color = result.IsValid ? ConsoleColor.Green : ConsoleColor.Red;
+    Console.ForegroundColor = color;
+    Console.WriteLine($"      {status} {test.Desc}");
+    Console.ResetColor();
+}
+
+Console.WriteLine();
+
+// ─────────────────────────────────────────
+// 13. FluentValidation - SEPA Payment Example
+// ─────────────────────────────────────────
+WriteSubHeader("13", "FluentValidation - SEPA Payment Example");
+
+Console.ForegroundColor = ConsoleColor.DarkCyan;
+Console.WriteLine("      Using validators in a real-world SEPA payment scenario:");
+Console.ResetColor();
+
+// Define a sample payment request
+var validPayment = new SepaPaymentRequest
+{
+    DebtorIban = "BE68539007547034",
+    DebtorBic = "KREDBEBB",
+    CreditorIban = "DE89370400440532013000",
+    CreditorBic = "COBADEFF",
+    Amount = 1500.00m,
+    Currency = "EUR"
+};
+
+var invalidPayment = new SepaPaymentRequest
+{
+    DebtorIban = "INVALID_IBAN",
+    DebtorBic = "BAD",
+    CreditorIban = "XX00000000000000",
+    CreditorBic = "TOOLONGBICCODE",
+    Amount = -100m,
+    Currency = "USD"
+};
+
+var sepaValidator = new SepaPaymentRequestValidator();
+
+var validResult = sepaValidator.Validate(validPayment);
+var invalidResult = sepaValidator.Validate(invalidPayment);
+
+Console.WriteLine();
+WriteInfo("Valid Payment", $"IsValid = {validResult.IsValid}");
+if (validResult.IsValid)
+{
+    WriteSuccess("All validation rules passed!");
+}
+
+Console.WriteLine();
+WriteInfo("Invalid Payment", $"IsValid = {invalidResult.IsValid}");
+if (!invalidResult.IsValid)
+{
+    foreach (var error in invalidResult.Errors)
+    {
+        WriteError($"{error.PropertyName}: {error.ErrorMessage}");
+    }
+}
+
+Console.WriteLine();
+
+// ─────────────────────────────────────────
+// 14. FluentValidation - Card Payment
+// ─────────────────────────────────────────
+WriteSubHeader("14", "FluentValidation - Card Payment");
+
+var validCard = new CardPaymentRequest
+{
+    CardNumber = "4532015112830366",
+    CardholderName = "John Doe",
+    ExpiryMonth = "12",
+    ExpiryYear = "28",
+    Cvv = "123",
+    Amount = 99.99m
+};
+
+var invalidCard = new CardPaymentRequest
+{
+    CardNumber = "1234567890123456",
+    CardholderName = "",
+    ExpiryMonth = "13",
+    ExpiryYear = "20",
+    Cvv = "12",
+    Amount = 0m
+};
+
+var cardPaymentValidator = new CardPaymentRequestValidator();
+
+var validCardResult = cardPaymentValidator.Validate(validCard);
+var invalidCardResult = cardPaymentValidator.Validate(invalidCard);
+
+WriteInfo("Valid Card", $"IsValid = {validCardResult.IsValid}");
+if (validCardResult.IsValid)
+{
+    WriteSuccess("Card payment validation passed!");
+}
+
+Console.WriteLine();
+WriteInfo("Invalid Card", $"IsValid = {invalidCardResult.IsValid}");
+if (!invalidCardResult.IsValid)
+{
+    foreach (var error in invalidCardResult.Errors.Take(5))
+    {
+        WriteError($"{error.PropertyName}: {error.ErrorMessage}");
+    }
+}
+
+Console.WriteLine();
+
+// ─────────────────────────────────────────
+// 15. FluentValidation - BIC/IBAN Consistency
+// ─────────────────────────────────────────
+WriteSubHeader("15", "FluentValidation - BIC/IBAN Country Consistency");
+
+Console.ForegroundColor = ConsoleColor.DarkCyan;
+Console.WriteLine("      Testing BIC country matches IBAN country:");
+Console.ResetColor();
+
+var consistentTransfer = new InternationalTransfer
+{
+    SenderIban = "BE68539007547034",
+    SenderBic = "KREDBEBB",      // Belgian BIC matches Belgian IBAN
+    RecipientIban = "DE89370400440532013000",
+    RecipientBic = "COBADEFF"    // German BIC matches German IBAN
+};
+
+var inconsistentTransfer = new InternationalTransfer
+{
+    SenderIban = "BE68539007547034",
+    SenderBic = "COBADEFF",      // German BIC doesn't match Belgian IBAN!
+    RecipientIban = "DE89370400440532013000",
+    RecipientBic = "KREDBEBB"    // Belgian BIC doesn't match German IBAN!
+};
+
+var transferValidator = new InternationalTransferValidator();
+
+var consistentResult = transferValidator.Validate(consistentTransfer);
+var inconsistentResult = transferValidator.Validate(inconsistentTransfer);
+
+Console.WriteLine();
+WriteInfo("Consistent (BE→DE)", $"IsValid = {consistentResult.IsValid}");
+if (consistentResult.IsValid)
+{
+    WriteSuccess("BIC countries match IBAN countries!");
+}
+
+Console.WriteLine();
+WriteInfo("Inconsistent", $"IsValid = {inconsistentResult.IsValid}");
+if (!inconsistentResult.IsValid)
+{
+    foreach (var error in inconsistentResult.Errors)
+    {
+        WriteError($"{error.PropertyName}: {error.ErrorMessage}");
+    }
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -470,18 +803,150 @@ Console.ResetColor();
 
 Console.WriteLine();
 Console.ForegroundColor = ConsoleColor.Cyan;
-Console.WriteLine("  Finova supports:");
+Console.WriteLine("  Finova supports 8 European countries:");
+Console.ResetColor();
+
+WriteBullet("🇧🇪 Belgium - IBAN, VAT, Enterprise Number, OGM Payment Reference");
+WriteBullet("🇫🇷 France - IBAN validation");
+WriteBullet("🇩🇪 Germany - IBAN validation");
+WriteBullet("🇮🇹 Italy - IBAN validation with CIN check");
+WriteBullet("🇱🇺 Luxembourg - IBAN validation");
+WriteBullet("🇳🇱 Netherlands - IBAN validation");
+WriteBullet("🇪🇸 Spain - IBAN validation");
+WriteBullet("🇬🇧 United Kingdom - IBAN validation");
+
+Console.WriteLine();
+Console.ForegroundColor = ConsoleColor.Cyan;
+Console.WriteLine("  Core validators:");
 Console.ResetColor();
 
 WriteBullet("BIC/SWIFT validation (ISO 9362)");
-WriteBullet("IBAN validation for BE, FR, DE, NL, and more");
 WriteBullet("Payment card validation (Luhn, brand detection, CVV, expiry)");
 WriteBullet("ISO 11649 (RF) payment reference validation & generation");
-WriteBullet("Belgian VAT & Enterprise Number validation");
-WriteBullet("Full Dependency Injection support");
+WriteBullet("EuropeIbanValidator - auto-detects and validates any supported country");
+
+Console.WriteLine();
+Console.ForegroundColor = ConsoleColor.Cyan;
+Console.WriteLine("  Integration:");
+Console.ResetColor();
+
+WriteBullet("Full Dependency Injection support via AddFinova()");
+WriteBullet("FluentValidation extension: MustBeValidIban(), MustBeValidBic(), etc.");
 
 Console.WriteLine();
 Console.ForegroundColor = ConsoleColor.DarkGray;
 Console.WriteLine("  " + new string('═', 74));
 Console.ResetColor();
 Console.WriteLine();
+
+// ══════════════════════════════════════════════════════════════════════════════
+// FLUENT VALIDATION MODEL CLASSES
+// ══════════════════════════════════════════════════════════════════════════════
+
+public class SepaPaymentRequest
+{
+    public string DebtorIban { get; set; } = string.Empty;
+    public string DebtorBic { get; set; } = string.Empty;
+    public string CreditorIban { get; set; } = string.Empty;
+    public string CreditorBic { get; set; } = string.Empty;
+    public decimal Amount { get; set; }
+    public string Currency { get; set; } = "EUR";
+}
+
+public class SepaPaymentRequestValidator : AbstractValidator<SepaPaymentRequest>
+{
+    public SepaPaymentRequestValidator()
+    {
+        RuleFor(x => x.DebtorIban)
+            .NotEmpty().WithMessage("Debtor IBAN is required")
+            .MustBeValidIban().WithMessage("Debtor IBAN is invalid");
+
+        RuleFor(x => x.DebtorBic)
+            .NotEmpty().WithMessage("Debtor BIC is required")
+            .MustBeValidBic().WithMessage("Debtor BIC is invalid");
+
+        RuleFor(x => x.CreditorIban)
+            .NotEmpty().WithMessage("Creditor IBAN is required")
+            .MustBeValidIban().WithMessage("Creditor IBAN is invalid");
+
+        RuleFor(x => x.CreditorBic)
+            .NotEmpty().WithMessage("Creditor BIC is required")
+            .MustBeValidBic().WithMessage("Creditor BIC is invalid");
+
+        RuleFor(x => x.Amount)
+            .GreaterThan(0).WithMessage("Amount must be positive");
+
+        RuleFor(x => x.Currency)
+            .Equal("EUR").WithMessage("SEPA payments must be in EUR");
+    }
+}
+
+public class CardPaymentRequest
+{
+    public string CardNumber { get; set; } = string.Empty;
+    public string CardholderName { get; set; } = string.Empty;
+    public string ExpiryMonth { get; set; } = string.Empty;
+    public string ExpiryYear { get; set; } = string.Empty;
+    public string Cvv { get; set; } = string.Empty;
+    public decimal Amount { get; set; }
+}
+
+public class CardPaymentRequestValidator : AbstractValidator<CardPaymentRequest>
+{
+    public CardPaymentRequestValidator()
+    {
+        RuleFor(x => x.CardNumber)
+            .NotEmpty().WithMessage("Card number is required")
+            .MustBeValidPaymentCard().WithMessage("Card number is invalid");
+
+        RuleFor(x => x.CardholderName)
+            .NotEmpty().WithMessage("Cardholder name is required");
+
+        RuleFor(x => x.ExpiryMonth)
+            .NotEmpty().WithMessage("Expiry month is required")
+            .Matches(@"^(0[1-9]|1[0-2])$").WithMessage("Invalid expiry month");
+
+        RuleFor(x => x.ExpiryYear)
+            .NotEmpty().WithMessage("Expiry year is required")
+            .Matches(@"^\d{2}$").WithMessage("Invalid expiry year format");
+
+        RuleFor(x => x.Cvv)
+            .NotEmpty().WithMessage("CVV is required")
+            .Matches(@"^\d{3,4}$").WithMessage("CVV must be 3 or 4 digits");
+
+        RuleFor(x => x.Amount)
+            .GreaterThan(0).WithMessage("Amount must be positive");
+    }
+}
+
+public class InternationalTransfer
+{
+    public string SenderIban { get; set; } = string.Empty;
+    public string SenderBic { get; set; } = string.Empty;
+    public string RecipientIban { get; set; } = string.Empty;
+    public string RecipientBic { get; set; } = string.Empty;
+}
+
+public class InternationalTransferValidator : AbstractValidator<InternationalTransfer>
+{
+    public InternationalTransferValidator()
+    {
+        RuleFor(x => x.SenderIban)
+            .NotEmpty().WithMessage("Sender IBAN is required")
+            .MustBeValidIban().WithMessage("Sender IBAN is invalid");
+
+        RuleFor(x => x.SenderBic)
+            .NotEmpty().WithMessage("Sender BIC is required")
+            .MustBeValidBic().WithMessage("Sender BIC is invalid")
+            .MustMatchIbanCountry(x => x.SenderIban).WithMessage("Sender BIC country must match sender IBAN country");
+
+        RuleFor(x => x.RecipientIban)
+            .NotEmpty().WithMessage("Recipient IBAN is required")
+            .MustBeValidIban().WithMessage("Recipient IBAN is invalid");
+
+        RuleFor(x => x.RecipientBic)
+            .NotEmpty().WithMessage("Recipient BIC is required")
+            .MustBeValidBic().WithMessage("Recipient BIC is invalid")
+            .MustMatchIbanCountry(x => x.RecipientIban).WithMessage("Recipient BIC country must match recipient IBAN country");
+    }
+}
