@@ -1,15 +1,14 @@
-﻿namespace Finova.Core.Models
+namespace Finova.Core.Models;
+
+public enum PaymentCardBrand
 {
-    public enum PaymentCardBrand
-    {
-        Unknown,
-        Visa,
-        Mastercard,
-        AmericanExpress,
-        Discover,
-        JCB,
-        DinersClub,
-        Maestro,
-        ChinaUnionPay
-    }
+    Unknown,
+    Visa,
+    Mastercard,
+    AmericanExpress,
+    Discover,
+    JCB,
+    DinersClub,
+    Maestro,
+    ChinaUnionPay
 }
