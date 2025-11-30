@@ -55,7 +55,7 @@ jobs:
 
             - name: Pack All Libraries
               run: |
-                  dotnet pack Finova.sln \
+                  dotnet pack Finova.slnx \
                     --configuration Release \
                     --no-build \
                     --output ./nupkgs \
