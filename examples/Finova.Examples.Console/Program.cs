@@ -1,11 +1,16 @@
 using Finova.Belgium.Services;
 using Finova.Belgium.Validators;
+using Finova.Countries.Europe.Austria.Validators;
 using Finova.Countries.Europe.Belgium.Validators;
+using Finova.Countries.Europe.Finland.Validators;
 using Finova.Countries.Europe.France.Validators;
 using Finova.Countries.Europe.Germany.Validators;
+using Finova.Countries.Europe.Greece.Validators;
+using Finova.Countries.Europe.Ireland.Validators;
 using Finova.Countries.Europe.Italy.Validators;
 using Finova.Countries.Europe.Luxembourg.Validators;
 using Finova.Countries.Europe.Netherlands.Validators;
+using Finova.Countries.Europe.Portugal.Validators;
 using Finova.Countries.Europe.Spain.Validators;
 using Finova.Countries.Europe.UnitedKingdom.Validators;
 using Finova.Core.Interfaces;
@@ -192,9 +197,17 @@ foreach (var bic in bicCodes)
 Console.WriteLine();
 
 // ─────────────────────────────────────────
-// 2. Multi-Country IBAN Validation (8 Countries)
+// 2. Multi-Country IBAN Validation (13 Countries)
 // ─────────────────────────────────────────
-WriteSubHeader("2", "Multi-Country IBAN Validation (8 Countries)");
+WriteSubHeader("2", "Multi-Country IBAN Validation (13 Countries)");
+
+// Austria 🇦🇹
+WriteCountryHeader("🇦🇹", "Austria (AT - 20 characters)");
+string[] austrianIbans = ["AT611904300234573201", "AT61 1904 3002 3457 3201", "AT483200000012345864", "AT00123456789012345678"];
+foreach (var iban in austrianIbans)
+{
+    WriteSimpleResult(iban, AustriaIbanValidator.ValidateAustriaIban(iban));
+}
 
 // Belgium 🇧🇪
 WriteCountryHeader("🇧🇪", "Belgium (BE - 16 characters)");
@@ -238,7 +251,7 @@ foreach (var iban in luxembourgIbans)
 
 // Netherlands 🇳🇱
 WriteCountryHeader("🇳🇱", "Netherlands (NL - 18 characters)");
-string[] dutchIbans = ["NL91ABNA0417164300", "NL91 ABNA 0417 1643 00", "NL20INGB0001234567", "NL00XXXX0000000000"];
+string[] dutchIbans = ["NL91ABNA0417164300", "NL91 ABNA 0417 1643 00", "NL39RABO0300065264", "NL00XXXX0000000000"];
 foreach (var iban in dutchIbans)
 {
     WriteSimpleResult(iban, NetherlandsIbanValidator.ValidateNetherlandsIban(iban));
@@ -260,6 +273,41 @@ foreach (var iban in ukIbans)
     WriteSimpleResult(iban, UnitedKingdomIbanValidator.ValidateUnitedKingdomIban(iban));
 }
 
+// Finland 🇫🇮
+WriteCountryHeader("🇫🇮", "Finland (FI - 18 characters)");
+string[] finnishIbans = ["FI2112345600000785", "FI21 1234 5600 0007 85", "FI1410093000123458", "FI0012345678901234"];
+foreach (var iban in finnishIbans)
+{
+    WriteSimpleResult(iban, FinlandIbanValidator.ValidateFinlandIban(iban));
+}
+
+// Greece 🇬🇷
+WriteCountryHeader("🇬🇷", "Greece (GR - 27 characters)");
+string[] greekIbans = ["GR1601101250000000012300695", "GR16 0110 1250 0000 0001 2300 695", "GR9608100010000001234567890", "GR0012345678901234567890123"];
+foreach (var iban in greekIbans)
+{
+    WriteSimpleResult(iban, GreeceIbanValidator.ValidateGreeceIban(iban));
+}
+
+// Ireland 🇮🇪
+WriteCountryHeader("🇮🇪", "Ireland (IE - 22 characters)");
+string[] irishIbans = ["IE29AIBK93115212345678", "IE29 AIBK 9311 5212 3456 78", "IE64IRCE92050112345678", "IE00XXXX00000000000000"];
+foreach (var iban in irishIbans)
+{
+    WriteSimpleResult(iban, IrelandIbanValidator.ValidateIrelandIban(iban));
+}
+
+// Portugal 🇵🇹
+WriteCountryHeader("🇵🇹", "Portugal (PT - 25 characters, NIB check required)");
+// Portuguese IBANs require valid NIB check digits (last 2 digits of BBAN)
+// NIB key = 98 - (19-digit-body mod 97) - see strict NIB validation
+// Demo: All examples below intentionally fail NIB check to show validation strictness
+string[] portugueseIbans = ["PT50000000000000000000197", "PT50 0000 0000 0000 0000 001 97", "PT00XXXX12345678901234567"];
+foreach (var iban in portugueseIbans)
+{
+    WriteSimpleResult(iban, PortugalIbanValidator.ValidatePortugalIban(iban));
+}
+
 Console.WriteLine();
 
 // ─────────────────────────────────────────
@@ -269,15 +317,19 @@ WriteSubHeader("3", "EuropeIbanValidator (Auto-Detects Country)");
 
 string[] europeanIbans =
 [
+    "AT611904300234573201",       // Austria
     "BE68539007547034",           // Belgium
+    "FI2112345600000785",         // Finland
     "FR7630006000011234567890189", // France
     "DE89370400440532013000",     // Germany
+    "GR1601101250000000012300695", // Greece
+    "IE29AIBK93115212345678",     // Ireland
     "IT60X0542811101000000123456", // Italy
     "LU280019400644750000",       // Luxembourg
     "NL91ABNA0417164300",         // Netherlands
     "ES9121000418450200051332",   // Spain
     "GB29NWBK60161331926819",     // United Kingdom
-    "XX00123456789012"            // Unknown country
+    "XX00123456789012"            // Unknown country (will fail)
 ];
 
 foreach (var iban in europeanIbans)
@@ -803,16 +855,21 @@ Console.ResetColor();
 
 Console.WriteLine();
 Console.ForegroundColor = ConsoleColor.Cyan;
-Console.WriteLine("  Finova supports 8 European countries:");
+Console.WriteLine("  Finova supports 13 European countries:");
 Console.ResetColor();
 
-WriteBullet("🇧🇪 Belgium - IBAN, VAT, Enterprise Number, OGM Payment Reference");
-WriteBullet("🇫🇷 France - IBAN validation");
+WriteBullet("�🇹 Austria - IBAN validation");
+WriteBullet("�🇧🇪 Belgium - IBAN, VAT, Enterprise Number, OGM Payment Reference");
+WriteBullet("🇫� Finland - IBAN validation");
+WriteBullet("🇫�🇷 France - IBAN validation with RIB key check");
 WriteBullet("🇩🇪 Germany - IBAN validation");
-WriteBullet("🇮🇹 Italy - IBAN validation with CIN check");
+WriteBullet("🇬� Greece - IBAN validation");
+WriteBullet("🇮🇪 Ireland - IBAN validation");
+WriteBullet("�🇮🇹 Italy - IBAN validation with CIN check");
 WriteBullet("🇱🇺 Luxembourg - IBAN validation");
-WriteBullet("🇳🇱 Netherlands - IBAN validation");
-WriteBullet("🇪🇸 Spain - IBAN validation");
+WriteBullet("🇳🇱 Netherlands - IBAN validation with Elfproef");
+WriteBullet("🇵🇹 Portugal - IBAN validation with NIB check");
+WriteBullet("🇪🇸 Spain - IBAN validation with DC check");
 WriteBullet("🇬🇧 United Kingdom - IBAN validation");
 
 Console.WriteLine();

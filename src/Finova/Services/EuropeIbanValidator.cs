@@ -1,11 +1,16 @@
 using Finova.Core.Accounts;
 using Finova.Core.Interfaces;
+using Finova.Countries.Europe.Austria.Validators;
 using Finova.Countries.Europe.Belgium.Validators;
+using Finova.Countries.Europe.Finland.Validators;
 using Finova.Countries.Europe.France.Validators;
 using Finova.Countries.Europe.Germany.Validators;
+using Finova.Countries.Europe.Greece.Validators;
+using Finova.Countries.Europe.Ireland.Validators;
 using Finova.Countries.Europe.Italy.Validators;
 using Finova.Countries.Europe.Luxembourg.Validators;
 using Finova.Countries.Europe.Netherlands.Validators;
+using Finova.Countries.Europe.Portugal.Validators;
 using Finova.Countries.Europe.Spain.Validators;
 using Finova.Countries.Europe.UnitedKingdom.Validators;
 
@@ -13,7 +18,7 @@ namespace Finova.Services;
 
 public class EuropeIbanValidator : IIbanValidator
 {
-    public string CountryCode => "EU";
+    public string CountryCode => "";
     public static bool Validate(string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban) || iban.Length < 2)
@@ -34,9 +39,12 @@ public class EuropeIbanValidator : IIbanValidator
             "NL" => NetherlandsIbanValidator.ValidateNetherlandsIban(iban),
             "GB" => UnitedKingdomIbanValidator.ValidateUnitedKingdomIban(iban),
             "LU" => LuxembourgIbanValidator.ValidateLuxembourgIban(iban),
+            "IE" => IrelandIbanValidator.ValidateIrelandIban(iban),
+            "AT" => AustriaIbanValidator.ValidateAustriaIban(iban),
+            "GR" => GreeceIbanValidator.ValidateGreeceIban(iban),
+            "FI" => FinlandIbanValidator.ValidateFinlandIban(iban),
+            "PT" => PortugalIbanValidator.ValidatePortugalIban(iban),
 
-            // Fallback for generic SEPA
-            "AT" or "PT" or "IE" or "GR" or "FI" or
             "SE" or "DK" or "NO" or "PL" or "CZ" or "HU" or "RO" or
             "BG" or "HR" or "SI" or "SK" or "EE" or "LV" or "LT" or
             "CY" or "MT" or "GB" or "CH" =>

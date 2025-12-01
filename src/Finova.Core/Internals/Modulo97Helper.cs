@@ -9,13 +9,23 @@ public static class Modulo97Helper
     /// </summary>
     public static int Calculate(string numericString)
     {
-        if (string.IsNullOrWhiteSpace(numericString) || !numericString.All(char.IsDigit))
+        if (string.IsNullOrWhiteSpace(numericString))
         {
-            throw new ArgumentException("Input must contain only digits.", nameof(numericString));
+            throw new ArgumentException("Input cannot be null or empty.", nameof(numericString));
         }
 
-        // Use BigInteger to handle very large numbers
-        BigInteger number = BigInteger.Parse(numericString);
-        return (int)(number % 97);
+        int remainder = 0;
+        foreach (char c in numericString)
+        {
+            if (!char.IsDigit(c))
+            {
+                throw new ArgumentException("Input must contain only digits.", nameof(numericString));
+            }
+
+            int digit = c - '0';
+            remainder = (remainder * 10 + digit) % 97;
+        }
+
+        return remainder;
     }
 }

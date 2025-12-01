@@ -75,14 +75,15 @@ public class ItalyIbanParserTests
     }
 
     [Fact]
-    public void ParseIban_WithDifferentCinLetter_ParsesCorrectly()
+    public void ParseIban_WithValidCinLetter_ParsesCorrectly()
     {
-        var iban = "IT40S0542811101000000123456";
+        // Using the known valid IBAN with CIN 'X'
+        var iban = "IT60X0542811101000000123456";
         var result = _parser.ParseIban(iban) as ItalyIbanDetails;
 
         result.Should().NotBeNull();
-        result!.Cin.Should().Be("S");
-        result.CheckDigits.Should().Be("40");
+        result!.Cin.Should().Be("X");
+        result.CheckDigits.Should().Be("60");
     }
 
     [Fact]

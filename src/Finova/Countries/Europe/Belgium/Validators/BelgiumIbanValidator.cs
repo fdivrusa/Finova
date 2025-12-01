@@ -6,8 +6,8 @@ namespace Finova.Countries.Europe.Belgium.Validators;
 
 /// <summary>
 /// Validator for Belgian IBAN bank accounts.
-/// Belgian IBAN format: BE + 2 check digits + 12 digits (16 characters total).
-/// Example: BE68539007547034 or formatted: BE68 5390 0754 7034
+/// Belgian IBAN format: BE + 2 check digits + 3 Bank + 7 Account + 2 National Check.
+/// Total: 16 characters.
 /// </summary>
 public class BelgiumIbanValidator : IIbanValidator
 {
@@ -16,22 +16,11 @@ public class BelgiumIbanValidator : IIbanValidator
     private const int BelgianIbanLength = 16;
     private const string BelgianCountryCode = "BE";
 
-    #region Instance Methods (for Dependency Injection)
-
     public bool IsValidIban(string? iban)
     {
         return ValidateBelgiumIban(iban);
     }
 
-    #endregion
-
-    #region Static Methods (for Direct Usage)
-
-    /// <summary>
-    /// Validates a Belgian IBAN.
-    /// </summary>
-    /// <param name="iban">The IBAN to validate</param>
-    /// <returns>True if valid Belgian IBAN, false otherwise</returns>
     public static bool ValidateBelgiumIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
@@ -41,13 +30,11 @@ public class BelgiumIbanValidator : IIbanValidator
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
-        // Check length (Belgian IBAN is exactly 16 characters)
         if (normalized.Length != BelgianIbanLength)
         {
             return false;
         }
 
-        // Check country code
         if (!normalized.StartsWith(BelgianCountryCode, StringComparison.OrdinalIgnoreCase))
         {
             return false;
@@ -61,9 +48,49 @@ public class BelgiumIbanValidator : IIbanValidator
             }
         }
 
-        // Validate structure and checksum
+        // Internal BBAN Validation (Specific to Belgium)
+        // Extract the last 12 digits (Positions 4 to 16)
+        string bban = normalized.Substring(4, 12);
+
+        if (!ValidateBelgianBban(bban))
+        {
+            return false;
+        }
+
         return IbanHelper.IsValidIban(normalized);
     }
 
-    #endregion
+    /// <summary>
+    /// Validates the internal Belgian BBAN structure.
+    /// Format: 10 digits (Bank + Account) + 2 digits (Check).
+    /// Algorithm: First10 % 97 == Last2.
+    /// </summary>
+    private static bool ValidateBelgianBban(string bban)
+    {
+        if (bban.Length != 12)
+        {
+            return false;
+        }
+
+        // Split into Data (10 digits) and Check (2 digits)
+        string dataPart = bban.Substring(0, 10);
+        string checkPart = bban.Substring(10, 2);
+
+        if (!long.TryParse(dataPart, out long dataValue) ||
+            !int.TryParse(checkPart, out int checkValue))
+        {
+            return false;
+        }
+
+        // Calculate Modulo
+        long remainder = dataValue % 97;
+
+        // Specific rule: If remainder is 0, the check digits must be 97
+        if (remainder == 0)
+        {
+            return checkValue == 97;
+        }
+
+        return remainder == checkValue;
+    }
 }

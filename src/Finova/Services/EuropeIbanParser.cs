@@ -1,12 +1,17 @@
 using Finova.Core.Accounts;
 using Finova.Core.Interfaces;
 using Finova.Core.Models;
+using Finova.Countries.Europe.Austria.Services;
 using Finova.Countries.Europe.Belgium.Services;
+using Finova.Countries.Europe.Finland.Services;
 using Finova.Countries.Europe.France.Services;
 using Finova.Countries.Europe.Germany.Services;
+using Finova.Countries.Europe.Greece.Services;
+using Finova.Countries.Europe.Ireland.Services;
 using Finova.Countries.Europe.Italy.Services;
 using Finova.Countries.Europe.Luxembourg.Services;
 using Finova.Countries.Europe.Netherlands.Services;
+using Finova.Countries.Europe.Portugal.Services;
 using Finova.Countries.Europe.Spain.Services;
 using Finova.Countries.Europe.UnitedKingdom.Services;
 
@@ -42,6 +47,11 @@ public class EuropeIbanParser : IIbanParser
             "LU" => LuxembourgIbanParser.Create().ParseIban(normalized),
             "GB" => UnitedKingdomIbanParser.Create().ParseIban(normalized),
             "NL" => NetherlandsIbanParser.Create().ParseIban(normalized),
+            "IE" => IrelandIbanParser.Create().ParseIban(normalized),
+            "AT" => AustriaIbanParser.Create().ParseIban(normalized),
+            "GR" => GreeceIbanParser.Create().ParseIban(normalized),
+            "PT" => PortugalIbanParser.Create().ParseIban(normalized),
+            "FI" => FinlandIbanParser.Create().ParseIban(normalized),
 
             _ => new IbanDetails
             {

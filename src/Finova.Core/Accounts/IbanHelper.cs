@@ -141,23 +141,27 @@ public static partial class IbanHelper
             return false;
         }
 
-        try
+        var rearranged = string.Concat(iban.AsSpan(4), iban.AsSpan()[..4]);
+
+        int remainder = 0;
+        foreach (char c in rearranged)
         {
-            // Move first 4 characters to end: BExx... becomes ...BExx
-            var rearranged = string.Concat(iban.AsSpan(4), iban.AsSpan()[..4]);
+            int value;
+            if (char.IsLetter(c))
+            {
+                // A=10 ... Z=35
+                value = char.ToUpper(c) - 55;
 
-            // Convert letters to numbers: A=10, B=11, ..., Z=35
-            var numericString = ConvertLettersToDigits(rearranged);
-
-            // Calculate modulo 97 - should be 1 for valid IBAN
-            var mod = Modulo97Helper.Calculate(numericString);
-
-            return mod == 1;
+                remainder = (remainder * 100 + value) % 97;
+            }
+            else
+            {
+                value = c - '0';
+                remainder = (remainder * 10 + value) % 97;
+            }
         }
-        catch
-        {
-            return false;
-        }
+
+        return remainder == 1;
     }
 
     /// <summary>

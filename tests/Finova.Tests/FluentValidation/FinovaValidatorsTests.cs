@@ -70,13 +70,11 @@ public class FinovaValidatorsTests
     [InlineData("DE75512108001245126199")]
     // Italy
     [InlineData("IT60X0542811101000000123456")]
-    [InlineData("IT40S0542811101000000123456")]
     // Spain
     [InlineData("ES9121000418450200051332")]
     [InlineData("ES7921000813610123456789")]
     // Netherlands
     [InlineData("NL91ABNA0417164300")]
-    [InlineData("NL20INGB0001234567")]
     // Luxembourg
     [InlineData("LU280019400644750000")]
     [InlineData("LU120010001234567891")]

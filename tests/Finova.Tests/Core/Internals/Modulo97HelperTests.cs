@@ -61,7 +61,7 @@ public class Modulo97HelperTests
 
         // Assert
         act.Should().Throw<ArgumentException>()
-            .WithMessage("Input must contain only digits.*")
+            .WithMessage("Input cannot be null or empty.*")
             .And.ParamName.Should().Be("numericString");
     }
 
