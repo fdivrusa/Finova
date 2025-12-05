@@ -1,19 +1,48 @@
 using Finova.Core.Accounts;
 using Finova.Core.Interfaces;
 using Finova.Core.Models;
+using Finova.Countries.Europe.Andorra.Services;
 using Finova.Countries.Europe.Austria.Services;
 using Finova.Countries.Europe.Belgium.Services;
+using Finova.Countries.Europe.Bulgaria.Services;
+using Finova.Countries.Europe.Croatia.Services;
+using Finova.Countries.Europe.Cyprus.Services;
+using Finova.Countries.Europe.CzechRepublic.Services;
+using Finova.Countries.Europe.Denmark.Services;
+using Finova.Countries.Europe.Estonia.Services;
 using Finova.Countries.Europe.Finland.Services;
 using Finova.Countries.Europe.France.Services;
 using Finova.Countries.Europe.Germany.Services;
+using Finova.Countries.Europe.Gibraltar.Services;
 using Finova.Countries.Europe.Greece.Services;
+using Finova.Countries.Europe.Hungary.Services;
+using Finova.Countries.Europe.Iceland.Services;
 using Finova.Countries.Europe.Ireland.Services;
 using Finova.Countries.Europe.Italy.Services;
+using Finova.Countries.Europe.Latvia.Services;
+using Finova.Countries.Europe.Lithuania.Services;
 using Finova.Countries.Europe.Luxembourg.Services;
+using Finova.Countries.Europe.Malta.Services;
+using Finova.Countries.Europe.Monaco.Services;
 using Finova.Countries.Europe.Netherlands.Services;
+using Finova.Countries.Europe.Norway.Services;
+using Finova.Countries.Europe.Poland.Services;
 using Finova.Countries.Europe.Portugal.Services;
+using Finova.Countries.Europe.Romania.Services;
+using Finova.Countries.Europe.SanMarino.Services;
+using Finova.Countries.Europe.Slovakia.Services;
+using Finova.Countries.Europe.Slovenia.Services;
 using Finova.Countries.Europe.Spain.Services;
+using Finova.Countries.Europe.Sweden.Services;
+using Finova.Countries.Europe.Switzerland.Services;
 using Finova.Countries.Europe.UnitedKingdom.Services;
+using Finova.Countries.Europe.Vatican.Services;
+using Finova.Countries.Europe.Albania.Services;
+using Finova.Countries.Europe.Moldova.Services;
+using Finova.Countries.Europe.Montenegro.Services;
+using Finova.Countries.Europe.NorthMacedonia.Services;
+using Finova.Countries.Europe.Liechtenstein.Services;
+using Finova.Countries.Europe.Serbia.Services;
 
 namespace Finova.Services;
 
@@ -52,7 +81,35 @@ public class EuropeIbanParser : IIbanParser
             "GR" => GreeceIbanParser.Create().ParseIban(normalized),
             "PT" => PortugalIbanParser.Create().ParseIban(normalized),
             "FI" => FinlandIbanParser.Create().ParseIban(normalized),
-
+            "SE" => SwedenIbanParser.Create().ParseIban(normalized),
+            "DK" => DenmarkIbanParser.Create().ParseIban(normalized),
+            "NO" => NorwayIbanParser.Create().ParseIban(normalized),
+            "PL" => PolandIbanParser.Create().ParseIban(normalized),
+            "CZ" => CzechRepublicIbanParser.Create().ParseIban(normalized),
+            "HU" => HungaryIbanParser.Create().ParseIban(normalized),
+            "RO" => RomaniaIbanParser.Create().ParseIban(normalized),
+            "BG" => BulgariaIbanParser.Create().ParseIban(normalized),
+            "HR" => CroatiaIbanParser.Create().ParseIban(normalized),
+            "SI" => SloveniaIbanParser.Create().ParseIban(normalized),
+            "SK" => SlovakiaIbanParser.Create().ParseIban(normalized),
+            "EE" => EstoniaIbanParser.Create().ParseIban(normalized),
+            "LV" => LatviaIbanParser.Create().ParseIban(normalized),
+            "LT" => LithuaniaIbanParser.Create().ParseIban(normalized),
+            "CH" => SwitzerlandIbanParser.Create().ParseIban(normalized),
+            "CY" => CyprusIbanParser.Create().ParseIban(normalized),
+            "MT" => MaltaIbanParser.Create().ParseIban(normalized),
+            "MC" => MonacoIbanParser.Create().ParseIban(normalized),
+            "AD" => AndorraIbanParser.Create().ParseIban(normalized),
+            "VA" => VaticanIbanParser.Create().ParseIban(normalized),
+            "SM" => SanMarinoIbanParser.Create().ParseIban(normalized),
+            "GI" => GibraltarIbanParser.Create().ParseIban(normalized),
+            "IS" => IcelandIbanParser.Create().ParseIban(normalized),
+            "AL" => AlbaniaIbanParser.Create().ParseIban(normalized),
+            "MD" => MoldovaIbanParser.Create().ParseIban(normalized),
+            "ME" => MontenegroIbanParser.Create().ParseIban(normalized),
+            "MK" => NorthMacedoniaIbanParser.Create().ParseIban(normalized),
+            "LI" => LiechtensteinIbanParser.Create().ParseIban(normalized),
+            "RS" => SerbiaIbanParser.Create().ParseIban(normalized),
             _ => new IbanDetails
             {
                 Iban = normalized,

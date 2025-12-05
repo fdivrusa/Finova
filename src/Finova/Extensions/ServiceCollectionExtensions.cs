@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IBicValidator, BicValidator>();
         services.AddSingleton<IPaymentCardValidator, PaymentCardValidator>();
         services.AddSingleton<IPaymentReferenceValidator, PaymentReferenceValidator>();
+
         services.AddSingleton<IPaymentReferenceGenerator, BelgiumPaymentReferenceService>();
 
         services.AddSingleton<IIbanParser, EuropeIbanParser>();
