@@ -23,14 +23,14 @@ public class CroatiaIbanValidatorTests
     [InlineData("HR1723600001101234565")]
     public void IsValidIban_WithValidCroatiaIban_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
     [InlineData("HR17 2360 0001 1012 3456 5")]
     public void IsValidIban_WithFormattedIban_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -42,6 +42,8 @@ public class CroatiaIbanValidatorTests
     [InlineData("")]
     public void IsValidIban_WithInvalidIban_ReturnsFalse(string? iban)
     {
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 }
+
+

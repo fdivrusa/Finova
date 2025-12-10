@@ -23,14 +23,14 @@ public class SwitzerlandIbanValidatorTests
     [InlineData("CH5604835012345678009")]
     public void IsValidIban_WithValidSwitzerlandIban_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
     [InlineData("CH56 0483 5012 3456 7800 9")]
     public void IsValidIban_WithFormattedIban_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -42,6 +42,8 @@ public class SwitzerlandIbanValidatorTests
     [InlineData("")]
     public void IsValidIban_WithInvalidIban_ReturnsFalse(string? iban)
     {
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 }
+
+

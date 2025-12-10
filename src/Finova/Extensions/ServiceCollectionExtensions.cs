@@ -1,8 +1,11 @@
-using Finova.Belgium.Services;
-using Finova.Core.Interfaces;
-using Finova.Core.Validators;
+using Finova.Core.Iban;
+using Finova.Core.Bic;
+using Finova.Core.PaymentCard;
+using Finova.Core.PaymentReference;
 using Finova.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Finova.Generators;
+using Finova.Validators;
 
 namespace Finova.Extensions;
 
@@ -17,9 +20,9 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IBicValidator, BicValidator>();
         services.AddSingleton<IPaymentCardValidator, PaymentCardValidator>();
-        services.AddSingleton<IPaymentReferenceValidator, PaymentReferenceValidator>();
 
-        services.AddSingleton<IPaymentReferenceGenerator, BelgiumPaymentReferenceService>();
+        services.AddSingleton<IPaymentReferenceValidator, PaymentReferenceValidator>();
+        services.AddSingleton<IPaymentReferenceGenerator, PaymentReferenceGenerator>();
 
         services.AddSingleton<IIbanParser, EuropeIbanParser>();
         services.AddSingleton<IIbanValidator, EuropeIbanValidator>();

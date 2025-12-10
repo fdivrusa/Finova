@@ -32,10 +32,10 @@ public class BelgiumIbanValidatorTests
     public void IsValidIban_WithValidBelgianIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -45,10 +45,10 @@ public class BelgiumIbanValidatorTests
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -63,10 +63,10 @@ public class BelgiumIbanValidatorTests
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -82,7 +82,7 @@ public class BelgiumIbanValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -94,7 +94,7 @@ public class BelgiumIbanValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -111,7 +111,7 @@ public class BelgiumIbanValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -127,7 +127,7 @@ public class BelgiumIbanValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -140,7 +140,7 @@ public class BelgiumIbanValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -157,7 +157,7 @@ public class BelgiumIbanValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeFalse("Checksum should be invalid");
+        result.IsValid.Should().BeFalse("Checksum should be invalid");
     }
 
     [Fact]
@@ -167,14 +167,15 @@ public class BelgiumIbanValidatorTests
         var iban = "BE68539007547034";
 
         // Act
-        var result1 = _validator.IsValidIban(iban);
-        var result2 = _validator.IsValidIban(iban);
-        var result3 = _validator.IsValidIban(iban);
+        var result1 = _validator.Validate(iban);
+        var result2 = _validator.Validate(iban);
+        var result3 = _validator.Validate(iban);
 
         // Assert
-        result1.Should().Be(result2);
-        result2.Should().Be(result3);
+        result1.Should().BeEquivalentTo(result2);
+        result2.Should().BeEquivalentTo(result3);
     }
 
     #endregion
 }
+

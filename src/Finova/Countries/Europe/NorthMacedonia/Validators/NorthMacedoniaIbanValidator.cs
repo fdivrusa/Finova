@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.NorthMacedonia.Validators;
 
@@ -22,33 +22,25 @@ public class NorthMacedoniaIbanValidator : IIbanValidator
     /// </summary>
     /// <param name="iban">The IBAN to validate.</param>
     /// <returns>True if the IBAN is valid; otherwise, false.</returns>
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateNorthMacedoniaIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateNorthMacedoniaIban(iban);
 
-    /// <summary>
-    /// Static validation method for North Macedonia IBANs.
-    /// </summary>
-    /// <param name="iban">The IBAN to validate.</param>
-    /// <returns>True if the IBAN is valid; otherwise, false.</returns>
-    public static bool ValidateNorthMacedoniaIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateNorthMacedoniaIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != NorthMacedoniaIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {NorthMacedoniaIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(NorthMacedoniaCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected MK.");
         }
 
         // Structure Validation:
@@ -57,7 +49,7 @@ public class NorthMacedoniaIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Bank code must be numeric.");
             }
         }
 
@@ -66,7 +58,7 @@ public class NorthMacedoniaIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Account number must be alphanumeric.");
             }
         }
 
@@ -75,10 +67,12 @@ public class NorthMacedoniaIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "National check digits must be numeric.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

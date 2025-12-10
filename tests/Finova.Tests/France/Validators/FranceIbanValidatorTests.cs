@@ -24,7 +24,7 @@ public class FranceIbanValidatorTests
     [InlineData("FR7630006000011234567890189")]
     public void IsValidIban_WithValidFrenchIbans_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -32,7 +32,7 @@ public class FranceIbanValidatorTests
     [InlineData("fr1420041010050500013m02606")] // Lowercase
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -47,7 +47,7 @@ public class FranceIbanValidatorTests
     [InlineData(null)] // Null
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -55,7 +55,7 @@ public class FranceIbanValidatorTests
     [InlineData("FR7630006000011234567890189")]
     public void ValidateFranceIban_WithValidIbans_ReturnsTrue(string iban)
     {
-        FranceIbanValidator.ValidateFranceIban(iban).Should().BeTrue();
+        FranceIbanValidator.ValidateFranceIban(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -64,15 +64,17 @@ public class FranceIbanValidatorTests
     [InlineData(null)]
     public void ValidateFranceIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
-        FranceIbanValidator.ValidateFranceIban(iban).Should().BeFalse();
+        FranceIbanValidator.ValidateFranceIban(iban).IsValid.Should().BeFalse();
     }
 
     [Fact]
     public void IsValidIban_CalledMultipleTimes_ReturnsConsistentResults()
     {
         var iban = "FR1420041010050500013M02606";
-        var result1 = _validator.IsValidIban(iban);
-        var result2 = _validator.IsValidIban(iban);
-        result1.Should().Be(result2);
+        var result1 = _validator.Validate(iban);
+        var result2 = _validator.Validate(iban);
+        result1.Should().BeEquivalentTo(result2);
     }
 }
+
+

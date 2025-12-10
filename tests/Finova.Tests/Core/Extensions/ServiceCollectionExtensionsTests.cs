@@ -1,6 +1,5 @@
 using Finova.Core.Extensions;
-using Finova.Core.Interfaces;
-using Finova.Core.Services;
+using Finova.Core.Iban;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -81,10 +80,10 @@ public class ServiceCollectionExtensionsTests
         var service = serviceProvider.GetRequiredService<IIbanService>();
 
         // Act
-        var result = service.IsValidIban("BE68539007547034");
+        var result = service.Validate("BE68539007547034");
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]

@@ -21,12 +21,12 @@ public static partial class BelgiumVatValidator
     /// Accepts formats: BE0123.456.789, BE0123456789, 0123.456.789, or 0123456789.
     /// </summary>
     /// <param name="vat">The VAT number to validate</param>
-    /// <returns>True if valid, false otherwise</returns>
-    public static bool IsValid([NotNullWhen(true)] string? vat)
+    /// <returns>A ValidationResult indicating success or failure.</returns>
+    public static Core.Common.ValidationResult Validate(string? vat)
     {
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return false;
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
         }
 
         // Remove "BE" prefix if present
@@ -37,7 +37,7 @@ public static partial class BelgiumVatValidator
         }
 
         // Delegate to Enterprise Number validator (VAT = KBO/BCE)
-        return BelgiumEnterpriseValidator.IsValid(cleaned);
+        return BelgiumEnterpriseValidator.Validate(cleaned);
     }
 
     /// <summary>
@@ -48,13 +48,13 @@ public static partial class BelgiumVatValidator
     /// <exception cref="ArgumentException">If the VAT number is invalid</exception>
     public static string Format(string? vat)
     {
-        if (!IsValid(vat))
+        if (!Validate(vat).IsValid)
         {
             throw new ArgumentException("Invalid Belgian VAT number", nameof(vat));
         }
 
         // Remove BE prefix if present
-        var cleaned = vat.Trim().ToUpperInvariant();
+        var cleaned = vat!.Trim().ToUpperInvariant();
         if (cleaned.StartsWith(VatPrefix))
         {
             cleaned = cleaned[VatPrefix.Length..];
@@ -96,17 +96,37 @@ public static partial class BelgiumVatValidator
     /// <returns>The corresponding KBO/BCE number or null if invalid</returns>
     public static string? GetEnterpriseNumber(string? vat)
     {
-        if (!IsValid(vat))
+        if (!Validate(vat).IsValid)
         {
             return null;
         }
 
-        var cleaned = vat.Trim().ToUpperInvariant();
+        var cleaned = vat!.Trim().ToUpperInvariant();
         if (cleaned.StartsWith(VatPrefix))
         {
             cleaned = cleaned[VatPrefix.Length..];
         }
 
         return BelgiumEnterpriseValidator.Normalize(cleaned);
+    }
+
+    /// <summary>
+    /// Parses a Belgian VAT number and returns details.
+    /// </summary>
+    /// <param name="vat">The VAT number to parse.</param>
+    /// <returns>VatDetails object or null if invalid.</returns>
+    public static Core.Vat.VatDetails? GetVatDetails(string? vat)
+    {
+        if (!Validate(vat).IsValid)
+        {
+            return null;
+        }
+
+        return new Core.Vat.VatDetails
+        {
+            VatNumber = Normalize(vat),
+            CountryCode = "BE",
+            IsValid = true
+        };
     }
 }

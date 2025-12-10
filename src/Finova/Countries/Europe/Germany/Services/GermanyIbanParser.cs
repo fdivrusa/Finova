@@ -1,6 +1,4 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
 using Finova.Countries.Europe.Germany.Models;
 using Finova.Countries.Europe.Germany.Validators;
 
@@ -24,14 +22,14 @@ public class GermanyIbanParser(GermanyIbanValidator validator) : IIbanParser
     /// var details = parser.ParseIban("DE89370400440532013000");
     /// </code>
     /// </example>
-    public static GermanyIbanParser Create()
-    {
-        return new GermanyIbanParser(new GermanyIbanValidator());
-    }
+    public static GermanyIbanParser Create() => new GermanyIbanParser(new GermanyIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {
-        if (!_validator.IsValidIban(iban)) return null;
+        if (!_validator.Validate(iban).IsValid)
+        {
+            return null;
+        }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 

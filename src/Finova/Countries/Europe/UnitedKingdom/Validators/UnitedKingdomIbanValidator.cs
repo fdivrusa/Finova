@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.UnitedKingdom.Validators;
 
@@ -17,10 +17,7 @@ public class UnitedKingdomIbanValidator : IIbanValidator
     private const string UnitedKingdomCountryCode = "GB";
 
     #region Instance Methods (for Dependency Injection)
-    public bool IsValidIban([NotNullWhen(true)] string? iban)
-    {
-        return ValidateUnitedKingdomIban(iban);
-    }
+    public ValidationResult Validate([NotNullWhen(true)] string? iban) => ValidateUnitedKingdomIban(iban);
     #endregion
 
     #region Static Methods (for Direct Usage)
@@ -29,23 +26,23 @@ public class UnitedKingdomIbanValidator : IIbanValidator
     /// </summary>
     /// <param name="iban">The IBAN to validate.</param>
     /// <returns> True if the IBAN is valid for United Kingdom; otherwise, false.</returns>
-    public static bool ValidateUnitedKingdomIban(string? iban)
+    public static ValidationResult ValidateUnitedKingdomIban(string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
         var normalized = IbanHelper.NormalizeIban(iban);
         // Check length (United Kingdom IBAN is exactly 22 characters)
         if (normalized.Length != UnitedKingdomIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {UnitedKingdomIbanLength}, got {normalized.Length}.");
         }
 
         // Check country code
         if (!normalized.StartsWith(UnitedKingdomCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected GB.");
         }
 
         // Check that positions 4 to 7 are LETTERS
@@ -54,7 +51,7 @@ public class UnitedKingdomIbanValidator : IIbanValidator
 
             if (!char.IsLetter(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "UK Bank Code must be letters.");
             }
         }
 
@@ -63,12 +60,14 @@ public class UnitedKingdomIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "UK Sort Code/Account Number must be digits.");
             }
         }
 
         // Validate structure and checksum
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
     #endregion
 }

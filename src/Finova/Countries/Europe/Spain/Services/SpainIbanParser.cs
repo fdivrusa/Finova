@@ -1,6 +1,6 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
+
+
 using Finova.Countries.Europe.Spain.Models;
 using Finova.Countries.Europe.Spain.Validators;
 
@@ -11,14 +11,11 @@ public class SpainIbanParser(SpainIbanValidator validator) : IIbanParser
     private readonly SpainIbanValidator _validator = validator;
     public string? CountryCode => _validator.CountryCode;
 
-    public static SpainIbanParser Create()
-    {
-        return new SpainIbanParser(new SpainIbanValidator());
-    }
+    public static SpainIbanParser Create() => new SpainIbanParser(new SpainIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {
-        if (!_validator.IsValidIban(iban))
+        if (!_validator.Validate(iban).IsValid)
         {
             return null;
         }

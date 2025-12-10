@@ -1,5 +1,5 @@
-using Finova.Core.Models;
-using Finova.Core.Validators;
+
+using Finova.Core.Bic;
 using FluentAssertions;
 using Xunit;
 
@@ -32,8 +32,8 @@ public class BicValidatorTests
     [InlineData("BBBBCCDD123")] // Generic valid format with branch
     public void IsValid_WithValidBics_ReturnsTrue(string bic)
     {
-        BicValidator.Validate(bic).Should().BeTrue();
-        ((Finova.Core.Interfaces.IBicValidator)_validator).IsValid(bic).Should().BeTrue();
+        BicValidator.Validate(bic).IsValid.Should().BeTrue();
+        ((IBicValidator)_validator).Validate(bic).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -59,8 +59,8 @@ public class BicValidatorTests
     [InlineData("DEUTDEFFXX@")] // Branch code contains special char
     public void IsValid_WithInvalidBics_ReturnsFalse(string? bic)
     {
-        BicValidator.Validate(bic).Should().BeFalse();
-        ((Finova.Core.Interfaces.IBicValidator)_validator).IsValid(bic).Should().BeFalse();
+        BicValidator.Validate(bic).IsValid.Should().BeFalse();
+        ((IBicValidator)_validator).Validate(bic).IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -68,7 +68,7 @@ public class BicValidatorTests
     {
         // IsValid accepts lowercase letters
         var bic = "deutdeff";
-        BicValidator.Validate(bic).Should().BeTrue();
+        BicValidator.Validate(bic).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -78,7 +78,7 @@ public class BicValidatorTests
     [InlineData("AAAABB11A")]
     public void IsValid_WithIncompleteBics_ReturnsFalse(string bic)
     {
-        BicValidator.Validate(bic).Should().BeFalse();
+        BicValidator.Validate(bic).IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -166,7 +166,7 @@ public class BicValidatorTests
     public void Parse_WithInvalidBics_ReturnsNull(string? bic)
     {
         BicValidator.Parse(bic).Should().BeNull();
-        ((Finova.Core.Interfaces.IBicValidator)_validator).Parse(bic).Should().BeNull();
+        ((IBicValidator)_validator).Parse(bic).Should().BeNull();
     }
 
     [Fact]
@@ -197,8 +197,8 @@ public class BicValidatorTests
     [InlineData("DEUTDEFF500", "DE")] // With branch code
     public void IsConsistentWithIban_WithMatchingCountryCodes_ReturnsTrue(string bic, string ibanCountryCode)
     {
-        BicValidator.IsConsistentWithIban(bic, ibanCountryCode).Should().BeTrue();
-        ((Finova.Core.Interfaces.IBicValidator)_validator).IsConsistentWithIban(bic, ibanCountryCode).Should().BeTrue();
+        BicValidator.ValidateConsistencyWithIban(bic, ibanCountryCode).IsValid.Should().BeTrue();
+        ((IBicValidator)_validator).ValidateConsistencyWithIban(bic, ibanCountryCode).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -208,7 +208,7 @@ public class BicValidatorTests
     [InlineData("GEBABEBB", "NL")] // Belgian BIC with Dutch IBAN
     public void IsConsistentWithIban_WithMismatchedCountryCodes_ReturnsFalse(string bic, string ibanCountryCode)
     {
-        BicValidator.IsConsistentWithIban(bic, ibanCountryCode).Should().BeFalse();
+        BicValidator.ValidateConsistencyWithIban(bic, ibanCountryCode).IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -217,7 +217,7 @@ public class BicValidatorTests
     [InlineData("deutdeff", "DE")] // Mixed case
     public void IsConsistentWithIban_IsCaseInsensitive(string bic, string ibanCountryCode)
     {
-        BicValidator.IsConsistentWithIban(bic, ibanCountryCode).Should().BeTrue();
+        BicValidator.ValidateConsistencyWithIban(bic, ibanCountryCode).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -230,7 +230,7 @@ public class BicValidatorTests
     [InlineData("DEUTDEFF", "   ")]
     public void IsConsistentWithIban_WithNullOrEmptyValues_ReturnsFalse(string? bic, string? ibanCountryCode)
     {
-        BicValidator.IsConsistentWithIban(bic, ibanCountryCode).Should().BeFalse();
+        BicValidator.ValidateConsistencyWithIban(bic, ibanCountryCode).IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -238,7 +238,7 @@ public class BicValidatorTests
     {
         var bic = "DEUT"; // Only 4 chars
         var ibanCountryCode = "DE";
-        BicValidator.IsConsistentWithIban(bic, ibanCountryCode).Should().BeFalse();
+        BicValidator.ValidateConsistencyWithIban(bic, ibanCountryCode).IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -246,21 +246,21 @@ public class BicValidatorTests
     #region IBicValidator Interface Tests
 
     [Fact]
-    public void IBicValidator_IsValid_DelegatesToStaticMethod()
+    public void IBicValidator_Validate_DelegatesToStaticMethod()
     {
-        var validator = (Finova.Core.Interfaces.IBicValidator)_validator;
+        var validator = (IBicValidator)_validator;
         var bic = "DEUTDEFF";
 
         var staticResult = BicValidator.Validate(bic);
-        var instanceResult = validator.IsValid(bic);
+        var instanceResult = validator.Validate(bic);
 
-        instanceResult.Should().Be(staticResult);
+        instanceResult.Should().BeEquivalentTo(staticResult);
     }
 
     [Fact]
     public void IBicValidator_Parse_DelegatesToStaticMethod()
     {
-        var validator = (Finova.Core.Interfaces.IBicValidator)_validator;
+        var validator = (IBicValidator)_validator;
         var bic = "DEUTDEFF";
 
         var staticResult = BicValidator.Parse(bic);
@@ -270,16 +270,16 @@ public class BicValidatorTests
     }
 
     [Fact]
-    public void IBicValidator_IsConsistentWithIban_DelegatesToStaticMethod()
+    public void IBicValidator_ValidateConsistencyWithIban_DelegatesToStaticMethod()
     {
-        var validator = (Finova.Core.Interfaces.IBicValidator)_validator;
+        var validator = (IBicValidator)_validator;
         var bic = "DEUTDEFF";
         var country = "DE";
 
-        var staticResult = BicValidator.IsConsistentWithIban(bic, country);
-        var instanceResult = validator.IsConsistentWithIban(bic, country);
+        var staticResult = BicValidator.ValidateConsistencyWithIban(bic, country);
+        var instanceResult = validator.ValidateConsistencyWithIban(bic, country);
 
-        instanceResult.Should().Be(staticResult);
+        instanceResult.Should().BeEquivalentTo(staticResult);
     }
 
     #endregion
@@ -310,14 +310,14 @@ public class BicValidatorTests
     public void IsValid_WithAllLetterLocationCode_ReturnsTrue()
     {
         var bic = "DEUTDEFF";
-        BicValidator.Validate(bic).Should().BeTrue();
+        BicValidator.Validate(bic).IsValid.Should().BeTrue();
     }
 
     [Fact]
     public void IsValid_WithAllDigitLocationCode_ReturnsTrue()
     {
         var bic = "DEUT DE 11".Replace(" ", "");
-        BicValidator.Validate(bic).Should().BeTrue();
+        BicValidator.Validate(bic).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -326,7 +326,7 @@ public class BicValidatorTests
     [InlineData("TESTAA11")]
     public void IsValid_WithEdgeCaseBankAndCountryCodes_ReturnsTrue(string bic)
     {
-        BicValidator.Validate(bic).Should().BeTrue();
+        BicValidator.Validate(bic).IsValid.Should().BeTrue();
     }
 
     #endregion

@@ -15,13 +15,13 @@ public class GermanyIbanValidatorTests
     [InlineData("DE89370400440532013000")]
     [InlineData("DE44500105175407324931")]
     public void IsValidIban_WithValidGermanIbans_ReturnsTrue(string iban)
-        => _validator.IsValidIban(iban).Should().BeTrue();
+        => _validator.Validate(iban).IsValid.Should().BeTrue();
 
     [Theory]
     [InlineData("DE89 3704 0044 0532 0130 00")] // With spaces
     [InlineData("de89370400440532013000")] // Lowercase
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
-        => _validator.IsValidIban(iban).Should().BeTrue();
+        => _validator.Validate(iban).IsValid.Should().BeTrue();
 
     [Theory]
     [InlineData("DE00370400440532013000")] // Wrong check digits
@@ -31,10 +31,12 @@ public class GermanyIbanValidatorTests
     [InlineData("")] // Empty
     [InlineData(null)] // Null
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
-        => _validator.IsValidIban(iban).Should().BeFalse();
+        => _validator.Validate(iban).IsValid.Should().BeFalse();
 
     [Theory]
     [InlineData("DE89370400440532013000")]
     public void ValidateGermanyIban_WithValidIbans_ReturnsTrue(string iban)
-        => GermanyIbanValidator.ValidateGermanyIban(iban).Should().BeTrue();
+        => GermanyIbanValidator.ValidateGermanyIban(iban).IsValid.Should().BeTrue();
 }
+
+

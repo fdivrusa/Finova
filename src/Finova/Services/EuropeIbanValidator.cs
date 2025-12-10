@@ -1,5 +1,5 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+
+using Finova.Core.Iban;
 using Finova.Countries.Europe.Andorra.Validators;
 using Finova.Countries.Europe.Austria.Validators;
 using Finova.Countries.Europe.Belgium.Validators;
@@ -37,16 +37,26 @@ using Finova.Countries.Europe.Switzerland.Validators;
 using Finova.Countries.Europe.UnitedKingdom.Validators;
 using Finova.Countries.Europe.Vatican.Validators;
 
+using Finova.Core.Common;
+
 namespace Finova.Services;
 
 public class EuropeIbanValidator : IIbanValidator
 {
     public string CountryCode => "";
-    public static bool Validate(string? iban)
+
+    public ValidationResult Validate(string? iban) => ValidateIban(iban);
+
+    public static ValidationResult ValidateIban(string? iban)
     {
-        if (string.IsNullOrWhiteSpace(iban) || iban.Length < 2)
+        if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+        }
+
+        if (iban.Length < 2)
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN is too short.");
         }
 
         string country = iban[0..2].ToUpperInvariant();
@@ -92,11 +102,8 @@ public class EuropeIbanValidator : IIbanValidator
             "IS" => IcelandIbanValidator.ValidateIcelandIban(iban),
 
             _ => IbanHelper.IsValidIban(iban)
+                ? ValidationResult.Success()
+                : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {country} is not supported or IBAN is invalid.")
         };
-    }
-
-    public bool IsValidIban(string? iban)
-    {
-        return Validate(iban);
     }
 }

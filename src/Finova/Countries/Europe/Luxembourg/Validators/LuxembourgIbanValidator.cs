@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Luxembourg.Validators;
 
@@ -18,10 +18,7 @@ public class LuxembourgIbanValidator : IIbanValidator
 
     #region Instance Methods (for Dependency Injection)
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateLuxembourgIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateLuxembourgIban(iban);
 
     #endregion
 
@@ -32,11 +29,11 @@ public class LuxembourgIbanValidator : IIbanValidator
     /// </summary>
     /// <param name="iban">The IBAN to validate</param>
     /// <returns>True if valid Luxembourg IBAN, false otherwise</returns>
-    public static bool ValidateLuxembourgIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateLuxembourgIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
@@ -44,13 +41,13 @@ public class LuxembourgIbanValidator : IIbanValidator
         // Check length (Luxembourg IBAN is exactly 20 characters)
         if (normalized.Length != LuxembourgIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {LuxembourgIbanLength}, got {normalized.Length}.");
         }
 
         // Check country code
         if (!normalized.StartsWith(LuxembourgCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected LU.");
         }
 
         // Bank Code (indices 4-6) must be numeric.
@@ -58,12 +55,14 @@ public class LuxembourgIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Luxembourg Bank Code must be numeric.");
             }
         }
 
         // Validate structure and checksum
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
     #endregion
 }

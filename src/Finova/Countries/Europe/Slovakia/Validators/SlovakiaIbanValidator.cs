@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Slovakia.Validators;
 
@@ -10,28 +10,25 @@ public class SlovakiaIbanValidator : IIbanValidator
     private const int SlovakiaIbanLength = 24;
     private const string SlovakiaCountryCode = "SK";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateSlovakiaIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateSlovakiaIban(iban);
 
-    public static bool ValidateSlovakiaIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateSlovakiaIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != SlovakiaIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {SlovakiaIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(SlovakiaCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected SK.");
         }
 
         // Structure check: All digits
@@ -39,7 +36,7 @@ public class SlovakiaIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Slovakia IBAN must contain only digits after the country code.");
             }
         }
 
@@ -53,17 +50,19 @@ public class SlovakiaIbanValidator : IIbanValidator
         {
             if (!ValidateSlovakMod11(prefix, true))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Slovak Prefix checksum.");
             }
         }
 
         // Validate Account Number
         if (!ValidateSlovakMod11(accountNumber, false))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Slovak Account Number checksum.");
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 
     /// <summary>

@@ -30,8 +30,8 @@ public class GreeceIbanValidatorTests
     [InlineData("GR9608100010000001234567890")] // Another valid Greek IBAN
     public void IsValidIban_WithValidGreekIban_ReturnsTrue(string iban)
     {
-        var result = _validator.IsValidIban(iban);
-        result.Should().BeTrue();
+        var result = _validator.Validate(iban);
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -39,8 +39,8 @@ public class GreeceIbanValidatorTests
     [InlineData("gr1601101250000000012300695")] // Lowercase
     public void IsValidIban_WithFormattedGreekIban_ReturnsTrue(string iban)
     {
-        var result = _validator.IsValidIban(iban);
-        result.Should().BeTrue();
+        var result = _validator.Validate(iban);
+        result.IsValid.Should().BeTrue();
     }
 
     #endregion
@@ -53,8 +53,8 @@ public class GreeceIbanValidatorTests
     [InlineData("   ")]
     public void IsValidIban_WithNullOrEmpty_ReturnsFalse(string? iban)
     {
-        var result = _validator.IsValidIban(iban);
-        result.Should().BeFalse();
+        var result = _validator.Validate(iban);
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -67,8 +67,8 @@ public class GreeceIbanValidatorTests
     [InlineData("FI2112345600000785")] // Finnish IBAN
     public void IsValidIban_WithOtherCountryIban_ReturnsFalse(string iban)
     {
-        var result = _validator.IsValidIban(iban);
-        result.Should().BeFalse();
+        var result = _validator.Validate(iban);
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -80,8 +80,8 @@ public class GreeceIbanValidatorTests
     [InlineData("GR16011012500000001230069500")] // Too long (28 chars)
     public void IsValidIban_WithIncorrectLength_ReturnsFalse(string iban)
     {
-        var result = _validator.IsValidIban(iban);
-        result.Should().BeFalse();
+        var result = _validator.Validate(iban);
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -94,9 +94,9 @@ public class GreeceIbanValidatorTests
         // Changing check digits from 16 to 00
         var iban = "GR0001101250000000012300695";
 
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -108,9 +108,9 @@ public class GreeceIbanValidatorTests
     [InlineData("GR1601A01250000000012300695")] // Letter in branch code (pos 7)
     public void IsValidIban_WithNonNumericBankBranchCode_ReturnsFalse(string iban)
     {
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -125,9 +125,9 @@ public class GreeceIbanValidatorTests
         // Note: Real Greek IBANs typically use only numeric, but spec allows alphanumeric
         var iban = "GR1601101250000000012300695";
 
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     #endregion
@@ -138,15 +138,16 @@ public class GreeceIbanValidatorTests
     public void ValidateGreeceIban_StaticMethod_WorksCorrectly()
     {
         var result = GreeceIbanValidator.ValidateGreeceIban("GR1601101250000000012300695");
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
     public void ValidateGreeceIban_StaticMethod_WithInvalid_ReturnsFalse()
     {
         var result = GreeceIbanValidator.ValidateGreeceIban("GR0001101250000000012300695");
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
 }
+

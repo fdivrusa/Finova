@@ -1,6 +1,6 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
+
+
 using Finova.Countries.Europe.UnitedKingdom.Models;
 using Finova.Countries.Europe.UnitedKingdom.Validators;
 
@@ -25,10 +25,7 @@ public class UnitedKingdomIbanParser(UnitedKingdomIbanValidator validator) : IIb
     /// var details = parser.ParseIban("GB29MIDL40051512345678");
     /// </code>
     /// </example>
-    public static UnitedKingdomIbanParser Create()
-    {
-        return new UnitedKingdomIbanParser(new UnitedKingdomIbanValidator());
-    }
+    public static UnitedKingdomIbanParser Create() => new UnitedKingdomIbanParser(new UnitedKingdomIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {
@@ -37,7 +34,7 @@ public class UnitedKingdomIbanParser(UnitedKingdomIbanValidator validator) : IIb
             return null;
         }
 
-        if (!_validator.IsValidIban(iban))
+        if (!_validator.Validate(iban).IsValid)
         {
             return null;
         }

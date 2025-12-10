@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Ireland.Validators;
 
@@ -17,10 +17,7 @@ public class IrelandIbanValidator : IIbanValidator
 
     #region Instance Methods (for Dependency Injection)
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateIrelandIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateIrelandIban(iban);
 
     #endregion
 
@@ -30,24 +27,24 @@ public class IrelandIbanValidator : IIbanValidator
     /// Validates an Irish IBAN.
     /// </summary>
     /// <param name="iban">The IBAN to validate.</param>
-    public static bool ValidateIrelandIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateIrelandIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
         var normalized = IbanHelper.NormalizeIban(iban);
 
         // Check length (Ireland IBAN is exactly 22 characters)
         if (normalized.Length != IrelandIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {IrelandIbanLength}, got {normalized.Length}.");
         }
 
         // Check country code
         if (!normalized.StartsWith(IrelandCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected IE.");
         }
 
         // Structure Validation:
@@ -58,7 +55,7 @@ public class IrelandIbanValidator : IIbanValidator
         {
             if (!char.IsLetter(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Ireland Bank Code must be letters.");
             }
         }
 
@@ -68,11 +65,13 @@ public class IrelandIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Ireland Sort Code/Account Number must be digits.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 
     #endregion

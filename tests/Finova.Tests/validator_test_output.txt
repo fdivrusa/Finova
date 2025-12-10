@@ -1,0 +1,52 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Finova.Core -> C:\Users\flori\source\repos\Finova\Finova Nuget\src\Finova.Core\bin\Debug\net8.0\Finova.Core.dll
+  Finova -> C:\Users\flori\source\repos\Finova\Finova Nuget\src\Finova\bin\Debug\net8.0\Finova.dll
+  Finova.Core -> C:\Users\flori\source\repos\Finova\Finova Nuget\src\Finova.Core\bin\Debug\net10.0\Finova.Core.dll
+  Finova.Extensions.FluentValidation -> C:\Users\flori\source\repos\Finova\Finova Nuget\src\Finova.Extensions.FluentValidation\bin\Debug\net8.0\Finova.Extensions.FluentValidation.dll
+  Finova -> C:\Users\flori\source\repos\Finova\Finova Nuget\src\Finova\bin\Debug\net10.0\Finova.dll
+  Finova.Tests -> C:\Users\flori\source\repos\Finova\Finova Nuget\tests\Finova.Tests\bin\Debug\net8.0\Finova.Tests.dll
+  Finova.Extensions.FluentValidation -> C:\Users\flori\source\repos\Finova\Finova Nuget\src\Finova.Extensions.FluentValidation\bin\Debug\net10.0\Finova.Extensions.FluentValidation.dll
+  Finova.Tests -> C:\Users\flori\source\repos\Finova\Finova Nuget\tests\Finova.Tests\bin\Debug\net10.0\Finova.Tests.dll
+Test run for C:\Users\flori\source\repos\Finova\Finova Nuget\tests\Finova.Tests\bin\Debug\net8.0\Finova.Tests.dll (.NETCoreApp,Version=v8.0)
+Test run for C:\Users\flori\source\repos\Finova\Finova Nuget\tests\Finova.Tests\bin\Debug\net10.0\Finova.Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.1 (x64)
+
+VSTest version 18.0.1 (x64)
+
+Starting test execution, please wait...
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+A total of 1 test files matched the specified pattern.
+  Failed Finova.Tests.Services.EuropeIbanValidatorTests.Validate_WithValidIban_ReturnsTrue(iban: "PT50500000201231234567890") [386 ms]
+  Error Message:
+   Expected result to be true, but found False.
+  Stack Trace:
+     at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+   at Finova.Tests.Services.EuropeIbanValidatorTests.Validate_WithValidIban_ReturnsTrue(String iban) in C:\Users\flori\source\repos\Finova\Finova Nuget\tests\Finova.Tests\Services\EuropeIbanValidatorTests.cs:line 74
+   at InvokeStub_EuropeIbanValidatorTests.Validate_WithValidIban_ReturnsTrue(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+  Failed Finova.Tests.Services.EuropeIbanValidatorTests.Validate_WithValidIban_ReturnsTrue(iban: "PT50500000201231234567890") [339 ms]
+  Error Message:
+   Expected result to be true, but found False.
+  Stack Trace:
+     at FluentAssertions.Execution.XUnit2TestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+   at Finova.Tests.Services.EuropeIbanValidatorTests.Validate_WithValidIban_ReturnsTrue(String iban) in C:\Users\flori\source\repos\Finova\Finova Nuget\tests\Finova.Tests\Services\EuropeIbanValidatorTests.cs:line 74
+   at InvokeStub_EuropeIbanValidatorTests.Validate_WithValidIban_ReturnsTrue(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+Failed!  - Failed:     1, Passed:    53, Skipped:     0, Total:    54, Duration: 617 ms - Finova.Tests.dll (net10.0)
+
+Failed!  - Failed:     1, Passed:    53, Skipped:     0, Total:    54, Duration: 500 ms - Finova.Tests.dll (net8.0)

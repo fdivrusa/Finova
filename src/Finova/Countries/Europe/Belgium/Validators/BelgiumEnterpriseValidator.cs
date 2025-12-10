@@ -1,6 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
-using Finova.Core.Internals;
+using Finova.Core.PaymentReference.Internals;
 
 namespace Finova.Belgium.Validators;
 
@@ -20,12 +19,12 @@ public static partial class BelgiumEnterpriseValidator
     /// Accepts formats: 0123.456.789, BE0123456789, or 0123456789.
     /// </summary>
     /// <param name="kbo">The KBO/BCE number to validate</param>
-    /// <returns>True if valid, false otherwise</returns>
-    public static bool IsValid([NotNullWhen(true)] string? kbo)
+    /// <returns>A ValidationResult indicating success or failure.</returns>
+    public static Core.Common.ValidationResult Validate(string? kbo)
     {
         if (string.IsNullOrWhiteSpace(kbo))
         {
-            return false;
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
         }
 
         // Extract only digits
@@ -34,13 +33,13 @@ public static partial class BelgiumEnterpriseValidator
         // Must be exactly 10 digits
         if (digits.Length != KboLength)
         {
-            return false;
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, "Enterprise number must be 10 digits.");
         }
 
         // Must start with 0 or 1
         if (digits[0] != '0' && digits[0] != '1')
         {
-            return false;
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidFormat, "Enterprise number must start with 0 or 1.");
         }
 
         // Extract the first 8 digits (main number) and last 2 digits (check digits)
@@ -49,7 +48,7 @@ public static partial class BelgiumEnterpriseValidator
 
         if (!int.TryParse(checkDigitStr, out var providedCheckDigit))
         {
-            return false;
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidFormat, "Check digits must be numeric.");
         }
 
         // Calculate modulo 97 on the first 8 digits
@@ -58,7 +57,9 @@ public static partial class BelgiumEnterpriseValidator
         // Check digit calculation: 97 - (mainNumber % 97)
         var expectedCheckDigit = 97 - mod;
 
-        return expectedCheckDigit == providedCheckDigit;
+        return expectedCheckDigit == providedCheckDigit
+            ? Core.Common.ValidationResult.Success()
+            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
     }
 
     /// <summary>
@@ -69,12 +70,12 @@ public static partial class BelgiumEnterpriseValidator
     /// <exception cref="ArgumentException">If the KBO number is invalid</exception>
     public static string Format(string? kbo)
     {
-        if (!IsValid(kbo))
+        if (!Validate(kbo).IsValid)
         {
             throw new ArgumentException("Invalid Belgian Enterprise Number (KBO/BCE)", nameof(kbo));
         }
 
-        var digits = DigitsOnlyRegex().Replace(kbo, "");
+        var digits = DigitsOnlyRegex().Replace(kbo!, "");
 
         // Format as: 0xxx.xxx.xxx
         return $"{digits[0]}{digits.Substring(1, 3)}.{digits.Substring(4, 3)}.{digits.Substring(7, 3)}";

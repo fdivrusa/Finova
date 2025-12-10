@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Monaco.Validators;
 
@@ -11,28 +11,25 @@ public class MonacoIbanValidator : IIbanValidator
     private const int MonacoIbanLength = 27;
     private const string MonacoCountryCode = "MC";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateMonacoIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateMonacoIban(iban);
 
-    public static bool ValidateMonacoIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateMonacoIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != MonacoIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {MonacoIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(MonacoCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected MC.");
         }
 
         // Structure check: Bank (5) and Branch (5) must be digits
@@ -40,14 +37,14 @@ public class MonacoIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Monaco Bank/Branch must be digits.");
             }
         }
 
         // RIB Key (Pos 25-27) must be digits
         if (!char.IsDigit(normalized[25]) || !char.IsDigit(normalized[26]))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Monaco RIB Key must be digits.");
         }
 
         // Internal Validation: RIB Key Algorithm (Same as France)
@@ -58,10 +55,12 @@ public class MonacoIbanValidator : IIbanValidator
 
         if (!ValidateRibKey(bank, branch, account, key))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid RIB Key.");
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 
     private static bool ValidateRibKey(string bank, string branch, string account, string key)

@@ -1,5 +1,6 @@
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+
+
+using Finova.Core.Iban;
 using Finova.Countries.Europe.Albania.Models;
 using Finova.Countries.Europe.Albania.Validators;
 
@@ -21,10 +22,7 @@ public class AlbaniaIbanParser(IIbanValidator validator) : IIbanParser
     /// Creates a new instance of the parser with a default validator.
     /// </summary>
     /// <returns>A new <see cref="AlbaniaIbanParser"/> instance.</returns>
-    public static AlbaniaIbanParser Create()
-    {
-        return new AlbaniaIbanParser(new AlbaniaIbanValidator());
-    }
+    public static AlbaniaIbanParser Create() => new AlbaniaIbanParser(new AlbaniaIbanValidator());
 
     /// <summary>
     /// Parses the Albanian IBAN.
@@ -33,7 +31,7 @@ public class AlbaniaIbanParser(IIbanValidator validator) : IIbanParser
     /// <returns>The parsed IBAN details, or null if invalid.</returns>
     public IbanDetails? ParseIban(string? iban)
     {
-        if (iban is null || !_validator.IsValidIban(iban))
+        if (iban is null || !_validator.Validate(iban).IsValid)
         {
             return null;
         }

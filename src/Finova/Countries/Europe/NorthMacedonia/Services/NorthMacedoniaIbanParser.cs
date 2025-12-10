@@ -1,5 +1,6 @@
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+
+
+using Finova.Core.Iban;
 using Finova.Countries.Europe.NorthMacedonia.Models;
 using Finova.Countries.Europe.NorthMacedonia.Validators;
 
@@ -21,10 +22,7 @@ public class NorthMacedoniaIbanParser(IIbanValidator validator) : IIbanParser
     /// Creates a new instance of the parser with a default validator.
     /// </summary>
     /// <returns>A new <see cref="NorthMacedoniaIbanParser"/> instance.</returns>
-    public static NorthMacedoniaIbanParser Create()
-    {
-        return new NorthMacedoniaIbanParser(new NorthMacedoniaIbanValidator());
-    }
+    public static NorthMacedoniaIbanParser Create() => new NorthMacedoniaIbanParser(new NorthMacedoniaIbanValidator());
 
     /// <summary>
     /// Parses the North Macedonia IBAN.
@@ -33,7 +31,7 @@ public class NorthMacedoniaIbanParser(IIbanValidator validator) : IIbanParser
     /// <returns>The parsed IBAN details, or null if invalid.</returns>
     public IbanDetails? ParseIban(string? iban)
     {
-        if (iban is null || !_validator.IsValidIban(iban))
+        if (iban is null || !_validator.Validate(iban).IsValid)
         {
             return null;
         }

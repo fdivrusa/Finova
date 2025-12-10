@@ -1,4 +1,4 @@
-using Finova.Core.Services;
+using Finova.Core.Iban;
 using FluentAssertions;
 using Xunit;
 
@@ -25,10 +25,10 @@ public class IbanServiceTests
     public void IsValidIban_WithValidIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _service.IsValidIban(iban);
+        var result = _service.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -39,10 +39,10 @@ public class IbanServiceTests
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
         // Act
-        var result = _service.IsValidIban(iban);
+        var result = _service.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion

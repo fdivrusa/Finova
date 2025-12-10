@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Malta.Validators;
 
@@ -10,28 +10,25 @@ public class MaltaIbanValidator : IIbanValidator
     private const int MaltaIbanLength = 31;
     private const string MaltaCountryCode = "MT";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateMaltaIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateMaltaIban(iban);
 
-    public static bool ValidateMaltaIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateMaltaIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != MaltaIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {MaltaIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(MaltaCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected MT.");
         }
 
         // Structure Validation:
@@ -41,7 +38,7 @@ public class MaltaIbanValidator : IIbanValidator
         {
             if (!char.IsLetter(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Malta Bank BIC must be letters.");
             }
         }
 
@@ -50,7 +47,7 @@ public class MaltaIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Malta Sort Code must be digits.");
             }
         }
 
@@ -59,10 +56,12 @@ public class MaltaIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Malta Account Number must be alphanumeric.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

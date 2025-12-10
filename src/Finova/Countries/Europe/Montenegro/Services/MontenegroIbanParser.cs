@@ -1,5 +1,6 @@
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+
+
+using Finova.Core.Iban;
 using Finova.Countries.Europe.Montenegro.Models;
 using Finova.Countries.Europe.Montenegro.Validators;
 
@@ -21,10 +22,7 @@ public class MontenegroIbanParser(IIbanValidator validator) : IIbanParser
     /// Creates a new instance of the parser with a default validator.
     /// </summary>
     /// <returns>A new <see cref="MontenegroIbanParser"/> instance.</returns>
-    public static MontenegroIbanParser Create()
-    {
-        return new MontenegroIbanParser(new MontenegroIbanValidator());
-    }
+    public static MontenegroIbanParser Create() => new MontenegroIbanParser(new MontenegroIbanValidator());
 
     /// <summary>
     /// Parses the Montenegro IBAN.
@@ -33,7 +31,7 @@ public class MontenegroIbanParser(IIbanValidator validator) : IIbanParser
     /// <returns>The parsed IBAN details, or null if invalid.</returns>
     public IbanDetails? ParseIban(string? iban)
     {
-        if (iban is null || !_validator.IsValidIban(iban))
+        if (iban is null || !_validator.Validate(iban).IsValid)
         {
             return null;
         }

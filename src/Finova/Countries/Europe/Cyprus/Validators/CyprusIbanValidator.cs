@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Cyprus.Validators;
 
@@ -10,28 +10,25 @@ public class CyprusIbanValidator : IIbanValidator
     private const int CyprusIbanLength = 28;
     private const string CyprusCountryCode = "CY";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateCyprusIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateCyprusIban(iban);
 
-    public static bool ValidateCyprusIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateCyprusIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != CyprusIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {CyprusIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(CyprusCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected CY.");
         }
 
         // Structure Validation:
@@ -41,7 +38,7 @@ public class CyprusIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Cyprus Bank Code must be digits.");
             }
         }
 
@@ -50,7 +47,7 @@ public class CyprusIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Cyprus Branch Code must be digits.");
             }
         }
 
@@ -59,10 +56,12 @@ public class CyprusIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Cyprus Account Number must be alphanumeric.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

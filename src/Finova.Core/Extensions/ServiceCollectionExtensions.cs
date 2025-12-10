@@ -1,7 +1,8 @@
-using Finova.Core.Interfaces;
-using Finova.Core.Services;
-using Finova.Core.Validators;
 using Microsoft.Extensions.DependencyInjection;
+using Finova.Core.Iban;
+using Finova.Core.Bic;
+using Finova.Core.PaymentCard;
+using Finova.Core.PaymentReference;
 
 namespace Finova.Core.Extensions;
 
@@ -15,14 +16,13 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddFinovaCoreServices(this IServiceCollection services)
     {
-        // Register Finova Core services here
         services.AddSingleton<IIbanService, IbanService>();
         services.AddSingleton<IIbanParser, IbanParser>();
         services.AddSingleton<IBicValidator, BicValidator>();
         services.AddSingleton<IPaymentCardValidator, PaymentCardValidator>();
-        services.AddSingleton<IPaymentReferenceValidator, PaymentReferenceValidator>();
+        services.AddSingleton<IPaymentReferenceValidator, IsoPaymentReferenceValidator>();
+        services.AddSingleton<IPaymentReferenceGenerator, IsoPaymentReferenceGenerator>();
 
-        // Add other service registrations as needed
         return services;
     }
 }

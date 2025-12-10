@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Austria.Validators;
 
@@ -9,24 +9,24 @@ public class AustriaIbanValidator : IIbanValidator
     public string CountryCode => "AT";
     private const int AustriaIbanLength = 20;
 
-    public bool IsValidIban(string? iban) => ValidateAustriaIban(iban);
+    public ValidationResult Validate(string? iban) => ValidateAustriaIban(iban);
 
-    public static bool ValidateAustriaIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateAustriaIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != AustriaIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {AustriaIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith("AT", StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected AT.");
         }
 
         // Austria IBANs are strictly numeric after the country code.
@@ -35,10 +35,12 @@ public class AustriaIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Austria IBAN must contain only digits after the country code.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

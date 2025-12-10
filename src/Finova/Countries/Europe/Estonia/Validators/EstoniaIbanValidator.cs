@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Estonia.Validators;
 
@@ -10,28 +10,25 @@ public class EstoniaIbanValidator : IIbanValidator
     private const int EstoniaIbanLength = 20;
     private const string EstoniaCountryCode = "EE";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateEstoniaIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateEstoniaIban(iban);
 
-    public static bool ValidateEstoniaIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateEstoniaIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != EstoniaIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {EstoniaIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(EstoniaCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected EE.");
         }
 
         // Structure check: All digits
@@ -39,7 +36,7 @@ public class EstoniaIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Estonia IBAN must contain only digits after the country code.");
             }
         }
 
@@ -49,10 +46,12 @@ public class EstoniaIbanValidator : IIbanValidator
         string bban = normalized.Substring(4, 16);
         if (!ValidateEstonian731(bban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Estonian BBAN structure.");
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 
     private static bool ValidateEstonian731(string bban)

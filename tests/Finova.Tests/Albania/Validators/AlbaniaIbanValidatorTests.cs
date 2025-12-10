@@ -18,14 +18,14 @@ public class AlbaniaIbanValidatorTests
     [InlineData("AL961001000C0000000000000001")] // Generated valid IBAN
     public void IsValidIban_WithValidAlbaniaIban_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
     [InlineData("AL96 1001 000C 0000 0000 0000 0001")]
     public void IsValidIban_WithFormattedIban_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -37,6 +37,8 @@ public class AlbaniaIbanValidatorTests
     [InlineData("")]
     public void IsValidIban_WithInvalidIban_ReturnsFalse(string? iban)
     {
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 }
+
+

@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.France.Validators;
 
@@ -16,28 +16,25 @@ public class FranceIbanValidator : IIbanValidator
     private const int FranceIbanLength = 27;
     private const string FranceCountryCode = "FR";
 
-    public bool IsValidIban([NotNullWhen(true)] string? iban)
-    {
-        return ValidateFranceIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateFranceIban(iban);
 
-    public static bool ValidateFranceIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateFranceIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != FranceIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {FranceIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(FranceCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected FR.");
         }
 
         // Indices in normalized string: Bank(4..9), Branch(9..14)
@@ -45,13 +42,13 @@ public class FranceIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "France Bank/Branch code must be digits.");
             }
         }
 
         if (!char.IsDigit(normalized[25]) || !char.IsDigit(normalized[26]))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "France RIB Key must be digits.");
         }
 
         // Extract parts
@@ -62,10 +59,12 @@ public class FranceIbanValidator : IIbanValidator
 
         if (!ValidateRibKey(bankCode, branchCode, accountNumber, ribKey))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid RIB Key.");
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 
     /// <summary>

@@ -23,14 +23,14 @@ public class SlovakiaIbanValidatorTests
     [InlineData("SK8975000000000012345671")]
     public void IsValidIban_WithValidSlovakiaIban_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
     [InlineData("SK89 7500 0000 0000 1234 5671")]
     public void IsValidIban_WithFormattedIban_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -42,6 +42,8 @@ public class SlovakiaIbanValidatorTests
     [InlineData("")]
     public void IsValidIban_WithInvalidIban_ReturnsFalse(string? iban)
     {
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 }
+
+

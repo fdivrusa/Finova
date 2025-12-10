@@ -1,6 +1,6 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
+
+
 using Finova.Countries.Europe.Luxembourg.Models;
 using Finova.Countries.Europe.Luxembourg.Validators;
 
@@ -13,14 +13,11 @@ public class LuxembourgIbanParser(LuxembourgIbanValidator validator) : IIbanPars
     public string? CountryCode => _validator.CountryCode;
 
     //static method
-    public static LuxembourgIbanParser Create()
-    {
-        return new LuxembourgIbanParser(new LuxembourgIbanValidator());
-    }
+    public static LuxembourgIbanParser Create() => new LuxembourgIbanParser(new LuxembourgIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {
-        if (!_validator.IsValidIban(iban))
+        if (!_validator.Validate(iban).IsValid)
         {
             return null;
         }

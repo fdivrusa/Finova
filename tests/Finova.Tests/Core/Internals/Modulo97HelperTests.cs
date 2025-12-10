@@ -1,4 +1,4 @@
-using Finova.Core.Internals;
+using Finova.Core.PaymentReference.Internals;
 using FluentAssertions;
 using Xunit;
 

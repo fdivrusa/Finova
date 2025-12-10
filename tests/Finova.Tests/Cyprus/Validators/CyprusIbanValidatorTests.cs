@@ -23,14 +23,14 @@ public class CyprusIbanValidatorTests
     [InlineData("CY21002001950000357001234567")]
     public void IsValidIban_WithValidCyprusIban_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
     [InlineData("CY21 0020 0195 0000 3570 0123 4567")]
     public void IsValidIban_WithFormattedIban_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -42,6 +42,8 @@ public class CyprusIbanValidatorTests
     [InlineData("")]
     public void IsValidIban_WithInvalidIban_ReturnsFalse(string? iban)
     {
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 }
+
+

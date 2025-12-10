@@ -1,7 +1,8 @@
 using System.Text.RegularExpressions;
-using Finova.Core.Interfaces;
-using Finova.Core.Internals;
-using Finova.Core.Models;
+using Finova.Core.Common;
+using Finova.Core.PaymentReference;
+using Finova.Core.PaymentReference.Internals;
+
 
 namespace Finova.Belgium.Services;
 
@@ -20,37 +21,18 @@ public partial class BelgiumPaymentReferenceService : IPaymentReferenceGenerator
 
     #region Instance Methods (for Dependency Injection)
 
-    public string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalBelgian)
+    public string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalBelgian) => format switch
     {
-        return format switch
-        {
-            // Domestic (OGM/VCS) - Specific to Belgium
-            PaymentReferenceFormat.LocalBelgian => GenerateOgm(rawReference),
+        // Domestic (OGM/VCS) - Specific to Belgium
+        PaymentReferenceFormat.LocalBelgian => GenerateOgm(rawReference),
 
-            // ISO RF - Uses the international standard logic from Core
-            PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
+        // ISO RF - Uses the international standard logic from Core
+        PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
 
-            _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
-        };
-    }
+        _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
+    };
 
-    public bool IsValid(string communication)
-    {
-        if (string.IsNullOrWhiteSpace(communication))
-        {
-            return false;
-        }
 
-        // 1. Quick check for ISO RF format (Starts with 'RF')
-        if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
-        {
-            // Delegate validation to a shared ISO validator in Core
-            return IsoReferenceValidator.IsValid(communication);
-        }
-
-        // 2. Assume Domestic OGM/VCS if it doesn't match the international standard
-        return ValidateOgm(communication);
-    }
 
     #endregion
 
@@ -61,36 +43,30 @@ public partial class BelgiumPaymentReferenceService : IPaymentReferenceGenerator
     /// </summary>
     /// <param name="rawReference">The raw reference data (max 10 digits)</param>
     /// <returns>Formatted Belgian OGM/VCS reference</returns>
-    public static string GenerateOgmStatic(string rawReference)
-    {
-        return GenerateOgm(rawReference);
-    }
+    public static string GenerateOgmStatic(string rawReference) => GenerateOgm(rawReference);
 
     /// <summary>
     /// Generates an ISO 11649 (RF) international payment reference.
     /// </summary>
     /// <param name="rawReference">The raw reference data</param>
     /// <returns>ISO 11649 formatted reference (RFxx...)</returns>
-    public static string GenerateIsoReferenceStatic(string rawReference)
-    {
-        return IsoReferenceHelper.Generate(rawReference);
-    }
+    public static string GenerateIsoReferenceStatic(string rawReference) => IsoReferenceHelper.Generate(rawReference);
 
     /// <summary>
     /// Validates a Belgian payment reference (supports both OGM/VCS and ISO RF formats).
     /// </summary>
     /// <param name="communication">The payment reference to validate</param>
     /// <returns>True if valid, false otherwise</returns>
-    public static bool ValidateStatic(string communication)
+    public static ValidationResult ValidateStatic(string communication)
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
         }
 
         if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
         {
-            return IsoReferenceValidator.IsValid(communication);
+            return IsoReferenceValidator.Validate(communication);
         }
 
         return ValidateOgm(communication);
@@ -101,10 +77,7 @@ public partial class BelgiumPaymentReferenceService : IPaymentReferenceGenerator
     /// </summary>
     /// <param name="communication">The OGM/VCS reference to validate</param>
     /// <returns>True if valid, false otherwise</returns>
-    public static bool ValidateOgmStatic(string communication)
-    {
-        return ValidateOgm(communication);
-    }
+    public static ValidationResult ValidateOgmStatic(string communication) => ValidateOgm(communication);
 
     #endregion
 
@@ -133,13 +106,18 @@ public partial class BelgiumPaymentReferenceService : IPaymentReferenceGenerator
         return $"+++{fullNumber[..3]}/{fullNumber.Substring(3, 4)}/{fullNumber.Substring(7, 5)}+++";
     }
 
-    private static bool ValidateOgm(string communication)
+    private static ValidationResult ValidateOgm(string communication)
     {
+        if (string.IsNullOrWhiteSpace(communication))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+        }
+
         var digits = DigitsOnlyRegex().Replace(communication, "");
 
         if (digits.Length != OgmTotalLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "OGM reference must be 12 digits.");
         }
 
         var data = digits[..10];
@@ -151,10 +129,12 @@ public partial class BelgiumPaymentReferenceService : IPaymentReferenceGenerator
 
         if (int.TryParse(checkDigitStr, out var actualCheckDigit))
         {
-            return expectedCheckDigit == actualCheckDigit;
+            return expectedCheckDigit == actualCheckDigit
+                ? ValidationResult.Success()
+                : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
         }
 
-        return false;
+        return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Check digits must be numeric.");
     }
 
     #endregion

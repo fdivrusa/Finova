@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Montenegro.Validators;
 
@@ -22,33 +22,25 @@ public class MontenegroIbanValidator : IIbanValidator
     /// </summary>
     /// <param name="iban">The IBAN to validate.</param>
     /// <returns>True if the IBAN is valid; otherwise, false.</returns>
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateMontenegroIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateMontenegroIban(iban);
 
-    /// <summary>
-    /// Static validation method for Montenegro IBANs.
-    /// </summary>
-    /// <param name="iban">The IBAN to validate.</param>
-    /// <returns>True if the IBAN is valid; otherwise, false.</returns>
-    public static bool ValidateMontenegroIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateMontenegroIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != MontenegroIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {MontenegroIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(MontenegroCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected ME.");
         }
 
         // Structure Validation:
@@ -57,7 +49,7 @@ public class MontenegroIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Bank code must be numeric.");
             }
         }
 
@@ -66,7 +58,7 @@ public class MontenegroIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Account number must be numeric.");
             }
         }
 
@@ -75,10 +67,12 @@ public class MontenegroIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "National check digits must be numeric.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

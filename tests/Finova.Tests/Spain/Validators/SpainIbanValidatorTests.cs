@@ -24,7 +24,7 @@ public class SpainIbanValidatorTests
     [InlineData("ES6621000418401234567891")]
     public void IsValidIban_WithValidSpanishIbans_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -32,7 +32,7 @@ public class SpainIbanValidatorTests
     [InlineData("es9121000418450200051332")] // Lowercase
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -50,7 +50,7 @@ public class SpainIbanValidatorTests
     [InlineData("   ")] // Whitespace
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -58,7 +58,7 @@ public class SpainIbanValidatorTests
     [InlineData("ES6621000418401234567891")]
     public void ValidateSpainIban_WithValidIbans_ReturnsTrue(string iban)
     {
-        SpainIbanValidator.ValidateSpainIban(iban).Should().BeTrue();
+        SpainIbanValidator.ValidateSpainIban(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -67,16 +67,16 @@ public class SpainIbanValidatorTests
     [InlineData(null)] // Null
     public void ValidateSpainIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
-        SpainIbanValidator.ValidateSpainIban(iban).Should().BeFalse();
+        SpainIbanValidator.ValidateSpainIban(iban).IsValid.Should().BeFalse();
     }
 
     [Fact]
     public void IsValidIban_CalledMultipleTimes_ReturnsConsistentResults()
     {
         var iban = "ES9121000418450200051332";
-        var result1 = _validator.IsValidIban(iban);
-        var result2 = _validator.IsValidIban(iban);
-        result1.Should().Be(result2);
+        var result1 = _validator.Validate(iban);
+        var result2 = _validator.Validate(iban);
+        result1.Should().BeEquivalentTo(result2);
     }
 
     [Theory]
@@ -84,7 +84,7 @@ public class SpainIbanValidatorTests
     [InlineData("ES6621000418401234567891")] // Entidad: 2100
     public void IsValidIban_WithDifferentBanks_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -93,14 +93,14 @@ public class SpainIbanValidatorTests
     [InlineData("IT60X0542811101000000123456")] // Italian IBAN
     public void IsValidIban_WithOtherCountryIbans_ReturnsFalse(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 
     [Fact]
     public void IsValidIban_WithOnlyDigitsAfterCountryCode_ReturnsTrue()
     {
         var iban = "ES9121000418450200051332";
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
 
         // Verify it's all digits after ES
         for (int i = 2; i < iban.Length; i++)
@@ -115,7 +115,9 @@ public class SpainIbanValidatorTests
     public void IsValidIban_WithEdgeCases_ValidatesCorrectly(string iban)
     {
         // These should validate structure but may fail mod97 check
-        var result = _validator.IsValidIban(iban);
-        result.Should().BeFalse(); // These are structurally valid but fail checksum
+        var result = _validator.Validate(iban);
+        result.IsValid.Should().BeFalse(); // These are structurally valid but fail checksum
     }
 }
+
+

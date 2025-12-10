@@ -15,13 +15,13 @@ public class LuxembourgIbanValidatorTests
     [InlineData("LU280019400644750000")]
     [InlineData("LU120010001234567891")]
     public void IsValidIban_WithValidLuxembourgIbans_ReturnsTrue(string iban)
-        => _validator.IsValidIban(iban).Should().BeTrue();
+        => _validator.Validate(iban).IsValid.Should().BeTrue();
 
     [Theory]
     [InlineData("LU28 0019 4006 4475 0000")] // With spaces
     [InlineData("lu280019400644750000")] // Lowercase
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
-        => _validator.IsValidIban(iban).Should().BeTrue();
+        => _validator.Validate(iban).IsValid.Should().BeTrue();
 
     [Theory]
     [InlineData("LU000019400644750000")] // Wrong check digits
@@ -31,10 +31,12 @@ public class LuxembourgIbanValidatorTests
     [InlineData("")] // Empty
     [InlineData(null)] // Null
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
-        => _validator.IsValidIban(iban).Should().BeFalse();
+        => _validator.Validate(iban).IsValid.Should().BeFalse();
 
     [Theory]
     [InlineData("LU280019400644750000")]
     public void ValidateLuxembourgIban_WithValidIbans_ReturnsTrue(string iban)
-        => LuxembourgIbanValidator.ValidateLuxembourgIban(iban).Should().BeTrue();
+        => LuxembourgIbanValidator.ValidateLuxembourgIban(iban).IsValid.Should().BeTrue();
 }
+
+

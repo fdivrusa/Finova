@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Iceland.Validators;
 
@@ -10,28 +10,25 @@ public class IcelandIbanValidator : IIbanValidator
     private const int IcelandIbanLength = 26;
     private const string IcelandCountryCode = "IS";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateIcelandIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateIcelandIban(iban);
 
-    public static bool ValidateIcelandIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateIcelandIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != IcelandIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {IcelandIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(IcelandCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected IS.");
         }
 
         // Structure check: All digits
@@ -39,7 +36,7 @@ public class IcelandIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Iceland IBAN must contain only digits after the country code.");
             }
         }
 
@@ -48,10 +45,12 @@ public class IcelandIbanValidator : IIbanValidator
         string kennitala = normalized.Substring(16, 10);
         if (!ValidateKennitala(kennitala))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Icelandic Kennitala.");
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 
     /// <summary>

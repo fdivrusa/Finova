@@ -32,10 +32,10 @@ public class RomaniaIbanValidatorTests
     public void IsValidIban_WithValidRomanianIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -45,10 +45,10 @@ public class RomaniaIbanValidatorTests
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -62,10 +62,10 @@ public class RomaniaIbanValidatorTests
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -82,7 +82,7 @@ public class RomaniaIbanValidatorTests
         var result = RomaniaIbanValidator.ValidateRomaniaIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -94,7 +94,7 @@ public class RomaniaIbanValidatorTests
         var result = RomaniaIbanValidator.ValidateRomaniaIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -110,7 +110,7 @@ public class RomaniaIbanValidatorTests
         var result = RomaniaIbanValidator.ValidateRomaniaIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -124,10 +124,10 @@ public class RomaniaIbanValidatorTests
         var iban = "RO49AAAA1B31007593840000"; // 24 chars
 
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
         iban.Replace(" ", "").Length.Should().Be(24);
     }
 
@@ -138,10 +138,10 @@ public class RomaniaIbanValidatorTests
     public void IsValidIban_WithOtherCountryIbans_ReturnsFalse(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -150,11 +150,11 @@ public class RomaniaIbanValidatorTests
         var iban = "RO49AAAA1B31007593840000";
 
         // Act
-        var result1 = _validator.IsValidIban(iban);
-        var result2 = _validator.IsValidIban(iban);
+        var result1 = _validator.Validate(iban);
+        var result2 = _validator.Validate(iban);
 
         // Assert
-        result1.Should().Be(result2);
+        result1.Should().BeEquivalentTo(result2);
     }
 
     #endregion
@@ -169,10 +169,10 @@ public class RomaniaIbanValidatorTests
     {
         // Romanian IBANs allow letters in bank code (4 chars) and account (16 chars)
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -182,10 +182,10 @@ public class RomaniaIbanValidatorTests
         var iban = "RO66BACX0000001234567890";
 
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -195,10 +195,10 @@ public class RomaniaIbanValidatorTests
         var iban = "RO49AAAA1B31007593840000";
 
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
 
         // Verify structure - Bank code (4 chars) should be letters, account can be alphanumeric
         var normalized = iban.ToUpper();
@@ -207,3 +207,4 @@ public class RomaniaIbanValidatorTests
 
     #endregion
 }
+

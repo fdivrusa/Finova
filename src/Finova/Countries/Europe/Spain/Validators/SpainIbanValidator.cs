@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Spain.Validators;
 
@@ -19,30 +19,33 @@ public class SpainIbanValidator : IIbanValidator
     // Standard weights for Spanish Modulo 11 algorithm
     private static readonly int[] Weights = [1, 2, 4, 8, 5, 10, 9, 7, 3, 6];
 
-    public bool IsValidIban(string? iban) => ValidateSpainIban(iban);
+    public ValidationResult Validate(string? iban) => ValidateSpainIban(iban);
 
-    public static bool ValidateSpainIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateSpainIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != SpainIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {SpainIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(SpainCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected ES.");
         }
 
         for (int i = 2; i < 24; i++)
         {
-            if (!char.IsDigit(normalized[i])) return false;
+            if (!char.IsDigit(normalized[i]))
+            {
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Spain IBAN must contain only digits after the country code.");
+            }
         }
 
         // Extract parts:
@@ -68,10 +71,12 @@ public class SpainIbanValidator : IIbanValidator
         // dc[0] is the first digit, dc[1] is the second
         if ((dc[0] - '0') != calculatedDc1 || (dc[1] - '0') != calculatedDc2)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Spanish DC check.");
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 using Finova.Belgium.Services;
-using Finova.Core.Internals;
-using Finova.Core.Models;
+using Finova.Core.PaymentReference.Internals;
+using Finova.Core.PaymentReference;
 using FluentAssertions;
 using Xunit;
 
@@ -51,7 +51,7 @@ public class BelgianPaymentReferenceServiceTests
 
         // Assert
         result.Should().MatchRegex(@"^\+\+\+\d{3}/\d{4}/\d{5}\+\+\+$");
-        _service.IsValid(result).Should().BeTrue();
+        BelgiumPaymentReferenceService.ValidateStatic(result).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -66,7 +66,7 @@ public class BelgianPaymentReferenceServiceTests
         // Assert
         // Should extract "1234" from the string
         result.Should().MatchRegex(@"^\+\+\+\d{3}/\d{4}/\d{5}\+\+\+$");
-        _service.IsValid(result).Should().BeTrue();
+        BelgiumPaymentReferenceService.ValidateStatic(result).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class BelgianPaymentReferenceServiceTests
         // Assert
         // Should generate OGM with all zeros padded
         result.Should().MatchRegex(@"^\+\+\+\d{3}/\d{4}/\d{5}\+\+\+$");
-        _service.IsValid(result).Should().BeTrue();
+        BelgiumPaymentReferenceService.ValidateStatic(result).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -105,10 +105,10 @@ public class BelgianPaymentReferenceServiceTests
     public void IsValid_WithValidOgm_ReturnsTrue(string ogm)
     {
         // Act
-        var result = _service.IsValid(ogm);
+        var result = BelgiumPaymentReferenceService.ValidateStatic(ogm);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -118,10 +118,10 @@ public class BelgianPaymentReferenceServiceTests
     public void IsValid_WithInvalidOgmCheckDigit_ReturnsFalse(string ogm)
     {
         // Act
-        var result = _service.IsValid(ogm);
+        var result = BelgiumPaymentReferenceService.ValidateStatic(ogm);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -130,10 +130,10 @@ public class BelgianPaymentReferenceServiceTests
     public void IsValid_WithOgmVariousFormats_ValidatesCorrectly(string ogm)
     {
         // Act
-        var result = _service.IsValid(ogm);
+        var result = BelgiumPaymentReferenceService.ValidateStatic(ogm);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -143,10 +143,10 @@ public class BelgianPaymentReferenceServiceTests
     public void IsValid_WithInvalidOgmLength_ReturnsFalse(string ogm)
     {
         // Act
-        var result = _service.IsValid(ogm);
+        var result = BelgiumPaymentReferenceService.ValidateStatic(ogm);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -165,7 +165,7 @@ public class BelgianPaymentReferenceServiceTests
         // Assert
         result.Should().StartWith("RF");
         result.Should().MatchRegex(@"^RF\d{2}.*");
-        _service.IsValid(result).Should().BeTrue();
+        IsoPaymentReferenceValidator.Validate(result).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -179,7 +179,7 @@ public class BelgianPaymentReferenceServiceTests
 
         // Assert
         result.Should().StartWith("RF");
-        _service.IsValid(result).Should().BeTrue();
+        IsoPaymentReferenceValidator.Validate(result).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -190,12 +190,12 @@ public class BelgianPaymentReferenceServiceTests
         var reference2 = reference1.Insert(4, " ").Insert(9, " ").Insert(14, " "); // Add spacing
 
         // Act
-        var result1 = _service.IsValid(reference1);
-        var result2 = _service.IsValid(reference2);
+        var result1 = IsoPaymentReferenceValidator.Validate(reference1);
+        var result2 = IsoPaymentReferenceValidator.Validate(reference2);
 
         // Assert
-        result1.Should().BeTrue();
-        result2.Should().BeTrue();
+        result1.IsValid.Should().BeTrue();
+        result2.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -204,10 +204,10 @@ public class BelgianPaymentReferenceServiceTests
     public void IsValid_WithInvalidIsoReference_ReturnsFalse(string reference)
     {
         // Act
-        var result = _service.IsValid(reference);
+        var result = IsoPaymentReferenceValidator.Validate(reference);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -257,7 +257,7 @@ public class BelgianPaymentReferenceServiceTests
 
         // Assert
         result.Should().MatchRegex(@"^\+\+\+\d{3}/\d{4}/\d{5}\+\+\+$");
-        _service.IsValid(result).Should().BeTrue();
+        BelgiumPaymentReferenceService.ValidateStatic(result).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -267,10 +267,10 @@ public class BelgianPaymentReferenceServiceTests
         var reference = "   ";
 
         // Act
-        var result = _service.IsValid(reference);
+        var result = BelgiumPaymentReferenceService.ValidateStatic(reference);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -279,10 +279,10 @@ public class BelgianPaymentReferenceServiceTests
     public void IsValid_WithNullOrEmptyString_ReturnsFalse(string? reference)
     {
         // Act
-        var result = _service.IsValid(reference!);
+        var result = BelgiumPaymentReferenceService.ValidateStatic(reference!);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -310,7 +310,7 @@ public class BelgianPaymentReferenceServiceTests
 
         // Assert
         result.Should().MatchRegex(@"^\+\+\+\d{3}/\d{4}/\d{5}\+\+\+$");
-        _service.IsValid(result).Should().BeTrue();
+        BelgiumPaymentReferenceService.ValidateStatic(result).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -324,7 +324,7 @@ public class BelgianPaymentReferenceServiceTests
 
         // Assert
         result.Should().MatchRegex(@"^\+\+\+\d{3}/\d{4}/\d{5}\+\+\+$");
-        _service.IsValid(result).Should().BeTrue();
+        BelgiumPaymentReferenceService.ValidateStatic(result).IsValid.Should().BeTrue();
     }
 
     #endregion
@@ -339,7 +339,7 @@ public class BelgianPaymentReferenceServiceTests
 
         // Act
         var generated = _service.Generate(rawReference, PaymentReferenceFormat.LocalBelgian);
-        var isValid = _service.IsValid(generated);
+        var isValid = BelgiumPaymentReferenceService.ValidateStatic(generated).IsValid;
 
         // Assert
         isValid.Should().BeTrue();
@@ -353,7 +353,7 @@ public class BelgianPaymentReferenceServiceTests
 
         // Act
         var generated = _service.Generate(rawReference, PaymentReferenceFormat.IsoRf);
-        var isValid = _service.IsValid(generated);
+        var isValid = IsoPaymentReferenceValidator.Validate(generated).IsValid;
 
         // Assert
         isValid.Should().BeTrue();

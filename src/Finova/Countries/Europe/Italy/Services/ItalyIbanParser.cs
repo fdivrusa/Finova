@@ -1,6 +1,6 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
+
+
 using Finova.Countries.Europe.Italy.Models;
 using Finova.Countries.Europe.Italy.Validators;
 
@@ -15,14 +15,11 @@ public class ItalyIbanParser(ItalyIbanValidator validator) : IIbanParser
     /// Creates a new parser instance with a default validator.
     /// Use this for non-DI scenarios or quick one-off parsing.
     /// </summary>
-    public static ItalyIbanParser Create()
-    {
-        return new ItalyIbanParser(new ItalyIbanValidator());
-    }
+    public static ItalyIbanParser Create() => new ItalyIbanParser(new ItalyIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {
-        if (!_validator.IsValidIban(iban))
+        if (!_validator.Validate(iban).IsValid)
         {
             return null;
         }

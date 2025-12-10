@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Switzerland.Validators;
 
@@ -10,28 +10,25 @@ public class SwitzerlandIbanValidator : IIbanValidator
     private const int SwitzerlandIbanLength = 21;
     private const string SwitzerlandCountryCode = "CH";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateSwitzerlandIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateSwitzerlandIban(iban);
 
-    public static bool ValidateSwitzerlandIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateSwitzerlandIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != SwitzerlandIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {SwitzerlandIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(SwitzerlandCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected CH.");
         }
 
         // Structure Validation:
@@ -41,7 +38,7 @@ public class SwitzerlandIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Switzerland Clearing Number must be digits.");
             }
         }
 
@@ -50,10 +47,12 @@ public class SwitzerlandIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Switzerland Account Number must be alphanumeric.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

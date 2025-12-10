@@ -1,6 +1,4 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
 using Finova.Countries.Europe.France.Models;
 using Finova.Countries.Europe.France.Validators;
 
@@ -12,10 +10,7 @@ public class FranceIbanParser(FranceIbanValidator validator) : IIbanParser
 
     public string? CountryCode => _validator.CountryCode;
 
-    public static FranceIbanParser Create()
-    {
-        return new FranceIbanParser(new FranceIbanValidator());
-    }
+    public static FranceIbanParser Create() => new FranceIbanParser(new FranceIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {
@@ -24,7 +19,7 @@ public class FranceIbanParser(FranceIbanValidator validator) : IIbanParser
             return null;
         }
 
-        if (!_validator.IsValidIban(iban))
+        if (!_validator.Validate(iban).IsValid)
         {
             return null;
         }

@@ -1,6 +1,6 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
+
+
 using Finova.Countries.Europe.Bulgaria.Models;
 using Finova.Countries.Europe.Bulgaria.Validators;
 
@@ -14,7 +14,7 @@ public class BulgariaIbanParser(BulgariaIbanValidator validator) : IIbanParser
 
     public IbanDetails? ParseIban(string? iban)
     {
-        if (!_validator.IsValidIban(iban))
+        if (!_validator.Validate(iban).IsValid)
         {
             return null;
         }

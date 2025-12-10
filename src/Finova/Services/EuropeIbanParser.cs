@@ -1,6 +1,5 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Common;
+using Finova.Core.Iban;
 using Finova.Countries.Europe.Andorra.Services;
 using Finova.Countries.Europe.Austria.Services;
 using Finova.Countries.Europe.Belgium.Services;
@@ -59,7 +58,7 @@ public class EuropeIbanParser : IIbanParser
 
         // 1. Normalize & Validate First (Fail fast)
         var normalized = IbanHelper.NormalizeIban(iban);
-        if (!EuropeIbanValidator.Validate(normalized))
+        if (!EuropeIbanValidator.ValidateIban(normalized).IsValid)
         {
             return null;
         }
@@ -120,8 +119,5 @@ public class EuropeIbanParser : IIbanParser
         };
     }
 
-    public IbanDetails? ParseIban(string? iban)
-    {
-        return Parse(iban);
-    }
+    public IbanDetails? ParseIban(string? iban) => Parse(iban);
 }

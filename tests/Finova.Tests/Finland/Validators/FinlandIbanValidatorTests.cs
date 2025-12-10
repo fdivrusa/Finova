@@ -31,10 +31,10 @@ public class FinlandIbanValidatorTests
     public void IsValidIban_WithValidFinnishIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -44,10 +44,10 @@ public class FinlandIbanValidatorTests
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -62,10 +62,10 @@ public class FinlandIbanValidatorTests
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -81,7 +81,7 @@ public class FinlandIbanValidatorTests
         var result = FinlandIbanValidator.ValidateFinlandIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -93,7 +93,7 @@ public class FinlandIbanValidatorTests
         var result = FinlandIbanValidator.ValidateFinlandIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -110,7 +110,7 @@ public class FinlandIbanValidatorTests
         var result = FinlandIbanValidator.ValidateFinlandIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -124,10 +124,10 @@ public class FinlandIbanValidatorTests
         var iban = "FI2112345600000785"; // 18 chars
 
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
         iban.Replace(" ", "").Length.Should().Be(18);
     }
 
@@ -138,10 +138,10 @@ public class FinlandIbanValidatorTests
     public void IsValidIban_WithOtherCountryIbans_ReturnsFalse(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -151,10 +151,10 @@ public class FinlandIbanValidatorTests
         var validIban = "FI2112345600000785";
 
         // Act
-        var result = _validator.IsValidIban(validIban);
+        var result = _validator.Validate(validIban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
 
         // Verify structure
         var normalized = validIban.ToUpper();
@@ -167,12 +167,13 @@ public class FinlandIbanValidatorTests
         var iban = "FI2112345600000785";
 
         // Act
-        var result1 = _validator.IsValidIban(iban);
-        var result2 = _validator.IsValidIban(iban);
+        var result1 = _validator.Validate(iban);
+        var result2 = _validator.Validate(iban);
 
         // Assert
-        result1.Should().Be(result2);
+        result1.Should().BeEquivalentTo(result2);
     }
 
     #endregion
 }
+

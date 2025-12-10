@@ -1,5 +1,6 @@
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+
+
+using Finova.Core.Iban;
 using Finova.Countries.Europe.Moldova.Models;
 using Finova.Countries.Europe.Moldova.Validators;
 
@@ -21,10 +22,7 @@ public class MoldovaIbanParser(IIbanValidator validator) : IIbanParser
     /// Creates a new instance of the parser with a default validator.
     /// </summary>
     /// <returns>A new <see cref="MoldovaIbanParser"/> instance.</returns>
-    public static MoldovaIbanParser Create()
-    {
-        return new MoldovaIbanParser(new MoldovaIbanValidator());
-    }
+    public static MoldovaIbanParser Create() => new MoldovaIbanParser(new MoldovaIbanValidator());
 
     /// <summary>
     /// Parses the Moldovan IBAN.
@@ -33,7 +31,7 @@ public class MoldovaIbanParser(IIbanValidator validator) : IIbanParser
     /// <returns>The parsed IBAN details, or null if invalid.</returns>
     public IbanDetails? ParseIban(string? iban)
     {
-        if (iban is null || !_validator.IsValidIban(iban))
+        if (iban is null || !_validator.Validate(iban).IsValid)
         {
             return null;
         }

@@ -32,10 +32,10 @@ public class BelgianBankAccountValidatorTests
     public void IsValidIban_WithValidBelgianIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -44,10 +44,10 @@ public class BelgianBankAccountValidatorTests
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -63,10 +63,10 @@ public class BelgianBankAccountValidatorTests
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -83,7 +83,7 @@ public class BelgianBankAccountValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -96,7 +96,7 @@ public class BelgianBankAccountValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -115,7 +115,7 @@ public class BelgianBankAccountValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -132,7 +132,7 @@ public class BelgianBankAccountValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -145,7 +145,7 @@ public class BelgianBankAccountValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -158,8 +158,9 @@ public class BelgianBankAccountValidatorTests
         var result = BelgiumIbanValidator.ValidateBelgiumIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
 }
+

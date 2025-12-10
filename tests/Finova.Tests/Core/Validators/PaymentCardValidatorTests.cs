@@ -1,5 +1,6 @@
-using Finova.Core.Models;
-using Finova.Core.Validators;
+
+using Finova.Core.PaymentCard;
+using Finova.Core.Common;
 using FluentAssertions;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace Finova.Tests.Core.Validators;
 
 public class PaymentCardValidatorTests
 {
-    private readonly PaymentCardValidator _validator;
+    private readonly IPaymentCardValidator _validator;
 
     public PaymentCardValidatorTests()
     {
@@ -27,8 +28,8 @@ public class PaymentCardValidatorTests
     [InlineData("79927398713")] // Valid short card
     public void IsValidLuhn_WithValidCardNumbers_ReturnsTrue(string cardNumber)
     {
-        PaymentCardValidator.Validate(cardNumber).Should().BeTrue();
-        ((Finova.Core.Interfaces.IPaymentCardValidator)_validator).IsValidLuhn(cardNumber).Should().BeTrue();
+        PaymentCardValidator.Validate(cardNumber).IsValid.Should().BeTrue();
+        ((IPaymentCardValidator)_validator).ValidateLuhn(cardNumber).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -37,7 +38,7 @@ public class PaymentCardValidatorTests
     [InlineData("3742 4545 5400 126")] // Valid Amex with spaces
     public void IsValidLuhn_WithFormattedCardNumbers_ReturnsTrue(string cardNumber)
     {
-        PaymentCardValidator.Validate(cardNumber).Should().BeTrue();
+        PaymentCardValidator.Validate(cardNumber).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -52,21 +53,21 @@ public class PaymentCardValidatorTests
     [InlineData("4532@151#128$036")] // Contains special chars
     public void IsValidLuhn_WithInvalidCardNumbers_ReturnsFalse(string? cardNumber)
     {
-        PaymentCardValidator.Validate(cardNumber).Should().BeFalse();
+        PaymentCardValidator.Validate(cardNumber).IsValid.Should().BeFalse();
     }
 
     [Fact]
     public void IsValidLuhn_WithAllZeros_PassesLuhnButUnlikely()
     {
         // All zeros technically passes Luhn check (0 % 10 == 0)
-        PaymentCardValidator.Validate("0000000000000000").Should().BeTrue();
+        PaymentCardValidator.Validate("0000000000000000").IsValid.Should().BeTrue();
     }
 
     [Fact]
     public void IsValidLuhn_WithSingleDigit_PassesLuhnCheck()
     {
         // Single digit "0" passes Luhn check (0 % 10 == 0)
-        PaymentCardValidator.Validate("0").Should().BeTrue();
+        PaymentCardValidator.Validate("0").IsValid.Should().BeTrue();
     }
 
     #endregion
@@ -81,7 +82,7 @@ public class PaymentCardValidatorTests
     public void GetBrand_WithVisaCards_ReturnsVisa(string cardNumber)
     {
         PaymentCardValidator.GetBrand(cardNumber).Should().Be(PaymentCardBrand.Visa);
-        ((Finova.Core.Interfaces.IPaymentCardValidator)_validator).GetBrand(cardNumber).Should().Be(PaymentCardBrand.Visa);
+        ((IPaymentCardValidator)_validator).GetBrand(cardNumber).Should().Be(PaymentCardBrand.Visa);
     }
 
     #endregion
@@ -229,8 +230,8 @@ public class PaymentCardValidatorTests
     [InlineData("999", PaymentCardBrand.DinersClub)]
     public void IsValidCvv_WithThreeDigitCvv_ForStandardCards_ReturnsTrue(string cvv, PaymentCardBrand brand)
     {
-        PaymentCardValidator.IsValidCvv(cvv, brand).Should().BeTrue();
-        ((Finova.Core.Interfaces.IPaymentCardValidator)_validator).IsValidCvv(cvv, brand).Should().BeTrue();
+        PaymentCardValidator.ValidateCvv(cvv, brand).IsValid.Should().BeTrue();
+        ((IPaymentCardValidator)_validator).ValidateCvv(cvv, brand).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -239,7 +240,7 @@ public class PaymentCardValidatorTests
     [InlineData("9999")]
     public void IsValidCvv_WithFourDigitCvv_ForAmex_ReturnsTrue(string cvv)
     {
-        PaymentCardValidator.IsValidCvv(cvv, PaymentCardBrand.AmericanExpress).Should().BeTrue();
+        PaymentCardValidator.ValidateCvv(cvv, PaymentCardBrand.AmericanExpress).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -249,7 +250,7 @@ public class PaymentCardValidatorTests
     [InlineData("12345", PaymentCardBrand.AmericanExpress)] // Too long for Amex
     public void IsValidCvv_WithWrongLength_ReturnsFalse(string cvv, PaymentCardBrand brand)
     {
-        PaymentCardValidator.IsValidCvv(cvv, brand).Should().BeFalse();
+        PaymentCardValidator.ValidateCvv(cvv, brand).IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -260,20 +261,20 @@ public class PaymentCardValidatorTests
     [InlineData("   ", PaymentCardBrand.Visa)] // Whitespace
     public void IsValidCvv_WithNonDigitCvv_ReturnsFalse(string? cvv, PaymentCardBrand brand)
     {
-        PaymentCardValidator.IsValidCvv(cvv, brand).Should().BeFalse();
+        PaymentCardValidator.ValidateCvv(cvv, brand).IsValid.Should().BeFalse();
     }
 
     [Fact]
     public void IsValidCvv_ForMaestro_AllowsThreeDigits()
     {
-        PaymentCardValidator.IsValidCvv("123", PaymentCardBrand.Maestro).Should().BeTrue();
+        PaymentCardValidator.ValidateCvv("123", PaymentCardBrand.Maestro).IsValid.Should().BeTrue();
     }
 
     [Fact]
     public void IsValidCvv_ForMaestro_EmptyStringNotAllowed()
     {
         // Maestro actually requires CVV when present, empty string is invalid
-        PaymentCardValidator.IsValidCvv("", PaymentCardBrand.Maestro).Should().BeFalse();
+        PaymentCardValidator.ValidateCvv("", PaymentCardBrand.Maestro).IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -281,7 +282,7 @@ public class PaymentCardValidatorTests
     [InlineData("1234")]
     public void IsValidCvv_ForUnknownBrand_AcceptsThreeOrFour(string cvv)
     {
-        PaymentCardValidator.IsValidCvv(cvv, PaymentCardBrand.Unknown).Should().BeTrue();
+        PaymentCardValidator.ValidateCvv(cvv, PaymentCardBrand.Unknown).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -289,7 +290,7 @@ public class PaymentCardValidatorTests
     [InlineData("1234")]
     public void IsValidCvv_ForChinaUnionPay_AcceptsThreeOrFour(string cvv)
     {
-        PaymentCardValidator.IsValidCvv(cvv, PaymentCardBrand.ChinaUnionPay).Should().BeTrue();
+        PaymentCardValidator.ValidateCvv(cvv, PaymentCardBrand.ChinaUnionPay).IsValid.Should().BeTrue();
     }
 
     #endregion
@@ -300,22 +301,22 @@ public class PaymentCardValidatorTests
     public void IsValidExpiration_WithFutureDate_ReturnsTrue()
     {
         var futureYear = DateTime.UtcNow.Year + 2;
-        PaymentCardValidator.IsValidExpiration(12, futureYear).Should().BeTrue();
-        ((Finova.Core.Interfaces.IPaymentCardValidator)_validator).IsValidExpiration(12, futureYear).Should().BeTrue();
+        PaymentCardValidator.ValidateExpiration(12, futureYear).IsValid.Should().BeTrue();
+        ((IPaymentCardValidator)_validator).ValidateExpiration(12, futureYear).IsValid.Should().BeTrue();
     }
 
     [Fact]
     public void IsValidExpiration_WithCurrentMonthAndYear_ReturnsTrue()
     {
         var now = DateTime.UtcNow;
-        PaymentCardValidator.IsValidExpiration(now.Month, now.Year).Should().BeTrue();
+        PaymentCardValidator.ValidateExpiration(now.Month, now.Year).IsValid.Should().BeTrue();
     }
 
     [Fact]
     public void IsValidExpiration_WithPastYear_ReturnsFalse()
     {
         var pastYear = DateTime.UtcNow.Year - 1;
-        PaymentCardValidator.IsValidExpiration(12, pastYear).Should().BeFalse();
+        PaymentCardValidator.ValidateExpiration(12, pastYear).IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -324,7 +325,7 @@ public class PaymentCardValidatorTests
         var now = DateTime.UtcNow;
         if (now.Month > 1)
         {
-            PaymentCardValidator.IsValidExpiration(now.Month - 1, now.Year).Should().BeFalse();
+            PaymentCardValidator.ValidateExpiration(now.Month - 1, now.Year).IsValid.Should().BeFalse();
         }
     }
 
@@ -336,7 +337,7 @@ public class PaymentCardValidatorTests
     public void IsValidExpiration_WithInvalidMonth_ReturnsFalse(int month)
     {
         var futureYear = DateTime.UtcNow.Year + 1;
-        PaymentCardValidator.IsValidExpiration(month, futureYear).Should().BeFalse();
+        PaymentCardValidator.ValidateExpiration(month, futureYear).IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -344,14 +345,14 @@ public class PaymentCardValidatorTests
     [InlineData(12, 30)] // Two digit year (should be normalized to 2030)
     public void IsValidExpiration_WithTwoDigitYear_NormalizesCorrectly(int month, int year)
     {
-        PaymentCardValidator.IsValidExpiration(month, year).Should().BeTrue();
+        PaymentCardValidator.ValidateExpiration(month, year).IsValid.Should().BeTrue();
     }
 
     [Fact]
     public void IsValidExpiration_WithYearTooFarInFuture_ReturnsFalse()
     {
         var farFutureYear = DateTime.UtcNow.Year + 25; // More than 20 years
-        PaymentCardValidator.IsValidExpiration(12, farFutureYear).Should().BeFalse();
+        PaymentCardValidator.ValidateExpiration(12, farFutureYear).IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -362,7 +363,7 @@ public class PaymentCardValidatorTests
     {
         if (year > DateTime.UtcNow.Year || (year == DateTime.UtcNow.Year && month >= DateTime.UtcNow.Month))
         {
-            PaymentCardValidator.IsValidExpiration(month, year).Should().BeTrue();
+            PaymentCardValidator.ValidateExpiration(month, year).IsValid.Should().BeTrue();
         }
     }
 
@@ -370,14 +371,14 @@ public class PaymentCardValidatorTests
     public void IsValidExpiration_WithExactCurrentMonth_ReturnsTrue()
     {
         var now = DateTime.UtcNow;
-        PaymentCardValidator.IsValidExpiration(now.Month, now.Year).Should().BeTrue();
+        PaymentCardValidator.ValidateExpiration(now.Month, now.Year).IsValid.Should().BeTrue();
     }
 
     [Fact]
     public void IsValidExpiration_AtBoundary_TwentyYearsInFuture_ReturnsTrue()
     {
         var boundaryYear = DateTime.UtcNow.Year + 20;
-        PaymentCardValidator.IsValidExpiration(12, boundaryYear).Should().BeTrue();
+        PaymentCardValidator.ValidateExpiration(12, boundaryYear).IsValid.Should().BeTrue();
     }
 
     #endregion
@@ -385,21 +386,21 @@ public class PaymentCardValidatorTests
     #region IPaymentCardValidator Interface Tests
 
     [Fact]
-    public void IPaymentCardValidator_IsValidLuhn_DelegatesToStaticMethod()
+    public void IPaymentCardValidator_ValidateLuhn_DelegatesToStaticMethod()
     {
-        var validator = (Finova.Core.Interfaces.IPaymentCardValidator)_validator;
+        var validator = (IPaymentCardValidator)_validator;
         var cardNumber = "4532015112830366";
 
         var staticResult = PaymentCardValidator.Validate(cardNumber);
-        var instanceResult = validator.IsValidLuhn(cardNumber);
+        var instanceResult = validator.ValidateLuhn(cardNumber);
 
-        instanceResult.Should().Be(staticResult);
+        instanceResult.Should().BeEquivalentTo(staticResult);
     }
 
     [Fact]
     public void IPaymentCardValidator_GetBrand_DelegatesToStaticMethod()
     {
-        var validator = (Finova.Core.Interfaces.IPaymentCardValidator)_validator;
+        var validator = (IPaymentCardValidator)_validator;
         var cardNumber = "4532015112830366";
 
         var staticResult = PaymentCardValidator.GetBrand(cardNumber);
@@ -409,29 +410,29 @@ public class PaymentCardValidatorTests
     }
 
     [Fact]
-    public void IPaymentCardValidator_IsValidCvv_DelegatesToStaticMethod()
+    public void IPaymentCardValidator_ValidateCvv_DelegatesToStaticMethod()
     {
-        var validator = (Finova.Core.Interfaces.IPaymentCardValidator)_validator;
+        var validator = (IPaymentCardValidator)_validator;
         var cvv = "123";
         var brand = PaymentCardBrand.Visa;
 
-        var staticResult = PaymentCardValidator.IsValidCvv(cvv, brand);
-        var instanceResult = validator.IsValidCvv(cvv, brand);
+        var staticResult = PaymentCardValidator.ValidateCvv(cvv, brand);
+        var instanceResult = validator.ValidateCvv(cvv, brand);
 
-        instanceResult.Should().Be(staticResult);
+        instanceResult.Should().BeEquivalentTo(staticResult);
     }
 
     [Fact]
-    public void IPaymentCardValidator_IsValidExpiration_DelegatesToStaticMethod()
+    public void IPaymentCardValidator_ValidateExpiration_DelegatesToStaticMethod()
     {
-        var validator = (Finova.Core.Interfaces.IPaymentCardValidator)_validator;
+        var validator = (IPaymentCardValidator)_validator;
         var month = 12;
         var year = DateTime.UtcNow.Year + 1;
 
-        var staticResult = PaymentCardValidator.IsValidExpiration(month, year);
-        var instanceResult = validator.IsValidExpiration(month, year);
+        var staticResult = PaymentCardValidator.ValidateExpiration(month, year);
+        var instanceResult = validator.ValidateExpiration(month, year);
 
-        instanceResult.Should().Be(staticResult);
+        instanceResult.Should().BeEquivalentTo(staticResult);
     }
 
     #endregion
@@ -447,18 +448,18 @@ public class PaymentCardValidatorTests
     public void IntegrationTest_ValidateCompleteCard(string cardNumber, PaymentCardBrand expectedBrand, bool shouldBeValidLuhn)
     {
         // Test Luhn validation
-        PaymentCardValidator.Validate(cardNumber).Should().Be(shouldBeValidLuhn);
+        PaymentCardValidator.Validate(cardNumber).IsValid.Should().Be(shouldBeValidLuhn);
 
         // Test brand detection
         PaymentCardValidator.GetBrand(cardNumber).Should().Be(expectedBrand);
 
         // Test CVV validation
         var cvvLength = expectedBrand == PaymentCardBrand.AmericanExpress ? "1234" : "123";
-        PaymentCardValidator.IsValidCvv(cvvLength, expectedBrand).Should().BeTrue();
+        PaymentCardValidator.ValidateCvv(cvvLength, expectedBrand).IsValid.Should().BeTrue();
 
         // Test expiration
         var futureYear = DateTime.UtcNow.Year + 2;
-        PaymentCardValidator.IsValidExpiration(12, futureYear).Should().BeTrue();
+        PaymentCardValidator.ValidateExpiration(12, futureYear).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -469,11 +470,11 @@ public class PaymentCardValidatorTests
         var month = 12;
         var year = DateTime.UtcNow.Year + 2;
 
-        PaymentCardValidator.Validate(cardNumber).Should().BeTrue();
+        PaymentCardValidator.Validate(cardNumber).IsValid.Should().BeTrue();
         var brand = PaymentCardValidator.GetBrand(cardNumber);
         brand.Should().Be(PaymentCardBrand.Visa);
-        PaymentCardValidator.IsValidCvv(cvv, brand).Should().BeTrue();
-        PaymentCardValidator.IsValidExpiration(month, year).Should().BeTrue();
+        PaymentCardValidator.ValidateCvv(cvv, brand).IsValid.Should().BeTrue();
+        PaymentCardValidator.ValidateExpiration(month, year).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -484,12 +485,66 @@ public class PaymentCardValidatorTests
         var month = 12;
         var year = DateTime.UtcNow.Year + 2;
 
-        PaymentCardValidator.Validate(cardNumber).Should().BeTrue();
+        PaymentCardValidator.Validate(cardNumber).IsValid.Should().BeTrue();
         var brand = PaymentCardValidator.GetBrand(cardNumber);
         brand.Should().Be(PaymentCardBrand.AmericanExpress);
-        PaymentCardValidator.IsValidCvv(cvv, brand).Should().BeTrue();
-        PaymentCardValidator.IsValidExpiration(month, year).Should().BeTrue();
+        PaymentCardValidator.ValidateCvv(cvv, brand).IsValid.Should().BeTrue();
+        PaymentCardValidator.ValidateExpiration(month, year).IsValid.Should().BeTrue();
     }
+
+    #region Instance Methods (Validate/Parse) Tests
+
+    [Fact]
+    public void Validate_WithValidCard_ReturnsSuccess()
+    {
+        var result = _validator.Validate("4532015112830366");
+        result.IsValid.Should().BeTrue();
+    }
+
+    [Fact]
+    public void Validate_WithInvalidCard_ReturnsFailure()
+    {
+        var result = _validator.Validate("4532015112830367"); // Invalid check digit
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().Contain(e => e.Code == ValidationErrorCode.InvalidChecksum);
+    }
+
+    [Fact]
+    public void Validate_WithEmptyCard_ReturnsFailure()
+    {
+        var result = _validator.Validate("");
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().Contain(e => e.Code == ValidationErrorCode.InvalidInput);
+    }
+
+    [Fact]
+    public void Parse_WithValidCard_ReturnsDetails()
+    {
+        var details = _validator.Parse("4532015112830366");
+        details.Should().NotBeNull();
+        details!.IsValid.Should().BeTrue();
+        details.IsLuhnValid.Should().BeTrue();
+        details.Brand.Should().Be(PaymentCardBrand.Visa);
+        details.CardNumber.Should().Be("4532015112830366");
+    }
+
+    [Fact]
+    public void Parse_WithFormattedCard_ReturnsNormalizedDetails()
+    {
+        var details = _validator.Parse("4532 0151 1283 0366");
+        details.Should().NotBeNull();
+        details!.CardNumber.Should().Be("4532015112830366");
+        details.Brand.Should().Be(PaymentCardBrand.Visa);
+    }
+
+    [Fact]
+    public void Parse_WithInvalidCard_ReturnsNull()
+    {
+        var details = _validator.Parse("4532015112830367");
+        details.Should().BeNull();
+    }
+
+    #endregion
 
     #endregion
 }

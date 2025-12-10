@@ -1,6 +1,6 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
+
+
 using Finova.Countries.Europe.Slovenia.Models;
 using Finova.Countries.Europe.Slovenia.Validators;
 
@@ -14,7 +14,7 @@ public class SloveniaIbanParser(SloveniaIbanValidator validator) : IIbanParser
 
     public IbanDetails? ParseIban(string? iban)
     {
-        if (!_validator.IsValidIban(iban))
+        if (!_validator.Validate(iban).IsValid)
         {
             return null;
         }

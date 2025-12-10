@@ -32,10 +32,10 @@ public class AustriaIbanValidatorTests
     public void IsValidIban_WithValidAustrianIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -45,10 +45,10 @@ public class AustriaIbanValidatorTests
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -63,10 +63,10 @@ public class AustriaIbanValidatorTests
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -83,7 +83,7 @@ public class AustriaIbanValidatorTests
         var result = AustriaIbanValidator.ValidateAustriaIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -95,7 +95,7 @@ public class AustriaIbanValidatorTests
         var result = AustriaIbanValidator.ValidateAustriaIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -112,7 +112,7 @@ public class AustriaIbanValidatorTests
         var result = AustriaIbanValidator.ValidateAustriaIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -126,10 +126,10 @@ public class AustriaIbanValidatorTests
         var iban = "AT611904300234573201"; // 20 chars
 
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
         iban.Replace(" ", "").Length.Should().Be(20);
     }
 
@@ -140,10 +140,10 @@ public class AustriaIbanValidatorTests
     public void IsValidIban_WithOtherCountryIbans_ReturnsFalse(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -153,10 +153,10 @@ public class AustriaIbanValidatorTests
         var validIban = "AT611904300234573201";
 
         // Act
-        var result = _validator.IsValidIban(validIban);
+        var result = _validator.Validate(validIban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
 
         // Verify structure
         var normalized = validIban.ToUpper();
@@ -169,12 +169,13 @@ public class AustriaIbanValidatorTests
         var iban = "AT611904300234573201";
 
         // Act
-        var result1 = _validator.IsValidIban(iban);
-        var result2 = _validator.IsValidIban(iban);
+        var result1 = _validator.Validate(iban);
+        var result2 = _validator.Validate(iban);
 
         // Assert
-        result1.Should().Be(result2);
+        result1.Should().BeEquivalentTo(result2);
     }
 
     #endregion
 }
+

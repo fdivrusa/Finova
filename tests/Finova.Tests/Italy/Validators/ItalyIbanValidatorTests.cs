@@ -23,7 +23,7 @@ public class ItalyIbanValidatorTests
     [InlineData("IT60X0542811101000000123456")]
     public void IsValidIban_WithValidItalianIbans_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -31,7 +31,7 @@ public class ItalyIbanValidatorTests
     [InlineData("it60x0542811101000000123456")] // Lowercase
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -49,14 +49,14 @@ public class ItalyIbanValidatorTests
     [InlineData("   ")] // Whitespace
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 
     [Theory]
     [InlineData("IT60X0542811101000000123456")]
     public void ValidateItalyIban_WithValidIbans_ReturnsTrue(string iban)
     {
-        ItalyIbanValidator.ValidateItalyIban(iban).Should().BeTrue();
+        ItalyIbanValidator.ValidateItalyIban(iban).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -65,16 +65,16 @@ public class ItalyIbanValidatorTests
     [InlineData(null)] // Null
     public void ValidateItalyIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
-        ItalyIbanValidator.ValidateItalyIban(iban).Should().BeFalse();
+        ItalyIbanValidator.ValidateItalyIban(iban).IsValid.Should().BeFalse();
     }
 
     [Fact]
     public void IsValidIban_CalledMultipleTimes_ReturnsConsistentResults()
     {
         var iban = "IT60X0542811101000000123456";
-        var result1 = _validator.IsValidIban(iban);
-        var result2 = _validator.IsValidIban(iban);
-        result1.Should().Be(result2);
+        var result1 = _validator.Validate(iban);
+        var result2 = _validator.Validate(iban);
+        result1.Should().BeEquivalentTo(result2);
     }
 
     [Fact]
@@ -82,7 +82,7 @@ public class ItalyIbanValidatorTests
     {
         // Test that CIN letter validation works with the known valid IBAN
         var iban = "IT60X0542811101000000123456";
-        _validator.IsValidIban(iban).Should().BeTrue();
+        _validator.Validate(iban).IsValid.Should().BeTrue();
 
         // Ensure the CIN is properly extracted
         var normalized = iban.Replace(" ", "").ToUpper();
@@ -96,24 +96,26 @@ public class ItalyIbanValidatorTests
     [InlineData("ES9121000418450200051332")] // Spanish IBAN
     public void IsValidIban_WithOtherCountryIbans_ReturnsFalse(string iban)
     {
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 
     [Fact]
     public void IsValidIban_WithNumericCin_ReturnsFalse()
     {
         var iban = "IT601054281110100000012345";
-        _validator.IsValidIban(iban).Should().BeFalse();
+        _validator.Validate(iban).IsValid.Should().BeFalse();
     }
 
     [Fact]
     public void IsValidIban_VerifiesAbiAndCabAreNumeric()
     {
         var validIban = "IT60X0542811101000000123456";
-        _validator.IsValidIban(validIban).Should().BeTrue();
+        _validator.Validate(validIban).IsValid.Should().BeTrue();
 
         var normalized = validIban.Replace(" ", "").ToUpper();
         normalized[5..10].All(char.IsDigit).Should().BeTrue();
         normalized[10..15].All(char.IsDigit).Should().BeTrue();
     }
 }
+
+

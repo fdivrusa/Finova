@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Romania.Validators;
 
@@ -10,28 +10,25 @@ public class RomaniaIbanValidator : IIbanValidator
     private const int RomaniaIbanLength = 24;
     private const string RomaniaCountryCode = "RO";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateRomaniaIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateRomaniaIban(iban);
 
-    public static bool ValidateRomaniaIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateRomaniaIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != RomaniaIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {RomaniaIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(RomaniaCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected RO.");
         }
 
         // Structure check: Alphanumeric
@@ -40,10 +37,12 @@ public class RomaniaIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Romania IBAN must contain only alphanumeric characters after the country code.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

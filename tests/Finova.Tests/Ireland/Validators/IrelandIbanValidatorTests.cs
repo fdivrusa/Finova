@@ -31,10 +31,10 @@ public class IrelandIbanValidatorTests
     public void IsValidIban_WithValidIrishIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -44,10 +44,10 @@ public class IrelandIbanValidatorTests
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -63,10 +63,10 @@ public class IrelandIbanValidatorTests
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -82,7 +82,7 @@ public class IrelandIbanValidatorTests
         var result = IrelandIbanValidator.ValidateIrelandIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -97,7 +97,7 @@ public class IrelandIbanValidatorTests
         var result = IrelandIbanValidator.ValidateIrelandIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -108,8 +108,8 @@ public class IrelandIbanValidatorTests
     public void IsValidIban_ValidatesCountryPrefix()
     {
         // Wrong country prefix but valid structure otherwise
-        var result = _validator.IsValidIban("GB29NWBK60161331926819");
-        result.Should().BeFalse();
+        var result = _validator.Validate("GB29NWBK60161331926819");
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -119,8 +119,8 @@ public class IrelandIbanValidatorTests
         var shortIban = "IE29AIBK9311521234";
         var longIban = "IE29AIBK931152123456789";
 
-        _validator.IsValidIban(shortIban).Should().BeFalse();
-        _validator.IsValidIban(longIban).Should().BeFalse();
+        _validator.Validate(shortIban).IsValid.Should().BeFalse();
+        _validator.Validate(longIban).IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -130,10 +130,10 @@ public class IrelandIbanValidatorTests
     public void IsValidIban_ValidatesCharacterPositions(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -142,9 +142,9 @@ public class IrelandIbanValidatorTests
         // Bank code (positions 4-7) must be all letters
         var invalidBankCode = "IE291234931152123456789";
 
-        var result = _validator.IsValidIban(invalidBankCode);
+        var result = _validator.Validate(invalidBankCode);
 
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -153,9 +153,9 @@ public class IrelandIbanValidatorTests
         // Sort code (8-13) and account (14-21) must be digits
         var invalidSortCode = "IE29AIBK9A115212345678"; // Letter 'A' in sort code
 
-        var result = _validator.IsValidIban(invalidSortCode);
+        var result = _validator.Validate(invalidSortCode);
 
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -168,10 +168,10 @@ public class IrelandIbanValidatorTests
     public void IsValidIban_WithDifferentValidBanks_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -180,11 +180,13 @@ public class IrelandIbanValidatorTests
         // Even with zeros, the modulo-97 check must pass
         var ibanWithZeros = "IE00AIBK00000000000000";
 
-        var result = _validator.IsValidIban(ibanWithZeros);
+        var result = _validator.Validate(ibanWithZeros);
 
         // This should fail because check digits "00" are invalid
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
 }
+
+

@@ -31,10 +31,10 @@ public class LuxembourgBankAccountValidatorTests
     public void IsValidIban_WithValidLuxembourgIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -43,10 +43,10 @@ public class LuxembourgBankAccountValidatorTests
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -62,10 +62,10 @@ public class LuxembourgBankAccountValidatorTests
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -81,7 +81,7 @@ public class LuxembourgBankAccountValidatorTests
         var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -94,7 +94,7 @@ public class LuxembourgBankAccountValidatorTests
         var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -113,7 +113,7 @@ public class LuxembourgBankAccountValidatorTests
         var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -126,7 +126,7 @@ public class LuxembourgBankAccountValidatorTests
         var result = LuxembourgIbanValidator.ValidateLuxembourgIban(invalidIban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -142,7 +142,7 @@ public class LuxembourgBankAccountValidatorTests
         var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     #endregion
@@ -163,9 +163,9 @@ public class LuxembourgBankAccountValidatorTests
         var correctResult = LuxembourgIbanValidator.ValidateLuxembourgIban(correct);
 
         // Assert
-        shortResult.Should().BeFalse();
-        longResult.Should().BeFalse();
-        correctResult.Should().BeTrue();
+        shortResult.IsValid.Should().BeFalse();
+        longResult.IsValid.Should().BeFalse();
+        correctResult.IsValid.Should().BeTrue();
     }
 
     #endregion
@@ -183,7 +183,7 @@ public class LuxembourgBankAccountValidatorTests
         var result = LuxembourgIbanValidator.ValidateLuxembourgIban(validIban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -196,7 +196,7 @@ public class LuxembourgBankAccountValidatorTests
         var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -213,7 +213,7 @@ public class LuxembourgBankAccountValidatorTests
         var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
         // Assert
-        result.Should().Be(expected);
+        result.IsValid.Should().Be(expected);
     }
 
     #endregion
@@ -230,7 +230,7 @@ public class LuxembourgBankAccountValidatorTests
         var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -246,7 +246,7 @@ public class LuxembourgBankAccountValidatorTests
         var result = LuxembourgIbanValidator.ValidateLuxembourgIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]

@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Greece.Validators;
 
@@ -9,24 +9,24 @@ public class GreeceIbanValidator : IIbanValidator
     public string CountryCode => "GR";
     private const int GreeceIbanLength = 27;
 
-    public bool IsValidIban(string? iban) => ValidateGreeceIban(iban);
+    public ValidationResult Validate(string? iban) => ValidateGreeceIban(iban);
 
-    public static bool ValidateGreeceIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateGreeceIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != GreeceIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {GreeceIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith("GR", StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected GR.");
         }
 
 
@@ -36,8 +36,7 @@ public class GreeceIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
-
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Greece Bank/Branch code must be digits.");
             }
         }
 
@@ -47,11 +46,13 @@ public class GreeceIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Greece Account Number must be alphanumeric.");
             }
         }
 
         // 4. Checksum Validation (Modulo 97)
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

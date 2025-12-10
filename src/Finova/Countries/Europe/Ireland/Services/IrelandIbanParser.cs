@@ -1,6 +1,6 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
+
+
 using Finova.Countries.Europe.Ireland.Models;
 using Finova.Countries.Europe.Ireland.Validators;
 
@@ -15,14 +15,11 @@ public class IrelandIbanParser(IrelandIbanValidator validator) : IIbanParser
     /// Creates a new parser instance with a default validator.
     /// Use this for non-DI scenarios or quick one-off parsing.
     /// </summary>
-    public static IrelandIbanParser Create()
-    {
-        return new IrelandIbanParser(new IrelandIbanValidator());
-    }
+    public static IrelandIbanParser Create() => new IrelandIbanParser(new IrelandIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {
-        if (!_validator.IsValidIban(iban))
+        if (!_validator.Validate(iban).IsValid)
         {
             return null;
         }

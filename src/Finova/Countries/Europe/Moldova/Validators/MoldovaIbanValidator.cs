@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Moldova.Validators;
 
@@ -22,33 +22,25 @@ public class MoldovaIbanValidator : IIbanValidator
     /// </summary>
     /// <param name="iban">The IBAN to validate.</param>
     /// <returns>True if the IBAN is valid; otherwise, false.</returns>
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateMoldovaIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateMoldovaIban(iban);
 
-    /// <summary>
-    /// Static validation method for Moldovan IBANs.
-    /// </summary>
-    /// <param name="iban">The IBAN to validate.</param>
-    /// <returns>True if the IBAN is valid; otherwise, false.</returns>
-    public static bool ValidateMoldovaIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateMoldovaIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != MoldovaIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {MoldovaIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(MoldovaCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected MD.");
         }
 
         // Structure Validation:
@@ -57,7 +49,7 @@ public class MoldovaIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Bank code must be alphanumeric.");
             }
         }
 
@@ -66,10 +58,12 @@ public class MoldovaIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Account number must be alphanumeric.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

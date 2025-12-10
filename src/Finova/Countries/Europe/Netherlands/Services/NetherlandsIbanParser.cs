@@ -1,6 +1,6 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
+
+
 using Finova.Countries.Europe.Netherlands.Models;
 using Finova.Countries.Europe.Netherlands.Validators;
 
@@ -25,10 +25,7 @@ public class NetherlandsIbanParser(NetherlandsIbanValidator validator) : IIbanPa
     /// var details = parser.ParseIban("NL91ABNA0417164300");
     /// </code>
     /// </example>
-    public static NetherlandsIbanParser Create()
-    {
-        return new NetherlandsIbanParser(new NetherlandsIbanValidator());
-    }
+    public static NetherlandsIbanParser Create() => new NetherlandsIbanParser(new NetherlandsIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {
@@ -37,7 +34,7 @@ public class NetherlandsIbanParser(NetherlandsIbanValidator validator) : IIbanPa
             return null;
         }
 
-        if (!_validator.IsValidIban(iban))
+        if (!_validator.Validate(iban).IsValid)
         {
             return null;
         }

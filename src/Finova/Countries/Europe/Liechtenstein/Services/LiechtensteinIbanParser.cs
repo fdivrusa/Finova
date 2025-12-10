@@ -1,5 +1,6 @@
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+
+
+using Finova.Core.Iban;
 using Finova.Countries.Europe.Liechtenstein.Models;
 using Finova.Countries.Europe.Liechtenstein.Validators;
 
@@ -21,10 +22,7 @@ public class LiechtensteinIbanParser(IIbanValidator validator) : IIbanParser
     /// Creates a new instance of the parser with a default validator.
     /// </summary>
     /// <returns>A new <see cref="LiechtensteinIbanParser"/> instance.</returns>
-    public static LiechtensteinIbanParser Create()
-    {
-        return new LiechtensteinIbanParser(new LiechtensteinIbanValidator());
-    }
+    public static LiechtensteinIbanParser Create() => new LiechtensteinIbanParser(new LiechtensteinIbanValidator());
 
     /// <summary>
     /// Parses the Liechtenstein IBAN.
@@ -33,7 +31,7 @@ public class LiechtensteinIbanParser(IIbanValidator validator) : IIbanParser
     /// <returns>The parsed IBAN details, or null if invalid.</returns>
     public IbanDetails? ParseIban(string? iban)
     {
-        if (iban is null || !_validator.IsValidIban(iban))
+        if (iban is null || !_validator.Validate(iban).IsValid)
         {
             return null;
         }

@@ -1,6 +1,6 @@
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Iban;
+
+
 using Finova.Countries.Europe.Belgium.Models;
 using Finova.Countries.Europe.Belgium.Validators;
 
@@ -24,10 +24,7 @@ public class BelgiumIbanParser(BelgiumIbanValidator validator) : IIbanParser
     /// var details = parser.ParseIban("BE685 39007547034");
     /// </code>
     /// </example>
-    public static BelgiumIbanParser Create()
-    {
-        return new BelgiumIbanParser(new BelgiumIbanValidator());
-    }
+    public static BelgiumIbanParser Create() => new BelgiumIbanParser(new BelgiumIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {
@@ -36,7 +33,7 @@ public class BelgiumIbanParser(BelgiumIbanValidator validator) : IIbanParser
             return null;
         }
 
-        if (!_validator.IsValidIban(iban))
+        if (!_validator.Validate(iban).IsValid)
         {
             return null;
         }

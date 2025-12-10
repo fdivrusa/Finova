@@ -30,10 +30,10 @@ public class NorwayIbanValidatorTests
     public void IsValidIban_WithValidNorwegianIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -43,10 +43,10 @@ public class NorwayIbanValidatorTests
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -61,10 +61,10 @@ public class NorwayIbanValidatorTests
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -79,7 +79,7 @@ public class NorwayIbanValidatorTests
         var result = NorwayIbanValidator.ValidateNorwayIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -91,7 +91,7 @@ public class NorwayIbanValidatorTests
         var result = NorwayIbanValidator.ValidateNorwayIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -108,7 +108,7 @@ public class NorwayIbanValidatorTests
         var result = NorwayIbanValidator.ValidateNorwayIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -122,10 +122,10 @@ public class NorwayIbanValidatorTests
         var iban = "NO9386011117947"; // 15 chars
 
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
         iban.Replace(" ", "").Length.Should().Be(15);
     }
 
@@ -136,10 +136,10 @@ public class NorwayIbanValidatorTests
     public void IsValidIban_WithOtherCountryIbans_ReturnsFalse(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -149,10 +149,10 @@ public class NorwayIbanValidatorTests
         var validIban = "NO9386011117947";
 
         // Act
-        var result = _validator.IsValidIban(validIban);
+        var result = _validator.Validate(validIban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
 
         // Verify structure
         var normalized = validIban.ToUpper();
@@ -165,11 +165,11 @@ public class NorwayIbanValidatorTests
         var iban = "NO9386011117947";
 
         // Act
-        var result1 = _validator.IsValidIban(iban);
-        var result2 = _validator.IsValidIban(iban);
+        var result1 = _validator.Validate(iban);
+        var result2 = _validator.Validate(iban);
 
         // Assert
-        result1.Should().Be(result2);
+        result1.Should().BeEquivalentTo(result2);
     }
 
     #endregion
@@ -184,10 +184,10 @@ public class NorwayIbanValidatorTests
         var invalidIban = "NO9386011117948"; // Changed last digit
 
         // Act
-        var result = _validator.IsValidIban(invalidIban);
+        var result = _validator.Validate(invalidIban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     [Theory]
@@ -196,11 +196,12 @@ public class NorwayIbanValidatorTests
     public void IsValidIban_WithValidMod11Checksum_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     #endregion
 }
+

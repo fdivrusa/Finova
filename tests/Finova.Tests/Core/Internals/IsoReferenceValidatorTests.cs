@@ -1,4 +1,4 @@
-using Finova.Core.Internals;
+using Finova.Core.PaymentReference.Internals;
 using FluentAssertions;
 using Xunit;
 
@@ -14,8 +14,8 @@ public class IsoReferenceValidatorTests
         var reference2 = IsoReferenceHelper.Generate("123456789012");
 
         // Act
-        var result1 = IsoReferenceValidator.IsValid(reference1);
-        var result2 = IsoReferenceValidator.IsValid(reference2);
+        var result1 = IsoReferenceValidator.Validate(reference1).IsValid;
+        var result2 = IsoReferenceValidator.Validate(reference2).IsValid;
 
         // Assert
         result1.Should().BeTrue();
@@ -29,7 +29,7 @@ public class IsoReferenceValidatorTests
         var generatedReference = IsoReferenceHelper.Generate("TEST12345");
 
         // Act
-        var result = IsoReferenceValidator.IsValid(generatedReference);
+        var result = IsoReferenceValidator.Validate(generatedReference).IsValid;
 
         // Assert
         result.Should().BeTrue();
@@ -42,7 +42,7 @@ public class IsoReferenceValidatorTests
     public void IsValid_WithInvalidCheckDigits_ReturnsFalse(string reference)
     {
         // Act
-        var result = IsoReferenceValidator.IsValid(reference);
+        var result = IsoReferenceValidator.Validate(reference).IsValid;
 
         // Assert
         result.Should().BeFalse();
@@ -55,7 +55,7 @@ public class IsoReferenceValidatorTests
     public void IsValid_WithNullOrWhiteSpace_ReturnsFalse(string? reference)
     {
         // Act
-        var result = IsoReferenceValidator.IsValid(reference!);
+        var result = IsoReferenceValidator.Validate(reference!).IsValid;
 
         // Assert
         result.Should().BeFalse();
@@ -69,7 +69,7 @@ public class IsoReferenceValidatorTests
     public void IsValid_WithInvalidPrefix_ReturnsFalse(string reference)
     {
         // Act
-        var result = IsoReferenceValidator.IsValid(reference);
+        var result = IsoReferenceValidator.Validate(reference).IsValid;
 
         // Assert
         result.Should().BeFalse();
@@ -83,7 +83,7 @@ public class IsoReferenceValidatorTests
     public void IsValid_WithTooShortReference_ReturnsFalse(string reference)
     {
         // Act
-        var result = IsoReferenceValidator.IsValid(reference);
+        var result = IsoReferenceValidator.Validate(reference).IsValid;
 
         // Assert
         result.Should().BeFalse();
@@ -96,7 +96,7 @@ public class IsoReferenceValidatorTests
         var referenceWithSpaces = "RF18 5390 0754 7034";
 
         // Act
-        var result = IsoReferenceValidator.IsValid(referenceWithSpaces);
+        var result = IsoReferenceValidator.Validate(referenceWithSpaces).IsValid;
 
         // Assert
         result.Should().BeTrue();
@@ -109,7 +109,7 @@ public class IsoReferenceValidatorTests
     public void IsValid_WithLowercaseOrMixedCase_HandlesCorrectly(string reference)
     {
         // Act
-        var result = IsoReferenceValidator.IsValid(reference);
+        var result = IsoReferenceValidator.Validate(reference).IsValid;
 
         // Assert
         result.Should().BeTrue();
@@ -123,8 +123,8 @@ public class IsoReferenceValidatorTests
         var reference2 = IsoReferenceHelper.Generate("ABC123XYZ");
 
         // Act
-        var result1 = IsoReferenceValidator.IsValid(reference1);
-        var result2 = IsoReferenceValidator.IsValid(reference2);
+        var result1 = IsoReferenceValidator.Validate(reference1).IsValid;
+        var result2 = IsoReferenceValidator.Validate(reference2).IsValid;
 
         // Assert
         result1.Should().BeTrue();
@@ -138,7 +138,7 @@ public class IsoReferenceValidatorTests
         var generatedReference = IsoReferenceHelper.Generate("ABC123XYZ789");
 
         // Act
-        var result = IsoReferenceValidator.IsValid(generatedReference);
+        var result = IsoReferenceValidator.Validate(generatedReference).IsValid;
 
         // Assert
         result.Should().BeTrue();
@@ -152,7 +152,7 @@ public class IsoReferenceValidatorTests
         var modifiedReference = validReference.Substring(0, validReference.Length - 1) + "9";
 
         // Act
-        var result = IsoReferenceValidator.IsValid(modifiedReference);
+        var result = IsoReferenceValidator.Validate(modifiedReference).IsValid;
 
         // Assert
         result.Should().BeFalse();
@@ -167,8 +167,8 @@ public class IsoReferenceValidatorTests
         var withSpaces2 = reference.Substring(0, 4) + " " + reference.Substring(4, 4) + " " + reference.Substring(8);
 
         // Act
-        var result1 = IsoReferenceValidator.IsValid(withSpaces1);
-        var result2 = IsoReferenceValidator.IsValid(withSpaces2);
+        var result1 = IsoReferenceValidator.Validate(withSpaces1).IsValid;
+        var result2 = IsoReferenceValidator.Validate(withSpaces2).IsValid;
 
         // Assert
         result1.Should().BeTrue();
@@ -182,7 +182,7 @@ public class IsoReferenceValidatorTests
         var longReference = IsoReferenceHelper.Generate("1234567890123456789012345");
 
         // Act
-        var result = IsoReferenceValidator.IsValid(longReference);
+        var result = IsoReferenceValidator.Validate(longReference).IsValid;
 
         // Assert
         result.Should().BeTrue();
@@ -201,9 +201,9 @@ public class IsoReferenceValidatorTests
         var withDot = validReference.Insert(6, ".");
 
         // Act
-        var resultDash = IsoReferenceValidator.IsValid(withDash);
-        var resultSlash = IsoReferenceValidator.IsValid(withSlash);
-        var resultDot = IsoReferenceValidator.IsValid(withDot);
+        var resultDash = IsoReferenceValidator.Validate(withDash).IsValid;
+        var resultSlash = IsoReferenceValidator.Validate(withSlash).IsValid;
+        var resultDot = IsoReferenceValidator.Validate(withDot).IsValid;
 
         // Assert - The current implementation ignores non-alphanumeric characters in conversion
         // so these may still pass validation. This is actually acceptable behavior

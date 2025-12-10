@@ -31,8 +31,8 @@ public class PortugalIbanValidatorTests
     [InlineData("   ")]
     public void IsValidIban_WithNullOrEmpty_ReturnsFalse(string? iban)
     {
-        var result = _validator.IsValidIban(iban);
-        result.Should().BeFalse();
+        var result = _validator.Validate(iban);
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -45,8 +45,8 @@ public class PortugalIbanValidatorTests
     [InlineData("GR1601101250000000012300695")] // Greek IBAN
     public void IsValidIban_WithOtherCountryIban_ReturnsFalse(string iban)
     {
-        var result = _validator.IsValidIban(iban);
-        result.Should().BeFalse();
+        var result = _validator.Validate(iban);
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -58,8 +58,8 @@ public class PortugalIbanValidatorTests
     [InlineData("PT500002012312345678901540")] // Too long (26 chars)
     public void IsValidIban_WithIncorrectLength_ReturnsFalse(string iban)
     {
-        var result = _validator.IsValidIban(iban);
-        result.Should().BeFalse();
+        var result = _validator.Validate(iban);
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -72,9 +72,9 @@ public class PortugalIbanValidatorTests
         // Any PT IBAN with check digits 00 should fail
         var iban = "PT00000201231234567890154";
 
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -86,9 +86,9 @@ public class PortugalIbanValidatorTests
     [InlineData("PT500002A1231234567890154")] // Letter in branch code
     public void IsValidIban_WithNonNumericContent_ReturnsFalse(string iban)
     {
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -99,8 +99,8 @@ public class PortugalIbanValidatorTests
     public void IsValidIban_ValidatesCountryPrefix()
     {
         // Wrong country prefix
-        var result = _validator.IsValidIban("ES9121000418450200051332");
-        result.Should().BeFalse();
+        var result = _validator.Validate("ES9121000418450200051332");
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
@@ -110,9 +110,11 @@ public class PortugalIbanValidatorTests
         var shortIban = "PT5000020123123456789";
         var longIban = "PT500002012312345678901234";
 
-        _validator.IsValidIban(shortIban).Should().BeFalse();
-        _validator.IsValidIban(longIban).Should().BeFalse();
+        _validator.Validate(shortIban).IsValid.Should().BeFalse();
+        _validator.Validate(longIban).IsValid.Should().BeFalse();
     }
 
     #endregion
 }
+
+

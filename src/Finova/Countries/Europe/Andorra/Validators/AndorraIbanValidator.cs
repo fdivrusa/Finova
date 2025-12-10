@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Andorra.Validators;
 
@@ -10,28 +10,25 @@ public class AndorraIbanValidator : IIbanValidator
     private const int AndorraIbanLength = 24;
     private const string AndorraCountryCode = "AD";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateAndorraIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateAndorraIban(iban);
 
-    public static bool ValidateAndorraIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateAndorraIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != AndorraIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {AndorraIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(AndorraCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected AD.");
         }
 
         // Structure check:
@@ -42,10 +39,12 @@ public class AndorraIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Andorra IBAN must contain only alphanumeric characters after the country code.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

@@ -1,4 +1,4 @@
-using Finova.Core.Models;
+using Finova.Core.Iban;
 
 namespace Finova.Countries.Europe.Monaco.Models;
 

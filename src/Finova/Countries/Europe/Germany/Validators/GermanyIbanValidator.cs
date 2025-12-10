@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Germany.Validators;
 
@@ -16,37 +16,36 @@ public class GermanyIbanValidator : IIbanValidator
     private const int GermanyIbanLength = 22;
     private const string GermanyCountryCode = "DE";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateGermanyIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateGermanyIban(iban);
 
-    public static bool ValidateGermanyIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateGermanyIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != GermanyIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {GermanyIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(GermanyCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected DE.");
         }
 
         for (int i = 2; i < 22; i++)
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Germany IBAN must contain only digits after the country code.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 }

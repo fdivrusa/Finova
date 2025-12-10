@@ -1,4 +1,4 @@
-using Finova.Core.Internals;
+using Finova.Core.PaymentReference.Internals;
 using FluentAssertions;
 using Xunit;
 
@@ -32,7 +32,7 @@ public class IsoReferenceHelperTests
         var result = IsoReferenceHelper.Generate(rawReference);
 
         // Assert - Generated reference should be valid
-        IsoReferenceValidator.IsValid(result).Should().BeTrue();
+        IsoReferenceValidator.Validate(result).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -47,7 +47,7 @@ public class IsoReferenceHelperTests
         // Assert
         result.Should().StartWith("RF");
         result.Should().Contain(rawReference.ToUpperInvariant());
-        IsoReferenceValidator.IsValid(result).Should().BeTrue();
+        IsoReferenceValidator.Validate(result).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -65,9 +65,9 @@ public class IsoReferenceHelperTests
         result5.Should().StartWith("RF");
 
         // These generated references should be valid
-        IsoReferenceValidator.IsValid(result3).Should().BeTrue();
-        IsoReferenceValidator.IsValid(result4).Should().BeTrue();
-        IsoReferenceValidator.IsValid(result5).Should().BeTrue();
+        IsoReferenceValidator.Validate(result3).IsValid.Should().BeTrue();
+        IsoReferenceValidator.Validate(result4).IsValid.Should().BeTrue();
+        IsoReferenceValidator.Validate(result5).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -97,7 +97,7 @@ public class IsoReferenceHelperTests
         // Assert
         result.Should().Contain("TEST123");
         result.Should().NotContain(" TEST123");
-        IsoReferenceValidator.IsValid(result).Should().BeTrue();
+        IsoReferenceValidator.Validate(result).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -112,7 +112,7 @@ public class IsoReferenceHelperTests
         // Assert
         result.Should().Contain("INVOICE123");
         result.Should().NotContain("invoice123");
-        IsoReferenceValidator.IsValid(result).Should().BeTrue();
+        IsoReferenceValidator.Validate(result).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -139,7 +139,7 @@ public class IsoReferenceHelperTests
 
         // Assert
         result.Should().StartWith(expectedPrefix);
-        IsoReferenceValidator.IsValid(result).Should().BeTrue();
+        IsoReferenceValidator.Validate(result).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -154,6 +154,6 @@ public class IsoReferenceHelperTests
         // Assert
         result.Should().StartWith("RF");
         // The check digits should make the whole reference valid
-        IsoReferenceValidator.IsValid(result).Should().BeTrue();
+        IsoReferenceValidator.Validate(result).IsValid.Should().BeTrue();
     }
 }

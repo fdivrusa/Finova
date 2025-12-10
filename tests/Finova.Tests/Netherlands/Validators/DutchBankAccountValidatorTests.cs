@@ -30,10 +30,10 @@ public class DutchBankAccountValidatorTests
     public void IsValidIban_WithValidDutchIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -42,10 +42,10 @@ public class DutchBankAccountValidatorTests
     public void IsValidIban_WithFormattedIbans_ReturnsTrue(string iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -62,10 +62,10 @@ public class DutchBankAccountValidatorTests
     public void IsValidIban_WithInvalidIbans_ReturnsFalse(string? iban)
     {
         // Act
-        var result = _validator.IsValidIban(iban);
+        var result = _validator.Validate(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -80,7 +80,7 @@ public class DutchBankAccountValidatorTests
         var result = NetherlandsIbanValidator.ValidateNetherlandsIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -93,7 +93,7 @@ public class DutchBankAccountValidatorTests
         var result = NetherlandsIbanValidator.ValidateNetherlandsIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -113,7 +113,7 @@ public class DutchBankAccountValidatorTests
         var result = NetherlandsIbanValidator.ValidateNetherlandsIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -128,7 +128,7 @@ public class DutchBankAccountValidatorTests
         var result = NetherlandsIbanValidator.ValidateNetherlandsIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -142,7 +142,7 @@ public class DutchBankAccountValidatorTests
         var result = NetherlandsIbanValidator.ValidateNetherlandsIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -157,7 +157,7 @@ public class DutchBankAccountValidatorTests
         var result = NetherlandsIbanValidator.ValidateNetherlandsIban(iban);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -170,7 +170,7 @@ public class DutchBankAccountValidatorTests
         var result = NetherlandsIbanValidator.ValidateNetherlandsIban(iban);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsValid.Should().BeFalse();
     }
 
     #endregion
@@ -187,7 +187,8 @@ public class DutchBankAccountValidatorTests
         var result = NetherlandsIbanValidator.ValidateNetherlandsIban(iban);
 
         // Assert
-        result.Should().BeFalse(); // Invalid checksum
+        result.IsValid.Should().BeFalse(); // Invalid checksum
     }
     #endregion
 }
+

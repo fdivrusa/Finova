@@ -1,4 +1,5 @@
-using Finova.Core.Validators;
+using Finova.Core.Bic;
+using Finova.Core.PaymentCard;
 using Finova.Services;
 using FluentValidation;
 
@@ -13,7 +14,7 @@ public static class FinovaValidators
     public static IRuleBuilderOptions<T, string?> MustBeValidIban<T>(this IRuleBuilder<T, string?> ruleBuilder)
     {
         return ruleBuilder
-            .Must(EuropeIbanValidator.Validate)
+            .Must(iban => EuropeIbanValidator.ValidateIban(iban).IsValid)
             .WithMessage("'{PropertyName}' is not a valid IBAN.");
     }
 
@@ -23,7 +24,7 @@ public static class FinovaValidators
     public static IRuleBuilderOptions<T, string?> MustBeValidBic<T>(this IRuleBuilder<T, string?> ruleBuilder)
     {
         return ruleBuilder
-            .Must(BicValidator.Validate)
+            .Must(x => BicValidator.Validate(x).IsValid)
             .WithMessage("'{PropertyName}' is not a valid BIC/SWIFT code.");
     }
 
@@ -34,7 +35,7 @@ public static class FinovaValidators
     public static IRuleBuilderOptions<T, string?> MustBeValidPaymentCard<T>(this IRuleBuilder<T, string?> ruleBuilder)
     {
         return ruleBuilder
-            .Must(PaymentCardValidator.Validate)
+            .Must(x => PaymentCardValidator.Validate(x).IsValid)
             .WithMessage("'{PropertyName}' is not a valid card number.");
     }
 
@@ -53,7 +54,7 @@ public static class FinovaValidators
                     return true;
                 }
 
-                return BicValidator.IsConsistentWithIban(bic, iban.Substring(0, 2));
+                return BicValidator.ValidateConsistencyWithIban(bic, iban.Substring(0, 2)).IsValid;
             })
             .WithMessage("The BIC country does not match the IBAN country.");
     }

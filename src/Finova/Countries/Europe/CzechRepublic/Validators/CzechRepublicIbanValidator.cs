@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.CzechRepublic.Validators;
 
@@ -10,28 +10,25 @@ public class CzechRepublicIbanValidator : IIbanValidator
     private const int CzechIbanLength = 24;
     private const string CzechCountryCode = "CZ";
 
-    public bool IsValidIban(string? iban)
-    {
-        return ValidateCzechIban(iban);
-    }
+    public ValidationResult Validate(string? iban) => ValidateCzechIban(iban);
 
-    public static bool ValidateCzechIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidateCzechIban([NotNullWhen(true)] string? iban)
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != CzechIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {CzechIbanLength}, got {normalized.Length}.");
         }
 
         if (!normalized.StartsWith(CzechCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected CZ.");
         }
 
         // Structure check: All digits
@@ -39,7 +36,7 @@ public class CzechRepublicIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Czech IBAN must contain only digits after the country code.");
             }
         }
 
@@ -59,17 +56,19 @@ public class CzechRepublicIbanValidator : IIbanValidator
             // Note: Prefix is 6 digits. We use the last 6 weights: 10, 5, 8, 4, 2, 1
             if (!ValidateCzechMod11(prefix, true))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Czech Prefix checksum.");
             }
         }
 
         // Validate Account Number
         if (!ValidateCzechMod11(accountNumber, false))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Czech Account Number checksum.");
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 
     /// <summary>

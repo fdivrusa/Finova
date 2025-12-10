@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Accounts;
-using Finova.Core.Interfaces;
+using Finova.Core.Iban;
+using Finova.Core.Common;
 
 namespace Finova.Countries.Europe.Portugal.Validators;
 
@@ -9,22 +9,25 @@ public class PortugalIbanValidator : IIbanValidator
     public string CountryCode => "PT";
     private const int PortugalIbanLength = 25;
 
-    public bool IsValidIban(string? iban) => ValidatePortugalIban(iban);
+    public ValidationResult Validate(string? iban) => ValidatePortugalIban(iban);
 
-    public static bool ValidatePortugalIban([NotNullWhen(true)] string? iban)
+    public static ValidationResult ValidatePortugalIban([NotNullWhen(true)] string? iban)
     {
-        if (string.IsNullOrWhiteSpace(iban)) return false;
+        if (string.IsNullOrWhiteSpace(iban))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+        }
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != PortugalIbanLength)
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {PortugalIbanLength}, got {normalized.Length}.");
         }
 
 
         if (!normalized.StartsWith("PT", StringComparison.OrdinalIgnoreCase))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected PT.");
         }
 
 
@@ -32,7 +35,7 @@ public class PortugalIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return false;
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Portugal IBAN must contain only digits after the country code.");
             }
         }
 
@@ -44,10 +47,12 @@ public class PortugalIbanValidator : IIbanValidator
 
         if (!ValidateNibKey(nibBody, nibKey))
         {
-            return false;
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid NIB Key.");
         }
 
-        return IbanHelper.IsValidIban(normalized);
+        return IbanHelper.IsValidIban(normalized)
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
     }
 
     /// <summary>

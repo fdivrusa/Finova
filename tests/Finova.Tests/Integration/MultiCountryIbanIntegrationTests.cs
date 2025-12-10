@@ -1,5 +1,7 @@
-using Finova.Core.Interfaces;
-using Finova.Core.Models;
+using Finova.Core.Bic;
+using Finova.Core.Iban;
+using Finova.Core.PaymentCard;
+using Finova.Core.PaymentReference;
 using Finova.Countries.Europe.Germany.Models;
 using Finova.Countries.Europe.Italy.Models;
 using Finova.Countries.Europe.Netherlands.Models;
