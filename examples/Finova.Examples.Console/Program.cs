@@ -331,6 +331,12 @@ void RunFluentValidationExamples()
         WriteSuccess("Validation passed!");
     }
 
+    //Display data that is valid
+    WriteInfo("Debtor IBAN", request.DebtorIban);
+    WriteInfo("Creditor IBAN", request.CreditorIban);
+    WriteInfo("Debtor BIC", request.DebtorBic);
+    WriteInfo("Creditor BIC", request.CreditorBic);
+
     Console.WriteLine();
     Console.WriteLine("Press any key to continue...");
     Console.ReadKey();
