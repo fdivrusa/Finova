@@ -10,10 +10,10 @@ This project uses automatic branch-based versioning for manual deployments and t
 - **Trigger**: Manual workflow dispatch from `develop` branch
 - **Purpose**: Pre-release testing and validation
 
-### Master Branch (Release Packages)
+### main Branch (Release Packages)
 - **Format**: `{BASE_VERSION}.{COMMIT_COUNT}`
 - **Example**: `1.0.0.123`
-- **Trigger**: Manual workflow dispatch from `master` branch
+- **Trigger**: Manual workflow dispatch from `main` branch
 - **Purpose**: Stable production releases
 
 ### Tagged Releases
@@ -23,14 +23,14 @@ This project uses automatic branch-based versioning for manual deployments and t
 
 ## How It Works
 
-1. **CI Workflow** runs on every push to `develop` or `master` branches
+1. **CI Workflow** runs on every push to `develop` or `main` branches
    - Builds the project
    - Runs all tests
    - Generates code coverage reports
 
 2. **CD Workflow** runs manually or on GitHub release
    - Manually trigger from GitHub Actions tab
-   - Select branch type (master for stable, develop for alpha)
+   - Select branch type (main for stable, develop for alpha)
    - Optionally specify a custom version
    - Automatically calculates the version based on branch selection
    - Builds and packs the NuGet package
@@ -43,7 +43,7 @@ This project uses automatic branch-based versioning for manual deployments and t
 1. Go to [GitHub Actions → CD - Publish NuGet Packages](https://github.com/fdivrusa/Finova/actions/workflows/cd.yml)
 2. Click "Run workflow" button
 3. **Select the branch** from the dropdown:
-   - Choose `master` for stable release
+   - Choose `main` for stable release
    - Choose `develop` for alpha pre-release
 4. Click "Run workflow"
 5. The version is **automatically generated** based on the selected branch
@@ -52,7 +52,7 @@ This project uses automatic branch-based versioning for manual deployments and t
 - Counts commits in the branch
 - Generates the version format based on branch name
 - For `develop`: adds alpha suffix and commit SHA
-- For `master`: creates stable version number
+- For `main`: creates stable version number
 
 ### GitHub Release
 
@@ -66,7 +66,7 @@ This project uses automatic branch-based versioning for manual deployments and t
 According to [SemVer 2.0.0](https://semver.org/):
 - **Release versions** (e.g., `1.0.0.123`) are considered stable
 - **Pre-release versions** (e.g., `1.0.0-alpha.42`) are considered unstable
-- Users installing without version constraints will get the latest stable version (from master)
+- Users installing without version constraints will get the latest stable version (from main)
 - Users can opt-in to alpha versions with: `dotnet add package Finova --version 1.0.0-alpha.*`
 
 ## Updating Base Version
@@ -92,10 +92,10 @@ git push origin develop
 # Select branch: develop
 # → Publishes: 1.0.0-alpha.42+a1b2c3d
 
-# Merge to master for release
-git checkout master
+# Merge to main for release
+git checkout main
 git merge develop
-git push origin master
+git push origin main
 
 # Run CI (automatic)
 # CI builds and tests the code
@@ -103,7 +103,7 @@ git push origin master
 # Publish stable version (manual)
 # Go to GitHub Actions → CD workflow
 # Click "Run workflow"
-# Select branch: master
+# Select branch: main
 # → Publishes: 1.0.0.43
 
 # Create official release (optional)

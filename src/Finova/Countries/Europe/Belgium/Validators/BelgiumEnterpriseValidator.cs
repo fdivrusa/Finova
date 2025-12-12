@@ -1,18 +1,26 @@
 using System.Text.RegularExpressions;
+using Finova.Core.Common;
+using Finova.Core.Enterprise;
 using Finova.Core.PaymentReference.Internals;
 
-namespace Finova.Belgium.Validators;
+namespace Finova.Countries.Europe.Belgium.Validators;
 
 /// <summary>
 /// Validator for Belgian Enterprise Numbers (KBO/BCE - Kruispuntbank van Ondernemingen / Banque-Carrefour des Entreprises).
 /// Format: 0xxx.xxx.xxx or BE0xxxxxxxxx (10 digits with check digit validation via modulo 97).
 /// </summary>
-public static partial class BelgiumEnterpriseValidator
+public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
 {
     [GeneratedRegex(@"[^\d]")]
     private static partial Regex DigitsOnlyRegex();
 
     private const int KboLength = 10;
+
+    public string CountryCode => "BE";
+
+    ValidationResult IValidator<string>.Validate(string? instance) => Validate(instance);
+
+    public string? Parse(string? instance) => Normalize(instance);
 
     /// <summary>
     /// Validates a Belgian Enterprise Number (KBO/BCE).
@@ -30,10 +38,15 @@ public static partial class BelgiumEnterpriseValidator
         // Extract only digits
         var digits = DigitsOnlyRegex().Replace(kbo, "");
 
-        // Must be exactly 10 digits
+        // Must be exactly 10 digits (or 9 digits, which we pad)
+        if (digits.Length == 9)
+        {
+            digits = "0" + digits;
+        }
+
         if (digits.Length != KboLength)
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, "Enterprise number must be 10 digits.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, "Enterprise number must be 10 digits (or 9 digits for old format).");
         }
 
         // Must start with 0 or 1
@@ -77,6 +90,11 @@ public static partial class BelgiumEnterpriseValidator
 
         var digits = DigitsOnlyRegex().Replace(kbo!, "");
 
+        if (digits.Length == 9)
+        {
+            digits = "0" + digits;
+        }
+
         // Format as: 0xxx.xxx.xxx
         return $"{digits[0]}{digits.Substring(1, 3)}.{digits.Substring(4, 3)}.{digits.Substring(7, 3)}";
     }
@@ -93,6 +111,7 @@ public static partial class BelgiumEnterpriseValidator
             return string.Empty;
         }
 
-        return DigitsOnlyRegex().Replace(kbo, "");
+        var digits = DigitsOnlyRegex().Replace(kbo, "");
+        return digits.Length == 9 ? "0" + digits : digits;
     }
 }

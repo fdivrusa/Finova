@@ -38,6 +38,15 @@ using Finova.Countries.Europe.UnitedKingdom.Validators;
 using Finova.Countries.Europe.Vatican.Validators;
 
 using Finova.Core.Common;
+using Finova.Countries.Europe.Liechtenstein.Validators;
+using Finova.Countries.Europe.Serbia.Validators;
+using Finova.Countries.Europe.Ukraine.Validators;
+using Finova.Countries.Europe.Montenegro.Validators;
+using Finova.Countries.Europe.Albania.Validators;
+using Finova.Countries.Europe.Turkey.Validators;
+using Finova.Countries.Europe.NorthMacedonia.Validators;
+using Finova.Countries.Europe.BosniaAndHerzegovina.Validators;
+using Finova.Countries.Europe.Georgia.Validators;
 
 namespace Finova.Services;
 
@@ -100,6 +109,15 @@ public class EuropeIbanValidator : IIbanValidator
             "SM" => SanMarinoIbanValidator.ValidateSanMarinoIban(iban),
             "GI" => GibraltarIbanValidator.ValidateGibraltarIban(iban),
             "IS" => IcelandIbanValidator.ValidateIcelandIban(iban),
+            "LI" => LiechtensteinIbanValidator.ValidateLiechtensteinIban(iban),
+            "RS" => SerbiaIbanValidator.ValidateSerbiaIban(iban),
+            "UA" => UkraineIbanValidator.ValidateUkraineIban(iban),
+            "ME" => MontenegroIbanValidator.ValidateMontenegroIban(iban),
+            "AL" => AlbaniaIbanValidator.ValidateAlbaniaIban(iban),
+            "TR" => TurkeyIbanValidator.ValidateTurkeyIban(iban),
+            "MK" => NorthMacedoniaIbanValidator.ValidateNorthMacedoniaIban(iban),
+            "BA" => BosniaAndHerzegovinaIbanValidator.ValidateBosniaAndHerzegovinaIban(iban),
+            "GE" => GeorgiaIbanValidator.ValidateGeorgiaIban(iban),
 
             _ => IbanHelper.IsValidIban(iban)
                 ? ValidationResult.Success()

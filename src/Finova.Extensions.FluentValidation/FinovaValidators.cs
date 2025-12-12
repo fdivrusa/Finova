@@ -2,6 +2,8 @@ using Finova.Core.Bic;
 using Finova.Core.PaymentCard;
 using Finova.Services;
 using FluentValidation;
+using Finova.Validators;
+using Finova.Core.PaymentReference;
 
 namespace Finova.Extensions.FluentValidation;
 
@@ -57,5 +59,28 @@ public static class FinovaValidators
                 return BicValidator.ValidateConsistencyWithIban(bic, iban.Substring(0, 2)).IsValid;
             })
             .WithMessage("The BIC country does not match the IBAN country.");
+    }
+
+    /// <summary>
+    /// Validates that the string is a valid VAT number.
+    /// Automatically detects the country from the prefix.
+    /// </summary>
+    public static IRuleBuilderOptions<T, string?> MustBeValidVat<T>(this IRuleBuilder<T, string?> ruleBuilder)
+    {
+        return ruleBuilder
+            .Must(vat => EuropeVatValidator.ValidateVat(vat).IsValid)
+            .WithMessage("'{PropertyName}' is not a valid VAT number.");
+    }
+
+    /// <summary>
+    /// Validates that the string is a valid Payment Reference.
+    /// Supports ISO 11649 (RF) and local formats (BE, FI, NO, SE, CH, SI).
+    /// </summary>
+    /// <param name="format">The expected format (default is IsoRf).</param>
+    public static IRuleBuilderOptions<T, string?> MustBeValidPaymentReference<T>(this IRuleBuilder<T, string?> ruleBuilder, PaymentReferenceFormat format = PaymentReferenceFormat.IsoRf)
+    {
+        return ruleBuilder
+            .Must(reference => PaymentReferenceValidator.Validate(reference, format).IsValid)
+            .WithMessage("'{PropertyName}' is not a valid payment reference.");
     }
 }

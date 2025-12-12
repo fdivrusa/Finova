@@ -1,5 +1,3 @@
-using Finova.Belgium.Services;
-using Finova.Belgium.Validators;
 using Finova.Countries.Europe.Austria.Validators;
 using Finova.Countries.Europe.Belgium.Validators;
 using Finova.Countries.Europe.CzechRepublic.Validators;
@@ -12,6 +10,8 @@ using Finova.Countries.Europe.Hungary.Validators;
 using Finova.Countries.Europe.Ireland.Validators;
 using Finova.Countries.Europe.Italy.Validators;
 using Finova.Countries.Europe.Luxembourg.Validators;
+using Finova.Countries.Europe.Monaco.Validators;
+using Finova.Countries.Europe.Montenegro.Validators;
 using Finova.Countries.Europe.Netherlands.Validators;
 using Finova.Countries.Europe.Norway.Validators;
 using Finova.Countries.Europe.Poland.Validators;
@@ -221,16 +221,15 @@ void RunPaymentReferenceExamples()
     var generator = new IsoPaymentReferenceGenerator();
     string rf = generator.Generate("123456");
     WriteInfo("Generated", rf);
-    WriteSimpleResult(rf, IsoPaymentReferenceValidator.Validate(rf).IsValid);
+    WriteSimpleResult(rf, PaymentReferenceValidator.Validate(rf).IsValid);
 
     // Belgium OGM
     Console.WriteLine("\n  Belgium (OGM):");
 
     var beServiceGenerator = new PaymentReferenceGenerator();
-    var beServiceValidator = new PaymentReferenceValidator();
     string ogm = beServiceGenerator.Generate("1234567890");
     WriteInfo("Generated", ogm);
-    WriteSimpleResult(ogm, beServiceValidator.Validate(ogm, PaymentReferenceFormat.LocalBelgian).IsValid);
+    WriteSimpleResult(ogm, PaymentReferenceValidator.Validate(ogm, PaymentReferenceFormat.LocalBelgian).IsValid);
 }
 
 void RunPaymentCardExamples()
@@ -251,6 +250,12 @@ void RunVatExamples()
 
     // Belgium
     WriteSimpleResult("BE0764117795", BelgiumVatValidator.Validate("BE0764117795").IsValid, "Belgium");
+
+    // Monaco
+    WriteSimpleResult("FR00000000000", MonacoVatValidator.Validate("FR00000000000").IsValid, "Monaco");
+
+    // Montenegro
+    WriteSimpleResult("02000005", MontenegroVatValidator.Validate("02000005").IsValid, "Montenegro");
 
     // Generic EuropeVatValidator
     var vatValidator = new EuropeVatValidator();
@@ -313,7 +318,9 @@ void RunFluentValidationExamples()
         CreditorIban = "DE89370400440532013000",
         CreditorBic = "COBADEFF",
         Amount = 100,
-        Currency = "EUR"
+        Currency = "EUR",
+        VatNumber = "FR44732829320", // Valid French VAT
+        PaymentReference = "RF18539007547034" // Valid RF
     };
 
     var result = validator.Validate(request);
@@ -336,6 +343,8 @@ void RunFluentValidationExamples()
     WriteInfo("Creditor IBAN", request.CreditorIban);
     WriteInfo("Debtor BIC", request.DebtorBic);
     WriteInfo("Creditor BIC", request.CreditorBic);
+    WriteInfo("VAT Number", request.VatNumber);
+    WriteInfo("Payment Ref", request.PaymentReference);
 
     Console.WriteLine();
     Console.WriteLine("Press any key to continue...");
@@ -428,6 +437,8 @@ public class SepaPaymentRequest
     public string CreditorBic { get; set; } = string.Empty;
     public decimal Amount { get; set; }
     public string Currency { get; set; } = "EUR";
+    public string VatNumber { get; set; } = string.Empty;
+    public string PaymentReference { get; set; } = string.Empty;
 }
 
 public class SepaPaymentRequestValidator : AbstractValidator<SepaPaymentRequest>
@@ -438,5 +449,7 @@ public class SepaPaymentRequestValidator : AbstractValidator<SepaPaymentRequest>
         RuleFor(x => x.DebtorBic).MustBeValidBic();
         RuleFor(x => x.CreditorIban).MustBeValidIban();
         RuleFor(x => x.CreditorBic).MustBeValidBic();
+        RuleFor(x => x.VatNumber).MustBeValidVat();
+        RuleFor(x => x.PaymentReference).MustBeValidPaymentReference();
     }
 }

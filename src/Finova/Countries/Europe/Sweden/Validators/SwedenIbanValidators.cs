@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-
-using Finova.Core.Iban;
 using Finova.Core.Common;
+using Finova.Core.Iban;
 
 namespace Finova.Countries.Europe.Sweden.Validators;
 
@@ -22,28 +21,35 @@ public class SwedenIbanValidator : IIbanValidator
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
+        // 1. Length Check
         if (normalized.Length != SwedenIbanLength)
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {SwedenIbanLength}, got {normalized.Length}.");
         }
 
+        // 2. Country Code Check
         if (!normalized.StartsWith(SwedenCountryCode, StringComparison.OrdinalIgnoreCase))
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected SE.");
         }
 
-        // Structure check: All digits
-        // Sweden IBAN body (positions 4 to 24) must be numeric
+        // 3. Format Check (Digits only after SE)
         for (int i = 2; i < SwedenIbanLength; i++)
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Sweden IBAN must contain only digits after the country code.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Sweden IBAN must contain only digits after country code.");
             }
         }
 
-        return IbanHelper.IsValidIban(normalized)
-            ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+        // 4. ISO 7064 Mod 97 Checksum (The Gold Standard)
+        if (!IbanHelper.IsValidIban(normalized))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+        }
+
+        // We skip the complex Domestic Rules (Mod11/Luhn per Bank ID) to avoid false negatives.
+        // The ISO Mod97 check guarantees the IBAN integrity sufficiently for international transfers.
+        return ValidationResult.Success();
     }
 }

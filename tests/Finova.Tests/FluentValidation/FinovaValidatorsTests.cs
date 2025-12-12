@@ -24,6 +24,18 @@ public class FinovaValidatorsTests
         public string? DestinationBic { get; set; }
     }
 
+    private class VatModel
+    {
+        public string? VatNumber { get; set; }
+    }
+
+    private class PaymentReferenceModel
+    {
+        public string? Reference { get; set; }
+    }
+
+
+
     #endregion
 
     #region Test Validators
@@ -51,6 +63,22 @@ public class FinovaValidatorsTests
             RuleFor(x => x.DestinationBic)
                 .MustBeValidBic()
                 .MustMatchIbanCountry(x => x.DestinationIban);
+        }
+    }
+
+    private class VatModelValidator : AbstractValidator<VatModel>
+    {
+        public VatModelValidator()
+        {
+            RuleFor(x => x.VatNumber).MustBeValidVat();
+        }
+    }
+
+    private class PaymentReferenceModelValidator : AbstractValidator<PaymentReferenceModel>
+    {
+        public PaymentReferenceModelValidator(Finova.Core.PaymentReference.PaymentReferenceFormat format = Finova.Core.PaymentReference.PaymentReferenceFormat.IsoRf)
+        {
+            RuleFor(x => x.Reference).MustBeValidPaymentReference(format);
         }
     }
 
@@ -517,6 +545,96 @@ public class FinovaValidatorsTests
         result.IsValid.Should().BeFalse();
         result.Errors.Should().Contain(e => e.PropertyName == "SourceBic");
         result.Errors.Should().Contain(e => e.PropertyName == "DestinationBic");
+    }
+
+    #endregion
+
+    #region MustBeValidVat Tests
+
+    [Theory]
+    [InlineData("FR44732829320")] // Valid French VAT
+    [InlineData("MC44732829320")] // Valid Monaco VAT (mapped to FR)
+    [InlineData("BE0123456749")] // Valid Belgian VAT (using valid format)
+    public void MustBeValidVat_WithValidVat_PassesValidation(string vat)
+    {
+        // Arrange
+        var validator = new VatModelValidator();
+        var model = new VatModel { VatNumber = vat };
+
+        // Act
+        var result = validator.Validate(model);
+
+        // Assert
+        result.IsValid.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("INVALID")]
+    [InlineData("FR14")] // Too short
+    public void MustBeValidVat_WithInvalidVat_FailsValidation(string? vat)
+    {
+        // Arrange
+        var validator = new VatModelValidator();
+        var model = new VatModel { VatNumber = vat };
+
+        // Act
+        var result = validator.Validate(model);
+
+        // Assert
+        result.Errors.Should().Contain(e => e.PropertyName == "VatNumber");
+        result.Errors.First(e => e.PropertyName == "VatNumber").ErrorMessage.Should().Be("'Vat Number' is not a valid VAT number.");
+    }
+
+    #endregion
+
+    #region MustBeValidPaymentReference Tests
+
+    [Theory]
+    [InlineData("RF18539007547034")] // Valid ISO RF
+    public void MustBeValidPaymentReference_WithValidIsoRf_PassesValidation(string reference)
+    {
+        // Arrange
+        var validator = new PaymentReferenceModelValidator();
+        var model = new PaymentReferenceModel { Reference = reference };
+
+        // Act
+        var result = validator.Validate(model);
+
+        // Assert
+        result.IsValid.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData("INVALID")]
+    [InlineData("RF00")] // Invalid RF check digits
+    public void MustBeValidPaymentReference_WithInvalidIsoRf_FailsValidation(string reference)
+    {
+        // Arrange
+        var validator = new PaymentReferenceModelValidator();
+        var model = new PaymentReferenceModel { Reference = reference };
+
+        // Act
+        var result = validator.Validate(model);
+
+        // Assert
+        result.Errors.Should().Contain(e => e.PropertyName == "Reference");
+        result.Errors.First(e => e.PropertyName == "Reference").ErrorMessage.Should().Be("'Reference' is not a valid payment reference.");
+    }
+
+    [Fact]
+    public void MustBeValidPaymentReference_WithLocalFormat_PassesValidation()
+    {
+        // Arrange - Belgian format (+++123/4567/89012+++)
+        var validator = new PaymentReferenceModelValidator(Finova.Core.PaymentReference.PaymentReferenceFormat.LocalBelgian);
+        var model = new PaymentReferenceModel { Reference = "+++090/9337/55493+++" };
+
+        // Act
+        var result = validator.Validate(model);
+
+        // Assert
+        result.IsValid.Should().BeTrue();
     }
 
     #endregion

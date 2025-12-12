@@ -11,12 +11,10 @@ namespace Finova.Tests.Generators;
 public class PaymentReferenceGeneratorTests
 {
     private readonly PaymentReferenceGenerator _generator;
-    private readonly PaymentReferenceValidator _validator;
 
     public PaymentReferenceGeneratorTests()
     {
         _generator = new PaymentReferenceGenerator();
-        _validator = new PaymentReferenceValidator();
     }
 
     #region Generate Tests - All Formats
@@ -32,7 +30,7 @@ public class PaymentReferenceGeneratorTests
 
         // Assert
         result.Should().StartWith("RF");
-        _validator.Validate(result).IsValid.Should().BeTrue();
+        PaymentReferenceValidator.Validate(result).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -48,7 +46,7 @@ public class PaymentReferenceGeneratorTests
         result.Should().StartWith("+++");
         result.Should().EndWith("+++");
         result.Should().MatchRegex(@"\+\+\+\d{3}/\d{4}/\d{5}\+\+\+"); // Format: +++XXX/XXXX/XXXXX+++
-        _validator.Validate(result, PaymentReferenceFormat.LocalBelgian).IsValid.Should().BeTrue();
+        PaymentReferenceValidator.Validate(result, PaymentReferenceFormat.LocalBelgian).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -63,7 +61,7 @@ public class PaymentReferenceGeneratorTests
         // Assert
         result.Should().NotBeNullOrEmpty();
         result.Length.Should().Be(input.Length + 1); // Original + 1 check digit
-        _validator.Validate(result, PaymentReferenceFormat.LocalFinland).IsValid.Should().BeTrue();
+        PaymentReferenceValidator.Validate(result, PaymentReferenceFormat.LocalFinland).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -77,7 +75,7 @@ public class PaymentReferenceGeneratorTests
         // Assert
         result.Should().NotBeNullOrEmpty();
         result.Length.Should().Be(input.Length + 1); // Original + 1 check digit (Luhn)
-        _validator.Validate(result, PaymentReferenceFormat.LocalNorway).IsValid.Should().BeTrue();
+        PaymentReferenceValidator.Validate(result, PaymentReferenceFormat.LocalNorway).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -89,7 +87,7 @@ public class PaymentReferenceGeneratorTests
 
         // Assert
         result.Should().NotBeNullOrEmpty();
-        _validator.Validate(result, PaymentReferenceFormat.LocalSweden).IsValid.Should().BeTrue();
+        PaymentReferenceValidator.Validate(result, PaymentReferenceFormat.LocalSweden).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -101,7 +99,7 @@ public class PaymentReferenceGeneratorTests
 
         // Assert
         result.Should().HaveLength(27); // 26 digits + 1 check digit
-        _validator.Validate(result, PaymentReferenceFormat.LocalSwitzerland).IsValid.Should().BeTrue();
+        PaymentReferenceValidator.Validate(result, PaymentReferenceFormat.LocalSwitzerland).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -113,7 +111,7 @@ public class PaymentReferenceGeneratorTests
 
         // Assert
         result.Should().StartWith("SI12");
-        _validator.Validate(result, PaymentReferenceFormat.LocalSlovenia).IsValid.Should().BeTrue();
+        PaymentReferenceValidator.Validate(result, PaymentReferenceFormat.LocalSlovenia).IsValid.Should().BeTrue();
     }
 
     #endregion
@@ -128,7 +126,7 @@ public class PaymentReferenceGeneratorTests
     public void IsValid_WithVariousInputs_ReturnsExpected(string? input, bool expected)
     {
         // Act
-        var result = _validator.Validate(input!).IsValid;
+        var result = PaymentReferenceValidator.Validate(input!).IsValid;
 
         // Assert
         result.Should().Be(expected);
@@ -141,7 +139,7 @@ public class PaymentReferenceGeneratorTests
         var reference = _generator.Generate("TEST123", PaymentReferenceFormat.IsoRf);
 
         // Act
-        var result = _validator.Validate(reference).IsValid;
+        var result = PaymentReferenceValidator.Validate(reference).IsValid;
 
         // Assert
         result.Should().BeTrue();
@@ -154,7 +152,7 @@ public class PaymentReferenceGeneratorTests
         var reference = _generator.Generate("12345", PaymentReferenceFormat.LocalBelgian);
 
         // Act
-        var result = _validator.Validate(reference, PaymentReferenceFormat.LocalBelgian).IsValid;
+        var result = PaymentReferenceValidator.Validate(reference, PaymentReferenceFormat.LocalBelgian).IsValid;
 
         // Assert
         result.Should().BeTrue();
@@ -224,7 +222,7 @@ public class PaymentReferenceGeneratorTests
     public void IsValid_WithNullOrEmpty_ReturnsFalse(string? input)
     {
         // Act
-        var result = _validator.Validate(input!).IsValid;
+        var result = PaymentReferenceValidator.Validate(input!).IsValid;
 
         // Assert
         result.Should().BeFalse();

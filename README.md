@@ -71,6 +71,10 @@ Fast, offline regex and checksum validation for European and International forma
 - **Enterprise Numbers:** Validates Belgian KBO/BCE (Mod97) & French SIRET/SIREN (Luhn).
 - **VAT Numbers:** Validates formatting and check digits for EU-27 countries.
 
+### 🔗 **FluentValidation Integration**
+- **Extensions:** `MustBeValidIban`, `MustBeValidBic`, `MustBeValidVat`, `MustBeValidPaymentReference`, etc.
+- **Seamless:** Integrates directly into your existing `AbstractValidator` classes.
+
 ---
 
 ## 📦 Installation
@@ -94,10 +98,10 @@ Install-Package Finova
 ### 1\. Validate an IBAN
 
 ```csharp
-using Finova.Belgium.Validators;
+using Finova.Countries.Europe.Belgium.Validators;
 
 // Validates format and checksum (Does NOT check if account exists)
-bool isValid = BelgianBankAccountValidator.ValidateBelgiumIban("BE68539007547034");
+bool isValid = BelgiumIbanValidator.ValidateBelgiumIban("BE68539007547034").IsValid;
 
 if (isValid) 
 {
@@ -108,7 +112,7 @@ if (isValid)
 ### 2\. Validate a Payment Card
 
 ```csharp
-using Finova.PaymentCards;
+using Finova.Core.PaymentCard;
 
 // Validates checksum (Luhn) and detects brand
 var result = PaymentCardValidator.Validate("4532123456789012");
@@ -122,16 +126,33 @@ if (result.IsValid)
 ### 3\. Generate a Payment Reference
 
 ```csharp
-using Finova.Belgium.Services;
-using Finova.Core.Models;
+using Finova.Generators;
+using Finova.Core.PaymentReference;
 
-var service = new BelgianPaymentReferenceService();
+var generator = new PaymentReferenceGenerator();
 
 // Generate Belgian OGM (+++000/0012/34569+++)
-string ogm = service.Generate("123456", PaymentReferenceFormat.Domestic);
+string ogm = generator.Generate("123456", PaymentReferenceFormat.LocalBelgian);
 
 // Generate ISO RF (RF89INVOICE2024)
-string isoRef = service.Generate("INVOICE2024", PaymentReferenceFormat.IsoRf);
+string isoRef = generator.Generate("INVOICE2024", PaymentReferenceFormat.IsoRf);
+```
+
+### 4\. FluentValidation Integration
+
+```csharp
+using FluentValidation;
+using Finova.Extensions.FluentValidation;
+
+public class CustomerValidator : AbstractValidator<Customer>
+{
+    public CustomerValidator()
+    {
+        RuleFor(x => x.Iban).MustBeValidIban();
+        RuleFor(x => x.VatNumber).MustBeValidVat();
+        RuleFor(x => x.PaymentReference).MustBeValidPaymentReference();
+    }
+}
 ```
 
 -----
@@ -157,10 +178,10 @@ Finova is strictly offline. Future updates focus on schema compliance, developer
 
 ---
 
-## 🔄 v1.2.0 — European Unification *(In Progress)*
+## ✅ v1.2.0 — European Unification *(Released)*
 - **Finova.Europe:** Unified wrapper package for all SEPA countries  
 - **Smart Routing:** Auto-detect country rules via `EuropeValidator`  
-- **Extensions:** FluentValidation integration package  
+- **Extensions:** FluentValidation integration package (`Finova.Extensions.FluentValidation`)
 
 ---
 

@@ -15,25 +15,17 @@ namespace Finova.Validators;
 /// </summary>
 public class PaymentReferenceValidator : IPaymentReferenceValidator
 {
+    #region Static Methods (High-Performance)
+
     /// <summary>
-    /// Validates a payment reference.
+    /// Validates a payment reference using the default ISO 11649 (RF) format.
     /// </summary>
-    /// <param name="communication">The payment reference to validate.</param>
-    /// <returns>Validation result.</returns>
-    /// <summary>
-    /// Validates a payment reference.
-    /// </summary>
-    /// <param name="communication">The payment reference to validate.</param>
-    /// <returns>Validation result.</returns>
-    public ValidationResult Validate(string? communication) => Validate(communication, PaymentReferenceFormat.IsoRf);
+    public static ValidationResult Validate(string? communication) => Validate(communication, PaymentReferenceFormat.IsoRf);
 
     /// <summary>
     /// Validates a payment reference against a specific format.
     /// </summary>
-    /// <param name="communication">The payment reference to validate.</param>
-    /// <param name="format">The expected format.</param>
-    /// <returns>Validation result.</returns>
-    public ValidationResult Validate(string? communication, PaymentReferenceFormat format)
+    public static ValidationResult Validate(string? communication, PaymentReferenceFormat format)
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
@@ -56,9 +48,7 @@ public class PaymentReferenceValidator : IPaymentReferenceValidator
     /// <summary>
     /// Parses the payment reference to identify its format and details.
     /// </summary>
-    /// <param name="reference">The payment reference to parse.</param>
-    /// <returns>The parsed details, or null if invalid.</returns>
-    public PaymentReferenceDetails? Parse(string? reference)
+    public static PaymentReferenceDetails? Parse(string? reference)
     {
         if (string.IsNullOrWhiteSpace(reference))
         {
@@ -72,9 +62,6 @@ public class PaymentReferenceValidator : IPaymentReferenceValidator
         }
 
         // For local formats, we return a generic details object if valid
-        // Note: Ideally, we would have Parse methods in each service to return specific details,
-        // but for now we'll return a generic valid result with the detected format.
-
         if (BelgiumPaymentReferenceService.ValidateStatic(reference).IsValid)
         {
             return CreateDetails(reference, PaymentReferenceFormat.LocalBelgian);
@@ -115,4 +102,15 @@ public class PaymentReferenceValidator : IPaymentReferenceValidator
         Format = format,
         IsValid = true
     };
+
+    #endregion
+
+    #region IPaymentReferenceValidator Implementation (DI Wrapper)
+
+    ValidationResult IValidator<PaymentReferenceDetails>.Validate(string? communication) => Validate(communication);
+    PaymentReferenceDetails? IValidator<PaymentReferenceDetails>.Parse(string? reference) => Parse(reference);
+
+    ValidationResult IPaymentReferenceValidator.Validate(string? communication, PaymentReferenceFormat format) => Validate(communication, format);
+
+    #endregion
 }

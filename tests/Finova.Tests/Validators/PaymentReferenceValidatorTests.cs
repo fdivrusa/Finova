@@ -7,20 +7,13 @@ namespace Finova.Tests.Validators;
 
 public class PaymentReferenceValidatorTests
 {
-    private readonly PaymentReferenceValidator _validator;
-
-    public PaymentReferenceValidatorTests()
-    {
-        _validator = new PaymentReferenceValidator();
-    }
-
     [Theory]
     [InlineData("RF18539007547034")]
     [InlineData("RF18 5390 0754 7034")]
     public void Validate_WithValidIsoRf_ReturnsSuccess(string reference)
     {
         // Act
-        var result = _validator.Validate(reference);
+        var result = PaymentReferenceValidator.Validate(reference);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -32,7 +25,7 @@ public class PaymentReferenceValidatorTests
     public void Validate_WithInvalidIsoRf_ReturnsFailure(string reference)
     {
         // Act
-        var result = _validator.Validate(reference);
+        var result = PaymentReferenceValidator.Validate(reference);
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -48,7 +41,7 @@ public class PaymentReferenceValidatorTests
     public void Validate_WithValidLocalFormat_ReturnsSuccess(string reference, PaymentReferenceFormat format)
     {
         // Act
-        var result = _validator.Validate(reference, format);
+        var result = PaymentReferenceValidator.Validate(reference, format);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -61,7 +54,7 @@ public class PaymentReferenceValidatorTests
         var reference = "UNKNOWN-FORMAT-123";
 
         // Act
-        var result = _validator.Validate(reference);
+        var result = PaymentReferenceValidator.Validate(reference);
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -74,7 +67,7 @@ public class PaymentReferenceValidatorTests
     public void Validate_WithNullOrEmpty_ReturnsFailure(string? reference)
     {
         // Act
-        var result = _validator.Validate(reference);
+        var result = PaymentReferenceValidator.Validate(reference);
 
         // Assert
         result.IsValid.Should().BeFalse();

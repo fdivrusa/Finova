@@ -31,6 +31,7 @@ The following tags help users find your package:
 - financial
 - fintech
 - belgian-banking
+- fluentvalidation
 
 ## 📄 Included Files
 
@@ -86,6 +87,7 @@ When viewing your package, users will see:
 
 2. **Dependencies Tab**
    - `Microsoft.Extensions.DependencyInjection` (10.0.0+)
+   - `FluentValidation` (11.0.0+)
    - Target framework (.NET 10.0)
 
 3. **Versions Tab**

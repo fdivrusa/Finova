@@ -9,6 +9,9 @@ public class PaymentCardValidator : IPaymentCardValidator
     /// <summary>
     /// Validates the card number using the Luhn Algorithm (Mod-10).
     /// </summary>
+    /// <summary>
+    /// Validates the card number using the Luhn Algorithm (Mod-10).
+    /// </summary>
     public static ValidationResult Validate(string? cardNumber)
     {
         if (string.IsNullOrWhiteSpace(cardNumber))
@@ -16,37 +19,18 @@ public class PaymentCardValidator : IPaymentCardValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Card number cannot be empty.");
         }
 
-        int sum = 0;
-        bool alternate = false;
-
-        // Loop from right to left, ignoring non-digits
-        for (int i = cardNumber.Length - 1; i >= 0; i--)
+        // Check for invalid characters (allow spaces and dashes)
+        foreach (char c in cardNumber)
         {
-            char c = cardNumber[i];
-
-            if (!char.IsDigit(c))
+            if (!char.IsDigit(c) && !char.IsWhiteSpace(c) && c != '-')
             {
-                // Allow spaces and dashes, reject other chars
-                if (char.IsWhiteSpace(c) || c == '-')
-                {
-                    continue;
-                }
                 return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Card number contains invalid characters.");
             }
-
-            int n = c - '0';
-
-            if (alternate)
-            {
-                n *= 2;
-                if (n > 9) n -= 9;
-            }
-
-            sum += n;
-            alternate = !alternate;
         }
 
-        return (sum % 10 == 0)
+        var cleanNumber = cardNumber.Replace(" ", "").Replace("-", "");
+
+        return ChecksumHelper.ValidateLuhn(cleanNumber)
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid card number (Luhn check failed).");
     }
