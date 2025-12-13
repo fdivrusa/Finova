@@ -12,13 +12,26 @@ namespace Finova.Countries.Europe.Austria.Validators;
 public partial class AustriaFirmenbuchValidator : IEnterpriseValidator
 {
     private const string CountryCodePrefix = "AT";
-
     [GeneratedRegex(@"^(?:FN\s?)?(\d{1,6})([a-zA-Z])$")]
     private static partial Regex FirmenbuchRegex();
 
     public string CountryCode => CountryCodePrefix;
 
     public ValidationResult Validate(string? number) => ValidateFirmenbuch(number);
+
+    public ValidationResult Validate(string? number, string countryCode)
+    {
+        return countryCode.Equals(CountryCodePrefix, StringComparison.OrdinalIgnoreCase)
+            ? Validate(number)
+            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {countryCode} is not supported by this validator.");
+    }
+
+    public ValidationResult Validate(string? number, EnterpriseNumberType type)
+    {
+        return type == EnterpriseNumberType.AustriaFirmenbuch
+            ? Validate(number)
+            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Enterprise number type {type} is not supported by this validator.");
+    }
 
     public string? Parse(string? number) => number?.Trim();
 

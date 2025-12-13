@@ -20,6 +20,20 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
 
     ValidationResult IValidator<string>.Validate(string? instance) => Validate(instance);
 
+    public ValidationResult Validate(string? number, string countryCode)
+    {
+        return countryCode.Equals("BE", StringComparison.OrdinalIgnoreCase)
+            ? Validate(number)
+            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {countryCode} is not supported by this validator.");
+    }
+
+    public ValidationResult Validate(string? number, EnterpriseNumberType type)
+    {
+        return type == EnterpriseNumberType.BelgiumEnterpriseNumber
+            ? Validate(number)
+            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Enterprise number type {type} is not supported by this validator.");
+    }
+
     public string? Parse(string? instance) => Normalize(instance);
 
     /// <summary>

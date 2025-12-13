@@ -16,6 +16,10 @@ public class EuropeEnterpriseValidator : IEnterpriseValidator
 
     public ValidationResult Validate(string? number) => ValidateEnterpriseNumber(number);
 
+    public ValidationResult Validate(string? number, string countryCode) => ValidateEnterpriseNumber(number, countryCode);
+
+    public ValidationResult Validate(string? number, EnterpriseNumberType type) => ValidateEnterpriseNumber(number, type);
+
     public string? Parse(string? number) => GetNormalizedNumber(number);
 
     public static ValidationResult ValidateEnterpriseNumber(string? number)

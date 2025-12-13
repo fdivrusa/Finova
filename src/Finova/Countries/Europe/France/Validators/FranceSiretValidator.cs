@@ -21,6 +21,20 @@ public partial class FranceSiretValidator : IEnterpriseValidator
 
     public ValidationResult Validate(string? number) => ValidateSiret(number);
 
+    public ValidationResult Validate(string? number, string countryCode)
+    {
+        return countryCode.Equals(CountryCodePrefix, StringComparison.OrdinalIgnoreCase)
+            ? Validate(number)
+            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {countryCode} is not supported by this validator.");
+    }
+
+    public ValidationResult Validate(string? number, EnterpriseNumberType type)
+    {
+        return type == EnterpriseNumberType.FranceSiret
+            ? Validate(number)
+            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Enterprise number type {type} is not supported by this validator.");
+    }
+
     public string? Parse(string? number) => number?.Trim().Replace(" ", "").Replace(".", "");
 
     public static ValidationResult ValidateSiret(string? number)

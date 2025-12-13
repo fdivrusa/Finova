@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Finova.Generators;
 using Finova.Validators;
 using Finova.Core.Vat;
+using Finova.Extensions.DependencyInjection;
 
 namespace Finova.Extensions;
 
@@ -28,6 +29,11 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IIbanParser, EuropeIbanParser>();
         services.AddSingleton<IIbanValidator, EuropeIbanValidator>();
         services.AddSingleton<IVatValidator, EuropeVatValidator>();
+
+        // Register specific validators via extensions
+        services.AddEnterpriseValidators();
+        services.AddIbanValidators();
+        services.AddVatValidators();
 
         return services;
     }

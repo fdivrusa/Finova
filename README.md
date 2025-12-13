@@ -147,14 +147,87 @@ using FluentValidation;
 using Finova.Extensions.FluentValidation;
 
 public class CustomerValidator : AbstractValidator<Customer>
+#### Option A: Dependency Injection (Recommended)
+
+Register Finova in your `Program.cs`:
+
+```csharp
+using Finova.Extensions;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Registers all validators (IBAN, VAT, Enterprise, PaymentReference, etc.)
+builder.Services.AddFinova();
+
+var app = builder.Build();
+```
+
+Inject and use the validators in your services:
+
+```csharp
+using Finova.Core.Vat;
+using Finova.Core.Enterprise;
+
+public class BusinessService
 {
-    public CustomerValidator()
+    private readonly IVatValidator _vatValidator;
+    private readonly IEnterpriseValidator _enterpriseValidator;
+
+    public BusinessService(IVatValidator vatValidator, IEnterpriseValidator enterpriseValidator)
     {
-        RuleFor(x => x.Iban).MustBeValidIban();
-        RuleFor(x => x.VatNumber).MustBeValidVat();
-        RuleFor(x => x.PaymentReference).MustBeValidPaymentReference();
+        _vatValidator = vatValidator;
+        _enterpriseValidator = enterpriseValidator;
+    }
+
+    public void RegisterCompany(string vatNumber, string enterpriseNumber)
+    {
+        // Validates VAT format and checksum for any EU country
+        if (!_vatValidator.Validate(vatNumber).IsValid)
+        {
+            throw new Exception("Invalid VAT Number");
+        }
+
+        // Validates Enterprise Number (e.g., SIRET, KBO)
+        if (!_enterpriseValidator.Validate(enterpriseNumber).IsValid)
+        {
+            throw new Exception("Invalid Enterprise Number");
+        }
     }
 }
+```
+
+#### Option B: Static Usage (Simple)
+
+You can also use the static helpers directly without DI:
+
+```csharp
+using Finova.Services;
+using Finova.Core.Enterprise;
+
+// 1. Validate VAT Number (Auto-detects country)
+bool isVatValid = EuropeVatValidator.Validate("FR12345678901").IsValid;
+
+// 2. Validate Enterprise Number (Auto-detects country)
+bool isEntValid = EuropeEnterpriseValidator.ValidateEnterpriseNumber("BE0123456789").IsValid;
+
+// 3. Validate Specific Enterprise Type
+bool isSiretValid = EuropeEnterpriseValidator.ValidateEnterpriseNumber(
+    "73282932000074", 
+    EnterpriseNumberType.FranceSiret
+).IsValid;
+```
+
+-----
+using Finova.Countries.Europe.France.Validators;
+using Finova.Countries.Europe.Belgium.Validators;
+
+// 1. Get detailed SIRET components (SIREN + NIC)
+var details = FranceSiretValidator.GetSiretDetails("73282932000074");
+Console.WriteLine($"SIREN: {details.Siren}, NIC: {details.Nic}");
+
+// 2. Format a Belgian Enterprise Number
+string formatted = BelgiumEnterpriseValidator.Format("0456789123");
+// Output: 0456.789.123
 ```
 
 -----
@@ -187,7 +260,7 @@ Finova is strictly offline. Future updates focus on schema compliance, developer
 
 ---
 
-## 🚧 v1.3.0 — Corporate Identity *(Ongoing)*
+## ✅ v1.3.0 — Corporate Identity *(Released)*
 - **VAT Numbers:** EU VAT checksums (VIES offline syntax)  
 - **Enterprise Numbers:** French SIRET/SIREN, Belgian KBO/BCE  
 
