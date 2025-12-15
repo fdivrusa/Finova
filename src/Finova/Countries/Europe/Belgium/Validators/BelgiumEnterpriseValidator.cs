@@ -18,21 +18,7 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
 
     public string CountryCode => "BE";
 
-    ValidationResult IValidator<string>.Validate(string? instance) => Validate(instance);
-
-    public ValidationResult Validate(string? number, string countryCode)
-    {
-        return countryCode.Equals("BE", StringComparison.OrdinalIgnoreCase)
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {countryCode} is not supported by this validator.");
-    }
-
-    public ValidationResult Validate(string? number, EnterpriseNumberType type)
-    {
-        return type == EnterpriseNumberType.BelgiumEnterpriseNumber
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Enterprise number type {type} is not supported by this validator.");
-    }
+    public ValidationResult Validate(string? instance) => ValidateEnterpriseNumber(instance);
 
     public string? Parse(string? instance) => Normalize(instance);
 
@@ -42,7 +28,7 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
     /// </summary>
     /// <param name="kbo">The KBO/BCE number to validate</param>
     /// <returns>A ValidationResult indicating success or failure.</returns>
-    public static Core.Common.ValidationResult Validate(string? kbo)
+    public static Core.Common.ValidationResult ValidateEnterpriseNumber(string? kbo)
     {
         if (string.IsNullOrWhiteSpace(kbo))
         {
@@ -97,7 +83,7 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
     /// <exception cref="ArgumentException">If the KBO number is invalid</exception>
     public static string Format(string? kbo)
     {
-        if (!Validate(kbo).IsValid)
+        if (!ValidateEnterpriseNumber(kbo).IsValid)
         {
             throw new ArgumentException("Invalid Belgian Enterprise Number (KBO/BCE)", nameof(kbo));
         }

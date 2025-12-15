@@ -96,7 +96,7 @@ Install-Package Finova
 
 ## 📖 Quick Start
 
-### 1\. Validate an IBAN
+### 1. Validate an IBAN
 
 ```csharp
 using Finova.Services;
@@ -111,7 +111,7 @@ if (isValid)
 }
 ```
 
-### 2\. Validate a Payment Card
+### 2. Validate a Payment Card
 
 ```csharp
 using Finova.Core.PaymentCard;
@@ -125,7 +125,7 @@ if (result.IsValid)
 }
 ```
 
-### 3\. Generate a Payment Reference
+### 3. Generate a Payment Reference
 
 ```csharp
 using Finova.Generators;
@@ -140,13 +140,23 @@ string ogm = generator.Generate("123456", PaymentReferenceFormat.LocalBelgian);
 string isoRef = generator.Generate("INVOICE2024", PaymentReferenceFormat.IsoRf);
 ```
 
-### 4\. FluentValidation Integration
+### 4. FluentValidation Integration
 
 ```csharp
 using FluentValidation;
 using Finova.Extensions.FluentValidation;
 
 public class CustomerValidator : AbstractValidator<Customer>
+{
+    public CustomerValidator()
+    {
+        RuleFor(x => x.Iban).MustBeValidIban();
+        RuleFor(x => x.VatNumber).MustBeValidVat();
+        RuleFor(x => x.Bic).MustBeValidBic();
+    }
+}
+```
+
 #### Option A: Dependency Injection (Recommended)
 
 Register Finova in your `Program.cs`:
@@ -217,22 +227,63 @@ bool isSiretValid = EuropeEnterpriseValidator.ValidateEnterpriseNumber(
 ).IsValid;
 ```
 
------
-using Finova.Countries.Europe.France.Validators;
-using Finova.Countries.Europe.Belgium.Validators;
+### 5. Enterprise Validator Usage
 
-// 1. Get detailed SIRET components (SIREN + NIC)
-var details = FranceSiretValidator.GetSiretDetails("73282932000074");
-Console.WriteLine($"SIREN: {details.Siren}, NIC: {details.Nic}");
+Finova provides a unified validator for European Enterprise and Business Registration Numbers, supporting **51 countries**.
 
-// 2. Format a Belgian Enterprise Number
-string formatted = BelgiumEnterpriseValidator.Format("0456789123");
-// Output: 0456.789.123
+```csharp
+using Finova.Services;
+using Finova.Core.Enterprise;
+
+// 1. Auto-detect Country from Code
+// Validates based on the country code provided (e.g., "DE", "FR", "GB")
+var result = EuropeEnterpriseValidator.ValidateEnterpriseNumber("12345678", "GB");
+if (result.IsValid)
+{
+    Console.WriteLine("Valid UK Company Number");
+}
+
+// 2. Validate Specific Type
+// Explicitly validate against a specific enterprise number type
+var vatResult = EuropeEnterpriseValidator.ValidateEnterpriseNumber(
+    "DE123456789", 
+    EnterpriseNumberType.GermanySteuernummer
+);
+
+// 3. Normalize Number
+// Removes formatting characters (spaces, dots, hyphens) and country prefixes
+string? normalized = EuropeEnterpriseValidator.GetNormalizedNumber("BE 0456.789.123");
+// Output: "0456789123"
+
+// 4. Country-Specific Logic (e.g., Germany)
+// Automatically distinguishes between Handelsregisternummer (HRA/HRB) and Steuernummer
+var deResult = EuropeEnterpriseValidator.ValidateEnterpriseNumber("HRB 12345", "DE");
+// Validates as GermanyHandelsregisternummer
+```
+
+### 6. Advanced Usage (Custom Validators)
+
+For advanced scenarios where you need to implement custom validation logic or use specific algorithms directly, you can use the `ChecksumHelper` class.
+
+> **Note:** This is intended for developers building custom extensions. For standard use cases, prefer the high-level validators.
+
+```csharp
+using Finova.Core.Common;
+
+// 1. Validate using Luhn Algorithm (Mod 10)
+bool isLuhnValid = ChecksumHelper.ValidateLuhn("79927398713");
+
+// 2. Validate using ISO 7064 Mod 97-10 (IBANs)
+bool isMod97Valid = ChecksumHelper.ValidateModulo97("1234567890123456789012345678901");
+
+// 3. Calculate Weighted Modulo 11
+int[] weights = { 2, 3, 4, 5, 6, 7 };
+int remainder = ChecksumHelper.CalculateWeightedModulo11("123456", weights);
 ```
 
 -----
 
-# 🗺️ Roadmap
+## 🗺️ Roadmap
 
 Finova is strictly offline. Future updates focus on schema compliance, developer experience, and mathematical validation.
 

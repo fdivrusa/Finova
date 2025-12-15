@@ -19,20 +19,6 @@ public partial class AustriaFirmenbuchValidator : IEnterpriseValidator
 
     public ValidationResult Validate(string? number) => ValidateFirmenbuch(number);
 
-    public ValidationResult Validate(string? number, string countryCode)
-    {
-        return countryCode.Equals(CountryCodePrefix, StringComparison.OrdinalIgnoreCase)
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {countryCode} is not supported by this validator.");
-    }
-
-    public ValidationResult Validate(string? number, EnterpriseNumberType type)
-    {
-        return type == EnterpriseNumberType.AustriaFirmenbuch
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Enterprise number type {type} is not supported by this validator.");
-    }
-
     public string? Parse(string? number) => number?.Trim();
 
     public static ValidationResult ValidateFirmenbuch(string? number)
@@ -50,8 +36,8 @@ public partial class AustriaFirmenbuchValidator : IEnterpriseValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid format. Expected 1-6 digits followed by a letter (optional FN prefix).");
         }
 
-        // TODO: Implement checksum algorithm if available.
-        // The last character is a check letter, but the algorithm is not publicly documented in detail.
+
+
 
         return ValidationResult.Success();
     }

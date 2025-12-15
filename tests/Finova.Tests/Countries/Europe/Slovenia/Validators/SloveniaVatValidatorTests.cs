@@ -13,7 +13,7 @@ public class SloveniaVatValidatorTests
     public void Validate_WithValidVat_ReturnsSuccess(string vat)
     {
         // Act
-        var result = SloveniaVatValidator.Validate(vat);
+        var result = SloveniaVatValidator.ValidateVat(vat);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -26,7 +26,7 @@ public class SloveniaVatValidatorTests
     public void Validate_WithFormattedVat_ReturnsSuccess(string vat)
     {
         // Act
-        var result = SloveniaVatValidator.Validate(vat);
+        var result = SloveniaVatValidator.ValidateVat(vat);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -44,7 +44,7 @@ public class SloveniaVatValidatorTests
     public void Validate_WithInvalidVat_ReturnsFailure(string? vat)
     {
         // Act
-        var result = SloveniaVatValidator.Validate(vat);
+        var result = SloveniaVatValidator.ValidateVat(vat);
 
         // Assert
         result.IsValid.Should().BeFalse();

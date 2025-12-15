@@ -1,10 +1,11 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
+using Finova.Core.Enterprise;
 using Finova.Core.Vat;
 
 namespace Finova.Countries.Europe.Malta.Validators;
 
-public partial class MaltaVatValidator : IVatValidator
+public partial class MaltaVatValidator : IVatValidator, IEnterpriseValidator
 {
     [GeneratedRegex(@"^MT\d{8}$")]
     private static partial Regex VatRegex();
@@ -13,11 +14,15 @@ public partial class MaltaVatValidator : IVatValidator
 
     public string CountryCode => VatPrefix;
 
-    ValidationResult IValidator<VatDetails>.Validate(string? instance) => Validate(instance);
+    ValidationResult IValidator<VatDetails>.Validate(string? instance) => ValidateVat(instance);
+
+    public ValidationResult Validate(string? instance) => ValidateVat(instance);
 
     public VatDetails? Parse(string? vat) => GetVatDetails(vat);
 
-    public static ValidationResult Validate(string? vat)
+    string? IValidator<string>.Parse(string? instance) => Normalize(instance);
+
+    public static ValidationResult ValidateVat(string? vat)
     {
         vat = VatSanitizer.Sanitize(vat);
 
@@ -38,19 +43,12 @@ public partial class MaltaVatValidator : IVatValidator
         }
 
         // Checksum Validation (Weighted Mod 37)
-        // Weights: 3, 4, 6, 7, 8, 2, 5
-        int[] weights = { 3, 4, 6, 7, 8, 2, 5 };
+        // Weights: 3, 4, 6, 7, 8, 9, 10, 1 applied to the 8 digits.
+        int[] weights = { 3, 4, 6, 7, 8, 9, 10, 1 };
 
-        int sum = ChecksumHelper.CalculateWeightedSum(cleaned.Substring(0, 7), weights);
+        int sum = ChecksumHelper.CalculateWeightedSum(cleaned, weights);
 
-        int checkDigit = 37 - (sum % 37);
-        if (checkDigit == 37) checkDigit = 0; // Assuming 0 if exact match? Or is it impossible?
-                                              // Usually if sum % 37 == 0, check is 0.
-                                              // Wait, 37 - 0 = 37. 37 is not a digit.
-                                              // If remainder is 0, check is 0.
-
-        int lastDigit = cleaned[7] - '0';
-        if (checkDigit != lastDigit)
+        if (sum % 37 != 0)
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Malta VAT checksum.");
         }
@@ -62,7 +60,7 @@ public partial class MaltaVatValidator : IVatValidator
     {
         vat = VatSanitizer.Sanitize(vat);
 
-        if (!Validate(vat).IsValid)
+        if (!ValidateVat(vat).IsValid)
         {
             return null;
         }
@@ -79,5 +77,21 @@ public partial class MaltaVatValidator : IVatValidator
             VatNumber = cleaned,
             IsValid = true
         };
+    }
+
+    public static string Normalize(string? number)
+    {
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return string.Empty;
+        }
+
+        var cleaned = number.Trim().ToUpperInvariant();
+        if (cleaned.StartsWith(VatPrefix))
+        {
+            cleaned = cleaned[2..];
+        }
+
+        return VatSanitizer.Sanitize(cleaned) ?? string.Empty;
     }
 }

@@ -7,19 +7,19 @@ namespace Finova.Tests.Services;
 public class EuropeEnterpriseValidatorTests
 {
     [Theory]
-    [InlineData("BE", "BE0123456789")] // Belgium
-    [InlineData("AT", "AT123456x")] // Austria (AT prefix stripped)
-    [InlineData("FR", "FR12345678901234")] // France (FR prefix stripped)
-    [InlineData("FR", "FR732829320")] // France SIREN
-    [InlineData("FR", "FR73282932000074")] // France SIRET
+    [InlineData("BE", "0764.117.795")] // Belgium
+    [InlineData("AT", "123456x")] // Austria (AT prefix stripped)
+    [InlineData("FR", "12002701600357")] // France SIRET
+    [InlineData("FR", "732829320")] // France SIREN
+    [InlineData("FR", "73282932000074")] // France SIRET
     public void Validate_ShouldDelegateToCorrectValidator(string countryCode, string number)
     {
         // Act
-        var result = EuropeEnterpriseValidator.ValidateEnterpriseNumber(number);
+        var result = EuropeEnterpriseValidator.ValidateEnterpriseNumber(number, countryCode);
 
         // Assert
         Assert.DoesNotContain(result.Errors, e => e.Code == ValidationErrorCode.UnsupportedCountry);
-        Assert.StartsWith(countryCode, number);
+        Assert.True(result.IsValid);
     }
 
     [Fact]
@@ -29,7 +29,7 @@ public class EuropeEnterpriseValidatorTests
         var number = "XX123456789";
 
         // Act
-        var result = EuropeEnterpriseValidator.ValidateEnterpriseNumber(number);
+        var result = EuropeEnterpriseValidator.ValidateEnterpriseNumber(number, "XX");
 
         // Assert
         Assert.False(result.IsValid);
@@ -55,10 +55,11 @@ public class EuropeEnterpriseValidatorTests
     [Fact]
     public void Validate_ShouldReturnInvalidInput_ForEmptyInput()
     {
-        var result = EuropeEnterpriseValidator.ValidateEnterpriseNumber("");
+        var result = EuropeEnterpriseValidator.ValidateEnterpriseNumber("", "");
         Assert.False(result.IsValid);
         Assert.Equal(ValidationErrorCode.InvalidInput, result.Errors[0].Code);
     }
+
     [Theory]
     [InlineData("AT", "123456x")] // Austria (no prefix)
     [InlineData("AT", "AT123456x")] // Austria (with prefix)
@@ -112,5 +113,13 @@ public class EuropeEnterpriseValidatorTests
         var resultUnsupported = EuropeEnterpriseValidator.ValidateEnterpriseNumber("123", (Finova.Core.Enterprise.EnterpriseNumberType)999);
         Assert.False(resultUnsupported.IsValid);
         Assert.Equal(ValidationErrorCode.UnsupportedCountry, resultUnsupported.Errors[0].Code);
+    }
+    [Theory]
+    [InlineData("732 829 320", Finova.Core.Enterprise.EnterpriseNumberType.FranceSiren, "732829320")]
+    [InlineData("BE 0764.117.795", Finova.Core.Enterprise.EnterpriseNumberType.BelgiumEnterpriseNumber, "0764117795")]
+    public void GetNormalizedNumber_WithType_ShouldNormalizeCorrectly(string input, Finova.Core.Enterprise.EnterpriseNumberType type, string expected)
+    {
+        var result = EuropeEnterpriseValidator.GetNormalizedNumber(input, type);
+        Assert.Equal(expected, result);
     }
 }

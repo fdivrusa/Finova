@@ -53,7 +53,7 @@ public partial class BelgiumVatValidator : IVatValidator
         }
 
         // Delegate to Enterprise Number validator (VAT = KBO/BCE)
-        return BelgiumEnterpriseValidator.Validate(cleaned);
+        return BelgiumEnterpriseValidator.ValidateEnterpriseNumber(cleaned);
     }
 
     /// <summary>

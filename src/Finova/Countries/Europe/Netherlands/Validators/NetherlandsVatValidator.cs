@@ -1,10 +1,11 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
+using Finova.Core.Enterprise;
 using Finova.Core.Vat;
 
 namespace Finova.Countries.Europe.Netherlands.Validators;
 
-public partial class NetherlandsVatValidator : IVatValidator
+public partial class NetherlandsVatValidator : IVatValidator, IEnterpriseValidator
 {
     [GeneratedRegex(@"^\d{9}B\d{2}$")]
     private static partial Regex VatRegex();
@@ -13,11 +14,15 @@ public partial class NetherlandsVatValidator : IVatValidator
 
     public string CountryCode => VatPrefix;
 
-    ValidationResult IValidator<VatDetails>.Validate(string? instance) => Validate(instance);
+    ValidationResult IValidator<VatDetails>.Validate(string? instance) => ValidateBtw(instance);
+
+    public ValidationResult Validate(string? instance) => ValidateBtw(instance);
 
     public VatDetails? Parse(string? vat) => GetVatDetails(vat);
 
-    public static ValidationResult Validate(string? vat)
+    string? IValidator<string>.Parse(string? instance) => Normalize(instance);
+
+    public static ValidationResult ValidateBtw(string? vat)
     {
         vat = VatSanitizer.Sanitize(vat);
 
@@ -42,7 +47,7 @@ public partial class NetherlandsVatValidator : IVatValidator
         // Convert letters to numbers (A=10, B=11...)
         // NL VAT usually has 'B' at pos 10.
 
-        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        System.Text.StringBuilder sb = new();
         foreach (char c in cleaned)
         {
             if (char.IsDigit(c))
@@ -62,11 +67,11 @@ public partial class NetherlandsVatValidator : IVatValidator
         bool isElfproefValid = false;
         if (cleaned.Length >= 9)
         {
-            string rsin = cleaned.Substring(0, 9);
+            string rsin = cleaned[..9];
             if (long.TryParse(rsin, out _))
             {
                 // Weights: 9, 8, 7, 6, 5, 4, 3, 2, -1
-                int[] elfWeights = { 9, 8, 7, 6, 5, 4, 3, 2, -1 };
+                int[] elfWeights = [9, 8, 7, 6, 5, 4, 3, 2, -1];
                 if (ChecksumHelper.CalculateWeightedModulo11(rsin, elfWeights) == 0)
                 {
                     isElfproefValid = true;
@@ -86,7 +91,7 @@ public partial class NetherlandsVatValidator : IVatValidator
     {
         vat = VatSanitizer.Sanitize(vat);
 
-        if (!Validate(vat).IsValid)
+        if (!ValidateBtw(vat).IsValid)
         {
             return null;
         }
@@ -103,5 +108,26 @@ public partial class NetherlandsVatValidator : IVatValidator
             VatNumber = cleaned,
             IsValid = true
         };
+    }
+
+    public static string Normalize(string? number)
+    {
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return string.Empty;
+        }
+
+        var cleaned = number.Trim().ToUpperInvariant();
+        if (cleaned.StartsWith(VatPrefix))
+        {
+            cleaned = cleaned[2..];
+        }
+
+        // Remove non-alphanumeric (dots, spaces, hyphens)
+        // VatSanitizer does this, but we want to return just the cleaned string.
+        // But wait, Normalize usually returns digits only?
+        // NL VAT has 'B'. So we should keep 'B'.
+        // VatSanitizer keeps alphanumeric.
+        return VatSanitizer.Sanitize(cleaned) ?? string.Empty;
     }
 }

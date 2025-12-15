@@ -1,10 +1,11 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
+using Finova.Core.Enterprise;
 using Finova.Core.Vat;
 
 namespace Finova.Countries.Europe.Slovakia.Validators;
 
-public partial class SlovakiaVatValidator : IVatValidator
+public partial class SlovakiaVatValidator : IVatValidator, IEnterpriseValidator
 {
     [GeneratedRegex(@"^\d{10}$")]
     private static partial Regex VatRegex();
@@ -12,18 +13,23 @@ public partial class SlovakiaVatValidator : IVatValidator
     private const string VatPrefix = "SK";
 
     public string CountryCode => VatPrefix;
+    public EnterpriseNumberType Type => EnterpriseNumberType.SlovakiaVat;
 
     ValidationResult IValidator<VatDetails>.Validate(string? instance) => Validate(instance);
 
+    public ValidationResult Validate(string? number) => ValidateVat(number);
+
     public VatDetails? Parse(string? vat) => GetVatDetails(vat);
 
-    public static ValidationResult Validate(string? vat)
+    string? IValidator<string>.Parse(string? instance) => Normalize(instance);
+
+    public static ValidationResult ValidateVat(string? vat)
     {
         vat = VatSanitizer.Sanitize(vat);
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -37,10 +43,14 @@ public partial class SlovakiaVatValidator : IVatValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Slovakia VAT format.");
         }
 
-        // Checksum Validation (Divisible by 11)
-        if (!ChecksumHelper.IsDivisibleBy(cleaned, 11))
+        if (!long.TryParse(cleaned, out long numericValue))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Slovakia VAT checksum (Must be divisible by 11).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Slovakia VAT format (non-numeric).");
+        }
+
+        if (numericValue % 11 != 0)
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Slovakia VAT checksum.");
         }
 
         return ValidationResult.Success();
@@ -48,14 +58,13 @@ public partial class SlovakiaVatValidator : IVatValidator
 
     public static VatDetails? GetVatDetails(string? vat)
     {
-        vat = VatSanitizer.Sanitize(vat);
-
-        if (!Validate(vat).IsValid)
+        var result = ValidateVat(vat);
+        if (!result.IsValid)
         {
             return null;
         }
 
-        var cleaned = vat!.Trim().ToUpperInvariant();
+        var cleaned = VatSanitizer.Sanitize(vat)!.Trim().ToUpperInvariant();
         if (cleaned.StartsWith(VatPrefix))
         {
             cleaned = cleaned[2..];
@@ -67,5 +76,12 @@ public partial class SlovakiaVatValidator : IVatValidator
             VatNumber = cleaned,
             IsValid = true
         };
+    }
+
+    public string? Normalize(string? number)
+    {
+        if (string.IsNullOrWhiteSpace(number)) return null;
+        var cleaned = number.ToUpperInvariant().Replace(VatPrefix, "").Replace(" ", "");
+        return VatRegex().IsMatch(cleaned) ? cleaned : null;
     }
 }

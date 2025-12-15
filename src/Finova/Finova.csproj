@@ -10,17 +10,23 @@
             The high-performance, 100% offline financial validation toolkit for .NET.
 
             Features:
-            ✔️ Universal IBAN Parser: Auto-detects and validates rules for Europe (DE, IT, ES, FR, BE, NL, UK) and Global formats.
-            ✔️ Payment Cards: Zero-allocation Luhn algorithm check, brand detection, and security validation.
+            ✔️ Universal IBAN Parser: Auto-detects and validates rules for Europe (DE, IT, ES, FR,
+            BE, NL, UK) and Global formats.
+            ✔️ Enterprise Numbers: Validates French SIRET/SIREN, Belgian KBO/BCE, German
+            Steuernummer, and more (51 countries).
+            ✔️ VAT Numbers: Validates EU VAT formats and checksums (VIES offline syntax).
+            ✔️ Payment Cards: Zero-allocation Luhn algorithm check, brand detection, and security
+            validation.
             ✔️ Payment References: Generate/Validate ISO 11649 (RF) and Belgian OGM/VCS.
             ✔️ Bank Codes: BIC/SWIFT structure validation (ISO 9362).
 
             Designed for FinTechs and SaaS. Zero dependencies.
         </Description>
-        <PackageTags>finova;iban;validator;parser;sepa;banking;finance;fintech;bic;swift;luhn;credit-card;payment;iso11649;ogm;vcs;offline;check-digits</PackageTags>
+        <PackageTags>
+            finova;iban;validator;parser;sepa;banking;finance;fintech;bic;swift;luhn;credit-card;payment;iso11649;ogm;vcs;offline;check-digits;vat;enterprise;siret;kbo;steuernummer;business</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
 
-        <ProjectUrl>https://finovapackage.netlify.app</ProjectUrl>
+        <ProjectUrl>https://finovasharp.com</ProjectUrl>
         <RepositoryUrl>https://github.com/fdivrusa/Finova</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
 

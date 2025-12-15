@@ -5,6 +5,11 @@ namespace Finova.Core.Common;
 /// <summary>
 /// Provides common checksum validation algorithms.
 /// </summary>
+/// <remarks>
+/// ⚠️ **Advanced Usage Only**
+/// This class is intended for developers who need to implement custom validators or use specific algorithms directly.
+/// For standard validation (IBAN, VAT, Enterprise Numbers), use the high-level wrappers (e.g., <see cref="Finova.Services.EuropeEnterpriseValidator"/>).
+/// </remarks>
 public static class ChecksumHelper
 {
     /// <summary>

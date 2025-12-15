@@ -13,7 +13,7 @@ public class SwedenVatValidatorTests
     public void Validate_WithValidVat_ReturnsSuccess(string vat)
     {
         // Act
-        var result = SwedenVatValidator.Validate(vat);
+        var result = SwedenVatValidator.ValidateVat(vat);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -26,7 +26,7 @@ public class SwedenVatValidatorTests
     public void Validate_WithFormattedVat_ReturnsSuccess(string vat)
     {
         // Act
-        var result = SwedenVatValidator.Validate(vat);
+        var result = SwedenVatValidator.ValidateVat(vat);
 
         // Assert
         result.IsValid.Should().BeTrue();
@@ -44,7 +44,7 @@ public class SwedenVatValidatorTests
     public void Validate_WithInvalidVat_ReturnsFailure(string? vat)
     {
         // Act
-        var result = SwedenVatValidator.Validate(vat);
+        var result = SwedenVatValidator.ValidateVat(vat);
 
         // Assert
         result.IsValid.Should().BeFalse();

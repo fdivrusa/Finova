@@ -1,10 +1,11 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
+using Finova.Core.Enterprise;
 using Finova.Core.Vat;
 
 namespace Finova.Countries.Europe.Sweden.Validators;
 
-public partial class SwedenVatValidator : IVatValidator
+public partial class SwedenVatValidator : IVatValidator, IEnterpriseValidator
 {
     [GeneratedRegex(@"^\d{12}$")]
     private static partial Regex VatRegex();
@@ -12,18 +13,21 @@ public partial class SwedenVatValidator : IVatValidator
     private const string VatPrefix = "SE";
 
     public string CountryCode => VatPrefix;
-
     ValidationResult IValidator<VatDetails>.Validate(string? instance) => Validate(instance);
+
+    public ValidationResult Validate(string? number) => ValidateVat(number);
 
     public VatDetails? Parse(string? vat) => GetVatDetails(vat);
 
-    public static ValidationResult Validate(string? vat)
+    string? IValidator<string>.Parse(string? instance) => Normalize(instance);
+
+    public static ValidationResult ValidateVat(string? vat)
     {
         vat = VatSanitizer.Sanitize(vat);
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -38,7 +42,7 @@ public partial class SwedenVatValidator : IVatValidator
         }
 
         // Checksum Validation (Luhn on first 10 digits)
-        string numberPart = cleaned.Substring(0, 10);
+        string numberPart = cleaned[..10];
         if (!ChecksumHelper.ValidateLuhn(numberPart))
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Sweden VAT checksum.");
@@ -49,14 +53,13 @@ public partial class SwedenVatValidator : IVatValidator
 
     public static VatDetails? GetVatDetails(string? vat)
     {
-        vat = VatSanitizer.Sanitize(vat);
-
-        if (!Validate(vat).IsValid)
+        var result = ValidateVat(vat);
+        if (!result.IsValid)
         {
             return null;
         }
 
-        var cleaned = vat!.Trim().ToUpperInvariant();
+        var cleaned = VatSanitizer.Sanitize(vat)!.Trim().ToUpperInvariant();
         if (cleaned.StartsWith(VatPrefix))
         {
             cleaned = cleaned[2..];
@@ -68,5 +71,12 @@ public partial class SwedenVatValidator : IVatValidator
             VatNumber = cleaned,
             IsValid = true
         };
+    }
+
+    public static string? Normalize(string? number)
+    {
+        if (string.IsNullOrWhiteSpace(number)) return null;
+        var cleaned = number.ToUpperInvariant().Replace(VatPrefix, "").Replace(" ", "").Replace("-", "");
+        return VatRegex().IsMatch(cleaned) ? cleaned : null;
     }
 }

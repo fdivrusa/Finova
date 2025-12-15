@@ -89,7 +89,7 @@ public static class VatValidatorsExtensions
         services.AddSingleton<SpainVatValidator>();
         services.AddSingleton<SwedenVatValidator>();
         services.AddSingleton<SwitzerlandVatValidator>();
-        services.AddSingleton<TurkeyVatValidator>();
+        services.AddSingleton<TurkeyVknValidator>();
         services.AddSingleton<UkraineVatValidator>();
         services.AddSingleton<UnitedKingdomVatValidator>();
 
