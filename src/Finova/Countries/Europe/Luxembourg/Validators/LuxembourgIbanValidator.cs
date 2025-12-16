@@ -50,13 +50,12 @@ public class LuxembourgIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
-        // Bank Code (indices 4-6) must be numeric.
-        for (int i = 4; i < 7; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = LuxembourgBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidLuxembourgBankCode);
-            }
+            return bbanResult;
         }
 
         // Validate structure and checksum

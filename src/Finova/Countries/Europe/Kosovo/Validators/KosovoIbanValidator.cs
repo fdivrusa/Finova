@@ -41,13 +41,12 @@ public class KosovoIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidKosovoCountryCode);
         }
 
-        // Structure check: All digits
-        for (int i = 2; i < KosovoIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = KosovoBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.KosovoIbanMustContainOnlyDigits);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

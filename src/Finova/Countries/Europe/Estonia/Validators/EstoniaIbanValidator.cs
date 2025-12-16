@@ -31,49 +31,18 @@ public class EstoniaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
-        // Structure check: All digits
-        for (int i = 2; i < EstoniaIbanLength; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.EstoniaIbanMustBeDigits);
-            }
-        }
-
         // Internal Validation: 7-3-1 Method on BBAN
         // EE BBAN is the last 16 digits (Pos 4-20)
         // This validates the check digit which is the last character of the BBAN.
         string bban = normalized.Substring(4, 16);
-        if (!ValidateEstonian731(bban))
+        var bbanResult = EstoniaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidEstoniaBbanStructure);
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
-    }
-
-    private static bool ValidateEstonian731(string bban)
-    {
-        // Weights: 7, 3, 1 repeating
-        int[] weights = [7, 3, 1];
-        int sum = 0;
-
-        // Iterate over the first 15 digits (last one is check digit)
-        for (int i = 0; i < 15; i++)
-        {
-            int digit = bban[i] - '0';
-            // Determine weight based on position (cycling 0, 1, 2)
-            int weight = weights[i % 3];
-            sum += digit * weight;
-        }
-
-        // Calculate Check Digit
-        // Formula: (10 - (Sum % 10)) % 10
-        int remainder = sum % 10;
-        int checkDigit = (remainder == 0) ? 0 : 10 - remainder;
-
-        return checkDigit == (bban[15] - '0');
     }
 }

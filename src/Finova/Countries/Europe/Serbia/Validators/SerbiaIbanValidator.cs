@@ -31,13 +31,12 @@ public class SerbiaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
-        // Structure check: All digits
-        for (int i = 2; i < SerbiaIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = SerbiaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSerbiaIbanFormat);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

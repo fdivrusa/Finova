@@ -30,51 +30,18 @@ public class PortugalIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "PT"));
         }
 
-
-        for (int i = 2; i < PortugalIbanLength; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Portugal"));
-            }
-        }
-
         // Extract the parts relevant to NIB (Positions 4 to 25)
-        // Bank (4) + Branch (4) + Account (11) = 19 digits Body
-        // Check (2) = last 2 digits
-        var nibBody = normalized.Substring(4, 19);
-        var nibKey = normalized.Substring(23, 2);
+        // BBAN is 21 digits
+        string bban = normalized.Substring(4, 21);
 
-        if (!ValidateNibKey(nibBody, nibKey))
+        var bbanResult = PortugalBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNibKey);
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
-    }
-
-    /// <summary>
-    /// Validates the specific Portuguese NIB control digits (Algarismos de Controlo).
-    /// Algorithm: 98 - (Body % 97)
-    /// </summary>
-    private static bool ValidateNibKey(string nibBody, string expectedKey)
-    {
-        if (!decimal.TryParse(nibBody, out decimal bodyValue))
-        {
-            return false;
-        }
-
-        // Calculate remainder
-        var remainder = (int)(bodyValue % 97);
-
-        // Calculate check digit
-        var checkValue = 98 - remainder;
-
-        // Format to 2 digits (e.g., 7 becomes "07")
-        var calculatedKey = checkValue.ToString("00");
-
-        return calculatedKey == expectedKey;
     }
 }

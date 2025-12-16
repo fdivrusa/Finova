@@ -243,7 +243,21 @@ string ogm = generator.Generate("123456", PaymentReferenceFormat.LocalBelgian);
 string isoRef = generator.Generate("INVOICE2024", PaymentReferenceFormat.IsoRf);
 ```
 
-### 4. FluentValidation Integration
+### 4. Global Bank Validation (New in v1.4.0)
+
+```csharp
+using Finova.Services;
+
+// Validate US Routing Number (ABA)
+var usResult = GlobalBankValidator.ValidateRoutingNumber("US", "121000248");
+if (usResult.IsValid) Console.WriteLine("Valid US Routing Number");
+
+// Validate Singapore Bank Account
+var sgResult = GlobalBankValidator.ValidateBankAccount("SG", "1234567890");
+if (sgResult.IsValid) Console.WriteLine("Valid Singapore Account");
+```
+
+### 5. FluentValidation Integration
 
 ```csharp
 using FluentValidation;
@@ -256,6 +270,10 @@ public class CustomerValidator : AbstractValidator<Customer>
         RuleFor(x => x.Iban).MustBeValidIban();
         RuleFor(x => x.VatNumber).MustBeValidVat();
         RuleFor(x => x.Bic).MustBeValidBic();
+
+        // New in v1.4.0: Global Bank Validation
+        RuleFor(x => x.RoutingNumber).MustBeValidBankRoutingNumber(x => x.CountryCode);
+        RuleFor(x => x.AccountNumber).MustBeValidBankAccountNumber(x => x.CountryCode);
     }
 }
 ```

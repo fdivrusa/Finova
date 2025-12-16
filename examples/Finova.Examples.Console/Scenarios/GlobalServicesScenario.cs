@@ -21,6 +21,7 @@ public static class GlobalServicesScenario
         RunGlobalBankAccountService(serviceProvider);
         RunEuropeIbanValidator(serviceProvider);
         RunGlobalAdaptersForEurope(serviceProvider);
+        RunGlobalBankValidatorFacade();
     }
 
     private static void RunGlobalTaxIdService(ServiceProvider provider)
@@ -125,6 +126,44 @@ public static class GlobalServicesScenario
             ConsoleHelper.WriteError("Invalid!");
         }
 
+        Console.WriteLine();
+    }
+
+    private static void RunGlobalBankValidatorFacade()
+    {
+        ConsoleHelper.WriteSubHeader("4", "Global Bank Validator Facade (Static)");
+
+        Console.WriteLine("      Demonstrating usage of GlobalBankValidator (Static Facade):");
+        Console.WriteLine();
+
+        // Routing Numbers
+        var routingTests = new[]
+        {
+            new { Country = "US", Routing = "121000248", Desc = "Valid US ABA" },
+            new { Country = "CA", Routing = "000112345", Desc = "Valid CA Routing" },
+            new { Country = "US", Routing = "123456789", Desc = "Invalid US Checksum" }
+        };
+
+        foreach (var test in routingTests)
+        {
+            var result = GlobalBankValidator.ValidateRoutingNumber(test.Country, test.Routing);
+            ConsoleHelper.WriteSimpleResult($"{test.Country} Routing: {test.Routing}", result.IsValid, test.Desc);
+        }
+        Console.WriteLine();
+
+        // Account Numbers
+        var accountTests = new[]
+        {
+            new { Country = "SG", Account = "1234567890", Desc = "Valid SG Account" },
+            new { Country = "JP", Account = "1234567", Desc = "Valid JP Account" },
+            new { Country = "SG", Account = "123", Desc = "Invalid SG Length" }
+        };
+
+        foreach (var test in accountTests)
+        {
+            var result = GlobalBankValidator.ValidateBankAccount(test.Country, test.Account);
+            ConsoleHelper.WriteSimpleResult($"{test.Country} Account: {test.Account}", result.IsValid, test.Desc);
+        }
         Console.WriteLine();
     }
 }

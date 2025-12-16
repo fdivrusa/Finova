@@ -52,21 +52,12 @@ public class AzerbaijanIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "AZ"));
         }
 
-        for (int i = 4; i < 8; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = AzerbaijanBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsLetter(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AzerbaijanIbanInvalidBankCode);
-            }
-        }
-
-        // Indices 8-27 must be alphanumeric
-        for (int i = 8; i < 28; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AzerbaijanIbanInvalidAccount);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

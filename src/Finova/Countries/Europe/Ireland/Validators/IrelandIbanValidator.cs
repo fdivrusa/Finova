@@ -47,32 +47,17 @@ public class IrelandIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidIrelandCountryCode);
         }
 
-        // Structure Validation:
-
-        // Bank Code / BIC (Pos 4-7) must be letters
-        // Example: "AIBK"
-        for (int i = 4; i < 8; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = IrelandBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsLetter(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.IrelandBankCodeMustBeLetters);
-            }
-        }
-
-        // Sort Code (Pos 8-13) and Account Number (Pos 14-21) must be digits
-        // Total range from index 8 to 21
-        for (int i = 8; i < 22; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.IrelandSortCodeAccountNumberMustBeDigits);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
-
     #endregion
 }

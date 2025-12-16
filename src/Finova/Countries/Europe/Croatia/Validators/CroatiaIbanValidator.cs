@@ -31,13 +31,12 @@ public class CroatiaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "HR"));
         }
 
-        // Structure check: Digits only
-        for (int i = 2; i < CroatiaIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = CroatiaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Croatia"));
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

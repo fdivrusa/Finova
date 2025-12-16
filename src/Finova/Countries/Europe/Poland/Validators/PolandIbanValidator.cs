@@ -31,13 +31,12 @@ public class PolandIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "PL"));
         }
 
-        // Structure check: All digits
-        for (int i = 2; i < PolandIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = PolandBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Poland"));
-            }
+            return bbanResult;
         }
 
         // Note: Poland uses an internal Modulo 97 on the BBAN (last 24 digits).

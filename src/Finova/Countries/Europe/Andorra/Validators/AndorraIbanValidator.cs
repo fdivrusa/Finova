@@ -31,16 +31,12 @@ public class AndorraIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, AndorraCountryCode));
         }
 
-        // Structure check:
-        // Bank (4) and Branch (4) are typically numeric or alphanumeric?
-        // Standard allows alphanumeric for Andorra account part, usually numeric for bank/branch.
-        // Let's enforce Alphanumeric globally for safety as per generic registry.
-        for (int i = 4; i < AndorraIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = AndorraBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanFormatAlphanumeric, "Andorra"));
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

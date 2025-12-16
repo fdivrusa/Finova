@@ -29,13 +29,12 @@ public class FinlandIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "FI"));
         }
 
-        // Finland IBANs are strictly numeric after the country code.
-        for (int i = 2; i < FinlandIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = FinlandBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Finland"));
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

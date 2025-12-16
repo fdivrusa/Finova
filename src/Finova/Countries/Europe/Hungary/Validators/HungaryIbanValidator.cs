@@ -31,13 +31,12 @@ public class HungaryIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
-        // Structure check: All body characters must be digits
-        for (int i = 2; i < HungaryIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = HungaryBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.HungaryIbanMustBeDigits);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

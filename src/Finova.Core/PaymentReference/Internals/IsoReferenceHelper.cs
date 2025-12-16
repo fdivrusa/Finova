@@ -1,4 +1,5 @@
 using System.Text;
+using Finova.Core.Common;
 
 namespace Finova.Core.PaymentReference.Internals;
 

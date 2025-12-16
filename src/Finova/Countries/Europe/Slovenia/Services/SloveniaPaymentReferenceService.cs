@@ -11,9 +11,9 @@ namespace Finova.Countries.Europe.Slovenia.Services;
 /// Service for generating and validating Slovenian payment references (SI12).
 /// Uses Modulo 97 algorithm.
 /// </summary>
-public partial class SloveniaPaymentReferenceService : IsoPaymentReferenceGenerator
+public partial class SloveniaPaymentReferenceService : IPaymentReferenceGenerator
 {
-    public override string CountryCode => "SI";
+    public string CountryCode => "SI";
 
     [GeneratedRegex(@"[^\d]")]
     private static partial Regex DigitsOnlyRegex();
@@ -22,14 +22,51 @@ public partial class SloveniaPaymentReferenceService : IsoPaymentReferenceGenera
     /// Generates a Slovenian SI12 reference.
     /// Format: SI12 + Reference + CheckDigits (Mod 97).
     /// </summary>
-    public override string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalSlovenia) => format switch
+    public string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalSlovenia) => format switch
     {
         PaymentReferenceFormat.LocalSlovenia => GenerateSi12(rawReference),
-        PaymentReferenceFormat.IsoRf => base.Generate(rawReference, format),
+        PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
         _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
     };
 
+    public PaymentReferenceDetails Parse(string reference)
+    {
+        var validation = ValidateStatic(reference);
+        if (!validation.IsValid)
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = string.Empty,
+                Format = PaymentReferenceFormat.Unknown,
+                IsValid = false
+            };
+        }
 
+        if (reference.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = IsoReferenceHelper.Parse(reference),
+                Format = PaymentReferenceFormat.IsoRf,
+                IsValid = true
+            };
+        }
+
+        // SI12
+        // Format: SI12 + Reference + CheckDigits (2)
+        var digits = DigitsOnlyRegex().Replace(reference.Substring(4), ""); // Remove SI12 prefix
+        var data = digits[..^2];
+
+        return new PaymentReferenceDetails
+        {
+            Reference = reference,
+            Content = data,
+            Format = PaymentReferenceFormat.LocalSlovenia,
+            IsValid = true
+        };
+    }
 
     #region Static Methods (for Direct Usage)
 
@@ -41,10 +78,20 @@ public partial class SloveniaPaymentReferenceService : IsoPaymentReferenceGenera
     /// <summary>
     /// Validates a Slovenian SI12 reference.
     /// </summary>
-    /// <summary>
-    /// Validates a Slovenian SI12 reference.
-    /// </summary>
-    public static Core.Common.ValidationResult ValidateStatic(string communication) => ValidateSi12(communication);
+    public static Core.Common.ValidationResult ValidateStatic(string communication)
+    {
+        if (string.IsNullOrWhiteSpace(communication))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        }
+
+        if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return IsoReferenceValidator.Validate(communication);
+        }
+
+        return ValidateSi12(communication);
+    }
 
     #endregion
 

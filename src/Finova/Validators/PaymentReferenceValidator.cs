@@ -61,6 +61,25 @@ public class PaymentReferenceValidator : IPaymentReferenceValidator
     }
 
     /// <summary>
+    /// Parses the payment reference using a specific format.
+    /// </summary>
+    public static PaymentReferenceDetails? Parse(string? reference, PaymentReferenceFormat format)
+    {
+        if (string.IsNullOrWhiteSpace(reference))
+        {
+            return null;
+        }
+
+        if (format == PaymentReferenceFormat.IsoRf)
+        {
+            return IsoPaymentReferenceValidator.Parse(reference);
+        }
+
+        var validation = Validate(reference, format);
+        return validation.IsValid ? CreateDetails(reference, format) : null;
+    }
+
+    /// <summary>
     /// Parses the payment reference to identify its format and details.
     /// </summary>
     public static PaymentReferenceDetails? Parse(string? reference)
@@ -137,10 +156,11 @@ public class PaymentReferenceValidator : IPaymentReferenceValidator
 
     #region IPaymentReferenceValidator Implementation (DI Wrapper)
 
-    ValidationResult IValidator<PaymentReferenceDetails>.Validate(string? communication) => Validate(communication);
-    PaymentReferenceDetails? IValidator<PaymentReferenceDetails>.Parse(string? reference) => Parse(reference);
+    /// <inheritdoc />
+    ValidationResult IPaymentReferenceValidator.Validate(string reference, PaymentReferenceFormat format) => Validate(reference, format);
 
-    ValidationResult IPaymentReferenceValidator.Validate(string? communication, PaymentReferenceFormat format) => Validate(communication, format);
+    /// <inheritdoc />
+    PaymentReferenceDetails? IPaymentReferenceValidator.Parse(string reference, PaymentReferenceFormat format) => Parse(reference, format);
 
     #endregion
 }

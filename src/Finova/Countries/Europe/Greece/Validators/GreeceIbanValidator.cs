@@ -29,25 +29,12 @@ public class GreeceIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidGreeceCountryCode);
         }
 
-
-        // Bank Code (Pos 4-6) and Branch Code (Pos 7-10) must be digits
-        // Range: 4 to 11
-        for (int i = 4; i < 11; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = GreeceBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.GreeceBankBranchCodeMustBeDigits);
-            }
-        }
-
-        // Account Number (Pos 11-26) can be Alphanumeric
-        // Range: 11 to 27
-        for (int i = 11; i < GreeceIbanLength; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.GreeceAccountNumberMustBeAlphanumeric);
-            }
+            return bbanResult;
         }
 
         // 4. Checksum Validation (Modulo 97)

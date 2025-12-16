@@ -46,10 +46,10 @@ public class ItalyPaymentReferenceValidatorTests
     public void Validate_WithLocalItalyFormat_ReturnsSuccess()
     {
         // Arrange
-        var reference = "123456789012347";
+        var reference = "123456789012345671";
 
         // Act
-        var result = _validator.Validate(reference, PaymentReferenceFormat.LocalItaly);
+        var result = _validator.Validate(reference);
 
         // Assert
         result.IsValid.Should().BeTrue();

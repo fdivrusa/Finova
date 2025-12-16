@@ -1,7 +1,7 @@
 using Finova.Core.PaymentReference;
+using Finova.Core.Common;
 using System.Text.RegularExpressions;
-
-
+using Finova.Core.PaymentReference.Internals;
 
 namespace Finova.Countries.Europe.Norway.Services;
 
@@ -9,9 +9,9 @@ namespace Finova.Countries.Europe.Norway.Services;
 /// Service for generating and validating Norwegian payment references (KID - Kundeidentifikasjonsnummer).
 /// Supports both Modulo 10 (Luhn) and Modulo 11 algorithms.
 /// </summary>
-public partial class NorwayPaymentReferenceService : IsoPaymentReferenceGenerator
+public partial class NorwayPaymentReferenceService : IPaymentReferenceGenerator
 {
-    public override string CountryCode => "NO";
+    public string CountryCode => "NO";
 
     [GeneratedRegex(@"[^\d]")]
     private static partial Regex DigitsOnlyRegex();
@@ -21,14 +21,50 @@ public partial class NorwayPaymentReferenceService : IsoPaymentReferenceGenerato
     /// By default, uses Modulo 10 (Luhn) which is the most common.
     /// To use Modulo 11, append "-11" to the raw reference (e.g., "12345-11").
     /// </summary>
-    public override string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalNorway) => format switch
+    public string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalNorway) => format switch
     {
         PaymentReferenceFormat.LocalNorway => GenerateKid(rawReference),
-        PaymentReferenceFormat.IsoRf => base.Generate(rawReference, format),
+        PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
         _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
     };
 
+    public PaymentReferenceDetails Parse(string reference)
+    {
+        var validation = ValidateStatic(reference);
+        if (!validation.IsValid)
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = string.Empty,
+                Format = PaymentReferenceFormat.Unknown,
+                IsValid = false
+            };
+        }
 
+        if (reference.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = IsoReferenceHelper.Parse(reference),
+                Format = PaymentReferenceFormat.IsoRf,
+                IsValid = true
+            };
+        }
+
+        // KID
+        var digits = DigitsOnlyRegex().Replace(reference, "");
+        var data = digits[..^1];
+
+        return new PaymentReferenceDetails
+        {
+            Reference = reference,
+            Content = data,
+            Format = PaymentReferenceFormat.LocalNorway,
+            IsValid = true
+        };
+    }
 
     #region Static Methods (for Direct Usage)
 
@@ -40,10 +76,20 @@ public partial class NorwayPaymentReferenceService : IsoPaymentReferenceGenerato
     /// <summary>
     /// Validates a Norwegian KID reference.
     /// </summary>
-    /// <summary>
-    /// Validates a Norwegian KID reference.
-    /// </summary>
-    public static Core.Common.ValidationResult ValidateStatic(string communication) => ValidateKid(communication);
+    public static Core.Common.ValidationResult ValidateStatic(string communication)
+    {
+        if (string.IsNullOrWhiteSpace(communication))
+        {
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, Core.Common.ValidationMessages.InputCannotBeEmpty);
+        }
+
+        if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return IsoReferenceValidator.Validate(communication);
+        }
+
+        return ValidateKid(communication);
+    }
 
     #endregion
 

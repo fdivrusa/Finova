@@ -43,32 +43,12 @@ public class MontenegroIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidMontenegroCountryCode);
         }
 
-        // Structure Validation:
-        // 1. Bank Code (Pos 4-7): 3 digits
-        for (int i = 4; i < 7; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = MontenegroBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BankCodeMustBeNumeric);
-            }
-        }
-
-        // 2. Account Number (Pos 7-20): 13 digits
-        for (int i = 7; i < 20; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AccountNumberMustBeNumeric);
-            }
-        }
-
-        // 3. National Check Digits (Pos 20-22): 2 digits
-        for (int i = 20; i < 22; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.NationalCheckDigitsMustBeNumeric);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

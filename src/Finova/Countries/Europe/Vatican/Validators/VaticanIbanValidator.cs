@@ -31,13 +31,12 @@ public class VaticanIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
-        // Structure check: All digits
-        for (int i = 2; i < VaticanIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = VaticanBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidVaticanIbanFormat);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

@@ -43,32 +43,12 @@ public class NorthMacedoniaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidNorthMacedoniaCountryCode);
         }
 
-        // Structure Validation:
-        // 1. Bank Code (Pos 4-7): 3 digits
-        for (int i = 4; i < 7; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = NorthMacedoniaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BankCodeMustBeNumeric);
-            }
-        }
-
-        // 2. Account Number (Pos 7-17): 10 alphanumeric characters
-        for (int i = 7; i < 17; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AccountNumberMustBeAlphanumeric);
-            }
-        }
-
-        // 3. National Check Digits (Pos 17-19): 2 digits
-        for (int i = 17; i < 19; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.NationalCheckDigitsMustBeNumeric);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

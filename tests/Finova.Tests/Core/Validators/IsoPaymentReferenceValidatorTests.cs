@@ -56,7 +56,7 @@ public class IsoPaymentReferenceValidatorTests
         var reference = "RF712348231";
 
         // Act
-        var result = ((IPaymentReferenceValidator)_validator).Validate(reference).IsValid;
+        var result = ((IPaymentReferenceValidator)_validator).Validate(reference, PaymentReferenceFormat.IsoRf).IsValid;
 
         // Assert
         result.Should().BeTrue();
@@ -178,7 +178,7 @@ public class IsoPaymentReferenceValidatorTests
         var reference = "RF712348231";
 
         // Act
-        var result = ((IPaymentReferenceValidator)_validator).Parse(reference);
+        var result = ((IPaymentReferenceValidator)_validator).Parse(reference, PaymentReferenceFormat.IsoRf);
 
         // Assert
         result.Should().NotBeNull();

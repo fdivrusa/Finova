@@ -31,14 +31,12 @@ public class LatviaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidLatviaCountryCode);
         }
 
-        // Structure check: Alphanumeric
-        // Bank Code (4 chars) + Account (13 chars)
-        for (int i = 4; i < LatviaIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = LatviaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.LatviaIbanMustBeAlphanumeric);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

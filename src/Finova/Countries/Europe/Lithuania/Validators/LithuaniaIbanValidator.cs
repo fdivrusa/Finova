@@ -31,13 +31,12 @@ public class LithuaniaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "LT"));
         }
 
-        // Structure check: Digits only
-        for (int i = 2; i < LithuaniaIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = LithuaniaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Lithuania"));
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

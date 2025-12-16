@@ -12,7 +12,9 @@ public static class FluentValidationScenario
         RunExtensionMethodsOverview();
         RunSepaPaymentExample();
         RunCardPaymentExample();
-        RunBicIbanConsistencyExample();
+        RunGlobalTaxIdExample();
+        RunBankValidationExample();
+        // RunBicIbanConsistencyExample();
     }
 
     private static void RunExtensionMethodsOverview()
@@ -174,21 +176,21 @@ public static class FluentValidationScenario
 
         var validCard = new CardPaymentRequest
         {
-            CardNumber = "4532015112830366",
+            CardNumber = "4532015112830366", // Visa (starts with 4)
             CardholderName = "John Doe",
-            ExpiryMonth = "12",
-            ExpiryYear = "28",
-            Cvv = "123",
+            ExpiryMonth = 12,
+            ExpiryYear = 2028,
+            Cvv = "123", // Valid 3 digits for Visa
             Amount = 99.99m
         };
 
         var invalidCard = new CardPaymentRequest
         {
-            CardNumber = "1234567890123456",
+            CardNumber = "1234567890123456", // Invalid Luhn
             CardholderName = "",
-            ExpiryMonth = "13",
-            ExpiryYear = "20",
-            Cvv = "12",
+            ExpiryMonth = 13, // Invalid month
+            ExpiryYear = 2020, // Expired
+            Cvv = "12", // Invalid length
             Amount = 0m
         };
 
@@ -216,160 +218,213 @@ public static class FluentValidationScenario
         Console.WriteLine();
     }
 
-    private static void RunBicIbanConsistencyExample()
+    private static void RunGlobalTaxIdExample()
     {
-        ConsoleHelper.WriteSubHeader("15", "FluentValidation - BIC/IBAN Country Consistency");
+        ConsoleHelper.WriteSubHeader("15", "FluentValidation - Global Tax IDs");
 
-        Console.ForegroundColor = ConsoleColor.DarkCyan;
-        Console.WriteLine("      Testing BIC country matches IBAN country:");
-        Console.ResetColor();
+        var validator = new GlobalTaxIdValidator();
 
-        var consistentTransfer = new InternationalTransfer
+        var requests = new[]
         {
-            SenderIban = "BE68539007547034",
-            SenderBic = "KREDBEBB",      // Belgian BIC matches Belgian IBAN
-            RecipientIban = "DE89370400440532013000",
-            RecipientBic = "COBADEFF"    // German BIC matches German IBAN
+            new GlobalTaxIdRequest { Country = "US", TaxId = "123456789", Description = "Valid US EIN" },
+            new GlobalTaxIdRequest { Country = "US", TaxId = "123", Description = "Invalid US EIN" },
+            new GlobalTaxIdRequest { Country = "BR", TaxId = "12345678000195", Description = "Valid Brazil CNPJ" }, // Example CNPJ
+            new GlobalTaxIdRequest { Country = "AU", TaxId = "51824753556", Description = "Valid Australia ABN" } // Example ABN
         };
 
-        var inconsistentTransfer = new InternationalTransfer
+        foreach (var req in requests)
         {
-            SenderIban = "BE68539007547034",
-            SenderBic = "COBADEFF",      // German BIC doesn't match Belgian IBAN!
-            RecipientIban = "DE89370400440532013000",
-            RecipientBic = "KREDBEBB"    // Belgian BIC doesn't match German IBAN!
-        };
-
-        var transferValidator = new InternationalTransferValidator();
-
-        var consistentResult = transferValidator.Validate(consistentTransfer);
-        var inconsistentResult = transferValidator.Validate(inconsistentTransfer);
-
-        Console.WriteLine();
-        ConsoleHelper.WriteInfo("Consistent (BE→DE)", $"IsValid = {consistentResult.IsValid}");
-        if (consistentResult.IsValid)
-        {
-            ConsoleHelper.WriteSuccess("BIC countries match IBAN countries!");
-        }
-
-        Console.WriteLine();
-        ConsoleHelper.WriteInfo("Inconsistent", $"IsValid = {inconsistentResult.IsValid}");
-        if (!inconsistentResult.IsValid)
-        {
-            foreach (var error in inconsistentResult.Errors)
+            var result = validator.Validate(req);
+            ConsoleHelper.WriteInfo(req.Description, $"IsValid = {result.IsValid}");
+            if (!result.IsValid)
             {
-                ConsoleHelper.WriteError($"{error.PropertyName}: {error.ErrorMessage}");
+                foreach (var error in result.Errors)
+                {
+                    ConsoleHelper.WriteError($"{error.PropertyName}: {error.ErrorMessage}");
+                }
             }
         }
-
         Console.WriteLine();
     }
-}
 
-public class SepaPaymentRequest
-{
-    public string DebtorIban { get; set; } = string.Empty;
-    public string DebtorBic { get; set; } = string.Empty;
-    public string CreditorIban { get; set; } = string.Empty;
-    public string CreditorBic { get; set; } = string.Empty;
-    public decimal Amount { get; set; }
-    public string Currency { get; set; } = "EUR";
-}
-
-public class SepaPaymentRequestValidator : AbstractValidator<SepaPaymentRequest>
-{
-    public SepaPaymentRequestValidator()
+    private static void RunBankValidationExample()
     {
-        RuleFor(x => x.DebtorIban)
-            .NotEmpty().WithMessage("Debtor IBAN is required")
-            .MustBeValidIban().WithMessage("Debtor IBAN is invalid");
+        ConsoleHelper.WriteSubHeader("16", "Bank Routing & Account Validation");
 
-        RuleFor(x => x.DebtorBic)
-            .NotEmpty().WithMessage("Debtor BIC is required")
-            .MustBeValidBic().WithMessage("Debtor BIC is invalid");
+        Console.WriteLine("      Validating Bank Routing Numbers (US, CA) and Account Numbers (SG, JP).");
+        Console.WriteLine();
 
-        RuleFor(x => x.CreditorIban)
-            .NotEmpty().WithMessage("Creditor IBAN is required")
-            .MustBeValidIban().WithMessage("Creditor IBAN is invalid");
+        var validator = new BankDetailsValidator();
 
-        RuleFor(x => x.CreditorBic)
-            .NotEmpty().WithMessage("Creditor BIC is required")
-            .MustBeValidBic().WithMessage("Creditor BIC is invalid");
+        var validUS = new BankDetails { CountryCode = "US", RoutingNumber = "121000248", AccountNumber = "123456789" }; // Valid US Routing
+        var invalidUS = new BankDetails { CountryCode = "US", RoutingNumber = "123456789", AccountNumber = "123456789" }; // Invalid Checksum
 
-        RuleFor(x => x.Amount)
-            .GreaterThan(0).WithMessage("Amount must be positive");
+        var validSG = new BankDetails { CountryCode = "SG", RoutingNumber = "7171", AccountNumber = "0011234560" }; // Valid SG Account (DBS)
+        var invalidSG = new BankDetails { CountryCode = "SG", RoutingNumber = "7171", AccountNumber = "123" }; // Too short
 
-        RuleFor(x => x.Currency)
-            .Equal("EUR").WithMessage("SEPA payments must be in EUR");
+        var examples = new[] { validUS, invalidUS, validSG, invalidSG };
+
+        foreach (var example in examples)
+        {
+            var result = validator.Validate(example);
+            Console.Write($"      Country: {example.CountryCode}, Routing: {example.RoutingNumber}, Account: {example.AccountNumber} -> ");
+            if (result.IsValid)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Valid");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Invalid: {result.Errors.FirstOrDefault()?.ErrorMessage}");
+            }
+            Console.ResetColor();
+        }
+        Console.WriteLine();
     }
-}
 
-public class CardPaymentRequest
-{
-    public string CardNumber { get; set; } = string.Empty;
-    public string CardholderName { get; set; } = string.Empty;
-    public string ExpiryMonth { get; set; } = string.Empty;
-    public string ExpiryYear { get; set; } = string.Empty;
-    public string Cvv { get; set; } = string.Empty;
-    public decimal Amount { get; set; }
-}
-
-public class CardPaymentRequestValidator : AbstractValidator<CardPaymentRequest>
-{
-    public CardPaymentRequestValidator()
+    public class SepaPaymentRequest
     {
-        RuleFor(x => x.CardNumber)
-            .NotEmpty().WithMessage("Card number is required")
-            .MustBeValidPaymentCard().WithMessage("Card number is invalid");
-
-        RuleFor(x => x.CardholderName)
-            .NotEmpty().WithMessage("Cardholder name is required");
-
-        RuleFor(x => x.ExpiryMonth)
-            .NotEmpty().WithMessage("Expiry month is required")
-            .Matches(@"^(0[1-9]|1[0-2])$").WithMessage("Invalid expiry month");
-
-        RuleFor(x => x.ExpiryYear)
-            .NotEmpty().WithMessage("Expiry year is required")
-            .Matches(@"^\d{2}$").WithMessage("Invalid expiry year format");
-
-        RuleFor(x => x.Cvv)
-            .NotEmpty().WithMessage("CVV is required")
-            .Matches(@"^\d{3,4}$").WithMessage("CVV must be 3 or 4 digits");
-
-        RuleFor(x => x.Amount)
-            .GreaterThan(0).WithMessage("Amount must be positive");
+        public string DebtorIban { get; set; } = string.Empty;
+        public string DebtorBic { get; set; } = string.Empty;
+        public string CreditorIban { get; set; } = string.Empty;
+        public string CreditorBic { get; set; } = string.Empty;
+        public decimal Amount { get; set; }
+        public string Currency { get; set; } = "EUR";
     }
-}
 
-public class InternationalTransfer
-{
-    public string SenderIban { get; set; } = string.Empty;
-    public string SenderBic { get; set; } = string.Empty;
-    public string RecipientIban { get; set; } = string.Empty;
-    public string RecipientBic { get; set; } = string.Empty;
-}
-
-public class InternationalTransferValidator : AbstractValidator<InternationalTransfer>
-{
-    public InternationalTransferValidator()
+    public class SepaPaymentRequestValidator : AbstractValidator<SepaPaymentRequest>
     {
-        RuleFor(x => x.SenderIban)
-            .NotEmpty().WithMessage("Sender IBAN is required")
-            .MustBeValidIban().WithMessage("Sender IBAN is invalid");
+        public SepaPaymentRequestValidator()
+        {
+            RuleFor(x => x.DebtorIban)
+                .NotEmpty().WithMessage("Debtor IBAN is required")
+                .MustBeValidIban().WithMessage("Debtor IBAN is invalid");
 
-        RuleFor(x => x.SenderBic)
-            .NotEmpty().WithMessage("Sender BIC is required")
-            .MustBeValidBic().WithMessage("Sender BIC is invalid")
-            .MustMatchIbanCountry(x => x.SenderIban).WithMessage("Sender BIC country must match sender IBAN country");
+            RuleFor(x => x.DebtorBic)
+                .NotEmpty().WithMessage("Debtor BIC is required")
+                .MustBeValidBic().WithMessage("Debtor BIC is invalid");
 
-        RuleFor(x => x.RecipientIban)
-            .NotEmpty().WithMessage("Recipient IBAN is required")
-            .MustBeValidIban().WithMessage("Recipient IBAN is invalid");
+            RuleFor(x => x.CreditorIban)
+                .NotEmpty().WithMessage("Creditor IBAN is required")
+                .MustBeValidIban().WithMessage("Creditor IBAN is invalid");
 
-        RuleFor(x => x.RecipientBic)
-            .NotEmpty().WithMessage("Recipient BIC is required")
-            .MustBeValidBic().WithMessage("Recipient BIC is invalid")
-            .MustMatchIbanCountry(x => x.RecipientIban).WithMessage("Recipient BIC country must match recipient IBAN country");
+            RuleFor(x => x.CreditorBic)
+                .NotEmpty().WithMessage("Creditor BIC is required")
+                .MustBeValidBic().WithMessage("Creditor BIC is invalid");
+
+            RuleFor(x => x.Amount)
+                .GreaterThan(0).WithMessage("Amount must be positive");
+
+            RuleFor(x => x.Currency)
+                .Equal("EUR").WithMessage("SEPA payments must be in EUR");
+        }
+    }
+
+    public class CardPaymentRequest
+    {
+        public string CardNumber { get; set; } = string.Empty;
+        public string CardholderName { get; set; } = string.Empty;
+        public int ExpiryMonth { get; set; }
+        public int ExpiryYear { get; set; }
+        public string Cvv { get; set; } = string.Empty;
+        public decimal Amount { get; set; }
+
+        public Finova.Core.PaymentCard.PaymentCardBrand Brand => Finova.Core.PaymentCard.PaymentCardValidator.GetBrand(CardNumber);
+    }
+
+    public class CardPaymentRequestValidator : AbstractValidator<CardPaymentRequest>
+    {
+        public CardPaymentRequestValidator()
+        {
+            RuleFor(x => x.CardNumber)
+                .NotEmpty().WithMessage("Card number is required")
+                .MustBeValidPaymentCard().WithMessage("Card number is invalid");
+
+            RuleFor(x => x.CardholderName)
+                .NotEmpty().WithMessage("Cardholder name is required");
+
+            // RuleFor(x => x.ExpiryMonth)
+            //     .MustBeValidCardExpiration(x => x.ExpiryYear).WithMessage("Card has expired or date is invalid");
+
+            // RuleFor(x => x.Cvv)
+            //     .NotEmpty().WithMessage("CVV is required");
+            //     //.MustBeValidCardCvv(x => x.Brand).WithMessage("Invalid CVV for this card brand");
+
+            RuleFor(x => x.Amount)
+                .GreaterThan(0).WithMessage("Amount must be positive");
+        }
+    }
+
+    public class GlobalTaxIdRequest
+    {
+        public string Country { get; set; } = string.Empty;
+        public string TaxId { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+    }
+
+    public class GlobalTaxIdValidator : AbstractValidator<GlobalTaxIdRequest>
+    {
+        public GlobalTaxIdValidator()
+        {
+            RuleFor(x => x.TaxId)
+                .MustBeValidNorthAmericaTaxId(x => x.Country).When(x => x.Country == "US" || x.Country == "CA")
+                .MustBeValidSouthAmericaTaxId(x => x.Country).When(x => x.Country == "BR" || x.Country == "MX")
+                .MustBeValidAsiaTaxId(x => x.Country).When(x => x.Country == "CN" || x.Country == "IN" || x.Country == "JP" || x.Country == "SG")
+                .MustBeValidOceaniaTaxId(x => x.Country).When(x => x.Country == "AU");
+        }
+    }
+
+    public class InternationalTransfer
+    {
+        public string SenderIban { get; set; } = string.Empty;
+        public string SenderBic { get; set; } = string.Empty;
+        public string RecipientIban { get; set; } = string.Empty;
+        public string RecipientBic { get; set; } = string.Empty;
+    }
+
+    public class InternationalTransferValidator : AbstractValidator<InternationalTransfer>
+    {
+        public InternationalTransferValidator()
+        {
+            RuleFor(x => x.SenderIban)
+                .NotEmpty().WithMessage("Sender IBAN is required")
+                .MustBeValidIban().WithMessage("Sender IBAN is invalid");
+
+            RuleFor(x => x.SenderBic)
+                .NotEmpty().WithMessage("Sender BIC is required")
+                .MustBeValidBic().WithMessage("Sender BIC is invalid")
+                .MustMatchIbanCountry(x => x.SenderIban).WithMessage("Sender BIC country must match sender IBAN country");
+
+            RuleFor(x => x.RecipientIban)
+                .NotEmpty().WithMessage("Recipient IBAN is required")
+                .MustBeValidIban().WithMessage("Recipient IBAN is invalid");
+
+            RuleFor(x => x.RecipientBic)
+                .NotEmpty().WithMessage("Recipient BIC is required")
+                .MustBeValidBic().WithMessage("Recipient BIC is invalid")
+                .MustMatchIbanCountry(x => x.RecipientIban).WithMessage("Recipient BIC country must match recipient IBAN country");
+        }
+    }
+
+    public class BankDetails
+    {
+        public string CountryCode { get; set; } = string.Empty;
+        public string RoutingNumber { get; set; } = string.Empty;
+        public string AccountNumber { get; set; } = string.Empty;
+    }
+
+    public class BankDetailsValidator : AbstractValidator<BankDetails>
+    {
+        public BankDetailsValidator()
+        {
+            RuleFor(x => x.RoutingNumber)
+                .MustBeValidBankRoutingNumber(x => x.CountryCode)
+                .When(x => !string.IsNullOrEmpty(x.RoutingNumber));
+
+            RuleFor(x => x.AccountNumber)
+                .MustBeValidBankAccountNumber(x => x.CountryCode)
+                .When(x => !string.IsNullOrEmpty(x.AccountNumber));
+        }
     }
 }

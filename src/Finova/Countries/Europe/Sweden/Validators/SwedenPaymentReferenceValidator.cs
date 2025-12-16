@@ -8,7 +8,7 @@ namespace Finova.Countries.Europe.Sweden.Validators;
 /// <summary>
 /// Validator for Swedish payment references (OCR).
 /// </summary>
-public class SwedenPaymentReferenceValidator : IPaymentReferenceValidator
+public class SwedenPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
@@ -20,15 +20,6 @@ public class SwedenPaymentReferenceValidator : IPaymentReferenceValidator
         return SwedenPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSwedishOcrReference);
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalSweden)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.UnsupportedFormat);
-        }
-        return Validate(reference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

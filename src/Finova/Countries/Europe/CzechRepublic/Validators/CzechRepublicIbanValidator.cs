@@ -31,69 +31,16 @@ public class CzechRepublicIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "CZ"));
         }
 
-        // Structure check: All digits
-        for (int i = 2; i < CzechIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = CzechRepublicBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Czech"));
-            }
-        }
-
-        // --- Specific CZ Validation (Modulo 11) ---
-        // CZ IBAN Structure:
-        // Pos 0-3: CZ + Check
-        // Pos 4-8: Bank Code (4 digits)
-        // Pos 8-14: Prefix (6 digits)
-        // Pos 14-24: Account Number (10 digits)
-
-        string prefix = normalized.Substring(8, 6);
-        string accountNumber = normalized.Substring(14, 10);
-
-        // Validate Prefix (only if not all zeros)
-        if (long.TryParse(prefix, out long prefixVal) && prefixVal > 0)
-        {
-            // Note: Prefix is 6 digits. We use the last 6 weights: 10, 5, 8, 4, 2, 1
-            if (!ValidateCzechMod11(prefix, true))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CzechRepublicIbanInvalidPrefixChecksum);
-            }
-        }
-
-        // Validate Account Number
-        if (!ValidateCzechMod11(accountNumber, false))
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CzechRepublicIbanInvalidAccountChecksum);
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
-    }
-
-    /// <summary>
-    /// Validates Czech Prefix or Account Number using Weighted Modulo 11.
-    /// Weights: 6, 3, 7, 9, 10, 5, 8, 4, 2, 1 (for 10 digits).
-    /// </summary>
-    private static bool ValidateCzechMod11(string input, bool isPrefix)
-    {
-        // Full weights for 10 digits
-        int[] weights = [6, 3, 7, 9, 10, 5, 8, 4, 2, 1];
-
-        int sum = 0;
-        int inputLength = input.Length;
-
-        // If checking prefix (6 digits), we align to the right of the weights array.
-        // Prefix corresponds to the last 6 positions of the weight array.
-        int weightStartIndex = isPrefix ? 4 : 0;
-
-        for (int i = 0; i < inputLength; i++)
-        {
-            int digit = input[i] - '0';
-            int weight = weights[weightStartIndex + i];
-            sum += digit * weight;
-        }
-
-        return sum % 11 == 0;
     }
 }

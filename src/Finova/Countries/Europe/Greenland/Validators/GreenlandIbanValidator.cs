@@ -53,14 +53,12 @@ public class GreenlandIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidGreenlandCountryCode);
         }
 
-        // GL + 16 digits
-        // Indices 4-17 must be digits
-        for (int i = 4; i < 18; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = GreenlandBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.GreenlandIbanMustContainOnlyDigits);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

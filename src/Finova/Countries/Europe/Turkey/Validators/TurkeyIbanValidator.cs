@@ -52,29 +52,12 @@ public class TurkeyIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
-        // Structure Validation:
-        // 1. Bank Code (Pos 4-9): 5 digits
-        for (int i = 4; i < 9; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = TurkeyBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidTurkeyBankCode);
-            }
-        }
-
-        // 2. Reserve (Pos 9): 1 alphanumeric character
-        if (!char.IsLetterOrDigit(normalized[9]))
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidTurkeyReserveChar);
-        }
-
-        // 3. Account Number (Pos 10-26): 16 alphanumeric characters
-        for (int i = 10; i < 26; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidTurkeyAccountNumber);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

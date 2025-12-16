@@ -457,4 +457,131 @@ public static class ChecksumHelper
 
         return c == 0;
     }
+
+    /// <summary>
+    /// Validates a number string using the 7-3-1 algorithm (used in Finland).
+    /// </summary>
+    /// <param name="input">The numeric string to validate (including check digit).</param>
+    /// <returns>True if the input is valid; otherwise, false.</returns>
+    public static bool Validate731(ReadOnlySpan<char> input)
+    {
+        if (input.IsEmpty || input.IsWhiteSpace() || input.Length < 2)
+        {
+            return false;
+        }
+
+        // Last digit is check digit
+        int checkDigit = input[input.Length - 1] - '0';
+        ReadOnlySpan<char> data = input.Slice(0, input.Length - 1);
+
+        int calculatedCheckDigit = Calculate731CheckDigit(data);
+        return checkDigit == calculatedCheckDigit;
+    }
+
+    /// <summary>
+    /// Calculates the check digit using the 7-3-1 algorithm.
+    /// </summary>
+    /// <param name="input">The numeric string (without check digit).</param>
+    /// <returns>The calculated check digit (0-9).</returns>
+    public static int Calculate731CheckDigit(ReadOnlySpan<char> input)
+    {
+        int[] weights = { 7, 3, 1 };
+        int sum = 0;
+        int weightIndex = 0;
+
+        for (int i = input.Length - 1; i >= 0; i--)
+        {
+            if (!char.IsDigit(input[i]))
+            {
+                continue;
+            }
+
+            int digit = input[i] - '0';
+            sum += digit * weights[weightIndex];
+            weightIndex = (weightIndex + 1) % 3;
+        }
+
+        int nextTen = (int)(Math.Ceiling(sum / 10.0) * 10);
+        return (nextTen - sum) % 10;
+    }
+
+    /// <summary>
+    /// Validates a number string using the Modulo 10 Recursive algorithm (used in Swiss QR References).
+    /// </summary>
+    /// <param name="input">The numeric string to validate (including check digit).</param>
+    /// <returns>True if the input is valid; otherwise, false.</returns>
+    public static bool ValidateMod10Recursive(ReadOnlySpan<char> input)
+    {
+        if (input.IsEmpty || input.IsWhiteSpace() || input.Length < 2)
+        {
+            return false;
+        }
+
+        // Last digit is check digit
+        int checkDigit = input[input.Length - 1] - '0';
+        ReadOnlySpan<char> data = input.Slice(0, input.Length - 1);
+
+        int calculatedCheckDigit = CalculateMod10RecursiveCheckDigit(data);
+        return checkDigit == calculatedCheckDigit;
+    }
+
+    /// <summary>
+    /// Calculates the check digit using the Modulo 10 Recursive algorithm.
+    /// </summary>
+    /// <param name="input">The numeric string (without check digit).</param>
+    /// <returns>The calculated check digit (0-9).</returns>
+    public static int CalculateMod10RecursiveCheckDigit(ReadOnlySpan<char> input)
+    {
+        // Table for Mod10 Recursive
+        int[] table = { 0, 9, 4, 6, 8, 2, 7, 1, 3, 5 };
+        int carry = 0;
+
+        foreach (char c in input)
+        {
+            if (!char.IsDigit(c))
+            {
+                continue;
+            }
+
+            int digit = c - '0';
+            int index = (carry + digit) % 10;
+            carry = table[index];
+        }
+
+        return (10 - carry) % 10;
+    }
+
+    /// <summary>
+    /// Validates a number string using Modulo 11 with weights 2, 3, 4, 5, 6, 7.
+    /// Used for Norwegian KID.
+    /// </summary>
+    /// <param name="input">The numeric string to validate (including check digit).</param>
+    /// <returns>True if the input is valid; otherwise, false.</returns>
+    public static bool ValidateMod11Weights2To7(ReadOnlySpan<char> input)
+    {
+        if (input.Length < 2) return false;
+
+        int sum = 0;
+        int weight = 2;
+
+        // Iterate from the second to last digit (excluding check digit) backwards
+        for (int i = input.Length - 2; i >= 0; i--)
+        {
+            if (!char.IsDigit(input[i])) return false;
+
+            int digit = input[i] - '0';
+            sum += digit * weight;
+
+            weight++;
+            if (weight > 7) weight = 2;
+        }
+
+        int remainder = sum % 11;
+        int calculatedCheckDigit = remainder == 0 ? 0 : 11 - remainder;
+
+        if (calculatedCheckDigit == 10) return false; // Mod11 cannot produce 10 as a single digit
+
+        int checkDigit = input[input.Length - 1] - '0';
+        return checkDigit == calculatedCheckDigit;
+    }
 }

@@ -31,13 +31,12 @@ public class DenmarkIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidDenmarkCountryCode);
         }
 
-        // Structure check: All digits
-        for (int i = 2; i < DenmarkIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = DenmarkBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.DenmarkIbanMustContainOnlyDigits);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

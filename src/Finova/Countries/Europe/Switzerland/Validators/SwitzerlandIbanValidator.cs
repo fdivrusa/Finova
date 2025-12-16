@@ -31,24 +31,12 @@ public class SwitzerlandIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "CH"));
         }
 
-        // Structure Validation:
-
-        // 1. Clearing Number (Pos 4-9): Must be digits
-        for (int i = 4; i < 9; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = SwitzerlandBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSwitzerlandClearingNumberFormat);
-            }
-        }
-
-        // 2. Account Number (Pos 9-21): Alphanumeric
-        for (int i = 9; i < 21; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSwitzerlandAccountNumberFormat);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

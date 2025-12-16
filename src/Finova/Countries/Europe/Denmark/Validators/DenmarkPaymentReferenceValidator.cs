@@ -7,7 +7,7 @@ namespace Finova.Countries.Europe.Denmark.Validators;
 /// <summary>
 /// Validator for Danish payment references (FIK/GIK).
 /// </summary>
-public class DenmarkPaymentReferenceValidator : IPaymentReferenceValidator
+public class DenmarkPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
@@ -19,15 +19,6 @@ public class DenmarkPaymentReferenceValidator : IPaymentReferenceValidator
         return DenmarkPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidDenmarkPaymentReference);
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalDenmark)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.UnsupportedFormat);
-        }
-        return Validate(reference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

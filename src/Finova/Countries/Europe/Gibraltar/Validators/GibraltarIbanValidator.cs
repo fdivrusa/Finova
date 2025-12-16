@@ -31,23 +31,12 @@ public class GibraltarIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidGibraltarCountryCode);
         }
 
-        // Structure check:
-        // Bank Code (4-8) is usually letters (BIC)
-        for (int i = 4; i < 8; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = GibraltarBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsLetter(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.GibraltarBankCodeMustBeLetters);
-            }
-        }
-
-        // Account (8-23) is alphanumeric
-        for (int i = 8; i < GibraltarIbanLength; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.GibraltarAccountNumberMustBeAlphanumeric);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

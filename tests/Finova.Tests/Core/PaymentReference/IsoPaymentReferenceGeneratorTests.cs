@@ -28,12 +28,23 @@ public class IsoPaymentReferenceGeneratorTests
     }
 
     [Fact]
-    public void Generate_WithNullInput_ThrowsArgumentNullException()
+    public void Generate_WithNullInput_ThrowsArgumentException()
     {
         // Act
         Action act = () => _generator.Generate(null!);
 
         // Assert
-        act.Should().Throw<ArgumentNullException>();
+        act.Should().Throw<ArgumentException>();
     }
+
+    [Fact]
+    public void Generate_WithEmptyInput_ThrowsArgumentException()
+    {
+        // Act
+        Action act = () => _generator.Generate(string.Empty);
+
+        // Assert
+        act.Should().Throw<ArgumentException>();
+    }
+
 }

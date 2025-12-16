@@ -47,10 +47,10 @@ public class DenmarkPaymentReferenceValidatorTests
     public void Validate_WithLocalDenmarkFormat_ReturnsSuccess()
     {
         // Arrange
-        var reference = "123456789012347";
+        var reference = "+71<123456789012347";
 
         // Act
-        var result = _validator.Validate(reference, PaymentReferenceFormat.LocalDenmark);
+        var result = _validator.Validate(reference);
 
         // Assert
         result.IsValid.Should().BeTrue();

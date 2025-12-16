@@ -3,7 +3,7 @@ using Finova.Core.Iban;
 
 namespace Finova.Core.PaymentReference;
 
-public class IsoPaymentReferenceValidator : IPaymentReferenceValidator
+public class IsoPaymentReferenceValidator : IIsoPaymentReferenceValidator, IPaymentReferenceValidator
 {
     private const string IsoPrefix = "RF";
 
@@ -73,18 +73,6 @@ public class IsoPaymentReferenceValidator : IPaymentReferenceValidator
 
 
 
-    /// <summary>
-    /// Validates an ISO 11649 (RF) Reference against a specific format.
-    /// </summary>
-    public ValidationResult Validate(string communication, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.IsoRf)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.UnsupportedPaymentReferenceFormat, format));
-        }
-        return Validate(communication);
-    }
-
     #endregion
 
     #region Interface Implementation (DI Wrapper)
@@ -93,7 +81,30 @@ public class IsoPaymentReferenceValidator : IPaymentReferenceValidator
     {
         return Validate(reference);
     }
+
     PaymentReferenceDetails? IValidator<PaymentReferenceDetails>.Parse(string? reference) => Parse(reference);
+
+    #endregion
+
+    #region IPaymentReferenceValidator Implementation
+
+    public ValidationResult Validate(string reference, PaymentReferenceFormat format)
+    {
+        if (format != PaymentReferenceFormat.IsoRf)
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by IsoPaymentReferenceValidator.");
+        }
+        return Validate(reference);
+    }
+
+    public PaymentReferenceDetails? Parse(string reference, PaymentReferenceFormat format)
+    {
+        if (format != PaymentReferenceFormat.IsoRf)
+        {
+            return null;
+        }
+        return Parse(reference);
+    }
 
     #endregion
 }

@@ -8,7 +8,7 @@ namespace Finova.Countries.Europe.Norway.Validators;
 /// <summary>
 /// Validator for Norwegian payment references (KID).
 /// </summary>
-public class NorwayPaymentReferenceValidator : IPaymentReferenceValidator
+public class NorwayPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
@@ -20,15 +20,6 @@ public class NorwayPaymentReferenceValidator : IPaymentReferenceValidator
         return NorwayPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidNorwayKidReference);
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalNorway)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.UnsupportedFormat, format));
-        }
-        return Validate(reference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

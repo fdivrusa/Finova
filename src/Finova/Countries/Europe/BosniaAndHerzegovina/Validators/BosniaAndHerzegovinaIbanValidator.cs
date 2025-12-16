@@ -53,14 +53,12 @@ public class BosniaAndHerzegovinaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "BA"));
         }
 
-        // BA + 18 digits
-        // Indices 4-19 must be digits
-        for (int i = 4; i < 20; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = BosniaAndHerzegovinaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Bosnia and Herzegovina"));
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

@@ -53,14 +53,12 @@ public class BelarusIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "BY"));
         }
 
-        // BY + 4 alphanumeric + 22 alphanumeric
-        // Indices 4-27 must be alphanumeric
-        for (int i = 4; i < 28; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = BelarusBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanFormatAlphanumeric, "Belarus"));
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

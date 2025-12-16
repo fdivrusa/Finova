@@ -31,22 +31,12 @@ public class BulgariaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "BG"));
         }
 
-        // Structure check: Alphanumeric (Bank ID is letters, Account can be alphanumeric)
-        for (int i = 4; i < BulgariaIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = BulgariaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanFormatAlphanumeric, "Bulgaria"));
-            }
-        }
-
-        // Specific check: Bank Code (Pos 4-8) must be letters
-        for (int i = 4; i < 8; i++)
-        {
-            if (!char.IsLetter(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BulgariaIbanInvalidBankCode);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

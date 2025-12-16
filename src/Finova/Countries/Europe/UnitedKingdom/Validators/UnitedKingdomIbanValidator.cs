@@ -45,23 +45,12 @@ public class UnitedKingdomIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, UnitedKingdomCountryCode));
         }
 
-        // Check that positions 4 to 7 are LETTERS
-        for (int i = 4; i < 8; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = UnitedKingdomBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-
-            if (!char.IsLetter(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUkBankCodeFormat);
-            }
-        }
-
-        // Check that positions 8 to 21 are DIGITS
-        for (int i = 8; i < 22; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUkSortCodeFormat);
-            }
+            return bbanResult;
         }
 
         // Validate structure and checksum

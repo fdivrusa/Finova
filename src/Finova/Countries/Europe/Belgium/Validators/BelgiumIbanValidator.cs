@@ -37,59 +37,18 @@ public class BelgiumIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
-        for (int i = 2; i < 16; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BelgiumIbanMustBeDigits);
-            }
-        }
-
         // Internal BBAN Validation (Specific to Belgium)
         // Extract the last 12 digits (Positions 4 to 16)
         string bban = normalized.Substring(4, 12);
 
-        if (!ValidateBelgianBban(bban))
+        var bbanResult = BelgiumBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBelgiumBbanStructure);
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
-    }
-
-    /// <summary>
-    /// Validates the internal Belgian BBAN structure.
-    /// Format: 10 digits (Bank + Account) + 2 digits (Check).
-    /// Algorithm: First10 % 97 == Last2.
-    /// </summary>
-    private static bool ValidateBelgianBban(string bban)
-    {
-        if (bban.Length != 12)
-        {
-            return false;
-        }
-
-        // Split into Data (10 digits) and Check (2 digits)
-        string dataPart = bban.Substring(0, 10);
-        string checkPart = bban.Substring(10, 2);
-
-        if (!long.TryParse(dataPart, out long dataValue) ||
-            !int.TryParse(checkPart, out int checkValue))
-        {
-            return false;
-        }
-
-        // Calculate Modulo
-        long remainder = dataValue % 97;
-
-        // Specific rule: If remainder is 0, the check digits must be 97
-        if (remainder == 0)
-        {
-            return checkValue == 97;
-        }
-
-        return remainder == checkValue;
     }
 }

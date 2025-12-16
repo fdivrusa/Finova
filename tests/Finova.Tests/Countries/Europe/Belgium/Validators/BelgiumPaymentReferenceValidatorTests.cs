@@ -51,23 +51,9 @@ public class BelgiumPaymentReferenceValidatorTests
         var reference = "+++090/9337/55493+++";
 
         // Act
-        var result = _validator.Validate(reference, PaymentReferenceFormat.LocalBelgian);
+        var result = _validator.Validate(reference);
 
         // Assert
         result.IsValid.Should().BeTrue();
-    }
-
-    [Fact]
-    public void Validate_WithUnsupportedFormat_ReturnsFailure()
-    {
-        // Arrange
-        var reference = "+++090/9337/55493+++";
-
-        // Act
-        var result = _validator.Validate(reference, PaymentReferenceFormat.LocalFinland);
-
-        // Assert
-        result.IsValid.Should().BeFalse();
-        result.Errors.Should().ContainSingle().Which.Code.Should().Be(ValidationErrorCode.InvalidFormat);
     }
 }

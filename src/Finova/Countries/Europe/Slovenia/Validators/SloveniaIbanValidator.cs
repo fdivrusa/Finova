@@ -31,13 +31,12 @@ public class SloveniaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "SI"));
         }
 
-        // Structure check: Digits only
-        for (int i = 2; i < SloveniaIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = SloveniaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Slovenia"));
-            }
+            return bbanResult;
         }
 
         // Note: Slovenia uses Mod 97 for the internal BBAN (last 15 digits).

@@ -43,38 +43,12 @@ public class AlbaniaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "AL"));
         }
 
-        // Structure Validation:
-        // 1. Bank Code (Pos 4-7): 3 digits
-        for (int i = 4; i < 7; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = AlbaniaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AlbaniaIbanInvalidBankCode);
-            }
-        }
-
-        // 2. Branch Code (Pos 7-11): 4 digits
-        for (int i = 7; i < 11; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AlbaniaIbanInvalidBranchCode);
-            }
-        }
-
-        // 3. Control Character (Pos 11): 1 alphanumeric character (usually check digit for BBAN, but part of IBAN structure)
-        if (!char.IsLetterOrDigit(normalized[11]))
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AlbaniaIbanInvalidControlChar);
-        }
-
-        // 4. Account Number (Pos 12-28): 16 alphanumeric characters
-        for (int i = 12; i < 28; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AlbaniaIbanInvalidAccount);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

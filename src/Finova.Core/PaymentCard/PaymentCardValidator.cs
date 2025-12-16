@@ -128,7 +128,38 @@ public class PaymentCardValidator : IPaymentCardValidator
     }
 
     /// <summary>
-    /// Validates the CVV length based on the card brand.
+    /// Validates the card number length based on the detected brand.
+    /// </summary>
+    public static ValidationResult ValidateLength(string? cardNumber)
+    {
+        if (string.IsNullOrWhiteSpace(cardNumber))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        }
+
+        var clean = cardNumber.Replace(" ", "").Replace("-", "");
+        var brand = GetBrand(clean);
+
+        bool isValid = brand switch
+        {
+            PaymentCardBrand.Visa => clean.Length == 13 || clean.Length == 16 || clean.Length == 19,
+            PaymentCardBrand.Mastercard => clean.Length == 16,
+            PaymentCardBrand.AmericanExpress => clean.Length == 15,
+            PaymentCardBrand.Discover => clean.Length == 16 || clean.Length == 19,
+            PaymentCardBrand.JCB => clean.Length >= 16 && clean.Length <= 19,
+            PaymentCardBrand.DinersClub => clean.Length >= 14 && clean.Length <= 19,
+            PaymentCardBrand.Maestro => clean.Length >= 12 && clean.Length <= 19,
+            PaymentCardBrand.ChinaUnionPay => clean.Length >= 16 && clean.Length <= 19,
+            _ => clean.Length >= 12 && clean.Length <= 19 // Fallback for unknown
+        };
+
+        return isValid
+            ? ValidationResult.Success()
+            : ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidLength);
+    }
+
+    /// <summary>
+    /// Validates the CVV/CVC code based on the card brand.
     /// </summary>
     public static ValidationResult ValidateCvv(string? cvv, PaymentCardBrand brand)
     {
@@ -137,30 +168,27 @@ public class PaymentCardValidator : IPaymentCardValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
-        if (!IsDigitsOnly(cvv))
+        if (!cvv.All(char.IsDigit))
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidCvvDigits);
         }
 
-        bool isValidLength = brand switch
+        int length = cvv.Length;
+        bool isValid = brand switch
         {
-            PaymentCardBrand.AmericanExpress => cvv.Length == 4,
-            PaymentCardBrand.Visa or
-            PaymentCardBrand.Mastercard or
-            PaymentCardBrand.Discover or
-            PaymentCardBrand.JCB or
-            PaymentCardBrand.DinersClub => cvv.Length == 3,
-            PaymentCardBrand.Maestro => cvv.Length == 3 || cvv.Length == 0,
-            _ => cvv.Length == 3 || cvv.Length == 4
+            PaymentCardBrand.AmericanExpress => length == 4,
+            PaymentCardBrand.ChinaUnionPay => length == 3 || length == 4,
+            PaymentCardBrand.Unknown => length == 3 || length == 4,
+            _ => length == 3
         };
 
-        return isValidLength
+        return isValid
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidCvvLength, brand));
     }
 
     /// <summary>
-    /// Checks if the expiration date is in the future.
+    /// Validates the expiration date.
     /// </summary>
     public static ValidationResult ValidateExpiration(int month, int year)
     {
@@ -170,19 +198,21 @@ public class PaymentCardValidator : IPaymentCardValidator
         }
 
         var now = DateTime.UtcNow;
+        var currentYear = now.Year;
+        var currentMonth = now.Month;
 
-        // Normalize 2-digit years (e.g. 25 -> 2025)
+        // Adjust 2-digit year to 4-digit year
         if (year < 100)
         {
             year += 2000;
         }
 
-        if (year < now.Year || (year == now.Year && month < now.Month))
+        if (year < currentYear || (year == currentYear && month < currentMonth))
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CardExpired);
         }
 
-        if (year > now.Year + 20)
+        if (year > currentYear + 20)
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CardYearTooFar);
         }

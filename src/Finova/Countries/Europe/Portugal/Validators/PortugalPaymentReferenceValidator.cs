@@ -5,9 +5,9 @@ using Finova.Countries.Europe.Portugal.Services;
 namespace Finova.Countries.Europe.Portugal.Validators;
 
 /// <summary>
-/// Validator for Portuguese payment references (Multibanco).
+/// Validator for Portuguese payment references.
 /// </summary>
-public class PortugalPaymentReferenceValidator : IPaymentReferenceValidator
+public class PortugalPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
@@ -19,15 +19,6 @@ public class PortugalPaymentReferenceValidator : IPaymentReferenceValidator
         return PortugalPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalPortugal)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.UnsupportedFormat, format));
-        }
-        return Validate(reference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

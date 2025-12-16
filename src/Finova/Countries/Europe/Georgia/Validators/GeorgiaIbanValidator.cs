@@ -52,23 +52,12 @@ public class GeorgiaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
-        // GE + 2 alphanumeric (Bank) + 16 digits (Account)
-        // Indices 4-5 must be alphanumeric
-        for (int i = 4; i < 6; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = GeorgiaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BankCodeMustBeAlphanumeric);
-            }
-        }
-
-        // Indices 6-21 must be alphanumeric
-        for (int i = 6; i < 22; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AccountNumberMustBeAlphanumeric);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

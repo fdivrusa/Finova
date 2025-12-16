@@ -87,7 +87,7 @@ public class EuropeIbanValidator : IIbanValidator
             _validators = _serviceProvider.GetServices<IIbanValidator>()
                                           .Where(v => v.GetType() != typeof(EuropeIbanValidator));
         }
-        return _validators ?? Enumerable.Empty<IIbanValidator>();
+        return _validators ?? [];
     }
 
     public string CountryCode => "";

@@ -12,7 +12,7 @@ namespace Finova.Countries.Europe.Finland.Validators;
 /// <summary>
 /// Validator for Finnish payment references (Viitenumero).
 /// </summary>
-public class FinlandPaymentReferenceValidator : IPaymentReferenceValidator
+public class FinlandPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
@@ -22,15 +22,6 @@ public class FinlandPaymentReferenceValidator : IPaymentReferenceValidator
         return FinlandPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.FinlandPaymentReferenceInvalidFormat);
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalFinland)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.UnsupportedFormat);
-        }
-        return Validate(reference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

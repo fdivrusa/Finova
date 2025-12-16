@@ -304,6 +304,26 @@ public static class StaticValidationScenario
         Console.WriteLine();
 
         // ─────────────────────────────────────────
+        // 5b. PaymentReferenceValidator Facade (Static with Format)
+        // ─────────────────────────────────────────
+        ConsoleHelper.WriteSubHeader("5b", "PaymentReferenceValidator Facade (Static with Format)");
+
+        var facadeExamples = new (string Ref, PaymentReferenceFormat Format)[]
+        {
+            ("RF18539007547034", PaymentReferenceFormat.IsoRf),
+            ("+++090/9337/55493+++", PaymentReferenceFormat.LocalBelgian),
+            ("+71<123456789012347", PaymentReferenceFormat.LocalDenmark)
+        };
+
+        foreach (var (reference, format) in facadeExamples)
+        {
+            var result = PaymentReferenceValidator.Validate(reference, format);
+            ConsoleHelper.WriteSimpleResult($"{format}", result.IsValid, reference);
+        }
+
+        Console.WriteLine();
+
+        // ─────────────────────────────────────────
         // 6. Belgian Structured Payment Reference (OGM/VCS)
         // ─────────────────────────────────────────
         ConsoleHelper.WriteSubHeader("6", "Belgian Structured Payment Reference (OGM/VCS)");

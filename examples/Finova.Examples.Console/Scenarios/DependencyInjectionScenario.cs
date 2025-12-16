@@ -121,8 +121,26 @@ public static class DependencyInjectionScenario
 
         foreach (var reference in diRefs)
         {
-            ConsoleHelper.WriteSimpleResult(reference, refValidator.Validate(reference).IsValid);
+            ConsoleHelper.WriteSimpleResult(reference, refValidator.Validate(reference, PaymentReferenceFormat.IsoRf).IsValid);
         }
+
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
+        Console.WriteLine("      Validate with specific format (DI):");
+        Console.ResetColor();
+
+        var formatExamples = new (string Ref, PaymentReferenceFormat Format)[]
+        {
+            ("+++090/9337/55493+++", PaymentReferenceFormat.LocalBelgian),
+            ("+71<123456789012347", PaymentReferenceFormat.LocalDenmark)
+        };
+
+        foreach (var (reference, format) in formatExamples)
+        {
+            var result = refValidator.Validate(reference, format);
+            ConsoleHelper.WriteSimpleResult($"{format}", result.IsValid, reference);
+        }
+
         Console.WriteLine();
     }
 }

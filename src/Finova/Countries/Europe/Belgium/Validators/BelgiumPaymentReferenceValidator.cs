@@ -7,7 +7,7 @@ namespace Finova.Belgium.Validators;
 /// <summary>
 /// Validator for Belgian payment references (OGM/VCS).
 /// </summary>
-public class BelgiumPaymentReferenceValidator : IPaymentReferenceValidator
+public class BelgiumPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
@@ -19,15 +19,6 @@ public class BelgiumPaymentReferenceValidator : IPaymentReferenceValidator
         return BelgiumPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBelgiumOgmVcsReference);
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalBelgian)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.UnsupportedFormat);
-        }
-        return Validate(reference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

@@ -36,12 +36,12 @@ public class GermanyIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidGermanyCountryCode);
         }
 
-        for (int i = 2; i < 22; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = GermanyBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.GermanyIbanMustContainOnlyDigits);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

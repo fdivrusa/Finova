@@ -1,4 +1,15 @@
-public static string InvalidCardNumberFormat => GetString("InvalidCardNumberFormat");
+using System.Globalization;
+using System.Resources;
+
+namespace Finova.Core.Resources;
+
+public static class ValidationMessages
+{
+    private static readonly ResourceManager ResourceManager = new("Finova.Core.Resources.ValidationMessages", typeof(ValidationMessages).Assembly);
+
+    private static string GetString(string name) => ResourceManager.GetString(name, CultureInfo.CurrentUICulture) ?? name;
+
+    public static string InvalidCardNumberFormat => GetString("InvalidCardNumberFormat");
     public static string InvalidCardNumberLuhn => GetString("InvalidCardNumberLuhn");
     public static string InvalidCvvDigits => GetString("InvalidCvvDigits");
     public static string InvalidCvvLength => GetString("InvalidCvvLength");
@@ -33,3 +44,4 @@ public static string InvalidCardNumberFormat => GetString("InvalidCardNumberForm
     public static string InvalidCanadaRoutingNumberFormat => GetString("InvalidCanadaRoutingNumberFormat");
     public static string InvalidBsbFormat => GetString("InvalidBsbFormat");
     public static string InvalidIfscFormat => GetString("InvalidIfscFormat");
+}

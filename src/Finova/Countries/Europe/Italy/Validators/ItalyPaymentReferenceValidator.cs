@@ -7,7 +7,7 @@ namespace Finova.Countries.Europe.Italy.Validators;
 /// <summary>
 /// Validator for Italian payment references (CBILL / PagoPA / IUV).
 /// </summary>
-public class ItalyPaymentReferenceValidator : IPaymentReferenceValidator
+public class ItalyPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
@@ -19,15 +19,6 @@ public class ItalyPaymentReferenceValidator : IPaymentReferenceValidator
         return ItalyPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidItalyIuvReference);
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalItaly)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.UnsupportedFormat);
-        }
-        return Validate(reference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

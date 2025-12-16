@@ -29,14 +29,12 @@ public class AustriaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "AT"));
         }
 
-        // Austria IBANs are strictly numeric after the country code.
-        // Positions 2 to 19 (Check digits + BLZ + Kontonummer)
-        for (int i = 2; i < AustriaIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = AustriaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Austria"));
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

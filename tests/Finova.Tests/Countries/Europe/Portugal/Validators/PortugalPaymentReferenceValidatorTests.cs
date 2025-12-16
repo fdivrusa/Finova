@@ -49,7 +49,7 @@ public class PortugalPaymentReferenceValidatorTests
         var reference = "123456789";
 
         // Act
-        var result = _validator.Validate(reference, PaymentReferenceFormat.LocalPortugal);
+        var result = _validator.Validate(reference);
 
         // Assert
         result.IsValid.Should().BeTrue();

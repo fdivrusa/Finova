@@ -43,23 +43,12 @@ public class LiechtensteinIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidLiechtensteinCountryCode);
         }
 
-        // Structure Validation:
-        // 1. Bank Code (Pos 4-9): 5 digits
-        for (int i = 4; i < 9; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = LiechtensteinBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BankCodeMustBeNumeric);
-            }
-        }
-
-        // 2. Account Number (Pos 9-21): 12 alphanumeric characters
-        for (int i = 9; i < 21; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AccountNumberMustBeAlphanumeric);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

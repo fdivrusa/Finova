@@ -43,23 +43,12 @@ public class MoldovaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidMoldovaCountryCode);
         }
 
-        // Structure Validation:
-        // 1. Bank Code (Pos 4-6): 2 alphanumeric characters
-        for (int i = 4; i < 6; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = MoldovaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BankCodeMustBeAlphanumeric);
-            }
-        }
-
-        // 2. Account Number (Pos 6-24): 18 alphanumeric characters
-        for (int i = 6; i < 24; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AccountNumberMustBeAlphanumeric);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

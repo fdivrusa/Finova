@@ -31,14 +31,12 @@ public class RomaniaIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
-        // Structure check: Alphanumeric
-        // Bank Code (Pos 4-8) and Account Number (Pos 8-24) can contain letters.
-        for (int i = 4; i < RomaniaIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = RomaniaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidRomaniaIbanFormat);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

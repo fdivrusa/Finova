@@ -33,13 +33,12 @@ public class SwedenIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "SE"));
         }
 
-        // 3. Format Check (Digits only after SE)
-        for (int i = 2; i < SwedenIbanLength; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = SwedenBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Sweden"));
-            }
+            return bbanResult;
         }
 
         // 4. ISO 7064 Mod 97 Checksum (The Gold Standard)

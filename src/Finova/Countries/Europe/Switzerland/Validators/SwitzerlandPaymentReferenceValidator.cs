@@ -8,7 +8,7 @@ namespace Finova.Countries.Europe.Switzerland.Validators;
 /// <summary>
 /// Validator for Swiss payment references (QR-Reference).
 /// </summary>
-public class SwitzerlandPaymentReferenceValidator : IPaymentReferenceValidator
+public class SwitzerlandPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
@@ -20,15 +20,6 @@ public class SwitzerlandPaymentReferenceValidator : IPaymentReferenceValidator
         return SwitzerlandPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
             : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSwissQrReference);
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalSwitzerland)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.UnsupportedFormat);
-        }
-        return Validate(reference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

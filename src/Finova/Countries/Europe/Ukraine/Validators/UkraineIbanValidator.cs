@@ -52,23 +52,12 @@ public class UkraineIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "UA"));
         }
 
-        // Structure Validation:
-        // 1. Bank Code (MFO) (Pos 4-10): 6 digits
-        for (int i = 4; i < 10; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = UkraineBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUkraineBankCodeFormat);
-            }
-        }
-
-        // 2. Account Number (Pos 10-29): 19 digits
-        for (int i = 10; i < 29; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUkraineAccountNumberFormat);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)

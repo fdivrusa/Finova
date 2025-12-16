@@ -1,5 +1,6 @@
 using Finova.Core.Common;
 using Finova.Core.PaymentReference;
+using Finova.Core.PaymentReference.Internals;
 using System.Text.RegularExpressions;
 
 
@@ -10,9 +11,9 @@ namespace Finova.Countries.Europe.Sweden.Services;
 /// Service for generating and validating Swedish payment references (OCR / Bankgiro).
 /// Uses Modulo 10 (Luhn) with an optional length check digit.
 /// </summary>
-public partial class SwedenPaymentReferenceService : IsoPaymentReferenceGenerator
+public partial class SwedenPaymentReferenceService : IPaymentReferenceGenerator
 {
-    public override string CountryCode => "SE";
+    public string CountryCode => "SE";
 
     [GeneratedRegex(@"[^\d]")]
     private static partial Regex DigitsOnlyRegex();
@@ -22,14 +23,51 @@ public partial class SwedenPaymentReferenceService : IsoPaymentReferenceGenerato
     /// By default, appends a length check digit and then a Luhn check digit.
     /// Format: [Data][LengthDigit][CheckDigit]
     /// </summary>
-    public override string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalSweden) => format switch
+    public string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalSweden) => format switch
     {
         PaymentReferenceFormat.LocalSweden => GenerateOcr(rawReference),
-        PaymentReferenceFormat.IsoRf => base.Generate(rawReference, format),
+        PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
         _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
     };
 
+    public PaymentReferenceDetails Parse(string reference)
+    {
+        var validation = ValidateStatic(reference);
+        if (!validation.IsValid)
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = string.Empty,
+                Format = PaymentReferenceFormat.Unknown,
+                IsValid = false
+            };
+        }
 
+        if (reference.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = IsoReferenceHelper.Parse(reference),
+                Format = PaymentReferenceFormat.IsoRf,
+                IsValid = true
+            };
+        }
+
+        // Swedish OCR
+        var digits = DigitsOnlyRegex().Replace(reference, "");
+        // Last digit is check digit, second last is length digit
+        var data = digits[..^2];
+
+        return new PaymentReferenceDetails
+        {
+            Reference = reference,
+            Content = data,
+            Format = PaymentReferenceFormat.LocalSweden,
+            IsValid = true
+        };
+    }
 
     #region Static Methods (for Direct Usage)
 
@@ -41,10 +79,20 @@ public partial class SwedenPaymentReferenceService : IsoPaymentReferenceGenerato
     /// <summary>
     /// Validates a Swedish OCR reference.
     /// </summary>
-    /// <summary>
-    /// Validates a Swedish OCR reference.
-    /// </summary>
-    public static Core.Common.ValidationResult ValidateStatic(string communication) => ValidateOcr(communication);
+    public static Core.Common.ValidationResult ValidateStatic(string communication)
+    {
+        if (string.IsNullOrWhiteSpace(communication))
+        {
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, Core.Common.ValidationMessages.InputCannotBeEmpty);
+        }
+
+        if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return IsoReferenceValidator.Validate(communication);
+        }
+
+        return ValidateOcr(communication);
+    }
 
     #endregion
 

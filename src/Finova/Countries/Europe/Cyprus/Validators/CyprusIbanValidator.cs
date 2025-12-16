@@ -31,33 +31,12 @@ public class CyprusIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "CY"));
         }
 
-        // Structure Validation:
-
-        // 1. Bank Code (Pos 4-7): Must be digits
-        for (int i = 4; i < 7; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = CyprusBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CyprusIbanInvalidBankCode);
-            }
-        }
-
-        // 2. Branch Code (Pos 7-12): Must be digits
-        for (int i = 7; i < 12; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CyprusIbanInvalidBranchCode);
-            }
-        }
-
-        // 3. Account Number (Pos 12-28): Alphanumeric
-        for (int i = 12; i < 28; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CyprusIbanInvalidAccount);
-            }
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)
