@@ -26,7 +26,7 @@ public partial class VaticanCityVatValidator : IVatValidator, IEnterpriseValidat
 
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = number.Trim().ToUpperInvariant();
@@ -41,13 +41,13 @@ public partial class VaticanCityVatValidator : IVatValidator, IEnterpriseValidat
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Vatican City VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidVaticanVatFormat);
         }
 
         // Italian Partita IVA Logic (Luhn on 11 digits)
         if (!ChecksumHelper.ValidateLuhn(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Vatican City VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidVaticanVatChecksum);
         }
 
         return ValidationResult.Success();

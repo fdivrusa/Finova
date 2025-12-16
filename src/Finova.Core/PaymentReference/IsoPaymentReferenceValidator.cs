@@ -16,7 +16,7 @@ public class IsoPaymentReferenceValidator : IPaymentReferenceValidator
     {
         if (string.IsNullOrWhiteSpace(reference))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Reference cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // Normalize: Remove spaces, uppercase
@@ -25,13 +25,13 @@ public class IsoPaymentReferenceValidator : IPaymentReferenceValidator
         // 1. Length Check (Min 5: "RFxxC", Max 25)
         if (clean.Length < 5 || clean.Length > 25)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Reference length must be between 5 and 25 characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidIsoReferenceLength);
         }
 
         // 2. Prefix Check
         if (!clean.StartsWith(IsoPrefix))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Reference must start with 'RF'.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIsoReferencePrefix);
         }
 
         // 3. Character Check (Alphanumeric only)
@@ -39,7 +39,7 @@ public class IsoPaymentReferenceValidator : IPaymentReferenceValidator
         {
             if (!char.IsLetterOrDigit(c))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Reference contains invalid characters.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIsoReferenceCharacters);
             }
         }
 
@@ -47,7 +47,7 @@ public class IsoPaymentReferenceValidator : IPaymentReferenceValidator
         string rearranged = clean[4..] + clean[0..4];
         return IbanHelper.CalculateMod97(rearranged) == 1
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCheckDigit);
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public class IsoPaymentReferenceValidator : IPaymentReferenceValidator
     {
         if (format != PaymentReferenceFormat.IsoRf)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by IsoPaymentReferenceValidator.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.UnsupportedPaymentReferenceFormat, format));
         }
         return Validate(communication);
     }

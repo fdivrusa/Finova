@@ -16,19 +16,19 @@ public class CroatiaIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.IbanEmpty);
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != CroatiaIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {CroatiaIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidIbanLength, CroatiaIbanLength, normalized.Length));
         }
 
         if (!normalized.StartsWith(CroatiaCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected HR.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "HR"));
         }
 
         // Structure check: Digits only
@@ -36,12 +36,12 @@ public class CroatiaIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Croatia IBAN must contain only digits after the country code.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Croatia"));
             }
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 }

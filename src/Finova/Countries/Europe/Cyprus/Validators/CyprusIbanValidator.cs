@@ -16,19 +16,19 @@ public class CyprusIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.IbanEmpty);
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != CyprusIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {CyprusIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidIbanLength, CyprusIbanLength, normalized.Length));
         }
 
         if (!normalized.StartsWith(CyprusCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected CY.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "CY"));
         }
 
         // Structure Validation:
@@ -38,7 +38,7 @@ public class CyprusIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Cyprus Bank Code must be digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CyprusIbanInvalidBankCode);
             }
         }
 
@@ -47,7 +47,7 @@ public class CyprusIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Cyprus Branch Code must be digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CyprusIbanInvalidBranchCode);
             }
         }
 
@@ -56,12 +56,12 @@ public class CyprusIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Cyprus Account Number must be alphanumeric.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CyprusIbanInvalidAccount);
             }
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 }

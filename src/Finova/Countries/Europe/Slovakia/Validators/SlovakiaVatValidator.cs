@@ -29,7 +29,7 @@ public partial class SlovakiaVatValidator : IVatValidator, IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -40,17 +40,17 @@ public partial class SlovakiaVatValidator : IVatValidator, IEnterpriseValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Slovakia VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSlovakiaVatFormat);
         }
 
         if (!long.TryParse(cleaned, out long numericValue))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Slovakia VAT format (non-numeric).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSlovakiaVatFormatNonNumeric);
         }
 
         if (numericValue % 11 != 0)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Slovakia VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSlovakiaVatChecksum);
         }
 
         return ValidationResult.Success();

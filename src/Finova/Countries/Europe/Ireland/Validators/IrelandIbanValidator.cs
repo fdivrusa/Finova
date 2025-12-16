@@ -31,20 +31,20 @@ public class IrelandIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
         var normalized = IbanHelper.NormalizeIban(iban);
 
         // Check length (Ireland IBAN is exactly 22 characters)
         if (normalized.Length != IrelandIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {IrelandIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, IrelandIbanLength, normalized.Length));
         }
 
         // Check country code
         if (!normalized.StartsWith(IrelandCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected IE.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidIrelandCountryCode);
         }
 
         // Structure Validation:
@@ -55,7 +55,7 @@ public class IrelandIbanValidator : IIbanValidator
         {
             if (!char.IsLetter(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Ireland Bank Code must be letters.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.IrelandBankCodeMustBeLetters);
             }
         }
 
@@ -65,13 +65,13 @@ public class IrelandIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Ireland Sort Code/Account Number must be digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.IrelandSortCodeAccountNumberMustBeDigits);
             }
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 
     #endregion

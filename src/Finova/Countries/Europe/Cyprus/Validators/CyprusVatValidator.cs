@@ -27,7 +27,7 @@ public partial class CyprusVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -38,7 +38,7 @@ public partial class CyprusVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Cyprus VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidCyprusVatFormat);
         }
 
         // Checksum Validation
@@ -68,7 +68,7 @@ public partial class CyprusVatValidator : IVatValidator
 
         if (calculatedLetter != expectedLetter)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Cyprus checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidCyprusVatChecksum);
         }
 
         return ValidationResult.Success();

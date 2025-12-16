@@ -17,18 +17,18 @@ public class FinlandPaymentReferenceValidator : IPaymentReferenceValidator
     public ValidationResult Validate(string? reference)
     {
         if (string.IsNullOrWhiteSpace(reference))
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Reference cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.FinlandPaymentReferenceEmpty);
 
         return FinlandPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Finnish payment reference.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.FinlandPaymentReferenceInvalidFormat);
     }
 
     public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
     {
         if (format != PaymentReferenceFormat.LocalFinland)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by FinlandPaymentReferenceValidator.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.UnsupportedFormat);
         }
         return Validate(reference);
     }

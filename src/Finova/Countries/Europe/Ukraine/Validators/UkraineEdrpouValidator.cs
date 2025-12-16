@@ -21,14 +21,14 @@ public partial class UkraineEdrpouValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = number.ToUpperInvariant().Replace("UA", "").Replace(" ", "");
 
         if (!EdrpouRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Ukraine EDRPOU format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUkraineEdrpouFormat);
         }
 
         // Pass 1
@@ -57,7 +57,7 @@ public partial class UkraineEdrpouValidator : IEnterpriseValidator
 
         if (checkDigit != (cleaned[7] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Ukraine EDRPOU checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidUkraineEdrpouChecksum);
         }
 
         return ValidationResult.Success();

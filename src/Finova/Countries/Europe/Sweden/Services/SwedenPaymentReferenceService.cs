@@ -54,7 +54,7 @@ public partial class SwedenPaymentReferenceService : IsoPaymentReferenceGenerato
 
         if (string.IsNullOrEmpty(cleanRef))
         {
-            throw new ArgumentException("Reference cannot be empty.");
+            throw new ArgumentException(ValidationMessages.InputCannotBeEmpty);
         }
 
         if (cleanRef.Length > 23)
@@ -78,14 +78,14 @@ public partial class SwedenPaymentReferenceService : IsoPaymentReferenceGenerato
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var digits = DigitsOnlyRegex().Replace(communication, "");
 
         if (digits.Length < 2 || digits.Length > 25)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Swedish OCR reference must be between 2 and 25 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidSwedishOcrLength);
         }
 
         // 1. Validate Check Digit (Last digit, Mod 10 of everything before it)
@@ -95,7 +95,7 @@ public partial class SwedenPaymentReferenceService : IsoPaymentReferenceGenerato
 
         if (checkDigitStr != calculatedCheckDigit.ToString())
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCheckDigit);
         }
 
         // 2. Validate Length Digit (Second to last digit)
@@ -112,7 +112,7 @@ public partial class SwedenPaymentReferenceService : IsoPaymentReferenceGenerato
         // Let's enforce it for now as it's the standard "Hard" level.
         return lengthDigitStr == expectedLengthDigit.ToString()
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid length digit.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidLengthDigit);
     }
 
     private static int CalculateLuhn(string data)

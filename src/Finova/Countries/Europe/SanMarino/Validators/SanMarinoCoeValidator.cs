@@ -10,9 +10,9 @@ public partial class SanMarinoCoeValidator : IEnterpriseValidator
     private static partial Regex CoeRegex();
 
     public string CountryCode => "SM";
-    public EnterpriseNumberType Type => EnterpriseNumberType.SanMarinoCoe;
+    public static EnterpriseNumberType Type => EnterpriseNumberType.SanMarinoCoe;
 
-    public ValidationResult Validate(string? number) => ValidateCoe(number);
+    public ValidationResult Validate(string? input) => ValidateCoe(input);
 
     public string? Parse(string? number) => Normalize(number);
 
@@ -20,14 +20,14 @@ public partial class SanMarinoCoeValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = number.Replace(" ", "");
 
         if (!CoeRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid San Marino COE format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSanMarinoCoeFormat);
         }
 
         return ValidationResult.Success();

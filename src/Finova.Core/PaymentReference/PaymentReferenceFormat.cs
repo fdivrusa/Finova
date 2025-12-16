@@ -3,6 +3,11 @@ namespace Finova.Core.PaymentReference;
 public enum PaymentReferenceFormat
 {
     /// <summary>
+    /// Unknown or invalid format.
+    /// </summary>
+    Unknown,
+
+    /// <summary>
     /// Specific format used in Belgium (ex: 123/4567/89012).
     /// </summary>
     LocalBelgian,
@@ -35,5 +40,20 @@ public enum PaymentReferenceFormat
     /// <summary>
     /// Specific format used in Slovenia (SI12).
     /// </summary>
-    LocalSlovenia
+    LocalSlovenia,
+
+    /// <summary>
+    /// Specific format used in Denmark (FIK / GIK).
+    /// </summary>
+    LocalDenmark,
+
+    /// <summary>
+    /// Specific format used in Italy (CBILL / PagoPA).
+    /// </summary>
+    LocalItaly,
+
+    /// <summary>
+    /// Specific format used in Portugal (Multibanco Reference).
+    /// </summary>
+    LocalPortugal
 }

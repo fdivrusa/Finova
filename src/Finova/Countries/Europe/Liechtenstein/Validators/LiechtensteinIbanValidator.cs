@@ -28,19 +28,19 @@ public class LiechtensteinIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != LiechtensteinIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {LiechtensteinIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, LiechtensteinIbanLength, normalized.Length));
         }
 
         if (!normalized.StartsWith(LiechtensteinCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected LI.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidLiechtensteinCountryCode);
         }
 
         // Structure Validation:
@@ -49,7 +49,7 @@ public class LiechtensteinIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Bank code must be numeric.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BankCodeMustBeNumeric);
             }
         }
 
@@ -58,12 +58,12 @@ public class LiechtensteinIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Account number must be alphanumeric.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AccountNumberMustBeAlphanumeric);
             }
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 }

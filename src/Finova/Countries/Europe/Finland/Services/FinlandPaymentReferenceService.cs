@@ -46,7 +46,7 @@ public partial class FinlandPaymentReferenceService : IsoPaymentReferenceGenerat
         var cleanRef = DigitsOnlyRegex().Replace(rawReference, "");
         if (string.IsNullOrEmpty(cleanRef))
         {
-            throw new ArgumentException("Reference cannot be empty.");
+            throw new ArgumentException(ValidationMessages.InputCannotBeEmpty);
         }
 
         if (cleanRef.Length < 3 || cleanRef.Length > 19)
@@ -62,14 +62,14 @@ public partial class FinlandPaymentReferenceService : IsoPaymentReferenceGenerat
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var digits = DigitsOnlyRegex().Replace(communication, "");
 
         if (digits.Length < 4 || digits.Length > 20)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Finnish reference must be between 4 and 20 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidFinnishReferenceLength);
         }
 
         var data = digits[..^1];
@@ -79,7 +79,7 @@ public partial class FinlandPaymentReferenceService : IsoPaymentReferenceGenerat
 
         return checkDigitStr == calculatedCheckDigit.ToString()
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCheckDigit);
     }
 
     private static int CalculateCheckDigit731(string data)

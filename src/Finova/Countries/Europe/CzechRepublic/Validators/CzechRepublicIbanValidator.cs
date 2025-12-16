@@ -16,19 +16,19 @@ public class CzechRepublicIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.IbanEmpty);
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != CzechIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {CzechIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidIbanLength, CzechIbanLength, normalized.Length));
         }
 
         if (!normalized.StartsWith(CzechCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected CZ.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "CZ"));
         }
 
         // Structure check: All digits
@@ -36,7 +36,7 @@ public class CzechRepublicIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Czech IBAN must contain only digits after the country code.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Czech"));
             }
         }
 
@@ -56,19 +56,19 @@ public class CzechRepublicIbanValidator : IIbanValidator
             // Note: Prefix is 6 digits. We use the last 6 weights: 10, 5, 8, 4, 2, 1
             if (!ValidateCzechMod11(prefix, true))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Czech Prefix checksum.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CzechRepublicIbanInvalidPrefixChecksum);
             }
         }
 
         // Validate Account Number
         if (!ValidateCzechMod11(accountNumber, false))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Czech Account Number checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CzechRepublicIbanInvalidAccountChecksum);
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 
     /// <summary>

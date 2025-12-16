@@ -28,19 +28,17 @@ public partial class KosovoFiscalNumberValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.EnterpriseNumberCannotBeEmpty);
         }
 
         // Remove spaces
         var cleaned = number.Trim().ToUpperInvariant();
-        // User didn't specify prefix removal for XK, but usually good practice.
-        // Spec: "Sanitization: Remove spaces."
 
         var digits = DigitsOnlyRegex().Replace(cleaned, "");
 
         if (digits.Length != 9)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Fiscal Number must be 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidKosovoFiscalNumberLength);
         }
 
         // Weights: [9, 8, 7, 6, 5, 4, 3, 2] applied to first 8 digits.
@@ -67,7 +65,7 @@ public partial class KosovoFiscalNumberValidator : IEnterpriseValidator
         int lastDigit = digits[8] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

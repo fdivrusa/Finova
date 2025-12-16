@@ -36,7 +36,7 @@ public partial class BelgiumVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // Remove "BE" prefix if present

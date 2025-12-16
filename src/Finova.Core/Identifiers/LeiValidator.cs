@@ -21,19 +21,19 @@ public partial class LeiValidator : IValidator<string>
     {
         if (string.IsNullOrWhiteSpace(instance))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "LEI cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = Parse(instance);
 
         if (normalized == null || normalized.Length != 20)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "LEI must be exactly 20 characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidLeiLength);
         }
 
         if (!LeiRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "LEI must contain only alphanumeric characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidLeiFormat);
         }
 
         // ISO 7064 Mod 97-10 Validation
@@ -53,12 +53,12 @@ public partial class LeiValidator : IValidator<string>
 
         if (!BigInteger.TryParse(sb.ToString(), out BigInteger bigInt))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Failed to parse LEI for checksum calculation.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.LeiParsingFailed);
         }
 
         if (bigInt % 97 != 1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid LEI checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidLeiChecksum);
         }
 
         return ValidationResult.Success();

@@ -28,7 +28,7 @@ public partial class HungaryAdoszamValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.EnterpriseNumberCannotBeEmpty);
         }
 
         // Remove hyphens and spaces
@@ -41,7 +41,7 @@ public partial class HungaryAdoszamValidator : IEnterpriseValidator
 
         if (digits.Length != 11)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Adószám must be 11 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidHungaryAdoszamLength);
         }
 
         // Focus validation only on the first 8 digits (the core "Törzsszám").
@@ -60,7 +60,7 @@ public partial class HungaryAdoszamValidator : IEnterpriseValidator
         int eighthDigit = digits[7] - '0';
         if (checkDigit != eighthDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

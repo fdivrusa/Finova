@@ -29,7 +29,7 @@ public partial class LiechtensteinPeidValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.EnterpriseNumberCannotBeEmpty);
         }
 
         // Remove "CHE" or "LI" prefix if present and spaces
@@ -45,7 +45,7 @@ public partial class LiechtensteinPeidValidator : IEnterpriseValidator
 
         if (digits.Length != 9)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "PEID must be 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidLiechtensteinPeidLength);
         }
 
         // Swiss UID Logic: Modulo 11 with weights 5,4,3,2,7,6,5,4
@@ -62,13 +62,13 @@ public partial class LiechtensteinPeidValidator : IEnterpriseValidator
 
         if (checkDigit == 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum (Check digit 10).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidLiechtensteinPeidChecksumCheckDigit10);
         }
 
         int lastDigit = digits[8] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

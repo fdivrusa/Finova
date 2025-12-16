@@ -22,13 +22,13 @@ public partial class SanMarinoVatValidator : IVatValidator
         vat = VatSanitizer.Sanitize(vat);
 
         if (string.IsNullOrWhiteSpace(vat))
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
 
         var cleaned = vat.Trim().ToUpperInvariant();
         if (cleaned.StartsWith(VatPrefix)) cleaned = cleaned[2..];
 
         if (!VatRegex().IsMatch(cleaned))
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid San Marino VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSanMarinoVatFormat);
 
         // No public checksum available.
         return ValidationResult.Success();

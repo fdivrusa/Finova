@@ -20,14 +20,14 @@ public partial class SerbiaPibValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = number.ToUpperInvariant().Replace("RS", "").Replace(" ", "");
 
         if (!PibRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Serbia PIB format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSerbiaPibFormat);
         }
 
         // ISO 7064 Modulo 11, 10 - Recursive
@@ -45,7 +45,7 @@ public partial class SerbiaPibValidator : IEnterpriseValidator
 
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Serbia PIB checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSerbiaPibChecksum);
         }
 
         return ValidationResult.Success();

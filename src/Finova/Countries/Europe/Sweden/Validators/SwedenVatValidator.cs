@@ -27,7 +27,7 @@ public partial class SwedenVatValidator : IVatValidator, IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -38,14 +38,14 @@ public partial class SwedenVatValidator : IVatValidator, IEnterpriseValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Sweden VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSwedenVatFormat);
         }
 
         // Checksum Validation (Luhn on first 10 digits)
         string numberPart = cleaned[..10];
         if (!ChecksumHelper.ValidateLuhn(numberPart))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Sweden VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSwedenVatChecksum);
         }
 
         return ValidationResult.Success();

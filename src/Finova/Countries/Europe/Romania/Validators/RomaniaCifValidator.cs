@@ -22,14 +22,14 @@ public partial class RomaniaCifValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = number.ToUpperInvariant().Replace("RO", "").Replace(" ", "");
 
         if (!CifRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Romania CIF format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidRomaniaCifFormat);
         }
 
         // Logic:
@@ -63,7 +63,7 @@ public partial class RomaniaCifValidator : IEnterpriseValidator
 
         if (calculated != checkDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Romania CIF checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidRomaniaCifChecksum);
         }
 
         return ValidationResult.Success();

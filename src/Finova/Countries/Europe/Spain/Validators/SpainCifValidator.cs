@@ -18,9 +18,9 @@ public partial class SpainCifValidator : IEnterpriseValidator
 
     public string CountryCode => "ES";
 
-    public ValidationResult Validate(string? instance) => ValidateCif(instance);
+    public ValidationResult Validate(string? input) => ValidateCif(input);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? input) => Normalize(input);
 
     /// <summary>
     /// Validates a Spanish CIF.
@@ -29,14 +29,14 @@ public partial class SpainCifValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "CIF cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = Normalize(number);
 
         if (!CifRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid CIF format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidCifFormat);
         }
 
         char entityType = normalized[0];
@@ -66,19 +66,19 @@ public partial class SpainCifValidator : IEnterpriseValidator
         {
             return providedControl == expectedControlLetter
                 ? ValidationResult.Success()
-                : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid CIF check letter.");
+                : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCifCheckLetter);
         }
         else if (expectsDigit)
         {
             return providedControl == expectedControlDigit
                 ? ValidationResult.Success()
-                : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid CIF check digit.");
+                : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCifCheckDigit);
         }
         else
         {
             return (providedControl == expectedControlDigit || providedControl == expectedControlLetter)
                 ? ValidationResult.Success()
-                : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid CIF check character.");
+                : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCifCheckCharacter);
         }
     }
 

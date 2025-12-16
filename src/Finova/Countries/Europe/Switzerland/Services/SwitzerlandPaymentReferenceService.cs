@@ -1,4 +1,5 @@
 using Finova.Core.PaymentReference;
+using Finova.Core.Common;
 using System.Text.RegularExpressions;
 
 
@@ -49,7 +50,7 @@ public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGen
 
         if (string.IsNullOrEmpty(cleanRef))
         {
-            throw new ArgumentException("Reference cannot be empty.");
+            throw new ArgumentException(ValidationMessages.InputCannotBeEmpty);
         }
 
         if (cleanRef.Length > 26)
@@ -68,7 +69,7 @@ public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGen
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, Core.Common.ValidationMessages.InputCannotBeEmpty);
         }
 
         var digits = DigitsOnlyRegex().Replace(communication, "");
@@ -76,7 +77,7 @@ public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGen
         // Swiss QR Reference is strictly 27 digits
         if (digits.Length != 27)
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, "Swiss QR reference must be 27 digits.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, Core.Common.ValidationMessages.InvalidSwitzerlandQrReferenceLength);
         }
 
         var data = digits[..^1];
@@ -85,7 +86,7 @@ public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGen
 
         return checkDigitStr == calculatedCheckDigit.ToString()
             ? Core.Common.ValidationResult.Success()
-            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, Core.Common.ValidationMessages.InvalidCheckDigit);
     }
 
     private static int CalculateMod10Recursive(string data)

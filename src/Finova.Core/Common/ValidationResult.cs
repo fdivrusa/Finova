@@ -3,6 +3,22 @@ namespace Finova.Core.Common;
 /// <summary>
 /// Represents the result of a validation operation.
 /// </summary>
+/// <example>
+/// <code>
+/// var result = validator.Validate("BE0000000000");
+/// if (result.IsValid)
+/// {
+///     Console.WriteLine("Valid!");
+/// }
+/// else
+/// {
+///     foreach (var error in result.Errors)
+///     {
+///         Console.WriteLine($"{error.Code}: {error.Message}");
+///     }
+/// }
+/// </code>
+/// </example>
 public class ValidationResult
 {
     public bool IsValid => Errors.Count == 0;

@@ -31,7 +31,7 @@ public partial class IrelandVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -42,7 +42,7 @@ public partial class IrelandVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Ireland VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIrelandVatFormat);
         }
 
         int sum;
@@ -77,7 +77,7 @@ public partial class IrelandVatValidator : IVatValidator
 
         if (checkChar != expectedChar)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Ireland VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidIrelandVatChecksum);
         }
 
         return ValidationResult.Success();

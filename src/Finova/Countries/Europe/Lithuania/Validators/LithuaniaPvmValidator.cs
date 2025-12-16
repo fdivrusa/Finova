@@ -28,7 +28,7 @@ public partial class LithuaniaPvmValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // Remove "LT" prefix if present and spaces
@@ -42,7 +42,7 @@ public partial class LithuaniaPvmValidator : IEnterpriseValidator
 
         if (digits.Length != 9)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "PVM must be 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidPvmLength);
         }
 
         // Pass 1: Weights [1, 2, 3, 4, 5, 6, 7, 8]
@@ -84,7 +84,7 @@ public partial class LithuaniaPvmValidator : IEnterpriseValidator
         int lastDigit = digits[8] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

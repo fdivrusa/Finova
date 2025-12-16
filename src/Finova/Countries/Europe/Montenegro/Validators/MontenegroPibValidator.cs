@@ -28,7 +28,7 @@ public partial class MontenegroPibValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.EnterpriseNumberCannotBeEmpty);
         }
 
         // Remove spaces
@@ -38,7 +38,7 @@ public partial class MontenegroPibValidator : IEnterpriseValidator
 
         if (digits.Length != 8)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "PIB must be 8 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.PibMustBe8Digits);
         }
 
 
@@ -59,7 +59,7 @@ public partial class MontenegroPibValidator : IEnterpriseValidator
         }
         else if (remainder == 1) // Spec says: "If Remainder == 1, Invalid."
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum (Remainder 1).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksumRemainder1);
         }
         else
         {
@@ -69,7 +69,7 @@ public partial class MontenegroPibValidator : IEnterpriseValidator
         int lastDigit = digits[7] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

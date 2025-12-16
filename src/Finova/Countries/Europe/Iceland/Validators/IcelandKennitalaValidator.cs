@@ -30,12 +30,12 @@ public partial class IcelandKennitalaValidator : IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Kennitala cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.KennitalaCannotBeEmpty);
         }
 
         if (!FormatRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Kennitala format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidKennitalaFormat);
         }
 
         // Checksum Validation
@@ -53,12 +53,12 @@ public partial class IcelandKennitalaValidator : IEnterpriseValidator
 
         if (checkDigit == 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Kennitala checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidKennitalaChecksum);
         }
 
         if (checkDigit != (normalized[8] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Kennitala checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidKennitalaChecksum);
         }
 
         // Date Validation
@@ -74,7 +74,7 @@ public partial class IcelandKennitalaValidator : IEnterpriseValidator
 
         if (day < 1 || day > 31 || month < 1 || month > 12)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Kennitala date.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidKennitalaDate);
         }
 
         return ValidationResult.Success();

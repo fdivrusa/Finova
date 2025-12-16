@@ -23,7 +23,7 @@ public partial class LatviaVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -34,7 +34,7 @@ public partial class LatviaVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Latvia VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidLatviaVatFormat);
         }
 
         int[] weights = { 9, 1, 4, 8, 3, 10, 2, 5, 7, 6 };
@@ -47,13 +47,13 @@ public partial class LatviaVatValidator : IVatValidator
 
         if (checkDigit == -1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Latvia VAT checksum (Result -1).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidLatviaVatChecksumResultMinusOne);
         }
 
         int lastDigit = cleaned[10] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Latvia VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidLatviaVatChecksum);
         }
 
         return ValidationResult.Success();

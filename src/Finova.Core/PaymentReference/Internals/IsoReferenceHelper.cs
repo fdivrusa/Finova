@@ -11,7 +11,7 @@ public static class IsoReferenceHelper
     {
         if (string.IsNullOrWhiteSpace(rawReference))
         {
-            throw new ArgumentException("Raw reference cannot be empty for ISO generation.", nameof(rawReference));
+            throw new ArgumentException(ValidationMessages.InputCannotBeEmpty, nameof(rawReference));
         }
 
         var referenceBody = rawReference.Trim().ToUpperInvariant();
@@ -48,5 +48,15 @@ public static class IsoReferenceHelper
             }
         }
         return sb.ToString();
+    }
+
+    public static string Parse(string reference)
+    {
+        var clean = reference.Replace(" ", "").ToUpperInvariant();
+        if (clean.StartsWith(IsoPrefix) && clean.Length > 4)
+        {
+            return clean.Substring(4);
+        }
+        return string.Empty;
     }
 }

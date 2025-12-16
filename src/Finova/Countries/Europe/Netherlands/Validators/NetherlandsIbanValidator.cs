@@ -33,19 +33,19 @@ public class NetherlandsIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != DutchIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {DutchIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, DutchIbanLength, normalized.Length));
         }
 
         if (!normalized.StartsWith(DutchCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected NL.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidNetherlandsCountryCode);
         }
 
         // Bank Code: Positions 4-7 (4 chars) must be letters (e.g., ABNA, INGB, RABO)
@@ -53,7 +53,7 @@ public class NetherlandsIbanValidator : IIbanValidator
         {
             if (!char.IsLetter(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Netherlands Bank Code must be letters.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.NetherlandsBankCodeMustBeLetters);
             }
         }
 
@@ -62,7 +62,7 @@ public class NetherlandsIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Netherlands Account Number must be digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.NetherlandsAccountNumberMustBeDigits);
             }
         }
 
@@ -70,12 +70,12 @@ public class NetherlandsIbanValidator : IIbanValidator
         string accountNumber = normalized.Substring(8, 10);
         if (!ValidateElfProef(accountNumber))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Elfproef check.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidElfproefCheck);
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 
     /// <summary>

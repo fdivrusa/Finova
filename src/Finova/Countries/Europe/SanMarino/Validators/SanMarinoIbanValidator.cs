@@ -22,23 +22,23 @@ public class SanMarinoIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != SmIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {SmIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidIbanLength, SmIbanLength, normalized.Length));
         }
         if (!normalized.StartsWith(SmCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected SM.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
         // CIN (Pos 4) check
         if (!char.IsLetter(normalized[4]))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "San Marino CIN must be a letter.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSanMarinoCin);
         }
 
         // ABI & CAB (Pos 5-15) check
@@ -46,19 +46,19 @@ public class SanMarinoIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "San Marino ABI/CAB must be digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSanMarinoAbiCab);
             }
         }
 
         // CIN Validation (Same algorithm as Italy)
         if (!ValidateCin(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid CIN.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidCin);
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 
     private static bool ValidateCin(string iban)

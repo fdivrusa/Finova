@@ -29,7 +29,7 @@ public partial class GermanyHandelsregisternummerValidator : IEnterpriseValidato
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Handelsregisternummer cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.HandelsregisternummerCannotBeEmpty);
         }
 
         // Normalize for validation check (remove spaces to handle "HRB 123" and "HRB123" consistently if needed, 
@@ -41,7 +41,7 @@ public partial class GermanyHandelsregisternummerValidator : IEnterpriseValidato
 
         if (!FormatRegex().IsMatch(trimmed))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Handelsregisternummer format. Expected HRA or HRB followed by digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidGermanyHandelsregisternummerFormat);
         }
 
         return ValidationResult.Success();

@@ -22,7 +22,7 @@ public partial class ItalyVatValidator : IVatValidator
     {
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = vat.Trim().ToUpperInvariant();
@@ -35,7 +35,7 @@ public partial class ItalyVatValidator : IVatValidator
             }
             else
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid format. Expected IT prefix or 11 digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidVatFormat, "Italy"));
             }
         }
         else
@@ -47,17 +47,17 @@ public partial class ItalyVatValidator : IVatValidator
 
         if (normalized.Length != 11)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected 11 digits, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, 11, normalized.Length));
         }
 
         if (normalized == "00000000000")
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "VAT number cannot be all zeros.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "Italy"));
         }
 
         if (!ChecksumHelper.ValidateLuhn(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "Italy"));
         }
 
         return ValidationResult.Success();

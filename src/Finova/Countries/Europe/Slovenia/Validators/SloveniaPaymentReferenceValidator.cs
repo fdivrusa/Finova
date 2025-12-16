@@ -14,19 +14,19 @@ public class SloveniaPaymentReferenceValidator : IPaymentReferenceValidator
     {
         if (string.IsNullOrWhiteSpace(reference))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Reference cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         return SloveniaPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Slovenian SI12 reference.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSlovenianSi12Reference);
     }
 
     public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
     {
         if (format != PaymentReferenceFormat.LocalSlovenia)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by SloveniaPaymentReferenceValidator.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.UnsupportedFormat);
         }
         return Validate(reference);
     }

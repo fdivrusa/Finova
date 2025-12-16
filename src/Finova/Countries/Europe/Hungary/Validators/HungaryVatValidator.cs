@@ -23,7 +23,7 @@ public partial class HungaryVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -34,7 +34,7 @@ public partial class HungaryVatValidator : IVatValidator
 
         if (cleaned.Length != 8 || !long.TryParse(cleaned, out _))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Hungary VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidHungaryVatFormat);
         }
 
         // Checksum Validation (Weighted Mod 10)
@@ -49,7 +49,7 @@ public partial class HungaryVatValidator : IVatValidator
         int lastDigit = cleaned[7] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Hungary VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidHungaryVatChecksum);
         }
 
         return ValidationResult.Success();

@@ -28,7 +28,7 @@ public partial class TurkeyVknValidator : IVatValidator, IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = number.Trim().ToUpperInvariant();
@@ -39,7 +39,7 @@ public partial class TurkeyVknValidator : IVatValidator, IEnterpriseValidator
 
         if (!VknRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Turkey VKN format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidTurkeyVknFormat);
         }
 
         int sum = 0;
@@ -68,7 +68,7 @@ public partial class TurkeyVknValidator : IVatValidator, IEnterpriseValidator
 
         if (lastDigit != checkDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Turkey VKN checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidTurkeyVknChecksum);
         }
 
         return ValidationResult.Success();

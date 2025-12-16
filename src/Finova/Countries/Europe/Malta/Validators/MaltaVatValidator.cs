@@ -28,7 +28,7 @@ public partial class MaltaVatValidator : IVatValidator, IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -39,7 +39,7 @@ public partial class MaltaVatValidator : IVatValidator, IEnterpriseValidator
 
         if (cleaned.Length != 8 || !long.TryParse(cleaned, out _))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Malta VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidMaltaVatFormat);
         }
 
         // Checksum Validation (Weighted Mod 37)
@@ -50,7 +50,7 @@ public partial class MaltaVatValidator : IVatValidator, IEnterpriseValidator
 
         if (sum % 37 != 0)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Malta VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidMaltaVatChecksum);
         }
 
         return ValidationResult.Success();

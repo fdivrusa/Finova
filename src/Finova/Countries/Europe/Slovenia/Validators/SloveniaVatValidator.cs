@@ -34,7 +34,7 @@ public partial class SloveniaVatValidator : IVatValidator, IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -45,7 +45,7 @@ public partial class SloveniaVatValidator : IVatValidator, IEnterpriseValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Slovenia VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSloveniaVatFormat);
         }
 
         int sum = ChecksumHelper.CalculateWeightedSum(cleaned[..7], Weights);
@@ -53,14 +53,14 @@ public partial class SloveniaVatValidator : IVatValidator, IEnterpriseValidator
 
         if (remainder == 1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Slovenia VAT checksum (forbidden remainder).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSloveniaVatChecksumForbidden);
         }
 
         int checkDigit = remainder == 0 ? 0 : 11 - remainder;
 
         if (checkDigit != (cleaned[7] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Slovenia VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSloveniaVatChecksum);
         }
 
         return ValidationResult.Success();

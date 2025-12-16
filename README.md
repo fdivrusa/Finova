@@ -50,11 +50,11 @@
 Fast, offline regex and checksum validation for European and International formats.
 - **IBAN Validation:**
     - **Parsing & Validation:** Extracts country code, check digits, bank code, branch code, and account number.
-    - **Country Specific Rules:** Supports specific validation rules for **51 countries** (Belgium, France, Germany, Italy, Spain, UK, Netherlands, etc.).
+    - **Country Specific Rules:** Supports specific validation rules for **51 European countries and territories** (Belgium, France, Germany, Italy, Spain, UK, Netherlands, etc.).
     - **Generic Validation:** Supports parsing and validating checksums for all ISO-compliant countries.
 - **Payment Cards:**
     - **Luhn Algorithm:** Mod 10 validation for PAN numbers.
-    - **Brand Detection:** Identifies Visa, Mastercard, Amex, Discover, JCB, Maestro.
+    - **Brand Detection:** Identifies Visa, Mastercard, Amex, Discover, JCB, Maestro, RuPay, Mir, Verve, Troy.
     - **Secure CVV Check:** Format-only validation (Safe for PCI-DSS).
 - **BIC/SWIFT:** Structural validation (ISO 9362) & Cross-check with IBAN country code.
 
@@ -67,10 +67,91 @@ Fast, offline regex and checksum validation for European and International forma
     - **Sweden:** OCR
     - **Switzerland:** QR Reference
     - **Slovenia:** SI12
+    - **Denmark:** FIK / GIK
+    - **Italy:** CBILL / PagoPA
+    - **Portugal:** Multibanco
 
 ### 🏢 **Business Numbers**
-- **Enterprise Numbers:** Validates Belgian KBO/BCE (Mod97) & French SIRET/SIREN (Luhn).
-- **VAT Numbers:** Validates formatting and check digits for EU-27 countries.
+- **Enterprise Numbers:** Validates business registration numbers for **51 European countries** (e.g., Belgian KBO, French SIREN, Italian P.IVA, etc.).
+- **VAT Numbers:** Validates formatting and check digits for **European countries** (EU + UK, Norway, Switzerland, etc.).
+
+### 🌍 **Global Expansion (New in v1.4.0)**
+Finova now supports major economies across North America, South America, Asia, and Oceania.
+
+| Region | Country | Validators |
+| :--- | :--- | :--- |
+| **North America** | 🇺🇸 USA | Routing Number, EIN |
+| | 🇨🇦 Canada | SIN, Business Number (BN), Routing Number |
+| **South America** | 🇧🇷 Brazil | CPF, CNPJ, Routing Number |
+| | 🇲🇽 Mexico | CURP, RFC |
+| **Asia** | 🇨🇳 China | RIC, USCC, CNAPS |
+| | 🇯🇵 Japan | My Number, Corporate Number, Bank Account |
+| | 🇮🇳 India | Aadhaar, PAN, IFSC |
+| | 🇸🇬 Singapore | NRIC, UEN, Bank Account |
+| **Oceania** | 🇦🇺 Australia | TFN, ABN, BSB |
+
+> **New in v1.4.0:** Full **Parsing** support (extracting metadata) is now available for:
+> - **Routing Numbers:** USA (ABA), Canada (CC), Australia (BSB), India (IFSC), China (CNAPS), Brazil (COMPE).
+> - **Bank Accounts:** Japan, Singapore.
+
+<details>
+<summary><strong>View Full List of Supported Countries (51)</strong></summary>
+
+| Country | Code | IBAN | VAT | Enterprise | Payment Ref |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| Albania | AL | ✅ | ✅ | ✅ | - |
+| Andorra | AD | ✅ | ✅ | ✅ | - |
+| Austria | AT | ✅ | ✅ | ✅ | - |
+| Azerbaijan | AZ | ✅ | ✅ | ✅ | - |
+| Belarus | BY | ✅ | ✅ | ✅ | - |
+| Belgium | BE | ✅ | ✅ | ✅ | ✅ |
+| Bosnia & Herzegovina | BA | ✅ | ✅ | ✅ | - |
+| Bulgaria | BG | ✅ | ✅ | ✅ | - |
+| Croatia | HR | ✅ | ✅ | ✅ | - |
+| Cyprus | CY | ✅ | ✅ | ✅ | - |
+| Czech Republic | CZ | ✅ | ✅ | ✅ | - |
+| Denmark | DK | ✅ | ✅ | ✅ | ✅ |
+| Estonia | EE | ✅ | ✅ | ✅ | - |
+| Faroe Islands | FO | ✅ | ✅ | ✅ | - |
+| Finland | FI | ✅ | ✅ | ✅ | ✅ |
+| France | FR | ✅ | ✅ | ✅ | - |
+| Georgia | GE | ✅ | ✅ | ✅ | - |
+| Germany | DE | ✅ | ✅ | ✅ | - |
+| Gibraltar | GI | ✅ | ✅ | ✅ | - |
+| Greece | GR | ✅ | ✅ | ✅ | - |
+| Greenland | GL | ✅ | - | ✅ | - |
+| Hungary | HU | ✅ | ✅ | ✅ | - |
+| Iceland | IS | ✅ | ✅ | ✅ | - |
+| Ireland | IE | ✅ | ✅ | ✅ | - |
+| Italy | IT | ✅ | ✅ | ✅ | ✅ |
+| Kosovo | XK | ✅ | - | ✅ | - |
+| Latvia | LV | ✅ | ✅ | ✅ | - |
+| Liechtenstein | LI | ✅ | ✅ | ✅ | - |
+| Lithuania | LT | ✅ | ✅ | ✅ | - |
+| Luxembourg | LU | ✅ | ✅ | ✅ | - |
+| Malta | MT | ✅ | ✅ | ✅ | - |
+| Moldova | MD | ✅ | ✅ | ✅ | - |
+| Monaco | MC | ✅ | ✅ | ✅ | - |
+| Montenegro | ME | ✅ | ✅ | ✅ | - |
+| Netherlands | NL | ✅ | ✅ | ✅ | - |
+| North Macedonia | MK | ✅ | ✅ | ✅ | - |
+| Norway | NO | ✅ | ✅ | ✅ | ✅ |
+| Poland | PL | ✅ | ✅ | ✅ | - |
+| Portugal | PT | ✅ | ✅ | ✅ | ✅ |
+| Romania | RO | ✅ | ✅ | ✅ | - |
+| San Marino | SM | ✅ | ✅ | ✅ | - |
+| Serbia | RS | ✅ | ✅ | ✅ | - |
+| Slovakia | SK | ✅ | ✅ | ✅ | - |
+| Slovenia | SI | ✅ | ✅ | ✅ | ✅ |
+| Spain | ES | ✅ | ✅ | ✅ | - |
+| Sweden | SE | ✅ | ✅ | ✅ | ✅ |
+| Switzerland | CH | ✅ | ✅ | ✅ | ✅ |
+| Turkey | TR | ✅ | ✅ | ✅ | - |
+| Ukraine | UA | ✅ | ✅ | ✅ | - |
+| United Kingdom | GB | ✅ | ✅ | ✅ | - |
+| Vatican City | VA | ✅ | ✅ | ✅ | - |
+
+</details>
 
 ### 🔗 **FluentValidation Integration**
 - **Extensions:** `MustBeValidIban`, `MustBeValidBic`, `MustBeValidVat`, `MustBeValidPaymentReference`, etc.
@@ -78,7 +159,29 @@ Fast, offline regex and checksum validation for European and International forma
 
 ---
 
-## 📦 Installation
+## � Dependency Injection & Global Services
+
+Finova provides global composite services that automatically delegate validation to the correct country-specific logic.
+
+```csharp
+// 1. Register Finova
+services.AddFinova();
+
+// 2. Inject Services
+public class MyService(ITaxIdService taxIdService, IBankAccountService bankAccountService)
+{
+    public void Validate()
+    {
+        // Validates US EIN
+        var result1 = taxIdService.Validate("US", "12-3456789");
+
+        // Validates Singapore Bank Account
+        var result2 = bankAccountService.Validate("SG", "1234567890");
+    }
+}
+```
+
+## �📦 Installation
 
 Install via the NuGet Package Manager:
 
@@ -105,7 +208,7 @@ using Finova.Services;
 // (Does NOT check if account exists)
 bool isValid = EuropeIbanValidator.ValidateIban("BE68539007547034").IsValid;
 
-if (isValid) 
+if (isValid)
 {
     Console.WriteLine("IBAN structure is valid");
 }
@@ -222,7 +325,7 @@ bool isEntValid = EuropeEnterpriseValidator.ValidateEnterpriseNumber("BE01234567
 
 // 3. Validate Specific Enterprise Type
 bool isSiretValid = EuropeEnterpriseValidator.ValidateEnterpriseNumber(
-    "73282932000074", 
+    "73282932000074",
     EnterpriseNumberType.FranceSiret
 ).IsValid;
 ```
@@ -246,7 +349,7 @@ if (result.IsValid)
 // 2. Validate Specific Type
 // Explicitly validate against a specific enterprise number type
 var vatResult = EuropeEnterpriseValidator.ValidateEnterpriseNumber(
-    "DE123456789", 
+    "DE123456789",
     EnterpriseNumberType.GermanySteuernummer
 );
 
@@ -287,51 +390,63 @@ int remainder = ChecksumHelper.CalculateWeightedModulo11("123456", weights);
 
 Finova is strictly offline. Future updates focus on schema compliance, developer experience, and mathematical validation.
 
+### Upcoming Releases
+
+#### v1.4.0 - Global Expansion 🌎
+- **North America**: Support for USA (Routing Numbers, EIN) and Canada (Business Numbers).
+- **Asia**: Support for major Asian economies (Japan, Singapore, etc.).
+- **South America**: Support for Brazil (CNPJ/CPF) and others.
+- **Architecture**: Introduction of `Finova.Countries.NorthAmerica`, `Finova.Countries.Asia`, etc.
+
+#### v1.5.0 - EPC QR Code Support 📱
+- **EPC QR String Generation**: Generate the raw payload string for European Payments Council (EPC) QR codes.
+- **Zero-Dependency**: Focus on string generation to maintain the "no external dependencies" rule (no image libraries required in core).
+
 ---
 
 ## ✅ v1.0.0 — Foundation *(Released)*
-- Belgian payment references (OGM/VCS)  
-- ISO 11649 international references  
-- Comprehensive testing and CI/CD  
+- Belgian payment references (OGM/VCS)
+- ISO 11649 international references
+- Comprehensive testing and CI/CD
 
 ---
 
 ## ✅ v1.1.0 — Core Expansion *(Released)*
-- **IBAN Expansion:** Italy (IT) & Spain (ES) specific rules  
-- **BIC/SWIFT:** Structural format validation (ISO 9362)  
-- **Payment Cards:** Luhn Algorithm & Brand Detection (Visa/MC/Amex)  
-- **Reference Validator:** RF Creditor Reference (ISO 11649)  
+- **IBAN Expansion:** Italy (IT) & Spain (ES) specific rules
+- **BIC/SWIFT:** Structural format validation (ISO 9362)
+- **Payment Cards:** Luhn Algorithm & Brand Detection (Visa/MC/Amex)
+- **Reference Validator:** RF Creditor Reference (ISO 11649)
 
 ---
 
 ## ✅ v1.2.0 — European Unification *(Released)*
-- **Finova.Europe:** Unified wrapper package for all SEPA countries  
-- **Smart Routing:** Auto-detect country rules via `EuropeValidator`  
+- **Finova.Europe:** Unified wrapper package for all SEPA countries
+- **Smart Routing:** Auto-detect country rules via `EuropeValidator`
 - **Extensions:** FluentValidation integration package (`Finova.Extensions.FluentValidation`)
 
 ---
 
 ## ✅ v1.3.0 — Corporate Identity *(Released)*
-- **VAT Numbers:** EU VAT checksums (VIES offline syntax)  
-- **Enterprise Numbers:** French SIRET/SIREN, Belgian KBO/BCE  
+- **VAT Numbers:** EU VAT checksums (VIES offline syntax)
+- **Enterprise Numbers:** French SIRET/SIREN, Belgian KBO/BCE
 
 ---
 
 ## 🔮 v1.4.0 — National Identifiers *(Planned)*
-- **National IDs:** Netherlands KVK, Spain NIF/CIF  
-- **Modern Payment Strings:** EPC QR Code payload builder, Swiss QR parsing  
+- **National IDs:** Netherlands KVK, Spain NIF/CIF
+- **Modern Payment Strings:** EPC QR Code payload builder, Swiss QR parsing
 
 ---
 
 ## 🔮 v1.5.0 — Global Routing *(Future)*
-- **USA:** ABA routing number checksums  
-- **Canada:** Transit number validation  
-- **Australia:** BSB number validation  
+- **USA:** ABA routing number checksums
+- **Canada:** Transit number validation
+- **Australia:** BSB number validation
 
 ---
 
 ## 🔭 Horizon *(Undetermined)*
-- AI-assisted anomaly detection  
+- AI-assisted anomaly detection
 
 -----
 

@@ -25,7 +25,7 @@ public partial class AustriaFirmenbuchValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Firmenbuchnummer cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.AustriaFirmenbuchEmpty);
         }
 
         var normalized = number.Trim();
@@ -33,11 +33,8 @@ public partial class AustriaFirmenbuchValidator : IEnterpriseValidator
         var match = FirmenbuchRegex().Match(normalized);
         if (!match.Success)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid format. Expected 1-6 digits followed by a letter (optional FN prefix).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AustriaFirmenbuchInvalidFormat);
         }
-
-
-
 
         return ValidationResult.Success();
     }

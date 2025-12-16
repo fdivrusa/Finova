@@ -31,7 +31,7 @@ public partial class GibraltarCompanyNumberValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.EnterpriseNumberCannotBeEmpty);
         }
 
         // Remove "GI" prefix if present and spaces
@@ -45,7 +45,7 @@ public partial class GibraltarCompanyNumberValidator : IEnterpriseValidator
         // Checksum is skipped due to lack of public spec.
         if (!CompanyNumberRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Gibraltar Company Number format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidGibraltarCompanyNumberFormat);
         }
 
         return ValidationResult.Success();

@@ -31,12 +31,12 @@ public partial class BulgariaUicValidator : IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "UIC cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.BulgariaUicEmpty);
         }
 
         if (!FormatRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid UIC format (must be 9 or 13 digits).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BulgariaUicInvalidFormat);
         }
 
         if (normalized.Length == 9)
@@ -79,7 +79,7 @@ public partial class BulgariaUicValidator : IEnterpriseValidator
 
         if (checkDigit != (uic[8] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid UIC checksum (9 digits).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.BulgariaUicInvalidChecksum9);
         }
 
         return ValidationResult.Success();
@@ -91,7 +91,7 @@ public partial class BulgariaUicValidator : IEnterpriseValidator
         var baseUicResult = Validate9DigitUic(uic.Substring(0, 9));
         if (!baseUicResult.IsValid)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid base UIC (first 9 digits).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.BulgariaUicInvalidChecksumBase);
         }
 
         int[] weights1 = { 2, 7, 3, 5 };
@@ -122,7 +122,7 @@ public partial class BulgariaUicValidator : IEnterpriseValidator
 
         if (checkDigit != (uic[12] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid UIC checksum (13 digits).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.BulgariaUicInvalidChecksum13);
         }
 
         return ValidationResult.Success();

@@ -7,18 +7,7 @@ public class SanMarinoEnterpriseValidatorTests
 {
     [Theory]
     [InlineData("12345", true)] // Valid COE
-    [InlineData("SM 12345", false)] // Prefix not stripped by validator? Validator strips spaces but not SM prefix?
-    // SanMarinoCoeValidator strips spaces. Does it strip SM?
-    // My implementation: var cleaned = number.Replace(" ", "");
-    // It does NOT strip SM.
-    // Wait, usually I strip country code.
-    // Let's check implementation.
-    // public static ValidationResult ValidateCoe(string? number) { ... var cleaned = number.Replace(" ", ""); ... }
-    // I should probably strip SM if it's common.
-    // But for now, let's test without SM or update implementation.
-    // The prompt said "Sanitization: Remove spaces." It didn't say Remove 'SM'.
-    // But usually we do.
-    // I'll assume strict 5 digits.
+    [InlineData("SM 12345", false)] // Prefix not stripped by validator
     [InlineData("1234", false)] // Invalid length
     [InlineData("123456", false)] // Invalid length
     public void Validate_ShouldReturnExpectedResult(string number, bool expectedIsValid)

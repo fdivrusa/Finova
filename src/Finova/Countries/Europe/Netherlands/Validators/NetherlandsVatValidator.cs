@@ -28,7 +28,7 @@ public partial class NetherlandsVatValidator : IVatValidator, IEnterpriseValidat
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -39,7 +39,7 @@ public partial class NetherlandsVatValidator : IVatValidator, IEnterpriseValidat
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Netherlands VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidNetherlandsVatFormat);
         }
 
         // Checksum Validation
@@ -81,7 +81,7 @@ public partial class NetherlandsVatValidator : IVatValidator, IEnterpriseValidat
 
         if (!isMod97Valid && !isElfproefValid)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum (Mod 97 or Elfproef).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNetherlandsVatChecksumMod97OrElfproef);
         }
 
         return ValidationResult.Success();

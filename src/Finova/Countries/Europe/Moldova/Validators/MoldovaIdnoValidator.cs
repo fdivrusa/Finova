@@ -28,7 +28,7 @@ public partial class MoldovaIdnoValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.EnterpriseNumberCannotBeEmpty);
         }
 
         // Remove spaces
@@ -40,7 +40,7 @@ public partial class MoldovaIdnoValidator : IEnterpriseValidator
 
         if (digits.Length != 13)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "IDNO must be 13 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.IdnoMustBe13Digits);
         }
 
         // Weights: [7, 3, 1, 7, 3, 1, 7, 3, 1, 7, 3, 1] applied to first 12 digits.
@@ -58,7 +58,7 @@ public partial class MoldovaIdnoValidator : IEnterpriseValidator
         int lastDigit = digits[12] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

@@ -32,12 +32,12 @@ public partial class CyprusTicValidator : IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "TIC cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.CyprusTicEmpty);
         }
 
         if (!TicRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Cyprus TIC format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CyprusTicInvalidFormat);
         }
 
         // Checksum Validation
@@ -67,7 +67,7 @@ public partial class CyprusTicValidator : IEnterpriseValidator
 
         if (calculatedLetter != expectedLetter)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Cyprus TIC checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.CyprusTicInvalidChecksum);
         }
 
         return ValidationResult.Success();

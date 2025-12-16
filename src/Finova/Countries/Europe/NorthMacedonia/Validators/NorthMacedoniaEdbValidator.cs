@@ -22,14 +22,14 @@ public partial class NorthMacedoniaEdbValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = number.Replace(" ", "");
 
         if (!EdbRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid North Macedonia EDB format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidNorthMacedoniaEdbFormat);
         }
 
         int sum = ChecksumHelper.CalculateWeightedSum(cleaned[..12], Weights);
@@ -43,12 +43,12 @@ public partial class NorthMacedoniaEdbValidator : IEnterpriseValidator
 
         if (checkDigit == -1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid North Macedonia EDB checksum (forbidden remainder).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNorthMacedoniaEdbChecksumForbiddenRemainder);
         }
 
         if (checkDigit != (cleaned[12] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid North Macedonia EDB checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNorthMacedoniaEdbChecksum);
         }
 
         return ValidationResult.Success();

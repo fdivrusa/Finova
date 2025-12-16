@@ -28,7 +28,7 @@ public partial class GreeceAfmValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.EnterpriseNumberCannotBeEmpty);
         }
 
         // Remove "EL" or "GR" prefix if present and spaces
@@ -42,7 +42,7 @@ public partial class GreeceAfmValidator : IEnterpriseValidator
 
         if (digits.Length != 9)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "AFM must be 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.AfmMustBe9Digits);
         }
 
         // Weights (Reversed Powers of 2): [256, 128, 64, 32, 16, 8, 4, 2]
@@ -60,7 +60,7 @@ public partial class GreeceAfmValidator : IEnterpriseValidator
         int lastDigit = digits[8] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

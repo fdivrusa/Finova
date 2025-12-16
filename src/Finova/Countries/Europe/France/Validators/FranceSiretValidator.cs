@@ -28,19 +28,19 @@ public partial class FranceSiretValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "SIRET number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.SiretCannotBeEmpty);
         }
 
         var normalized = number.Trim().Replace(" ", "").Replace(".", "");
 
         if (!SiretRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid format. Expected 14 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSiretFormat);
         }
 
         if (!LuhnCheck(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum (Luhn).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSiretChecksum);
         }
 
         return ValidationResult.Success();

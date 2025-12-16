@@ -25,9 +25,9 @@ public partial class UnitedKingdomCompanyNumberValidator : IEnterpriseValidator
 
     public string CountryCode => "GB";
 
-    public ValidationResult Validate(string? instance) => ValidateCompanyNumber(instance);
+    public ValidationResult Validate(string? input) => ValidateCompanyNumber(input);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? input) => Normalize(input);
 
     /// <summary>
     /// Validates a UK Company Registration Number (CRN).
@@ -36,7 +36,7 @@ public partial class UnitedKingdomCompanyNumberValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "CRN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = Normalize(number);
@@ -49,12 +49,12 @@ public partial class UnitedKingdomCompanyNumberValidator : IEnterpriseValidator
 
         if (normalized.Length != 8)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "CRN must be 8 characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidCrnLength);
         }
 
         if (!CrnRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid CRN format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidCrnFormat);
         }
 
         // Prefix validation
@@ -63,7 +63,7 @@ public partial class UnitedKingdomCompanyNumberValidator : IEnterpriseValidator
             string prefix = normalized.Substring(0, 2);
             if (!ValidPrefixes.Contains(prefix))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Invalid CRN prefix: {prefix}.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
             }
         }
 

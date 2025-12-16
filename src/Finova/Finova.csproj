@@ -23,7 +23,7 @@
             Designed for FinTechs and SaaS. Zero dependencies.
         </Description>
         <PackageTags>
-            finova;iban;validator;parser;sepa;banking;finance;fintech;bic;swift;luhn;credit-card;payment;iso11649;ogm;vcs;offline;check-digits;vat;enterprise;siret;kbo;steuernummer;business</PackageTags>
+            finova;iban;validator;parser;sepa;banking;finance;fintech;bic;swift;luhn;credit-card;payment;iso11649;ogm;vcs;offline;check-digits;vat;enterprise;siret;kbo;steuernummer;business;usa;canada;brazil;mexico;china;japan;india;singapore;australia;global;routing-number;ein;sin;cpf;cnpj;curp;rfc;aadhaar;pan;nric;uen;tfn;abn</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
 
         <ProjectUrl>https://finovasharp.com</ProjectUrl>

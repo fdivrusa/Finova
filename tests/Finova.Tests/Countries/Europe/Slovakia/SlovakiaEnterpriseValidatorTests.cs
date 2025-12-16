@@ -6,11 +6,8 @@ namespace Finova.Tests.Countries.Europe.Slovakia;
 public class SlovakiaEnterpriseValidatorTests
 {
     [Theory]
-    [InlineData("2020202020", false)] // 2020202020 % 11 = ?
-    // 2020202020 / 11 = 183654729.09...
-    // Let's find a divisible number.
-    // 1100000000 is divisible.
-    [InlineData("1100000000", true)]
+    [InlineData("2020202020", false)] // Invalid checksum
+    [InlineData("1100000000", true)] // Divisible by 11
     [InlineData("SK 1100000000", true)] // Valid with prefix
     [InlineData("1100000001", false)] // Invalid checksum
     [InlineData("123", false)] // Invalid length

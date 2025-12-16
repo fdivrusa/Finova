@@ -41,20 +41,20 @@ public class ItalyIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
         var normalized = IbanHelper.NormalizeIban(iban);
 
         // 1. Check length (Italy IBAN is exactly 27 characters)
         if (normalized.Length != ItalyIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {ItalyIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, ItalyIbanLength, normalized.Length));
         }
 
         // 2. Check country code
         if (!normalized.StartsWith(ItalyCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected IT.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidItalyCountryCode);
         }
 
         // 3. Structure Validation:
@@ -62,7 +62,7 @@ public class ItalyIbanValidator : IIbanValidator
         // CIN (Pos 4) must be a letter
         if (!char.IsLetter(normalized[4]))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Italy CIN must be a letter.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.ItalyCinMustBeLetter);
         }
 
         // ABI (Pos 5-9) and CAB (Pos 10-14) must be digits
@@ -71,7 +71,7 @@ public class ItalyIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Italy ABI/CAB must be digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.ItalyAbiCabMustBeDigits);
             }
         }
 
@@ -80,7 +80,7 @@ public class ItalyIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Italy Account Number must be alphanumeric.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.ItalyAccountNumberMustBeAlphanumeric);
             }
         }
 
@@ -88,13 +88,13 @@ public class ItalyIbanValidator : IIbanValidator
         // Checks the consistency of ABI + CAB + Account
         if (!ValidateCin(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid CIN.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidCin);
         }
 
         // 5. Global Checksum (Modulo 97)
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 
     /// <summary>

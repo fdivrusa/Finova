@@ -25,7 +25,7 @@ public partial class LuxembourgVatValidator : IVatValidator, IEnterpriseValidato
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -36,7 +36,7 @@ public partial class LuxembourgVatValidator : IVatValidator, IEnterpriseValidato
 
         if (cleaned.Length != 8 || !long.TryParse(cleaned, out _))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Luxembourg VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidLuxembourgVatFormat);
         }
 
         // Checksum Validation (Mod 89)
@@ -46,7 +46,7 @@ public partial class LuxembourgVatValidator : IVatValidator, IEnterpriseValidato
 
         if (firstPart % 89 != checkDigits)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Luxembourg VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidLuxembourgVatChecksum);
         }
 
         return ValidationResult.Success();

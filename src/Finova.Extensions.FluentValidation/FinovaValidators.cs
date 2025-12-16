@@ -13,6 +13,11 @@ public static class FinovaValidators
     /// Validates that the string is a valid IBAN.
     /// Automatically detects the country and applies the correct rules (e.g. Italy vs Germany).
     /// </summary>
+    /// <example>
+    /// <code>
+    /// RuleFor(x => x.Iban).MustBeValidIban();
+    /// </code>
+    /// </example>
     public static IRuleBuilderOptions<T, string?> MustBeValidIban<T>(this IRuleBuilder<T, string?> ruleBuilder)
     {
         return ruleBuilder
@@ -23,6 +28,11 @@ public static class FinovaValidators
     /// <summary>
     /// Validates that the string is a valid BIC/SWIFT code (ISO 9362).
     /// </summary>
+    /// <example>
+    /// <code>
+    /// RuleFor(x => x.Bic).MustBeValidBic();
+    /// </code>
+    /// </example>
     public static IRuleBuilderOptions<T, string?> MustBeValidBic<T>(this IRuleBuilder<T, string?> ruleBuilder)
     {
         return ruleBuilder
@@ -34,6 +44,11 @@ public static class FinovaValidators
     /// Validates that the string is a valid credit card number (Luhn Check).
     /// Note: This only checks mathematical validity, not existence.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// RuleFor(x => x.CardNumber).MustBeValidPaymentCard();
+    /// </code>
+    /// </example>
     public static IRuleBuilderOptions<T, string?> MustBeValidPaymentCard<T>(this IRuleBuilder<T, string?> ruleBuilder)
     {
         return ruleBuilder

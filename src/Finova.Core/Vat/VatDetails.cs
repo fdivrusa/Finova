@@ -19,4 +19,24 @@ public record VatDetails
     /// Indicates if the VAT number is valid.
     /// </summary>
     public bool IsValid { get; init; }
+
+    /// <summary>
+    /// The kind of identifier (e.g., VAT, Business Tax ID, Invoicing Scheme).
+    /// </summary>
+    public string IdentifierKind { get; init; } = "Vat";
+
+    /// <summary>
+    /// Indicates if this is a formal EU VAT number.
+    /// </summary>
+    public bool IsEuVat { get; init; }
+
+    /// <summary>
+    /// Indicates if this number is eligible for VIES validation.
+    /// </summary>
+    public bool IsViesEligible { get; init; }
+
+    /// <summary>
+    /// Additional notes regarding the usage or semantics of this identifier.
+    /// </summary>
+    public string? Notes { get; init; }
 }

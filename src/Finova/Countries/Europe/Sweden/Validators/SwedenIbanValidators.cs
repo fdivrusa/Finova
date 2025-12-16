@@ -16,7 +16,7 @@ public class SwedenIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
@@ -24,13 +24,13 @@ public class SwedenIbanValidator : IIbanValidator
         // 1. Length Check
         if (normalized.Length != SwedenIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {SwedenIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, SwedenIbanLength, normalized.Length));
         }
 
         // 2. Country Code Check
         if (!normalized.StartsWith(SwedenCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected SE.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "SE"));
         }
 
         // 3. Format Check (Digits only after SE)
@@ -38,14 +38,14 @@ public class SwedenIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Sweden IBAN must contain only digits after country code.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Sweden"));
             }
         }
 
         // 4. ISO 7064 Mod 97 Checksum (The Gold Standard)
         if (!IbanHelper.IsValidIban(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
         }
 
         // We skip the complex Domestic Rules (Mod11/Luhn per Bank ID) to avoid false negatives.

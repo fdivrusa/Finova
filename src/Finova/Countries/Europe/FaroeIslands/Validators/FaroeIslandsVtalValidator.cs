@@ -28,7 +28,7 @@ public partial class FaroeIslandsVtalValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // Remove "FO" prefix if present and spaces
@@ -42,7 +42,7 @@ public partial class FaroeIslandsVtalValidator : IEnterpriseValidator
 
         if (digits.Length != 6)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "V-tal must be 6 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidVtalLength);
         }
 
         // Weights: [2, 7, 6, 5, 4, 3]
@@ -56,7 +56,7 @@ public partial class FaroeIslandsVtalValidator : IEnterpriseValidator
 
         if (sum % 11 != 0)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

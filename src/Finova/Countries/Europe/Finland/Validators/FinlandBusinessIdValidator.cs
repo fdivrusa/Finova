@@ -28,7 +28,7 @@ public partial class FinlandBusinessIdValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.FinlandBusinessIdEmpty);
         }
 
         // Remove "FI" prefix if present, hyphens, and spaces
@@ -42,7 +42,7 @@ public partial class FinlandBusinessIdValidator : IEnterpriseValidator
 
         if (digits.Length != 8)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Business ID must be 8 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.FinlandBusinessIdInvalidLength);
         }
 
         // Weights: [7, 9, 10, 5, 8, 4, 2]
@@ -63,7 +63,7 @@ public partial class FinlandBusinessIdValidator : IEnterpriseValidator
         }
         else if (remainder == 1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum (Remainder 1 is not allowed).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.FinlandBusinessIdInvalidChecksumRemainder1);
         }
         else
         {
@@ -73,7 +73,7 @@ public partial class FinlandBusinessIdValidator : IEnterpriseValidator
         int lastDigit = digits[7] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

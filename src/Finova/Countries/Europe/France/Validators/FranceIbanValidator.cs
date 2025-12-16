@@ -22,19 +22,19 @@ public class FranceIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != FranceIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {FranceIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, FranceIbanLength, normalized.Length));
         }
 
         if (!normalized.StartsWith(FranceCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected FR.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidFranceCountryCode);
         }
 
         // Indices in normalized string: Bank(4..9), Branch(9..14)
@@ -42,13 +42,13 @@ public class FranceIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "France Bank/Branch code must be digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.FranceBankBranchCodeMustBeDigits);
             }
         }
 
         if (!char.IsDigit(normalized[25]) || !char.IsDigit(normalized[26]))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "France RIB Key must be digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.FranceRibKeyMustBeDigits);
         }
 
         // Extract parts
@@ -59,12 +59,12 @@ public class FranceIbanValidator : IIbanValidator
 
         if (!ValidateRibKey(bankCode, branchCode, accountNumber, ribKey))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid RIB Key.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidRibKey);
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 
     /// <summary>

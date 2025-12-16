@@ -14,19 +14,19 @@ public class SwedenPaymentReferenceValidator : IPaymentReferenceValidator
     {
         if (string.IsNullOrWhiteSpace(reference))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Reference cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         return SwedenPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Swedish OCR reference.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSwedishOcrReference);
     }
 
     public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
     {
         if (format != PaymentReferenceFormat.LocalSweden)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by SwedenPaymentReferenceValidator.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.UnsupportedFormat);
         }
         return Validate(reference);
     }

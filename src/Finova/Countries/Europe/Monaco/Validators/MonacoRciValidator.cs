@@ -31,7 +31,7 @@ public partial class MonacoRciValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // Remove spaces
@@ -43,7 +43,7 @@ public partial class MonacoRciValidator : IEnterpriseValidator
 
         if (!RciRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid RCI format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidMonacoRciFormat);
         }
 
         return ValidationResult.Success();

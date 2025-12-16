@@ -27,13 +27,13 @@ public class AzerbaijanVoenValidator : IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VOEN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // Additional check for Azerbaijan VOEN: Not all digits same
         if (normalized.Distinct().Count() == 1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "VOEN cannot consist of all same digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidAzerbaijanVoenFormatSameDigits);
         }
 
         return AzerbaijanVatValidator.Validate(normalized);

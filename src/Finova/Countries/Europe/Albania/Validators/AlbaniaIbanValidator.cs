@@ -28,19 +28,19 @@ public class AlbaniaIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.IbanEmpty);
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != AlbaniaIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {AlbaniaIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidIbanLength, AlbaniaIbanLength, normalized.Length));
         }
 
         if (!normalized.StartsWith(AlbaniaCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected AL.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, string.Format(ValidationMessages.InvalidCountryCodeExpected, "AL"));
         }
 
         // Structure Validation:
@@ -49,7 +49,7 @@ public class AlbaniaIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Bank code must be numeric.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AlbaniaIbanInvalidBankCode);
             }
         }
 
@@ -58,14 +58,14 @@ public class AlbaniaIbanValidator : IIbanValidator
         {
             if (!char.IsDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Branch code must be numeric.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AlbaniaIbanInvalidBranchCode);
             }
         }
 
         // 3. Control Character (Pos 11): 1 alphanumeric character (usually check digit for BBAN, but part of IBAN structure)
         if (!char.IsLetterOrDigit(normalized[11]))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Control character must be alphanumeric.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AlbaniaIbanInvalidControlChar);
         }
 
         // 4. Account Number (Pos 12-28): 16 alphanumeric characters
@@ -73,12 +73,12 @@ public class AlbaniaIbanValidator : IIbanValidator
         {
             if (!char.IsLetterOrDigit(normalized[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Account number must be alphanumeric.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AlbaniaIbanInvalidAccount);
             }
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 }

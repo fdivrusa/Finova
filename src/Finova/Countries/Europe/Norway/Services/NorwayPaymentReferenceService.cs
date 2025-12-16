@@ -84,14 +84,14 @@ public partial class NorwayPaymentReferenceService : IsoPaymentReferenceGenerato
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, Core.Common.ValidationMessages.InputCannotBeEmpty);
         }
 
         var digits = DigitsOnlyRegex().Replace(communication, "");
 
         if (digits.Length < 3 || digits.Length > 25)
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, "Norwegian KID reference must be between 3 and 25 digits.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, Core.Common.ValidationMessages.InvalidNorwayKidLength);
         }
 
         var data = digits[..^1];
@@ -108,7 +108,7 @@ public partial class NorwayPaymentReferenceService : IsoPaymentReferenceGenerato
         var mod11Digit = CalculateMod11(data);
         return (mod11Digit != "-" && checkDigitStr == mod11Digit)
             ? Core.Common.ValidationResult.Success()
-            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, "Invalid check digits (neither Mod10 nor Mod11 matched).");
+            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCheckDigitsMod10Mod11);
     }
 
     private static int CalculateLuhn(string data)

@@ -29,19 +29,19 @@ public partial class FranceSirenValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "SIREN number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.FranceSirenEmpty);
         }
 
         var normalized = number.Trim().Replace(" ", "").Replace(".", "");
 
         if (!SirenRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid format. Expected 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.FranceSirenInvalidFormat);
         }
 
         if (!LuhnCheck(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum (Luhn).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.FranceSirenInvalidChecksum);
         }
 
         return ValidationResult.Success();

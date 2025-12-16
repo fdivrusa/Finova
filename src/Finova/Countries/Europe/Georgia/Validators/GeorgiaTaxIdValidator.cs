@@ -28,7 +28,7 @@ public partial class GeorgiaTaxIdValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.EnterpriseNumberCannotBeEmpty);
         }
 
         // Remove "GE" prefix if present and spaces
@@ -42,7 +42,7 @@ public partial class GeorgiaTaxIdValidator : IEnterpriseValidator
 
         if (digits.Length != 9)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Tax ID must be 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidGeorgiaTaxIdLength);
         }
 
         // Weights: [1, 2, 3, 4, 5, 6, 7, 8]
@@ -64,13 +64,13 @@ public partial class GeorgiaTaxIdValidator : IEnterpriseValidator
         else // remainder == 10
         {
             // If Remainder == 10, Number is invalid (or requires fallback, assume Invalid for standard entities).
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum (Remainder 10).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidGeorgiaTaxIdChecksumRemainder10);
         }
 
         int lastDigit = digits[8] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

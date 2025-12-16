@@ -23,7 +23,7 @@ public partial class GreeceVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -34,7 +34,7 @@ public partial class GreeceVatValidator : IVatValidator
 
         if (cleaned.Length != 9 || !long.TryParse(cleaned, out _))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Greece VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidGreeceVatFormat);
         }
 
         // Checksum Validation (Powers of 2 Mod 11)
@@ -49,7 +49,7 @@ public partial class GreeceVatValidator : IVatValidator
         int lastDigit = cleaned[8] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Greece VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidGreeceVatChecksum);
         }
 
         return ValidationResult.Success();

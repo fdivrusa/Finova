@@ -22,14 +22,14 @@ public partial class PolandNipValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = number.ToUpperInvariant().Replace("PL", "").Replace("-", "").Replace(" ", "");
 
         if (!NipRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Poland NIP format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidPolandNipFormat);
         }
 
         int sum = ChecksumHelper.CalculateWeightedSum(cleaned[..9], Weights);
@@ -37,12 +37,12 @@ public partial class PolandNipValidator : IEnterpriseValidator
 
         if (remainder == 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Poland NIP checksum (forbidden remainder).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidPolandNipChecksumForbidden);
         }
 
         if (remainder != (cleaned[9] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Poland NIP checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidPolandNipChecksum);
         }
 
         return ValidationResult.Success();

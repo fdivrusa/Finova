@@ -25,12 +25,7 @@ public class GeorgiaIbanParserTests
 
         var georgiaDetails = (GeorgiaIbanDetails)details!;
         georgiaDetails.CountryCode.Should().Be("GE");
-        georgiaDetails.BankisKodi.Should().Be("29"); // Wait, GE63 29NB ... Bank Code is 2 chars.
-        // Let's recheck the parser.
-        // var bankisKodi = validIban.Substring(4, 2);
-        // IBAN: GE63 29NB ...
-        // Indices: 0123 4567
-        // 4,2 is "29". Correct.
+        georgiaDetails.BankisKodi.Should().Be("29");
         georgiaDetails.AngarishisNomeri.Should().Be("NB00000001019049");
     }
 

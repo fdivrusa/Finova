@@ -31,7 +31,7 @@ public partial class ItalyCodiceFiscaleValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Input cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = Normalize(number);
@@ -47,7 +47,7 @@ public partial class ItalyCodiceFiscaleValidator : IEnterpriseValidator
         }
         else
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid length. Expected 16 (Codice Fiscale) or 11 (Partita IVA) characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidItalianIdentifierLength);
         }
     }
 
@@ -55,7 +55,7 @@ public partial class ItalyCodiceFiscaleValidator : IEnterpriseValidator
     {
         if (!CodiceFiscaleRegex().IsMatch(cf))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Codice Fiscale format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidCodiceFiscaleFormat);
         }
 
         // Checksum calculation
@@ -83,20 +83,20 @@ public partial class ItalyCodiceFiscaleValidator : IEnterpriseValidator
 
         return cf[15] == checkChar
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid Codice Fiscale check character.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCodiceFiscaleCheckDigit);
     }
 
     private static ValidationResult ValidatePartitaIva(string piva)
     {
         if (!PartitaIvaRegex().IsMatch(piva))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Partita IVA format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidPartitaIvaFormat);
         }
 
         // Luhn Algorithm (standard for Partita IVA)
         return ChecksumHelper.ValidateLuhn(piva)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid Partita IVA check digit.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidPartitaIvaCheckDigit);
     }
 
     private static int GetOddValue(char c)

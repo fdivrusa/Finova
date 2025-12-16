@@ -18,7 +18,7 @@ public class FranceVatValidator : IVatValidator
     {
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = vat.Trim().ToUpperInvariant();
@@ -31,7 +31,7 @@ public class FranceVatValidator : IVatValidator
             }
             else
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid format. Expected FR prefix or 11 digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidFranceVatFormatPrefixOrDigits);
             }
         }
         else
@@ -43,12 +43,12 @@ public class FranceVatValidator : IVatValidator
 
         if (normalized.Length != 11)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected 11 digits, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, 11, normalized.Length));
         }
 
         if (!long.TryParse(normalized, out _))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "VAT number must contain only digits after prefix.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.FranceVatDigitsAfterPrefix);
         }
 
         var keyStr = normalized.Substring(0, 2);
@@ -56,25 +56,25 @@ public class FranceVatValidator : IVatValidator
 
         if (!int.TryParse(keyStr, out int key))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid numeric format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidNumericFormat);
         }
 
         int sirenMod97 = ChecksumHelper.CalculateModulo97(sirenStr);
         if (sirenMod97 == -1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid SIREN format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSirenFormat);
         }
 
         int calculatedKey = (12 + 3 * sirenMod97) % 97;
 
         if (key != calculatedKey)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum (Key).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksumKey);
         }
 
         if (!ChecksumHelper.ValidateLuhn(sirenStr))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum (SIREN Luhn).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksumSirenLuhn);
         }
 
         return ValidationResult.Success();

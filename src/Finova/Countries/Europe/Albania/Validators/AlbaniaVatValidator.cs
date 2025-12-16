@@ -15,7 +15,7 @@ public partial class AlbaniaVatValidator : IVatValidator
     private const string CountryCodePrefix = "AL";
     private const int VatLength = 10;
 
-    // Regex stricte : 1 Lettre + 8 Chiffres + 1 Lettre
+    // Strict Regex: 1 Letter + 8 Digits + 1 Letter
     [GeneratedRegex(@"^[A-Z]\d{8}[A-Z]$")]
     private static partial Regex AlbaniaVatRegex();
 
@@ -31,7 +31,7 @@ public partial class AlbaniaVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = vat.Trim().ToUpperInvariant();
@@ -43,13 +43,13 @@ public partial class AlbaniaVatValidator : IVatValidator
 
         if (normalized.Length != VatLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {VatLength} characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedX, VatLength));
         }
 
-        // Format Check (Suffisant pour l'Albanie)
+        // Format Check (Sufficient for Albania)
         if (!AlbaniaVatRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid format. Expected Letter + 8 digits + Letter.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidVatFormat, "Albania"));
         }
 
         return ValidationResult.Success();

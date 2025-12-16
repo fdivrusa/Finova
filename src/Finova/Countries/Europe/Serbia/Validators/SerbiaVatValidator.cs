@@ -28,7 +28,7 @@ public partial class SerbiaVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -39,12 +39,12 @@ public partial class SerbiaVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(VatPrefix + cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Serbia VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSerbiaVatFormat);
         }
 
         if (!ChecksumHelper.ValidateISO7064Mod11_10(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Serbia VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSerbiaVatChecksum);
         }
 
         return ValidationResult.Success();

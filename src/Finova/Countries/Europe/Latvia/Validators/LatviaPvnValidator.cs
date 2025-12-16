@@ -28,7 +28,7 @@ public partial class LatviaPvnValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.EnterpriseNumberCannotBeEmpty);
         }
 
         // Remove "LV" prefix if present and spaces
@@ -42,7 +42,7 @@ public partial class LatviaPvnValidator : IEnterpriseValidator
 
         if (digits.Length != 11)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "PVN must be 11 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidLatviaPvnLength);
         }
 
         // Weights: [9, 1, 4, 8, 3, 10, 2, 5, 7, 6] applied to first 10 digits.
@@ -111,7 +111,7 @@ public partial class LatviaPvnValidator : IEnterpriseValidator
             // Special case: maybe -1 maps to something?
             // But if checkDigit is -1 or 10, it will never match lastDigit (0-9).
             // So this correctly invalidates those cases.
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

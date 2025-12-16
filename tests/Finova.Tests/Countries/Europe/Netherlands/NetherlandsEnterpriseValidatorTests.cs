@@ -23,24 +23,12 @@ public class NetherlandsEnterpriseValidatorTests
         // Valid Mod 97 example
         // Need to construct one.
         // 9 digits + B + 2 digits.
-        // Let's try to find a known valid one or construct it.
-        // 000000000B01 -> 0000000001101
-        // 1101 % 97 = 34. Not 1.
-
-        // Let's rely on the logic being correct as per ISO 7064 Mod 97-10.
-        // I'll skip constructing a complex one manually here unless I have a generator.
-        // But I should test the "Elfproef" fallback.
     }
 
     [Fact]
     public void Btw_Validate_WithValidElfproef_ReturnsTrue()
     {
         // Valid Elfproef (Old format)
-        // 9 digits. But format check requires 9 digits + B + 2 digits.
-        // Wait, the format check `^\d{9}B\d{2}$` enforces the new format structure.
-        // Does the old format also adhere to this structure?
-        // Yes, old VAT numbers were converted to new format by adding B01 usually?
-        // Or does the validator accept just 9 digits?
         // The Regex `^\d{9}B\d{2}$` is strict.
         // So input MUST look like `123456789B01`.
         // The Elfproef check extracts the first 9 digits `123456789` and validates them.

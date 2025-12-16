@@ -14,19 +14,19 @@ public class NorwayPaymentReferenceValidator : IPaymentReferenceValidator
     {
         if (string.IsNullOrWhiteSpace(reference))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Reference cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         return NorwayPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Norwegian KID reference.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidNorwayKidReference);
     }
 
     public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
     {
         if (format != PaymentReferenceFormat.LocalNorway)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by NorwayPaymentReferenceValidator.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.UnsupportedFormat, format));
         }
         return Validate(reference);
     }

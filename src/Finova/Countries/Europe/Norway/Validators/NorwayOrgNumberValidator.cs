@@ -22,14 +22,14 @@ public partial class NorwayOrgNumberValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = number.ToUpperInvariant().Replace("NO", "").Replace(" ", "");
 
         if (!OrgRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Norway Org Number format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidNorwayOrgNumberFormat);
         }
 
         int sum = ChecksumHelper.CalculateWeightedSum(cleaned[..8], Weights);
@@ -43,12 +43,12 @@ public partial class NorwayOrgNumberValidator : IEnterpriseValidator
 
         if (checkDigit == -1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Norway Org Number checksum (forbidden remainder).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNorwayOrgNumberChecksumForbidden);
         }
 
         if (checkDigit != (cleaned[8] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Norway Org Number checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNorwayOrgNumberChecksum);
         }
 
         return ValidationResult.Success();

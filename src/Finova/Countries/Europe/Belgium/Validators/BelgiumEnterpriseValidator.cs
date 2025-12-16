@@ -32,7 +32,7 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(kbo))
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, Core.Common.ValidationMessages.InputCannotBeEmpty);
         }
 
         // Extract only digits
@@ -46,13 +46,13 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
 
         if (digits.Length != KboLength)
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, "Enterprise number must be 10 digits (or 9 digits for old format).");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, Core.Common.ValidationMessages.InvalidBelgiumEnterpriseLength);
         }
 
         // Must start with 0 or 1
         if (digits[0] != '0' && digits[0] != '1')
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidFormat, "Enterprise number must start with 0 or 1.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidFormat, Core.Common.ValidationMessages.InvalidBelgiumEnterpriseStart);
         }
 
         // Extract the first 8 digits (main number) and last 2 digits (check digits)
@@ -61,7 +61,7 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
 
         if (!int.TryParse(checkDigitStr, out var providedCheckDigit))
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidFormat, "Check digits must be numeric.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidFormat, Core.Common.ValidationMessages.InvalidBelgiumEnterpriseCheckDigitsNumeric);
         }
 
         // Calculate modulo 97 on the first 8 digits
@@ -72,7 +72,7 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
 
         return expectedCheckDigit == providedCheckDigit
             ? Core.Common.ValidationResult.Success()
-            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, Core.Common.ValidationMessages.InvalidCheckDigit);
     }
 
     /// <summary>

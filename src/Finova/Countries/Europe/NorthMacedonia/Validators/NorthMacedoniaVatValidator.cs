@@ -24,7 +24,7 @@ public partial class NorthMacedoniaVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -35,7 +35,7 @@ public partial class NorthMacedoniaVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid North Macedonia VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidNorthMacedoniaVatFormat);
         }
 
         int sum = ChecksumHelper.CalculateWeightedSum(cleaned[..12], Weights);
@@ -44,13 +44,13 @@ public partial class NorthMacedoniaVatValidator : IVatValidator
 
         if (checkDigit == 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid North Macedonia VAT checksum (Check digit 10).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNorthMacedoniaVatChecksumForbidden);
         }
         if (checkDigit == 11) checkDigit = 0;
 
         if (checkDigit != (cleaned[12] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid North Macedonia VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNorthMacedoniaVatChecksum);
         }
 
         return ValidationResult.Success();

@@ -16,7 +16,7 @@ public class PaymentCardValidator : IPaymentCardValidator
     {
         if (string.IsNullOrWhiteSpace(cardNumber))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Card number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // Check for invalid characters (allow spaces and dashes)
@@ -24,7 +24,7 @@ public class PaymentCardValidator : IPaymentCardValidator
         {
             if (!char.IsDigit(c) && !char.IsWhiteSpace(c) && c != '-')
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Card number contains invalid characters.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidCardNumberFormat);
             }
         }
 
@@ -32,7 +32,7 @@ public class PaymentCardValidator : IPaymentCardValidator
 
         return ChecksumHelper.ValidateLuhn(cleanNumber)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid card number (Luhn check failed).");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidCardNumberLuhn);
     }
 
     /// <summary>
@@ -100,6 +100,30 @@ public class PaymentCardValidator : IPaymentCardValidator
             return PaymentCardBrand.Maestro;
         }
 
+        // 9. RuPay: 60, 6521, 6522
+        if (clean.StartsWith("60") || clean.StartsWith("6521") || clean.StartsWith("6522"))
+        {
+            return PaymentCardBrand.RuPay;
+        }
+
+        // 10. Mir: 2200-2204
+        if (IsMir(clean))
+        {
+            return PaymentCardBrand.Mir;
+        }
+
+        // 11. Verve: 506099-506198, 650002-650027
+        if (IsVerve(clean))
+        {
+            return PaymentCardBrand.Verve;
+        }
+
+        // 12. Troy: 9792
+        if (clean.StartsWith("9792"))
+        {
+            return PaymentCardBrand.Troy;
+        }
+
         return PaymentCardBrand.Unknown;
     }
 
@@ -110,12 +134,12 @@ public class PaymentCardValidator : IPaymentCardValidator
     {
         if (string.IsNullOrWhiteSpace(cvv))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "CVV cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         if (!IsDigitsOnly(cvv))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "CVV must contain only digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidCvvDigits);
         }
 
         bool isValidLength = brand switch
@@ -132,7 +156,7 @@ public class PaymentCardValidator : IPaymentCardValidator
 
         return isValidLength
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid CVV length for {brand}.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidCvvLength, brand));
     }
 
     /// <summary>
@@ -142,7 +166,7 @@ public class PaymentCardValidator : IPaymentCardValidator
     {
         if (month < 1 || month > 12)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid month.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidMonth);
         }
 
         var now = DateTime.UtcNow;
@@ -155,12 +179,12 @@ public class PaymentCardValidator : IPaymentCardValidator
 
         if (year < now.Year || (year == now.Year && month < now.Month))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Card has expired.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CardExpired);
         }
 
         if (year > now.Year + 20)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Expiration year is too far in the future.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CardYearTooFar);
         }
 
         return ValidationResult.Success();
@@ -170,59 +194,63 @@ public class PaymentCardValidator : IPaymentCardValidator
 
     #region Private Helpers
 
-    private static bool IsMastercard(string s)
+    private static bool IsMastercard(string number)
     {
-        int firstTwo = int.Parse(s[..2]);
-        if (firstTwo >= 51 && firstTwo <= 55)
-        {
-            return true;
-        }
+        // Range 51-55
+        int firstTwo = int.Parse(number.Substring(0, 2));
+        if (firstTwo >= 51 && firstTwo <= 55) return true;
 
-        int firstFour = int.Parse(s[..4]);
-        if (firstFour >= 2221 && firstFour <= 2720)
-        {
-            return true;
-        }
-
-        return false;
+        // Range 2221-2720
+        int firstFour = int.Parse(number.Substring(0, 4));
+        return firstFour >= 2221 && firstFour <= 2720;
     }
 
-    private static bool IsDiscover(string s)
+    private static bool IsDiscover(string number)
     {
-        if (s.StartsWith("6011") || s.StartsWith("65"))
-        {
-            return true;
-        }
+        if (number.StartsWith("6011") || number.StartsWith("65")) return true;
 
-        int firstThree = int.Parse(s[..3]);
-        if (firstThree >= 644 && firstThree <= 649)
-        {
-            return true;
-        }
+        int firstThree = int.Parse(number.Substring(0, 3));
+        if (firstThree >= 644 && firstThree <= 649) return true;
 
-        int firstSix = int.Parse(s[..6]);
-        if (firstSix >= 622126 && firstSix <= 622925)
-        {
-            return true;
-        }
-
-        return false;
+        int firstSix = int.Parse(number.Substring(0, 6));
+        return firstSix >= 622126 && firstSix <= 622925;
     }
 
-    private static bool IsJcb(string s)
+    private static bool IsJcb(string number)
     {
-        int firstFour = int.Parse(s[..4]);
+        int firstFour = int.Parse(number.Substring(0, 4));
         return firstFour >= 3528 && firstFour <= 3589;
     }
 
-    private static bool IsDiners(string s)
+    private static bool IsDiners(string number)
     {
-        if (s.StartsWith("36") || s.StartsWith("38") || s.StartsWith("39"))
-        {
-            return true;
-        }
-        int firstThree = int.Parse(s[..3]);
-        return (firstThree >= 300 && firstThree <= 305) || firstThree == 309;
+        if (number.Length < 3) return false;
+
+        int firstThree = int.Parse(number.Substring(0, 3));
+        if (firstThree >= 300 && firstThree <= 305) return true;
+        if (firstThree == 309) return true;
+
+        if (number.StartsWith("36") || number.StartsWith("38") || number.StartsWith("39")) return true;
+
+        return false;
+    }
+
+    private static bool IsMir(string number)
+    {
+        if (number.Length < 4) return false;
+        int firstFour = int.Parse(number.Substring(0, 4));
+        return firstFour >= 2200 && firstFour <= 2204;
+    }
+
+    private static bool IsVerve(string number)
+    {
+        if (number.Length < 6) return false;
+        int firstSix = int.Parse(number.Substring(0, 6));
+
+        if (firstSix >= 506099 && firstSix <= 506198) return true;
+        if (firstSix >= 650002 && firstSix <= 650027) return true;
+
+        return false;
     }
 
     private static bool IsDigitsOnly(string s)

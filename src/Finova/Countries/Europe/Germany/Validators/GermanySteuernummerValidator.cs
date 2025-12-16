@@ -31,14 +31,14 @@ public partial class GermanySteuernummerValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Steuernummer cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.SteuernummerCannotBeEmpty);
         }
 
         var normalized = Normalize(number);
 
         if (!UnifiedFormatRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Steuernummer must be 13 digits (Unified Federal Format).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.SteuernummerMustBe13Digits);
         }
 
         // Note: Full checksum validation for the unified format is complex and depends on the first 4 digits (Finanzamt).

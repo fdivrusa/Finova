@@ -54,15 +54,10 @@ public partial class SloveniaPaymentReferenceService : IsoPaymentReferenceGenera
 
         if (string.IsNullOrEmpty(cleanRef))
         {
-            throw new ArgumentException("Reference cannot be empty.");
+            throw new ArgumentException(ValidationMessages.InputCannotBeEmpty);
         }
 
         // Calculate Mod 97 on the reference
-        // We assume the check digits are appended to the reference.
-        // Similar to Belgian OGM but without the +++ formatting and fixed length?
-        // Or maybe we should pad it?
-        // Let's assume standard Mod 97 calculation on the number.
-
         var mod = Modulo97Helper.Calculate(cleanRef);
         var checkDigitValue = mod == 0 ? 97 : mod;
         var checkDigits = checkDigitValue.ToString("00");
@@ -74,20 +69,20 @@ public partial class SloveniaPaymentReferenceService : IsoPaymentReferenceGenera
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // Must start with SI12
         if (!communication.StartsWith("SI12"))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Slovenian reference must start with SI12.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSloveniaReferencePrefix);
         }
 
         var digits = DigitsOnlyRegex().Replace(communication.Substring(4), ""); // Remove SI12 prefix
 
         if (digits.Length < 3) // At least 1 digit data + 2 check digits
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Slovenian reference is too short.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidSloveniaReferenceLength);
         }
 
         var data = digits[..^2];
@@ -98,7 +93,7 @@ public partial class SloveniaPaymentReferenceService : IsoPaymentReferenceGenera
 
         return checkDigitStr == expectedCheckDigitValue.ToString("00")
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCheckDigit);
     }
 }
 

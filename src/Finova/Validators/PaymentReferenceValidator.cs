@@ -6,6 +6,9 @@ using Finova.Countries.Europe.Norway.Services;
 using Finova.Countries.Europe.Slovenia.Services;
 using Finova.Countries.Europe.Sweden.Services;
 using Finova.Countries.Europe.Switzerland.Services;
+using Finova.Countries.Europe.Denmark.Services;
+using Finova.Countries.Europe.Italy.Services;
+using Finova.Countries.Europe.Portugal.Services;
 
 namespace Finova.Validators;
 
@@ -13,6 +16,15 @@ namespace Finova.Validators;
 /// Composite validator for payment references.
 /// Validates both ISO 11649 (RF) references and local country-specific formats.
 /// </summary>
+/// <example>
+/// <code>
+/// // Validate ISO RF
+/// var result = PaymentReferenceValidator.Validate("RF18123456789012");
+///
+/// // Validate Belgian OGM
+/// var result = PaymentReferenceValidator.Validate("+++123/4567/89012+++", PaymentReferenceFormat.LocalBelgian);
+/// </code>
+/// </example>
 public class PaymentReferenceValidator : IPaymentReferenceValidator
 {
     #region Static Methods (High-Performance)
@@ -29,7 +41,7 @@ public class PaymentReferenceValidator : IPaymentReferenceValidator
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         return format switch
@@ -41,6 +53,9 @@ public class PaymentReferenceValidator : IPaymentReferenceValidator
             PaymentReferenceFormat.LocalSweden => SwedenPaymentReferenceService.ValidateStatic(communication),
             PaymentReferenceFormat.LocalSwitzerland => SwitzerlandPaymentReferenceService.ValidateStatic(communication),
             PaymentReferenceFormat.LocalSlovenia => SloveniaPaymentReferenceService.ValidateStatic(communication),
+            PaymentReferenceFormat.LocalDenmark => DenmarkPaymentReferenceService.ValidateStatic(communication),
+            PaymentReferenceFormat.LocalItaly => ItalyPaymentReferenceService.ValidateStatic(communication),
+            PaymentReferenceFormat.LocalPortugal => PortugalPaymentReferenceService.ValidateStatic(communication),
             _ => ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Unsupported format: {format}")
         };
     }
@@ -90,6 +105,21 @@ public class PaymentReferenceValidator : IPaymentReferenceValidator
         if (SloveniaPaymentReferenceService.ValidateStatic(reference).IsValid)
         {
             return CreateDetails(reference, PaymentReferenceFormat.LocalSlovenia);
+        }
+
+        if (DenmarkPaymentReferenceService.ValidateStatic(reference).IsValid)
+        {
+            return CreateDetails(reference, PaymentReferenceFormat.LocalDenmark);
+        }
+
+        if (ItalyPaymentReferenceService.ValidateStatic(reference).IsValid)
+        {
+            return CreateDetails(reference, PaymentReferenceFormat.LocalItaly);
+        }
+
+        if (PortugalPaymentReferenceService.ValidateStatic(reference).IsValid)
+        {
+            return CreateDetails(reference, PaymentReferenceFormat.LocalPortugal);
         }
 
         return null;

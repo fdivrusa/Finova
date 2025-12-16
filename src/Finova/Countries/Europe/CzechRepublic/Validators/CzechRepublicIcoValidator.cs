@@ -30,12 +30,12 @@ public partial class CzechRepublicIcoValidator : IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IČO cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.CzechRepublicIcoEmpty);
         }
 
         if (!IcoRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Czech Republic IČO format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CzechRepublicIcoInvalidFormat);
         }
 
         // Checksum Validation
@@ -50,7 +50,7 @@ public partial class CzechRepublicIcoValidator : IEnterpriseValidator
 
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Czech Republic IČO checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.CzechRepublicIcoInvalidChecksum);
         }
 
         return ValidationResult.Success();

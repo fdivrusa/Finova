@@ -32,12 +32,12 @@ public partial class EstoniaRegistrikoodValidator : IEnterpriseValidator
 
         if (string.IsNullOrWhiteSpace(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Registrikood cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.RegistrikoodCannotBeEmpty);
         }
 
         if (!RegistrikoodRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Estonia Registrikood format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidEstoniaRegistrikoodFormat);
         }
 
         // Checksum Validation (Double Pass)
@@ -73,7 +73,7 @@ public partial class EstoniaRegistrikoodValidator : IEnterpriseValidator
 
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Estonia Registrikood checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidEstoniaRegistrikoodChecksum);
         }
 
         return ValidationResult.Success();

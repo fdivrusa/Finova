@@ -61,7 +61,7 @@ public partial class BelgiumPaymentReferenceService : IPaymentReferenceGenerator
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
@@ -95,7 +95,7 @@ public partial class BelgiumPaymentReferenceService : IPaymentReferenceGenerator
         var paddedRef = cleanRef.PadLeft(10, '0');
 
         // Calculate Modulo 97 on the 10 data digits
-        var mod = Modulo97Helper.Calculate(paddedRef);
+        var mod = ChecksumHelper.CalculateModulo97(paddedRef);
 
         // OGM rule: Check digit is 97 if remainder is 0, otherwise the remainder itself.
         var checkDigitValue = mod == 0 ? 97 : mod;
@@ -110,32 +110,71 @@ public partial class BelgiumPaymentReferenceService : IPaymentReferenceGenerator
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var digits = DigitsOnlyRegex().Replace(communication, "");
 
         if (digits.Length != OgmTotalLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "OGM reference must be 12 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedX, OgmTotalLength));
         }
 
         var data = digits[..10];
         var checkDigitStr = digits.Substring(10, 2);
 
         // Calculate expected check digit
-        var calculatedMod = Modulo97Helper.Calculate(data);
+        var calculatedMod = ChecksumHelper.CalculateModulo97(data);
         var expectedCheckDigit = calculatedMod == 0 ? 97 : calculatedMod;
 
         if (int.TryParse(checkDigitStr, out var actualCheckDigit))
         {
             return expectedCheckDigit == actualCheckDigit
                 ? ValidationResult.Success()
-                : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+                : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCheckDigit);
         }
 
-        return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Check digits must be numeric.");
+        return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidCheckDigit);
     }
 
     #endregion
+
+    public PaymentReferenceDetails Parse(string reference)
+    {
+        var validation = ValidateStatic(reference);
+        if (!validation.IsValid)
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = string.Empty,
+                Format = PaymentReferenceFormat.Unknown,
+                IsValid = false
+            };
+        }
+
+        if (reference.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = IsoReferenceHelper.Parse(reference),
+                Format = PaymentReferenceFormat.IsoRf,
+                IsValid = true
+            };
+        }
+
+        // OGM
+        var digits = DigitsOnlyRegex().Replace(reference, "");
+        // OGM is 12 digits: 10 data + 2 check
+        var data = digits.Substring(0, 10);
+
+        return new PaymentReferenceDetails
+        {
+            Reference = reference,
+            Content = data,
+            Format = PaymentReferenceFormat.LocalBelgian,
+            IsValid = true
+        };
+    }
 }
