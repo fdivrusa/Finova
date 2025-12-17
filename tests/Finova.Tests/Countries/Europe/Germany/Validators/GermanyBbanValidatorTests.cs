@@ -32,8 +32,11 @@ public class GermanyBbanValidatorTests
     }
 
     [Theory]
-    [InlineData("37040044 0532013099")] // Invalid Checksum (hypothetical, Germany has complex rules but basic check)
-    [InlineData("ABC")]                 // Invalid Length
+    [InlineData("ABC")]                    // Invalid Length - too short
+    [InlineData("37040044053201300")]      // Invalid Length - 17 digits (missing one)
+    [InlineData("3704004405320130000")]    // Invalid Length - 19 digits (one extra)
+    [InlineData("3704004405320130A0")]     // Invalid Format - contains letter
+    [InlineData("370400X40532013000")]     // Invalid Format - contains letter in middle
     public void Validate_ShouldReturnFailure_ForInvalidBban(string bban)
     {
         // Act
