@@ -40,7 +40,7 @@ public class IbanService(IIbanValidator? validator = null) : IIbanService
         {
             return ValidationResult.Success();
         }
-        return ValidationResult.Failure(ValidationErrorCode.InvalidIban, "Invalid IBAN.");
+        return ValidationResult.Failure(ValidationErrorCode.InvalidIban, ValidationMessages.InvalidIban);
     }
 
     /// <summary>

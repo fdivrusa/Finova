@@ -14,19 +14,19 @@ public static class IsoReferenceValidator
     {
         if (string.IsNullOrWhiteSpace(reference))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Reference cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleanReference = reference.Replace(" ", "").ToUpperInvariant();
 
         if (!cleanReference.StartsWith(IsoPrefix))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Reference must start with 'RF'.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIsoReferencePrefix);
         }
 
         if (cleanReference.Length < 6)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Reference length is too short.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidIsoReferenceLength);
         }
 
         var bodyAndPrefix = string.Concat(cleanReference.AsSpan(4), cleanReference.AsSpan(0, 4));
@@ -37,7 +37,7 @@ public static class IsoReferenceValidator
 
         return modResult == 1
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCheckDigit);
     }
 
     private static string ConvertLettersToDigits(string input)

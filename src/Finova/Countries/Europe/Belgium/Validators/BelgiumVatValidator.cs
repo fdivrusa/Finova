@@ -36,7 +36,7 @@ public partial class BelgiumVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // Remove "BE" prefix if present
@@ -53,7 +53,7 @@ public partial class BelgiumVatValidator : IVatValidator
         }
 
         // Delegate to Enterprise Number validator (VAT = KBO/BCE)
-        return BelgiumEnterpriseValidator.Validate(cleaned);
+        return BelgiumEnterpriseValidator.ValidateEnterpriseNumber(cleaned);
     }
 
     /// <summary>

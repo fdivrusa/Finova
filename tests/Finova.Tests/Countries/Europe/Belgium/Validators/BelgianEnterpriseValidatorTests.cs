@@ -14,7 +14,7 @@ public class BelgianEnterpriseValidatorTests
     public void IsValid_WithValidKboNumbers_ReturnsTrue(string kbo)
     {
         // Act
-        var result = BelgiumEnterpriseValidator.Validate(kbo);
+        var result = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(kbo);
         result.IsValid.Should().BeTrue();
     }
 
@@ -26,7 +26,7 @@ public class BelgianEnterpriseValidatorTests
     public void IsValid_WithFormattedKboNumbers_ReturnsTrue(string kbo)
     {
         // Act
-        var result = BelgiumEnterpriseValidator.Validate(kbo);
+        var result = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(kbo);
         result.IsValid.Should().BeTrue();
     }
 
@@ -44,7 +44,7 @@ public class BelgianEnterpriseValidatorTests
     public void IsValid_WithInvalidKboNumbers_ReturnsFalse(string? kbo)
     {
         // Act
-        var result = BelgiumEnterpriseValidator.Validate(kbo);
+        var result = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(kbo);
         result.IsValid.Should().BeFalse();
     }
 
@@ -138,7 +138,7 @@ public class BelgianEnterpriseValidatorTests
         var validKbo = baseNumber + checkDigits;
 
         // Act
-        var result = BelgiumEnterpriseValidator.Validate(validKbo);
+        var result = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(validKbo);
         result.IsValid.Should().BeTrue();
     }
 
@@ -153,7 +153,7 @@ public class BelgianEnterpriseValidatorTests
         var invalidKbo = baseNumber + incorrectCheckDigits.ToString("D2");
 
         // Act
-        var result = BelgiumEnterpriseValidator.Validate(invalidKbo);
+        var result = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(invalidKbo);
         result.IsValid.Should().BeFalse();
     }
 
@@ -166,7 +166,7 @@ public class BelgianEnterpriseValidatorTests
     public void IsValid_WithRealKboNumbers_ReturnsTrue(string kbo)
     {
         // Act
-        var result = BelgiumEnterpriseValidator.Validate(kbo);
+        var result = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(kbo);
         result.IsValid.Should().BeTrue();
     }
 
@@ -182,7 +182,7 @@ public class BelgianEnterpriseValidatorTests
         var kbo = "1019755159";
 
         // Act
-        var result = BelgiumEnterpriseValidator.Validate(kbo);
+        var result = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(kbo);
         result.IsValid.Should().BeTrue();
     }
 
@@ -194,7 +194,7 @@ public class BelgianEnterpriseValidatorTests
         var kbo = baseNumber + "97";
 
         // Act
-        var result = BelgiumEnterpriseValidator.Validate(kbo);
+        var result = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(kbo);
         result.IsValid.Should().BeTrue();
     }
 

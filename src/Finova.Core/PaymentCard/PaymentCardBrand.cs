@@ -10,5 +10,9 @@ public enum PaymentCardBrand
     JCB,
     DinersClub,
     Maestro,
-    ChinaUnionPay
+    ChinaUnionPay,
+    RuPay,
+    Mir,
+    Verve,
+    Troy
 }

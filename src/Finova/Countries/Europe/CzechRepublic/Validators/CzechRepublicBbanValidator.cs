@@ -1,0 +1,101 @@
+using Finova.Core.Common;
+using Finova.Core.Identifiers;
+
+namespace Finova.Countries.Europe.CzechRepublic.Validators;
+
+/// <summary>
+/// Validator for Czech BBAN (Basic Bank Account Number).
+/// </summary>
+public class CzechRepublicBbanValidator : IBbanValidator
+{
+    public string CountryCode => "CZ";
+    ValidationResult IValidator<string>.Validate(string? input) => Validate(input ?? "");
+
+    /// <summary>
+    /// Validates the Czech BBAN structure and checksum.
+    /// Format: 4 Bank + 6 Prefix + 10 Account (Total 20 digits).
+    /// Algorithm: Weighted Modulo 11 for Prefix and Account.
+    /// </summary>
+    /// <param name="bban">The BBAN string (20 digits).</param>
+    /// <returns>A ValidationResult indicating success or failure.</returns>
+    public static ValidationResult Validate(string? bban)
+    {
+        bban = InputSanitizer.Sanitize(bban);
+
+        if (string.IsNullOrWhiteSpace(bban))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.IbanEmpty);
+        }
+
+        if (bban.Length != 20)
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, 20, bban.Length));
+        }
+
+        // Ensure all characters are digits
+        foreach (char c in bban)
+        {
+            if (!char.IsDigit(c))
+            {
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Czech"));
+            }
+        }
+
+        // Extract parts
+        // Bank (4) - No checksum
+        // Prefix (6) - Mod 11
+        // Account (10) - Mod 11
+        ReadOnlySpan<char> bbanSpan = bban.AsSpan();
+        ReadOnlySpan<char> prefix = bbanSpan.Slice(4, 6);
+        ReadOnlySpan<char> accountNumber = bbanSpan.Slice(10, 10);
+
+        // Validate Prefix (only if not all zeros)
+        if (long.TryParse(prefix, out long prefixVal) && prefixVal > 0)
+        {
+            if (!ValidateCzechMod11(prefix, true))
+            {
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CzechRepublicIbanInvalidPrefixChecksum);
+            }
+        }
+
+        // Validate Account Number
+        if (!ValidateCzechMod11(accountNumber, false))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.CzechRepublicIbanInvalidAccountChecksum);
+        }
+
+        return ValidationResult.Success();
+    }
+
+    /// <summary>
+    /// Validates Czech Prefix or Account Number using Weighted Modulo 11.
+    /// Weights: 6, 3, 7, 9, 10, 5, 8, 4, 2, 1 (for 10 digits).
+    /// </summary>
+    private static bool ValidateCzechMod11(ReadOnlySpan<char> input, bool isPrefix)
+    {
+        // Full weights for 10 digits
+        ReadOnlySpan<int> weights = [6, 3, 7, 9, 10, 5, 8, 4, 2, 1];
+
+        int sum = 0;
+        int inputLength = input.Length;
+
+        // If checking prefix (6 digits), we align to the right of the weights array.
+        // Prefix corresponds to the last 6 positions of the weight array.
+        int weightStartIndex = isPrefix ? 4 : 0;
+
+        for (int i = 0; i < inputLength; i++)
+        {
+            int digit = input[i] - '0';
+            int weight = weights[weightStartIndex + i];
+            sum += digit * weight;
+        }
+
+        return sum % 11 == 0;
+    }
+
+    /// <inheritdoc/>
+    public string? Parse(string? input)
+    {
+        return Validate(input).IsValid ? input : null;
+    }
+}

@@ -50,25 +50,10 @@ public class SwitzerlandPaymentReferenceValidatorTests
         var reference = "210000000003139471430009017";
 
         // Act
-        var result = _validator.Validate(reference, PaymentReferenceFormat.LocalSwitzerland);
+        var result = _validator.Validate(reference);
 
         // Assert
         result.IsValid.Should().BeTrue();
-    }
-
-    [Fact]
-    public void Validate_WithUnsupportedFormat_ReturnsFailure()
-    {
-        // Arrange
-        var reference = "210000000003139471430009017";
-
-        // Act
-        var result = _validator.Validate(reference, PaymentReferenceFormat.LocalBelgian);
-
-        // Assert
-        result.IsValid.Should().BeFalse();
-        result.Errors.Should().ContainSingle()
-            .Which.Code.Should().Be(ValidationErrorCode.InvalidFormat);
     }
 
     [Theory]

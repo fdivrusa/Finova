@@ -7,6 +7,8 @@ namespace Finova.Tests.Countries.Europe.France.Validators;
 public class FranceSiretValidatorTests
 {
     [Theory]
+    [InlineData("12002701600357")]
+    [InlineData("120 027 016 00563")]
     [InlineData("73282932000074")] // Valid SIRET (Google France)
     public void Validate_ShouldReturnSuccess_ForValidSiret(string number)
     {

@@ -1,0 +1,1072 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="InputCannotBeEmpty" xml:space="preserve">
+    <value>Input cannot be empty.</value>
+  </data>
+  <data name="InvalidFormat" xml:space="preserve">
+    <value>Invalid format.</value>
+  </data>
+  <data name="InvalidChecksum" xml:space="preserve">
+    <value>Invalid checksum.</value>
+  </data>
+  <data name="InvalidLength" xml:space="preserve">
+    <value>Invalid length.</value>
+  </data>
+  <data name="InvalidCountryCode" xml:space="preserve">
+    <value>Invalid country code.</value>
+  </data>
+  <data name="UnsupportedCountry" xml:space="preserve">
+    <value>Country not supported.</value>
+  </data>
+  <data name="InvalidCheckDigit" xml:space="preserve">
+    <value>Invalid check digits.</value>
+  </data>
+  <data name="MustContainOnlyDigits" xml:space="preserve">
+    <value>Input must contain only digits.</value>
+  </data>
+  <data name="MustContainOnlyDigitsAndLetters" xml:space="preserve">
+    <value>Input must contain only digits and letters.</value>
+  </data>
+  <data name="InvalidLengthExpectedX" xml:space="preserve">
+    <value>Invalid length. Expected {0} characters.</value>
+  </data>
+  <data name="InvalidLengthExpectedXGotY" xml:space="preserve">
+    <value>Invalid length. Expected {0}, got {1}.</value>
+  </data>
+  <data name="InvalidVatFormat" xml:space="preserve">
+    <value>Invalid {0} VAT format.</value>
+  </data>
+  <data name="InvalidVatChecksum" xml:space="preserve">
+    <value>Invalid {0} VAT checksum.</value>
+  </data>
+  <data name="InvalidIbanLength" xml:space="preserve">
+    <value>Invalid length. Expected {0}, got {1}.</value>
+  </data>
+  <data name="InvalidIbanCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected {0}.</value>
+  </data>
+  <data name="InvalidIbanFormatDigits" xml:space="preserve">
+    <value>{0} IBAN must contain only digits after the country code.</value>
+  </data>
+  <data name="InvalidIbanFormatAlphanumeric" xml:space="preserve">
+    <value>{0} IBAN must contain only alphanumeric characters after the country code.</value>
+  </data>
+  <data name="InvalidCardNumberLuhn" xml:space="preserve">
+    <value>Invalid card number (Luhn check failed).</value>
+  </data>
+  <data name="InvalidCardNumberFormat" xml:space="preserve">
+    <value>Card number contains invalid characters.</value>
+  </data>
+  <data name="InvalidCvvDigits" xml:space="preserve">
+    <value>CVV must contain only digits.</value>
+  </data>
+  <data name="InvalidCvvLength" xml:space="preserve">
+    <value>Invalid CVV length for {0}.</value>
+  </data>
+  <data name="CardExpired" xml:space="preserve">
+    <value>Card has expired.</value>
+  </data>
+  <data name="CardYearTooFar" xml:space="preserve">
+    <value>Expiration year is too far in the future.</value>
+  </data>
+  <data name="InvalidMonth" xml:space="preserve">
+    <value>Invalid month.</value>
+  </data>
+  <data name="InvalidRoutingNumberLength" xml:space="preserve">
+    <value>Routing number must be 9 digits.</value>
+  </data>
+  <data name="InvalidRoutingNumberFormat" xml:space="preserve">
+    <value>Routing number must contain only digits.</value>
+  </data>
+  <data name="InvalidRoutingNumberChecksum" xml:space="preserve">
+    <value>Invalid routing number checksum.</value>
+  </data>
+  <data name="InvalidCpfLength" xml:space="preserve">
+    <value>CPF must be 11 digits.</value>
+  </data>
+  <data name="InvalidCpfFormat" xml:space="preserve">
+    <value>CPF must contain only digits.</value>
+  </data>
+  <data name="InvalidCpfIdenticalDigits" xml:space="preserve">
+    <value>CPF cannot consist of all identical digits.</value>
+  </data>
+  <data name="InvalidCpfChecksum1" xml:space="preserve">
+    <value>Invalid CPF checksum (1st digit).</value>
+  </data>
+  <data name="InvalidCpfChecksum2" xml:space="preserve">
+    <value>Invalid CPF checksum (2nd digit).</value>
+  </data>
+  <data name="InvalidCnpjLength" xml:space="preserve">
+    <value>CNPJ must be 14 digits.</value>
+  </data>
+  <data name="InvalidCnpjFormat" xml:space="preserve">
+    <value>CNPJ must contain only digits.</value>
+  </data>
+  <data name="InvalidCnpjIdenticalDigits" xml:space="preserve">
+    <value>CNPJ cannot consist of all identical digits.</value>
+  </data>
+  <data name="InvalidCnpjChecksum1" xml:space="preserve">
+    <value>Invalid CNPJ checksum (1st digit).</value>
+  </data>
+  <data name="InvalidCnpjChecksum2" xml:space="preserve">
+    <value>Invalid CNPJ checksum (2nd digit).</value>
+  </data>
+  <data name="InvalidCurpLength" xml:space="preserve">
+    <value>CURP must be 18 characters.</value>
+  </data>
+  <data name="InvalidCurpFormat" xml:space="preserve">
+    <value>Invalid CURP format.</value>
+  </data>
+  <data name="InvalidCurpChecksum" xml:space="preserve">
+    <value>Invalid CURP checksum.</value>
+  </data>
+  <data name="InvalidUsccLength" xml:space="preserve">
+    <value>USCC must be 18 characters.</value>
+  </data>
+  <data name="InvalidUsccCharacter" xml:space="preserve">
+    <value>Invalid character '{0}' in USCC.</value>
+  </data>
+  <data name="InvalidUsccChecksum" xml:space="preserve">
+    <value>Invalid USCC checksum.</value>
+  </data>
+  <data name="UnsupportedFormat" xml:space="preserve">
+    <value>Unsupported format: {0}.</value>
+  </data>
+  <data name="InvalidRfcLength" xml:space="preserve">
+    <value>RFC must be 12 (Company) or 13 (Person) characters.</value>
+  </data>
+  <data name="InvalidRfcFormat" xml:space="preserve">
+    <value>Invalid RFC format.</value>
+  </data>
+  <data name="InvalidNricLength" xml:space="preserve">
+    <value>NRIC/FIN must be 9 characters.</value>
+  </data>
+  <data name="InvalidNricPrefix" xml:space="preserve">
+    <value>Invalid NRIC/FIN prefix.</value>
+  </data>
+  <data name="InvalidNricDigits" xml:space="preserve">
+    <value>NRIC/FIN must contain 7 digits.</value>
+  </data>
+  <data name="InvalidNricChecksum" xml:space="preserve">
+    <value>Invalid NRIC/FIN checksum.</value>
+  </data>
+  <data name="InvalidCanadaRoutingNumberFormat" xml:space="preserve">
+    <value>Invalid Canadian Routing Number format. Must be 9 digits starting with 0.</value>
+  </data>
+  <data name="InvalidBsbFormat" xml:space="preserve">
+    <value>Invalid BSB format. Must be 6 digits.</value>
+  </data>
+  <data name="InvalidIfscFormat" xml:space="preserve">
+    <value>Invalid IFSC format. Must be 11 characters: 4 letters, 0, 6 alphanumeric.</value>
+  </data>
+  <data name="InvalidPolandNipFormat" xml:space="preserve">
+    <value>Invalid Poland NIP format.</value>
+  </data>
+  <data name="InvalidPolandNipChecksumForbidden" xml:space="preserve">
+    <value>Invalid Poland NIP checksum (forbidden remainder).</value>
+  </data>
+  <data name="InvalidPolandNipChecksum" xml:space="preserve">
+    <value>Invalid Poland NIP checksum.</value>
+  </data>
+  <data name="InvalidUkraineEdrpouFormat" xml:space="preserve">
+    <value>Invalid Ukraine EDRPOU format.</value>
+  </data>
+  <data name="InvalidUkraineEdrpouChecksum" xml:space="preserve">
+    <value>Invalid Ukraine EDRPOU checksum.</value>
+  </data>
+  <data name="InvalidTurkeyVknFormat" xml:space="preserve">
+    <value>Invalid Turkey VKN format.</value>
+  </data>
+  <data name="InvalidTurkeyVknChecksum" xml:space="preserve">
+    <value>Invalid Turkey VKN checksum.</value>
+  </data>
+  <data name="InvalidSwedenVatFormat" xml:space="preserve">
+    <value>Invalid Sweden VAT format.</value>
+  </data>
+  <data name="InvalidSwedenVatChecksum" xml:space="preserve">
+    <value>Invalid Sweden VAT checksum.</value>
+  </data>
+  <data name="InvalidNorthMacedoniaVatFormat" xml:space="preserve">
+    <value>Invalid North Macedonia VAT format.</value>
+  </data>
+  <data name="InvalidNorthMacedoniaVatChecksumForbidden" xml:space="preserve">
+    <value>Invalid North Macedonia VAT checksum (Check digit 10).</value>
+  </data>
+  <data name="InvalidNorthMacedoniaVatChecksum" xml:space="preserve">
+    <value>Invalid North Macedonia VAT checksum.</value>
+  </data>
+  <data name="InvalidSwitzerlandQrReferenceLength" xml:space="preserve">
+    <value>Swiss QR reference must be 27 digits.</value>
+  </data>
+  <data name="InvalidBelgiumEnterpriseLength" xml:space="preserve">
+    <value>Enterprise number must be 10 digits (or 9 digits for old format).</value>
+  </data>
+  <data name="InvalidBelgiumEnterpriseStart" xml:space="preserve">
+    <value>Enterprise number must start with 0 or 1.</value>
+  </data>
+  <data name="InvalidBelgiumEnterpriseCheckDigitsNumeric" xml:space="preserve">
+    <value>Check digits must be numeric.</value>
+  </data>
+  <data name="InvalidAzerbaijanVoenFormatSameDigits" xml:space="preserve">
+    <value>VOEN cannot consist of all same digits.</value>
+  </data>
+  <data name="InvalidMonacoRciFormat" xml:space="preserve">
+    <value>Invalid RCI format.</value>
+  </data>
+  <data name="InvalidMonacoIbanBankBranchDigits" xml:space="preserve">
+    <value>Monaco Bank/Branch must be digits.</value>
+  </data>
+  <data name="InvalidMonacoIbanRibKeyDigits" xml:space="preserve">
+    <value>Monaco RIB Key must be digits.</value>
+  </data>
+  <data name="InvalidMonacoIbanRibKey" xml:space="preserve">
+    <value>Invalid RIB Key.</value>
+  </data>
+  <data name="InvalidSerbiaPibFormat" xml:space="preserve">
+    <value>Invalid Serbia PIB format.</value>
+  </data>
+  <data name="InvalidSerbiaPibChecksum" xml:space="preserve">
+    <value>Invalid Serbia PIB checksum.</value>
+  </data>
+  <data name="InvalidSerbiaVatFormat" xml:space="preserve">
+    <value>Invalid Serbia VAT format.</value>
+  </data>
+  <data name="InvalidSerbiaVatChecksum" xml:space="preserve">
+    <value>Invalid Serbia VAT checksum.</value>
+  </data>
+  <data name="InvalidSanMarinoVatFormat" xml:space="preserve">
+    <value>Invalid San Marino VAT format.</value>
+  </data>
+  <data name="InvalidSanMarinoCoeFormat" xml:space="preserve">
+    <value>Invalid San Marino COE format.</value>
+  </data>
+  <data name="InvalidCyprusVatFormat" xml:space="preserve">
+    <value>Invalid Cyprus VAT format.</value>
+  </data>
+  <data name="InvalidCyprusVatChecksum" xml:space="preserve">
+    <value>Invalid Cyprus checksum.</value>
+  </data>
+  <data name="InvalidRomaniaVatFormat" xml:space="preserve">
+    <value>Invalid Romania VAT format.</value>
+  </data>
+  <data name="InvalidRomaniaVatChecksum" xml:space="preserve">
+    <value>Invalid Romania VAT checksum.</value>
+  </data>
+  <data name="InvalidRomaniaCifFormat" xml:space="preserve">
+    <value>Invalid Romania CIF format.</value>
+  </data>
+  <data name="InvalidRomaniaCifChecksum" xml:space="preserve">
+    <value>Invalid Romania CIF checksum.</value>
+  </data>
+  <data name="InvalidNorwayVatFormat" xml:space="preserve">
+    <value>Invalid Norway VAT format.</value>
+  </data>
+  <data name="InvalidNorwayVatChecksumForbidden" xml:space="preserve">
+    <value>Invalid Norway VAT checksum (Check digit 10).</value>
+  </data>
+  <data name="InvalidNorwayVatChecksum" xml:space="preserve">
+    <value>Invalid Norway VAT checksum.</value>
+  </data>
+  <data name="InvalidNorwayKidReference" xml:space="preserve">
+    <value>Invalid Norwegian KID reference.</value>
+  </data>
+  <data name="InvalidNorwayOrgNumberFormat" xml:space="preserve">
+    <value>Invalid Norway Org Number format.</value>
+  </data>
+  <data name="InvalidNorwayOrgNumberChecksumForbidden" xml:space="preserve">
+    <value>Invalid Norway Org Number checksum (forbidden remainder).</value>
+  </data>
+  <data name="InvalidNorwayOrgNumberChecksum" xml:space="preserve">
+    <value>Invalid Norway Org Number checksum.</value>
+  </data>
+  <data name="InvalidNorwayKidLength" xml:space="preserve">
+    <value>Norwegian KID reference must be between 3 and 25 digits.</value>
+  </data>
+  <data name="InvalidSingaporeUenLength" xml:space="preserve">
+    <value>UEN must be 9 or 10 characters.</value>
+  </data>
+  <data name="InvalidSingaporeUenFormat" xml:space="preserve">
+    <value>Invalid UEN format.</value>
+  </data>
+  <data name="InvalidJapanCorporateNumberLength" xml:space="preserve">
+    <value>Corporate Number must be 13 digits.</value>
+  </data>
+  <data name="InvalidJapanCorporateNumberFormat" xml:space="preserve">
+    <value>Corporate Number must contain only digits.</value>
+  </data>
+  <data name="InvalidJapanCorporateNumberChecksum" xml:space="preserve">
+    <value>Invalid Corporate Number checksum.</value>
+  </data>
+  <data name="InvalidJapanMyNumberLength" xml:space="preserve">
+    <value>My Number must be 12 digits.</value>
+  </data>
+  <data name="InvalidJapanMyNumberFormat" xml:space="preserve">
+    <value>My Number must contain only digits.</value>
+  </data>
+  <data name="InvalidJapanMyNumberChecksum" xml:space="preserve">
+    <value>Invalid My Number checksum.</value>
+  </data>
+  <data name="InvalidIndiaPanLength" xml:space="preserve">
+    <value>PAN must be 10 characters.</value>
+  </data>
+  <data name="InvalidIndiaPanFormat" xml:space="preserve">
+    <value>Invalid PAN format.</value>
+  </data>
+  <data name="InvalidIndiaPanStatus" xml:space="preserve">
+    <value>Invalid PAN status character (4th character).</value>
+  </data>
+  <data name="InvalidIndiaAadhaarLength" xml:space="preserve">
+    <value>Aadhaar must be 12 digits.</value>
+  </data>
+  <data name="InvalidIndiaAadhaarFormat" xml:space="preserve">
+    <value>Aadhaar must contain only digits.</value>
+  </data>
+  <data name="InvalidIndiaAadhaarChecksum" xml:space="preserve">
+    <value>Invalid Aadhaar checksum.</value>
+  </data>
+  <data name="InvalidIcelandVatFormat" xml:space="preserve">
+    <value>Invalid Iceland VAT format.</value>
+  </data>
+  <data name="InvalidCheckDigitsMod10Mod11" xml:space="preserve">
+    <value>Invalid check digits (neither Mod10 nor Mod11 matched).</value>
+  </data>
+  <data name="InvalidSlovakiaVatFormat" xml:space="preserve">
+    <value>Invalid Slovakia VAT format.</value>
+  </data>
+  <data name="InvalidSlovakiaVatFormatNonNumeric" xml:space="preserve">
+    <value>Invalid Slovakia VAT format (non-numeric).</value>
+  </data>
+  <data name="InvalidSlovakiaVatChecksum" xml:space="preserve">
+    <value>Invalid Slovakia VAT checksum.</value>
+  </data>
+  <data name="InvalidNorthMacedoniaCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected MK.</value>
+  </data>
+  <data name="BankCodeMustBeNumeric" xml:space="preserve">
+    <value>Bank code must be numeric.</value>
+  </data>
+  <data name="AccountNumberMustBeAlphanumeric" xml:space="preserve">
+    <value>Account number must be alphanumeric.</value>
+  </data>
+  <data name="NationalCheckDigitsMustBeNumeric" xml:space="preserve">
+    <value>National check digits must be numeric.</value>
+  </data>
+  <data name="InvalidMontenegroCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected ME.</value>
+  </data>
+  <data name="AccountNumberMustBeNumeric" xml:space="preserve">
+    <value>Account number must be numeric.</value>
+  </data>
+  <data name="InvalidMontenegroVatFormat" xml:space="preserve">
+    <value>Invalid Montenegro VAT format.</value>
+  </data>
+  <data name="InvalidMontenegroVatChecksumRemainder10" xml:space="preserve">
+    <value>Invalid Montenegro VAT checksum (Remainder 10).</value>
+  </data>
+  <data name="InvalidMontenegroVatChecksum" xml:space="preserve">
+    <value>Invalid Montenegro VAT checksum.</value>
+  </data>
+  <data name="InvalidBulgariaVatFormat" xml:space="preserve">
+    <value>Invalid Bulgaria VAT format.</value>
+  </data>
+  <data name="InvalidBulgariaVatChecksum" xml:space="preserve">
+    <value>Invalid Bulgaria VAT checksum.</value>
+  </data>
+  <data name="InvalidLithuaniaVatFormat" xml:space="preserve">
+    <value>Invalid Lithuania VAT format.</value>
+  </data>
+  <data name="InvalidLithuaniaVatChecksum" xml:space="preserve">
+    <value>Invalid Lithuania VAT checksum.</value>
+  </data>
+  <data name="EnterpriseNumberCannotBeEmpty" xml:space="preserve">
+    <value>Enterprise number cannot be empty.</value>
+  </data>
+  <data name="PibMustBe8Digits" xml:space="preserve">
+    <value>PIB must be 8 digits.</value>
+  </data>
+  <data name="InvalidChecksumRemainder1" xml:space="preserve">
+    <value>Invalid checksum (Remainder 1).</value>
+  </data>
+  <data name="InvalidNetherlandsVatFormat" xml:space="preserve">
+    <value>Invalid Netherlands VAT format.</value>
+  </data>
+  <data name="InvalidNetherlandsVatChecksumMod97OrElfproef" xml:space="preserve">
+    <value>Invalid checksum (Mod 97 or Elfproef).</value>
+  </data>
+  <data name="InvalidNetherlandsCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected NL.</value>
+  </data>
+  <data name="NetherlandsBankCodeMustBeLetters" xml:space="preserve">
+    <value>Netherlands Bank Code must be letters.</value>
+  </data>
+  <data name="NetherlandsAccountNumberMustBeDigits" xml:space="preserve">
+    <value>Netherlands Account Number must be digits.</value>
+  </data>
+  <data name="InvalidElfproefCheck" xml:space="preserve">
+    <value>Invalid Elfproef check.</value>
+  </data>
+  <data name="InvalidNorthMacedoniaEdbFormat" xml:space="preserve">
+    <value>Invalid North Macedonia EDB format.</value>
+  </data>
+  <data name="InvalidNorthMacedoniaEdbChecksumForbiddenRemainder" xml:space="preserve">
+    <value>Invalid North Macedonia EDB checksum (forbidden remainder).</value>
+  </data>
+  <data name="InvalidNorthMacedoniaEdbChecksum" xml:space="preserve">
+    <value>Invalid North Macedonia EDB checksum.</value>
+  </data>
+  <data name="IdCardCannotBeEmpty" xml:space="preserve">
+    <value>ID Card cannot be empty.</value>
+  </data>
+  <data name="IdCardMustBe18Characters" xml:space="preserve">
+    <value>ID Card must be 18 characters.</value>
+  </data>
+  <data name="First17CharactersMustBeDigits" xml:space="preserve">
+    <value>First 17 characters must be digits.</value>
+  </data>
+  <data name="LastCharacterMustBeDigitOrX" xml:space="preserve">
+    <value>Last character must be a digit or 'X'.</value>
+  </data>
+  <data name="InvalidIdCardChecksum" xml:space="preserve">
+    <value>Invalid ID Card checksum.</value>
+  </data>
+  <data name="InvalidLuxembourgVatFormat" xml:space="preserve">
+    <value>Invalid Luxembourg VAT format.</value>
+  </data>
+  <data name="InvalidLuxembourgVatChecksum" xml:space="preserve">
+    <value>Invalid Luxembourg VAT checksum.</value>
+  </data>
+  <data name="InvalidKosovoCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected XK.</value>
+  </data>
+  <data name="KosovoIbanMustContainOnlyDigits" xml:space="preserve">
+    <value>Kosovo IBAN must contain only digits after the country code.</value>
+  </data>
+  <data name="InvalidMoldovaVatFormat" xml:space="preserve">
+    <value>Invalid Moldova VAT format.</value>
+  </data>
+  <data name="IdnoMustBe13Digits" xml:space="preserve">
+    <value>IDNO must be 13 digits.</value>
+  </data>
+  <data name="InvalidMoldovaCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected MD.</value>
+  </data>
+  <data name="BankCodeMustBeAlphanumeric" xml:space="preserve">
+    <value>Bank code must be alphanumeric.</value>
+  </data>
+  <data name="InvalidGreeceVatFormat" xml:space="preserve">
+    <value>Invalid Greece VAT format.</value>
+  </data>
+  <data name="InvalidGreeceVatChecksum" xml:space="preserve">
+    <value>Invalid Greece VAT checksum.</value>
+  </data>
+  <data name="InvalidGreenlandCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected GL.</value>
+  </data>
+  <data name="GreenlandIbanMustContainOnlyDigits" xml:space="preserve">
+    <value>Greenland IBAN must contain only digits after the country code.</value>
+  </data>
+  <data name="CvrNumberMustBe8Digits" xml:space="preserve">
+    <value>CVR number must be 8 digits.</value>
+  </data>
+  <data name="InvalidGreeceCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected GR.</value>
+  </data>
+  <data name="GreeceBankBranchCodeMustBeDigits" xml:space="preserve">
+    <value>Greece Bank/Branch code must be digits.</value>
+  </data>
+  <data name="GreeceAccountNumberMustBeAlphanumeric" xml:space="preserve">
+    <value>Greece Account Number must be alphanumeric.</value>
+  </data>
+  <data name="AfmMustBe9Digits" xml:space="preserve">
+    <value>AFM must be 9 digits.</value>
+  </data>
+  <data name="InvalidMaltaVatFormat" xml:space="preserve">
+    <value>Invalid Malta VAT format.</value>
+  </data>
+  <data name="InvalidMaltaVatChecksum" xml:space="preserve">
+    <value>Invalid Malta VAT checksum.</value>
+  </data>
+  <data name="InvalidCroatiaVatFormat" xml:space="preserve">
+    <value>Invalid Croatia VAT format.</value>
+  </data>
+  <data name="InvalidCroatiaVatChecksum" xml:space="preserve">
+    <value>Invalid Croatia VAT checksum.</value>
+  </data>
+  <data name="InvalidFranceCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected FR.</value>
+  </data>
+  <data name="FranceBankBranchCodeMustBeDigits" xml:space="preserve">
+    <value>France Bank/Branch code must be digits.</value>
+  </data>
+  <data name="FranceRibKeyMustBeDigits" xml:space="preserve">
+    <value>France RIB Key must be digits.</value>
+  </data>
+  <data name="InvalidRibKey" xml:space="preserve">
+    <value>Invalid RIB Key.</value>
+  </data>
+  <data name="InvalidFranceVatFormatPrefixOrDigits" xml:space="preserve">
+    <value>Invalid format. Expected FR prefix or 11 digits.</value>
+  </data>
+  <data name="FranceVatDigitsAfterPrefix" xml:space="preserve">
+    <value>VAT number must contain only digits after prefix.</value>
+  </data>
+  <data name="InvalidNumericFormat" xml:space="preserve">
+    <value>Invalid numeric format.</value>
+  </data>
+  <data name="InvalidSirenFormat" xml:space="preserve">
+    <value>Invalid SIREN format.</value>
+  </data>
+  <data name="InvalidChecksumKey" xml:space="preserve">
+    <value>Invalid checksum (Key).</value>
+  </data>
+  <data name="InvalidChecksumSirenLuhn" xml:space="preserve">
+    <value>Invalid checksum (SIREN Luhn).</value>
+  </data>
+  <data name="InvalidGibraltarCompanyNumberFormat" xml:space="preserve">
+    <value>Invalid Gibraltar Company Number format.</value>
+  </data>
+  <data name="InvalidGibraltarCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected GI.</value>
+  </data>
+  <data name="GibraltarBankCodeMustBeLetters" xml:space="preserve">
+    <value>Gibraltar Bank Code must be letters.</value>
+  </data>
+  <data name="GibraltarAccountNumberMustBeAlphanumeric" xml:space="preserve">
+    <value>Gibraltar Account Number must be alphanumeric.</value>
+  </data>
+  <data name="InvalidGermanyVatFormat" xml:space="preserve">
+    <value>Invalid Germany VAT format.</value>
+  </data>
+  <data name="SteuernummerCannotBeEmpty" xml:space="preserve">
+    <value>Steuernummer cannot be empty.</value>
+  </data>
+  <data name="SteuernummerMustBe13Digits" xml:space="preserve">
+    <value>Steuernummer must be 13 digits (Unified Federal Format).</value>
+  </data>
+  <data name="InvalidGermanyCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected DE.</value>
+  </data>
+  <data name="GermanyIbanMustContainOnlyDigits" xml:space="preserve">
+    <value>Germany IBAN must contain only digits after the country code.</value>
+  </data>
+  <data name="InvalidIrelandVatFormat" xml:space="preserve">
+    <value>Invalid Ireland VAT format.</value>
+  </data>
+  <data name="InvalidIrelandVatChecksum" xml:space="preserve">
+    <value>Invalid Ireland VAT checksum.</value>
+  </data>
+  <data name="InvalidIrelandCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected IE.</value>
+  </data>
+  <data name="IrelandBankCodeMustBeLetters" xml:space="preserve">
+    <value>Ireland Bank Code must be letters.</value>
+  </data>
+  <data name="IrelandSortCodeAccountNumberMustBeDigits" xml:space="preserve">
+    <value>Ireland Sort Code/Account Number must be digits.</value>
+  </data>
+  <data name="InvalidMaltaCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected MT.</value>
+  </data>
+  <data name="MaltaBankBicMustBeLetters" xml:space="preserve">
+    <value>Malta Bank BIC must be letters.</value>
+  </data>
+  <data name="MaltaSortCodeMustBeDigits" xml:space="preserve">
+    <value>Malta Sort Code must be digits.</value>
+  </data>
+  <data name="MaltaAccountNumberMustBeAlphanumeric" xml:space="preserve">
+    <value>Malta Account Number must be alphanumeric.</value>
+  </data>
+  <data name="InvalidDenmarkVatFormat" xml:space="preserve">
+    <value>Invalid Denmark VAT format.</value>
+  </data>
+  <data name="InvalidDenmarkVatChecksum" xml:space="preserve">
+    <value>Invalid Denmark VAT checksum.</value>
+  </data>
+  <data name="InvalidDenmarkPaymentReference" xml:space="preserve">
+    <value>Invalid Danish FIK/GIK reference.</value>
+  </data>
+  <data name="InvalidDenmarkCountryCode" xml:space="preserve">
+    <value>Invalid country code. Expected DK.</value>
+  </data>
+  <data name="DenmarkIbanMustContainOnlyDigits" xml:space="preserve">
+    <value>Denmark IBAN must contain only digits after the country code.</value>
+  </data>
+  <data name="InvalidGeorgiaVatFormat" xml:space="preserve">
+    <value>Invalid Georgia VAT format.</value>
+  </data>
+  <data name="InvalidGeorgiaTaxIdLength" xml:space="preserve">
+    <value>Tax ID must be 9 digits.</value>
+  </data>
+  <data name="InvalidGeorgiaTaxIdChecksumRemainder10" xml:space="preserve">
+    <value>Invalid checksum (Remainder 10).</value>
+  </data>
+  <data name="InvalidDenmarkFikLength" xml:space="preserve">
+    <value>FIK reference length invalid.</value>
+  </data>
+  <data name="InvalidDenmarkFikCheckDigit" xml:space="preserve">
+    <value>Invalid FIK check digit (Luhn).</value>
+  </data>
+  <data name="HandelsregisternummerCannotBeEmpty" xml:space="preserve">
+    <value>Handelsregisternummer cannot be empty.</value>
+  </data>
+  <data name="InvalidGermanyHandelsregisternummerFormat" xml:space="preserve">
+    <value>Invalid Handelsregisternummer format. Expected HRA or HRB followed by digits.</value>
+  </data>
+  <data name="SiretCannotBeEmpty" xml:space="preserve">
+    <value>SIRET number cannot be empty.</value>
+  </data>
+  <data name="InvalidSiretFormat" xml:space="preserve">
+    <value>Invalid format. Expected 14 digits.</value>
+  </data>
+  <data name="InvalidSiretChecksum" xml:space="preserve">
+    <value>Invalid checksum (Luhn).</value>
+  </data>
+  <data name="InvalidFinlandVatFormat" xml:space="preserve">
+    <value>Invalid Finland VAT format.</value>
+  </data>
+  <data name="InvalidFinlandVatChecksumCheckDigit10" xml:space="preserve">
+    <value>Invalid checksum (Check digit 10).</value>
+  </data>
+  <data name="InvalidFinlandVatChecksum" xml:space="preserve">
+    <value>Invalid Finland VAT checksum.</value>
+  </data>
+  <data name="IbanEmpty" xml:space="preserve">
+    <value>IBAN cannot be empty.</value>
+  </data>
+  <data name="VatNumberEmpty" xml:space="preserve">
+    <value>VAT number cannot be empty.</value>
+  </data>
+  <data name="FranceSirenEmpty" xml:space="preserve">
+    <value>SIREN number cannot be empty.</value>
+  </data>
+  <data name="FranceSirenInvalidFormat" xml:space="preserve">
+    <value>Invalid format. Expected 9 digits.</value>
+  </data>
+  <data name="FranceSirenInvalidChecksum" xml:space="preserve">
+    <value>Invalid checksum (Luhn).</value>
+  </data>
+  <data name="FaroeIslandsVatInvalidFormat" xml:space="preserve">
+    <value>Invalid Faroe Islands VAT format.</value>
+  </data>
+  <data name="FinlandBusinessIdEmpty" xml:space="preserve">
+    <value>Enterprise number cannot be empty.</value>
+  </data>
+  <data name="FinlandBusinessIdInvalidLength" xml:space="preserve">
+    <value>Business ID must be 8 digits.</value>
+  </data>
+  <data name="FinlandBusinessIdInvalidChecksumRemainder1" xml:space="preserve">
+    <value>Invalid checksum (Remainder 1 is not allowed).</value>
+  </data>
+  <data name="CzechRepublicIbanInvalidPrefixChecksum" xml:space="preserve">
+    <value>Invalid Czech Prefix checksum.</value>
+  </data>
+  <data name="CzechRepublicIbanInvalidAccountChecksum" xml:space="preserve">
+    <value>Invalid Czech Account Number checksum.</value>
+  </data>
+  <data name="CzechRepublicIcoEmpty" xml:space="preserve">
+    <value>IČO cannot be empty.</value>
+  </data>
+  <data name="CzechRepublicIcoInvalidFormat" xml:space="preserve">
+    <value>Invalid Czech Republic IČO format.</value>
+  </data>
+  <data name="CzechRepublicIcoInvalidChecksum" xml:space="preserve">
+    <value>Invalid Czech Republic IČO checksum.</value>
+  </data>
+  <data name="FinlandPaymentReferenceEmpty" xml:space="preserve">
+    <value>Reference cannot be empty.</value>
+  </data>
+  <data name="FinlandPaymentReferenceInvalidFormat" xml:space="preserve">
+    <value>Invalid Finnish payment reference.</value>
+  </data>
+  <data name="CyprusTicEmpty" xml:space="preserve">
+    <value>TIC cannot be empty.</value>
+  </data>
+  <data name="CyprusTicInvalidFormat" xml:space="preserve">
+    <value>Invalid Cyprus TIC format.</value>
+  </data>
+  <data name="CyprusTicInvalidChecksum" xml:space="preserve">
+    <value>Invalid Cyprus TIC checksum.</value>
+  </data>
+  <data name="CyprusIbanInvalidBankCode" xml:space="preserve">
+    <value>Cyprus Bank Code must be digits.</value>
+  </data>
+  <data name="CyprusIbanInvalidBranchCode" xml:space="preserve">
+    <value>Cyprus Branch Code must be digits.</value>
+  </data>
+  <data name="CyprusIbanInvalidAccount" xml:space="preserve">
+    <value>Cyprus Account Number must be alphanumeric.</value>
+  </data>
+  <data name="AzerbaijanVatInvalidFormat" xml:space="preserve">
+    <value>Invalid Azerbaijan VAT format.</value>
+  </data>
+  <data name="AzerbaijanIbanInvalidBankCode" xml:space="preserve">
+    <value>Bank Code must be letters.</value>
+  </data>
+  <data name="AzerbaijanIbanInvalidAccount" xml:space="preserve">
+    <value>Account Number must be alphanumeric.</value>
+  </data>
+  <data name="AustriaFirmenbuchEmpty" xml:space="preserve">
+    <value>Firmenbuchnummer cannot be empty.</value>
+  </data>
+  <data name="AustriaFirmenbuchInvalidFormat" xml:space="preserve">
+    <value>Invalid format. Expected 1-6 digits followed by a letter (optional FN prefix).</value>
+  </data>
+  <data name="BulgariaIbanInvalidBankCode" xml:space="preserve">
+    <value>Bulgaria Bank Code must be letters.</value>
+  </data>
+  <data name="BulgariaUicEmpty" xml:space="preserve">
+    <value>UIC cannot be empty.</value>
+  </data>
+  <data name="BulgariaUicInvalidFormat" xml:space="preserve">
+    <value>Invalid UIC format (must be 9 or 13 digits).</value>
+  </data>
+  <data name="BulgariaUicInvalidChecksum9" xml:space="preserve">
+    <value>Invalid UIC checksum (9 digits).</value>
+  </data>
+  <data name="BulgariaUicInvalidChecksumBase" xml:space="preserve">
+    <value>Invalid base UIC (first 9 digits).</value>
+  </data>
+  <data name="BulgariaUicInvalidChecksum13" xml:space="preserve">
+    <value>Invalid UIC checksum (13 digits).</value>
+  </data>
+  <data name="BelarusVatInvalidFormat" xml:space="preserve">
+    <value>Invalid Belarus VAT format.</value>
+  </data>
+  <data name="BelarusVatInvalidChecksumMod11" xml:space="preserve">
+    <value>Invalid checksum (Mod 11 result is 10).</value>
+  </data>
+  <data name="AlbaniaIbanInvalidBankCode" xml:space="preserve">
+    <value>Bank code must be numeric.</value>
+  </data>
+  <data name="AlbaniaIbanInvalidBranchCode" xml:space="preserve">
+    <value>Branch code must be numeric.</value>
+  </data>
+  <data name="AlbaniaIbanInvalidControlChar" xml:space="preserve">
+    <value>Control character must be alphanumeric.</value>
+  </data>
+  <data name="AlbaniaIbanInvalidAccount" xml:space="preserve">
+    <value>Account number must be alphanumeric.</value>
+  </data>
+  <data name="InvalidIsoReferenceLength" xml:space="preserve">
+    <value>Reference length must be between 5 and 25 characters.</value>
+  </data>
+  <data name="InvalidIsoReferencePrefix" xml:space="preserve">
+    <value>Reference must start with 'RF'.</value>
+  </data>
+  <data name="InvalidIsoReferenceCharacters" xml:space="preserve">
+    <value>Reference contains invalid characters.</value>
+  </data>
+  <data name="UnsupportedPaymentReferenceFormat" xml:space="preserve">
+    <value>Format {0} is not supported by IsoPaymentReferenceValidator.</value>
+  </data>
+  <data name="InvalidLeiLength" xml:space="preserve">
+    <value>LEI must be exactly 20 characters.</value>
+  </data>
+  <data name="InvalidLeiFormat" xml:space="preserve">
+    <value>LEI must contain only alphanumeric characters.</value>
+  </data>
+  <data name="LeiParsingFailed" xml:space="preserve">
+    <value>Failed to parse LEI for checksum calculation.</value>
+  </data>
+  <data name="InvalidLeiChecksum" xml:space="preserve">
+    <value>Invalid LEI checksum.</value>
+  </data>
+  <data name="InvalidBicLength" xml:space="preserve">
+    <value>BIC must be 8 or 11 characters long.</value>
+  </data>
+  <data name="InvalidBicBankCode" xml:space="preserve">
+    <value>Bank code must contain only letters.</value>
+  </data>
+  <data name="InvalidBicCountryCode" xml:space="preserve">
+    <value>Country code must contain only letters.</value>
+  </data>
+  <data name="InvalidBicLocationCode" xml:space="preserve">
+    <value>Location code must be alphanumeric.</value>
+  </data>
+  <data name="InvalidBicBranchCode" xml:space="preserve">
+    <value>Branch code must be alphanumeric.</value>
+  </data>
+  <data name="InvalidIban" xml:space="preserve">
+    <value>Invalid IBAN.</value>
+  </data>
+  <data name="InvalidBrazilBankCodeFormat" xml:space="preserve">
+    <value>Invalid Brazil Bank Code format.</value>
+  </data>
+  <data name="InvalidAbnLength" xml:space="preserve">
+    <value>Invalid ABN length.</value>
+  </data>
+  <data name="InvalidAbnFormat" xml:space="preserve">
+    <value>Invalid ABN format.</value>
+  </data>
+  <data name="InvalidAbnChecksum" xml:space="preserve">
+    <value>Invalid ABN checksum.</value>
+  </data>
+  <data name="InvalidSinLength" xml:space="preserve">
+    <value>Invalid SIN length.</value>
+  </data>
+  <data name="InvalidSinFormat" xml:space="preserve">
+    <value>Invalid SIN format.</value>
+  </data>
+  <data name="InvalidSinChecksum" xml:space="preserve">
+    <value>Invalid SIN checksum.</value>
+  </data>
+  <data name="InvalidEinLength" xml:space="preserve">
+    <value>Invalid EIN length.</value>
+  </data>
+  <data name="InvalidEinFormat" xml:space="preserve">
+    <value>Invalid EIN format.</value>
+  </data>
+  <data name="BankAccountMustBeDigits" xml:space="preserve">
+    <value>Bank account must contain only digits.</value>
+  </data>
+  <data name="InvalidJapanBankAccountLength" xml:space="preserve">
+    <value>Invalid Japan bank account length.</value>
+  </data>
+  <data name="NoTaxIdValidatorRegistered" xml:space="preserve">
+    <value>No Tax ID validator registered for this country.</value>
+  </data>
+  <data name="InvalidTaxId" xml:space="preserve">
+    <value>Invalid Tax ID.</value>
+  </data>
+  <data name="NoNationalIdValidatorRegistered" xml:space="preserve">
+    <value>No National ID validator registered for this country.</value>
+  </data>
+  <data name="InvalidNationalId" xml:space="preserve">
+    <value>Invalid National ID.</value>
+  </data>
+  <data name="InvalidBnLength" xml:space="preserve">
+    <value>Invalid Business Number length.</value>
+  </data>
+  <data name="InvalidBnFormat" xml:space="preserve">
+    <value>Invalid Business Number format.</value>
+  </data>
+  <data name="InvalidBnChecksum" xml:space="preserve">
+    <value>Invalid Business Number checksum.</value>
+  </data>
+  <data name="NoBankRoutingValidatorRegistered" xml:space="preserve">
+    <value>No Bank Routing validator registered for this country.</value>
+  </data>
+  <data name="InvalidBankRoutingNumber" xml:space="preserve">
+    <value>Invalid Bank Routing Number.</value>
+  </data>
+  <data name="InvalidVaticanIbanFormat" xml:space="preserve">
+    <value>Invalid Vatican IBAN format.</value>
+  </data>
+  <data name="InvalidTfnLength" xml:space="preserve">
+    <value>Invalid TFN length.</value>
+  </data>
+  <data name="InvalidTfnFormat" xml:space="preserve">
+    <value>Invalid TFN format.</value>
+  </data>
+  <data name="InvalidTfnChecksum" xml:space="preserve">
+    <value>Invalid TFN checksum.</value>
+  </data>
+  <data name="InvalidVaticanVatFormat" xml:space="preserve">
+    <value>Invalid Vatican VAT format.</value>
+  </data>
+  <data name="InvalidVaticanVatChecksum" xml:space="preserve">
+    <value>Invalid Vatican VAT checksum.</value>
+  </data>
+  <data name="InvalidSingaporeBankAccountLength" xml:space="preserve">
+    <value>Invalid Singapore bank account length.</value>
+  </data>
+  <data name="InvalidUkBankCodeFormat" xml:space="preserve">
+    <value>Invalid UK Bank Code format.</value>
+  </data>
+  <data name="InvalidUkSortCodeFormat" xml:space="preserve">
+    <value>Invalid UK Sort Code format.</value>
+  </data>
+  <data name="InvalidCrnLength" xml:space="preserve">
+    <value>Invalid CRN length.</value>
+  </data>
+  <data name="InvalidCrnFormat" xml:space="preserve">
+    <value>Invalid CRN format.</value>
+  </data>
+  <data name="InvalidUkraineBankCodeFormat" xml:space="preserve">
+    <value>Invalid Ukraine Bank Code format.</value>
+  </data>
+  <data name="InvalidUkraineAccountNumberFormat" xml:space="preserve">
+    <value>Invalid Ukraine Account Number format.</value>
+  </data>
+  <data name="InvalidCnapsFormat" xml:space="preserve">
+    <value>Invalid CNAPS format.</value>
+  </data>
+  <data name="InvalidVtalLength" xml:space="preserve">
+    <value>Invalid V-tal length.</value>
+  </data>
+  <data name="UnsupportedCountryCode" xml:space="preserve">
+    <value>Unsupported country code.</value>
+  </data>
+  <data name="InvalidFinnishReferenceLength" xml:space="preserve">
+    <value>Invalid Finnish reference length.</value>
+  </data>
+  <data name="InvalidSloveniaVatFormat" xml:space="preserve">
+    <value>Invalid Slovenia VAT format.</value>
+  </data>
+  <data name="InvalidSloveniaVatChecksumForbidden" xml:space="preserve">
+    <value>Invalid Slovenia VAT checksum (forbidden).</value>
+  </data>
+  <data name="InvalidSloveniaVatChecksum" xml:space="preserve">
+    <value>Invalid Slovenia VAT checksum.</value>
+  </data>
+  <data name="InvalidSlovenianSi12Reference" xml:space="preserve">
+    <value>Invalid Slovenian SI12 reference.</value>
+  </data>
+  <data name="InvalidSloveniaReferencePrefix" xml:space="preserve">
+    <value>Invalid Slovenia reference prefix.</value>
+  </data>
+  <data name="InvalidSloveniaReferenceLength" xml:space="preserve">
+    <value>Invalid Slovenia reference length.</value>
+  </data>
+  <data name="InvalidSlovakPrefixChecksum" xml:space="preserve">
+    <value>Invalid Slovak prefix checksum.</value>
+  </data>
+  <data name="InvalidSlovakAccountNumberChecksum" xml:space="preserve">
+    <value>Invalid Slovak account number checksum.</value>
+  </data>
+  <data name="InvalidNibKey" xml:space="preserve">
+    <value>Invalid NIB key.</value>
+  </data>
+  <data name="InvalidSpanishDcCheck" xml:space="preserve">
+    <value>Invalid Spanish DC check.</value>
+  </data>
+  <data name="InvalidCifFormat" xml:space="preserve">
+    <value>Invalid CIF format.</value>
+  </data>
+  <data name="InvalidCifCheckLetter" xml:space="preserve">
+    <value>Invalid CIF check letter.</value>
+  </data>
+  <data name="InvalidCifCheckDigit" xml:space="preserve">
+    <value>Invalid CIF check digit.</value>
+  </data>
+  <data name="InvalidCifCheckCharacter" xml:space="preserve">
+    <value>Invalid CIF check character.</value>
+  </data>
+  <data name="InvalidNorwayIbanFormat" xml:space="preserve">
+    <value>Invalid Norway IBAN format.</value>
+  </data>
+  <data name="InvalidNorwayBbanChecksum" xml:space="preserve">
+    <value>Invalid Norway BBAN checksum.</value>
+  </data>
+  <data name="InvalidItalianIdentifierLength" xml:space="preserve">
+    <value>Invalid Italian identifier length.</value>
+  </data>
+  <data name="InvalidSwissQrReference" xml:space="preserve">
+    <value>Invalid Swiss QR reference.</value>
+  </data>
+  <data name="InvalidCodiceFiscaleFormat" xml:space="preserve">
+    <value>Invalid Codice Fiscale format.</value>
+  </data>
+  <data name="InvalidCodiceFiscaleCheckDigit" xml:space="preserve">
+    <value>Invalid Codice Fiscale check digit.</value>
+  </data>
+  <data name="InvalidPartitaIvaFormat" xml:space="preserve">
+    <value>Invalid Partita IVA format.</value>
+  </data>
+  <data name="InvalidPartitaIvaCheckDigit" xml:space="preserve">
+    <value>Invalid Partita IVA check digit.</value>
+  </data>
+  <data name="InvalidSwitzerlandClearingNumberFormat" xml:space="preserve">
+    <value>Invalid Switzerland Clearing Number format.</value>
+  </data>
+  <data name="InvalidSwitzerlandAccountNumberFormat" xml:space="preserve">
+    <value>Invalid Switzerland Account Number format.</value>
+  </data>
+  <data name="InvalidLuxembourgBankCode" xml:space="preserve">
+    <value>Invalid Luxembourg Bank Code.</value>
+  </data>
+  <data name="VatTooShortForCountryCode" xml:space="preserve">
+    <value>VAT too short for country code.</value>
+  </data>
+  <data name="InvalidSanMarinoCin" xml:space="preserve">
+    <value>Invalid San Marino CIN.</value>
+  </data>
+  <data name="InvalidSanMarinoAbiCab" xml:space="preserve">
+    <value>Invalid San Marino ABI/CAB.</value>
+  </data>
+  <data name="InvalidTurkeyBankCode" xml:space="preserve">
+    <value>Invalid Turkey Bank Code.</value>
+  </data>
+  <data name="InvalidTurkeyReserveChar" xml:space="preserve">
+    <value>Invalid Turkey Reserve Char.</value>
+  </data>
+  <data name="InvalidTurkeyAccountNumber" xml:space="preserve">
+    <value>Invalid Turkey Account Number.</value>
+  </data>
+  <data name="InvalidSerbiaIbanFormat" xml:space="preserve">
+    <value>Invalid Serbia IBAN format.</value>
+  </data>
+  <data name="InvalidSwedishOcrReference" xml:space="preserve">
+    <value>Invalid Swedish OCR reference.</value>
+  </data>
+  <data name="InvalidRomaniaIbanFormat" xml:space="preserve">
+    <value>Invalid Romania IBAN format.</value>
+  </data>
+  <data name="InvalidPvmLength" xml:space="preserve">
+    <value>Invalid PVM length.</value>
+  </data>
+  <data name="InvalidSwedishOcrLength" xml:space="preserve">
+    <value>Invalid Swedish OCR length.</value>
+  </data>
+  <data name="InvalidLengthDigit" xml:space="preserve">
+    <value>Invalid length digit.</value>
+  </data>
+</root>

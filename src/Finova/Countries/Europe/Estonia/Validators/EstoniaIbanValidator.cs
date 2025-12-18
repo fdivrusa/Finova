@@ -16,64 +16,33 @@ public class EstoniaIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != EstoniaIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {EstoniaIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, EstoniaIbanLength, normalized.Length));
         }
 
         if (!normalized.StartsWith(EstoniaCountryCode, StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected EE.");
-        }
-
-        // Structure check: All digits
-        for (int i = 2; i < EstoniaIbanLength; i++)
-        {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Estonia IBAN must contain only digits after the country code.");
-            }
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidCountryCode);
         }
 
         // Internal Validation: 7-3-1 Method on BBAN
         // EE BBAN is the last 16 digits (Pos 4-20)
         // This validates the check digit which is the last character of the BBAN.
         string bban = normalized.Substring(4, 16);
-        if (!ValidateEstonian731(bban))
+        var bbanResult = EstoniaBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Estonian BBAN structure.");
+            return bbanResult;
         }
 
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
-    }
-
-    private static bool ValidateEstonian731(string bban)
-    {
-        // Weights: 7, 3, 1 repeating
-        int[] weights = [7, 3, 1];
-        int sum = 0;
-
-        // Iterate over the first 15 digits (last one is check digit)
-        for (int i = 0; i < 15; i++)
-        {
-            int digit = bban[i] - '0';
-            // Determine weight based on position (cycling 0, 1, 2)
-            int weight = weights[i % 3];
-            sum += digit * weight;
-        }
-
-        // Calculate Check Digit
-        // Formula: (10 - (Sum % 10)) % 10
-        int remainder = sum % 10;
-        int checkDigit = (remainder == 0) ? 0 : 10 - remainder;
-
-        return checkDigit == (bban[15] - '0');
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 }

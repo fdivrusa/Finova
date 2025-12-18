@@ -23,7 +23,7 @@ public partial class CroatiaVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -34,12 +34,12 @@ public partial class CroatiaVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Croatia VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidCroatiaVatFormat);
         }
 
         if (!ChecksumHelper.ValidateISO7064Mod11_10(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Croatia VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidCroatiaVatChecksum);
         }
 
         return ValidationResult.Success();

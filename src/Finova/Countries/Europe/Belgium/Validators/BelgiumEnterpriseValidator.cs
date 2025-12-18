@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
-using Finova.Core.Enterprise;
+using Finova.Core.Identifiers;
 using Finova.Core.PaymentReference.Internals;
 
 namespace Finova.Countries.Europe.Belgium.Validators;
@@ -9,7 +9,7 @@ namespace Finova.Countries.Europe.Belgium.Validators;
 /// Validator for Belgian Enterprise Numbers (KBO/BCE - Kruispuntbank van Ondernemingen / Banque-Carrefour des Entreprises).
 /// Format: 0xxx.xxx.xxx or BE0xxxxxxxxx (10 digits with check digit validation via modulo 97).
 /// </summary>
-public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
+public partial class BelgiumEnterpriseValidator : ITaxIdValidator
 {
     [GeneratedRegex(@"[^\d]")]
     private static partial Regex DigitsOnlyRegex();
@@ -18,21 +18,7 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
 
     public string CountryCode => "BE";
 
-    ValidationResult IValidator<string>.Validate(string? instance) => Validate(instance);
-
-    public ValidationResult Validate(string? number, string countryCode)
-    {
-        return countryCode.Equals("BE", StringComparison.OrdinalIgnoreCase)
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {countryCode} is not supported by this validator.");
-    }
-
-    public ValidationResult Validate(string? number, EnterpriseNumberType type)
-    {
-        return type == EnterpriseNumberType.BelgiumEnterpriseNumber
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Enterprise number type {type} is not supported by this validator.");
-    }
+    public ValidationResult Validate(string? instance) => ValidateEnterpriseNumber(instance);
 
     public string? Parse(string? instance) => Normalize(instance);
 
@@ -42,11 +28,11 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
     /// </summary>
     /// <param name="kbo">The KBO/BCE number to validate</param>
     /// <returns>A ValidationResult indicating success or failure.</returns>
-    public static Core.Common.ValidationResult Validate(string? kbo)
+    public static Core.Common.ValidationResult ValidateEnterpriseNumber(string? kbo)
     {
         if (string.IsNullOrWhiteSpace(kbo))
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, "Enterprise number cannot be empty.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, Core.Common.ValidationMessages.InputCannotBeEmpty);
         }
 
         // Extract only digits
@@ -60,13 +46,13 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
 
         if (digits.Length != KboLength)
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, "Enterprise number must be 10 digits (or 9 digits for old format).");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, Core.Common.ValidationMessages.InvalidBelgiumEnterpriseLength);
         }
 
         // Must start with 0 or 1
         if (digits[0] != '0' && digits[0] != '1')
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidFormat, "Enterprise number must start with 0 or 1.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidFormat, Core.Common.ValidationMessages.InvalidBelgiumEnterpriseStart);
         }
 
         // Extract the first 8 digits (main number) and last 2 digits (check digits)
@@ -75,7 +61,7 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
 
         if (!int.TryParse(checkDigitStr, out var providedCheckDigit))
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidFormat, "Check digits must be numeric.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidFormat, Core.Common.ValidationMessages.InvalidBelgiumEnterpriseCheckDigitsNumeric);
         }
 
         // Calculate modulo 97 on the first 8 digits
@@ -86,7 +72,7 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
 
         return expectedCheckDigit == providedCheckDigit
             ? Core.Common.ValidationResult.Success()
-            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, Core.Common.ValidationMessages.InvalidCheckDigit);
     }
 
     /// <summary>
@@ -97,7 +83,7 @@ public partial class BelgiumEnterpriseValidator : IEnterpriseValidator
     /// <exception cref="ArgumentException">If the KBO number is invalid</exception>
     public static string Format(string? kbo)
     {
-        if (!Validate(kbo).IsValid)
+        if (!ValidateEnterpriseNumber(kbo).IsValid)
         {
             throw new ArgumentException("Invalid Belgian Enterprise Number (KBO/BCE)", nameof(kbo));
         }

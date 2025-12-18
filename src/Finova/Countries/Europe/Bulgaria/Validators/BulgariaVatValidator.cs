@@ -27,7 +27,7 @@ public partial class BulgariaVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -38,7 +38,7 @@ public partial class BulgariaVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Bulgaria VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBulgariaVatFormat);
         }
 
         bool isValidChecksum;
@@ -54,7 +54,7 @@ public partial class BulgariaVatValidator : IVatValidator
 
         if (!isValidChecksum)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Bulgaria VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidBulgariaVatChecksum);
         }
 
         return ValidationResult.Success();

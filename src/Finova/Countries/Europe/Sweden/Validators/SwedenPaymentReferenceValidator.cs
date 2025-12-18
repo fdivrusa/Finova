@@ -8,27 +8,18 @@ namespace Finova.Countries.Europe.Sweden.Validators;
 /// <summary>
 /// Validator for Swedish payment references (OCR).
 /// </summary>
-public class SwedenPaymentReferenceValidator : IPaymentReferenceValidator
+public class SwedenPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
         if (string.IsNullOrWhiteSpace(reference))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Reference cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         return SwedenPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Swedish OCR reference.");
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalSweden)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by SwedenPaymentReferenceValidator.");
-        }
-        return Validate(reference);
+            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSwedishOcrReference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

@@ -30,7 +30,7 @@ public partial class BosniaAndHerzegovinaVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -41,7 +41,7 @@ public partial class BosniaAndHerzegovinaVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Bosnia and Herzegovina VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBosniaAndHerzegovinaVatFormat);
         }
 
         // Implementation of Modulo 11
@@ -55,7 +55,7 @@ public partial class BosniaAndHerzegovinaVatValidator : IVatValidator
         int calculatedCheck;
         if (remainder == 1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Bosnia and Herzegovina VAT checksum (Remainder 1).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidBosniaAndHerzegovinaVatChecksumRemainderOne);
         }
         else if (remainder == 0)
         {
@@ -68,7 +68,7 @@ public partial class BosniaAndHerzegovinaVatValidator : IVatValidator
 
         if (calculatedCheck != checkDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Bosnia and Herzegovina VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidBosniaAndHerzegovinaVatChecksum);
         }
 
         return ValidationResult.Success();

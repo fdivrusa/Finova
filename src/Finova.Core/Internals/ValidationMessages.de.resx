@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="VatTooShortForCountryCode" xml:space="preserve">
+    <value>Umsatzsteuernummer ist zu kurz, um den Ländercode zu extrahieren.</value>
+  </data>
+  <data name="InvalidCountryCodeExpected" xml:space="preserve">
+    <value>Ungültiger Ländercode. Erwartet {0}.</value>
+  </data>
+  <data name="InvalidUkBankCodeFormat" xml:space="preserve">
+    <value>UK Bankleitzahl muss aus Buchstaben bestehen.</value>
+  </data>
+  <data name="InvalidUkSortCodeFormat" xml:space="preserve">
+    <value>UK Sort Code/Kontonummer muss aus Ziffern bestehen.</value>
+  </data>
+  <data name="InvalidPvmLength" xml:space="preserve">
+    <value>PVM muss 9 Ziffern haben.</value>
+  </data>
+  <data name="InvalidUkraineBankCodeFormat" xml:space="preserve">
+    <value>Bankleitzahl (MFO) muss aus Ziffern bestehen.</value>
+  </data>
+  <data name="InvalidUkraineAccountNumberFormat" xml:space="preserve">
+    <value>Kontonummer muss aus Ziffern bestehen.</value>
+  </data>
+  <data name="InvalidSwitzerlandClearingNumberFormat" xml:space="preserve">
+    <value>Schweizer Clearingnummer muss aus Ziffern bestehen.</value>
+  </data>
+  <data name="InvalidSwitzerlandAccountNumberFormat" xml:space="preserve">
+    <value>Schweizer Kontonummer muss alphanumerisch sein.</value>
+  </data>
+  <data name="InvalidIbanDigitsOnly" xml:space="preserve">
+    <value>{0} IBAN darf nach dem Ländercode nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidSlovakPrefixChecksum" xml:space="preserve">
+    <value>Ungültige slowakische Präfix-Prüfsumme.</value>
+  </data>
+  <data name="InvalidSlovakAccountNumberChecksum" xml:space="preserve">
+    <value>Ungültige slowakische Kontonummer-Prüfsumme.</value>
+  </data>
+  <data name="InvalidSpanishDcCheck" xml:space="preserve">
+    <value>Ungültige spanische DC-Prüfung.</value>
+  </data>
+  <data name="InvalidNibKey" xml:space="preserve">
+    <value>Ungültiger NIB-Schlüssel.</value>
+  </data>
+  <data name="InvalidIsoReferencePrefix" xml:space="preserve">
+    <value>Referenz muss mit 'RF' beginnen.</value>
+  </data>
+  <data name="InvalidIsoReferenceLength" xml:space="preserve">
+    <value>Referenzlänge ist zu kurz.</value>
+  </data>
+  <data name="InvalidSwedishOcrLength" xml:space="preserve">
+    <value>Schwedische OCR-Referenz muss zwischen 2 und 25 Ziffern haben.</value>
+  </data>
+  <data name="InvalidLengthDigit" xml:space="preserve">
+    <value>Ungültige Längenziffer.</value>
+  </data>
+  <data name="InvalidFinnishReferenceLength" xml:space="preserve">
+    <value>Finnische Referenz muss zwischen 4 und 20 Ziffern haben.</value>
+  </data>
+  <data name="InvalidSwissQrReference" xml:space="preserve">
+    <value>Ungültige Schweizer QR-Referenz.</value>
+  </data>
+  <data name="InvalidSwedishOcrReference" xml:space="preserve">
+    <value>Ungültige schwedische OCR-Referenz.</value>
+  </data>
+  <data name="InvalidCrnLength" xml:space="preserve">
+    <value>CRN muss 8 Zeichen haben.</value>
+  </data>
+  <data name="InvalidCrnFormat" xml:space="preserve">
+    <value>Ungültiges CRN-Format.</value>
+  </data>
+  <data name="InvalidCifFormat" xml:space="preserve">
+    <value>Ungültiges CIF-Format.</value>
+  </data>
+  <data name="InvalidCifCheckLetter" xml:space="preserve">
+    <value>Ungültiger CIF-Prüfbuchstabe.</value>
+  </data>
+  <data name="InvalidCifCheckDigit" xml:space="preserve">
+    <value>Ungültige CIF-Prüfziffer.</value>
+  </data>
+  <data name="InvalidCifCheckCharacter" xml:space="preserve">
+    <value>Ungültiges CIF-Prüfzeichen.</value>
+  </data>
+  <data name="InvalidIban" xml:space="preserve">
+    <value>Ungültige IBAN.</value>
+  </data>
+  <data name="InvalidAbnLength" xml:space="preserve">
+    <value>ABN muss 11 Ziffern haben.</value>
+  </data>
+  <data name="InvalidAbnFormat" xml:space="preserve">
+    <value>ABN darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidAbnChecksum" xml:space="preserve">
+    <value>Ungültige ABN-Prüfsumme.</value>
+  </data>
+  <data name="InvalidTfnLength" xml:space="preserve">
+    <value>TFN muss 8 oder 9 Ziffern haben.</value>
+  </data>
+  <data name="InvalidTfnFormat" xml:space="preserve">
+    <value>TFN darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidTfnChecksum" xml:space="preserve">
+    <value>Ungültige TFN-Prüfsumme.</value>
+  </data>
+  <data name="InvalidVaticanVatFormat" xml:space="preserve">
+    <value>Ungültiges Vatikanstadt-Umsatzsteuerformat.</value>
+  </data>
+  <data name="InvalidVaticanVatChecksum" xml:space="preserve">
+    <value>Ungültige Vatikanstadt-Umsatzsteuerprüfsumme.</value>
+  </data>
+  <data name="InvalidBnLength" xml:space="preserve">
+    <value>BN muss 9 Ziffern haben.</value>
+  </data>
+  <data name="InvalidBnFormat" xml:space="preserve">
+    <value>BN darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidBnChecksum" xml:space="preserve">
+    <value>Ungültige BN-Prüfsumme.</value>
+  </data>
+  <data name="InvalidEinLength" xml:space="preserve">
+    <value>EIN muss 9 Ziffern haben.</value>
+  </data>
+  <data name="InvalidEinFormat" xml:space="preserve">
+    <value>EIN darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidSinLength" xml:space="preserve">
+    <value>SIN muss 9 Ziffern haben.</value>
+  </data>
+  <data name="InvalidSinFormat" xml:space="preserve">
+    <value>SIN darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidSinChecksum" xml:space="preserve">
+    <value>Ungültige SIN-Prüfsumme.</value>
+  </data>
+  <data name="InvalidSloveniaVatFormat" xml:space="preserve">
+    <value>Ungültiges slowenisches Umsatzsteuerformat.</value>
+  </data>
+  <data name="InvalidSloveniaVatChecksum" xml:space="preserve">
+    <value>Ungültige slowenische Umsatzsteuerprüfsumme.</value>
+  </data>
+  <data name="InvalidSloveniaVatChecksumForbidden" xml:space="preserve">
+    <value>Ungültige slowenische Umsatzsteuerprüfsumme (verbotener Rest).</value>
+  </data>
+  <data name="InvalidSlovenianSi12Reference" xml:space="preserve">
+    <value>Ungültige slowenische SI12-Referenz.</value>
+  </data>
+  <data name="InvalidIbanLengthExpected" xml:space="preserve">
+    <value>Ungültige Länge. Erwartet {0}, erhalten {1}.</value>
+  </data>
+  <data name="InvalidPolandNipFormat" xml:space="preserve">
+    <value>Ungültiges polnisches NIP-Format.</value>
+  </data>
+  <data name="InvalidPolandNipChecksumForbidden" xml:space="preserve">
+    <value>Ungültige polnische NIP-Prüfsumme (verbotener Rest).</value>
+  </data>
+  <data name="InvalidPolandNipChecksum" xml:space="preserve">
+    <value>Ungültige polnische NIP-Prüfsumme.</value>
+  </data>
+  <data name="InvalidUkraineEdrpouFormat" xml:space="preserve">
+    <value>Ungültiges ukrainisches EDRPOU-Format.</value>
+  </data>
+  <data name="InvalidUkraineEdrpouChecksum" xml:space="preserve">
+    <value>Ungültige ukrainische EDRPOU-Prüfsumme.</value>
+  </data>
+  <data name="InvalidTurkeyVknFormat" xml:space="preserve">
+    <value>Ungültiges türkisches VKN-Format.</value>
+  </data>
+  <data name="InvalidTurkeyVknChecksum" xml:space="preserve">
+    <value>Ungültige türkische VKN-Prüfsumme.</value>
+  </data>
+  <data name="InvalidSwedenVatFormat" xml:space="preserve">
+    <value>Ungültiges schwedisches Umsatzsteuerformat.</value>
+  </data>
+  <data name="InvalidSwedenVatChecksum" xml:space="preserve">
+    <value>Ungültige schwedische Umsatzsteuerprüfsumme.</value>
+  </data>
+  <data name="InvalidNorthMacedoniaVatFormat" xml:space="preserve">
+    <value>Ungültiges nordmazedonisches Umsatzsteuerformat.</value>
+  </data>
+  <data name="InvalidNorthMacedoniaVatChecksumForbidden" xml:space="preserve">
+    <value>Ungültige nordmazedonische Umsatzsteuerprüfsumme (Prüfziffer 10).</value>
+  </data>
+  <data name="InvalidNorthMacedoniaVatChecksum" xml:space="preserve">
+    <value>Ungültige nordmazedonische Umsatzsteuerprüfsumme.</value>
+  </data>
+</root>

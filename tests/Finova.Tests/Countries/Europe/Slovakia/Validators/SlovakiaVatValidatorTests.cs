@@ -11,7 +11,7 @@ public class SlovakiaVatValidatorTests
     [InlineData("2022749619")] // Without prefix
     public void Validate_WithValidVat_ReturnsSuccess(string vat)
     {
-        var result = SlovakiaVatValidator.Validate(vat);
+        var result = SlovakiaVatValidator.ValidateVat(vat);
         result.IsValid.Should().BeTrue();
     }
 
@@ -21,7 +21,7 @@ public class SlovakiaVatValidatorTests
     [InlineData("")]
     public void Validate_WithInvalidVat_ReturnsFailure(string? vat)
     {
-        var result = SlovakiaVatValidator.Validate(vat);
+        var result = SlovakiaVatValidator.ValidateVat(vat);
         result.IsValid.Should().BeFalse();
     }
 

@@ -12,7 +12,7 @@ public class BelgiumEnterpriseValidatorOldFormatTests
     public void Validate_With9DigitFormat_ReturnsSuccess(string input, string expectedNormalized)
     {
         // Act
-        var result = BelgiumEnterpriseValidator.Validate(input);
+        var result = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(input);
         var normalized = BelgiumEnterpriseValidator.Normalize(input);
 
         // Assert

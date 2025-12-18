@@ -14,12 +14,12 @@ public class BicValidator : IBicValidator
     {
         if (string.IsNullOrWhiteSpace(bic))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "BIC cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
         // 8 or 11 characters
         if (bic.Length != 8 && bic.Length != 11)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "BIC must be 8 or 11 characters long.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBicLength);
         }
 
         // 1. Bank Code (4 letters)
@@ -27,7 +27,7 @@ public class BicValidator : IBicValidator
         {
             if (!char.IsLetter(bic[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Bank code must contain only letters.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBicBankCode);
             }
         }
 
@@ -36,7 +36,7 @@ public class BicValidator : IBicValidator
         {
             if (!char.IsLetter(bic[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Country code must contain only letters.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBicCountryCode);
             }
         }
 
@@ -45,7 +45,7 @@ public class BicValidator : IBicValidator
         {
             if (!char.IsLetterOrDigit(bic[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Location code must be alphanumeric.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBicLocationCode);
             }
         }
 
@@ -56,7 +56,7 @@ public class BicValidator : IBicValidator
             {
                 if (!char.IsLetterOrDigit(bic[i]))
                 {
-                    return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Branch code must be alphanumeric.");
+                    return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBicBranchCode);
                 }
             }
         }
@@ -96,13 +96,13 @@ public class BicValidator : IBicValidator
     {
         if (string.IsNullOrWhiteSpace(bic) || string.IsNullOrWhiteSpace(ibanCountryCode))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "BIC and IBAN country code cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // We only need to check indices 4-6 of the BIC
         if (bic.Length < 6)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "BIC is too short.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidLength);
         }
 
         // Fast string comparison slice
@@ -110,18 +110,18 @@ public class BicValidator : IBicValidator
 
         return isConsistent
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "BIC country code does not match IBAN country code.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"{ValidationMessages.InvalidFormat} BIC country code does not match IBAN country code.");
     }
 
     public static ValidationResult ValidateCompatibilityWithIban(string? bic, string? iban)
     {
         if (string.IsNullOrWhiteSpace(bic) || string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "BIC and IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var normalizedIban = iban.Trim();
-        if (normalizedIban.Length < 2) return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid IBAN length.");
+        if (normalizedIban.Length < 2) return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"{ValidationMessages.InvalidFormat} Invalid IBAN length.");
 
         var countryCode = normalizedIban.Substring(0, 2);
         return ValidateConsistencyWithIban(bic, countryCode);
@@ -131,12 +131,12 @@ public class BicValidator : IBicValidator
 
     #region IBicValidator Implementation (Wrapper for DI)
 
-    ValidationResult IValidator<BicDetails>.Validate(string? bic)
+    ValidationResult IValidator<BicDetails>.Validate(string? input)
     {
-        return Validate(bic);
+        return Validate(input);
     }
 
-    BicDetails? IValidator<BicDetails>.Parse(string? bic) => Parse(bic);
+    BicDetails? IValidator<BicDetails>.Parse(string? input) => Parse(input);
 
     ValidationResult IBicValidator.ValidateConsistencyWithIban(string? bic, string? ibanCountryCode) => ValidateConsistencyWithIban(bic, ibanCountryCode);
     ValidationResult IBicValidator.ValidateCompatibilityWithIban(string? bic, string? iban) => ValidateCompatibilityWithIban(bic, iban);

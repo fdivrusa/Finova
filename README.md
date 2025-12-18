@@ -2,9 +2,15 @@
 
 <div align="center">
 
-**The Offline Financial Validation Toolkit for .NET**
+**The Offline Financial Validation Toolkit for .NET### 🆔 **National Identity (New in v1.4.0)**
+- **Full European Coverage:** Validates National ID / Citizen ID numbers for **all 51 European countries and territories**.
+    - **Western Europe:** Belgium (NN), France (NIR), Germany (Steuer-ID), Netherlands (BSN), UK (NINO), etc.
+    - **Northern Europe:** Sweden (Personnummer), Norway (Fødselsnummer), Denmark (CPR), Finland (HETU), Iceland (Kennitala).
+    - **Southern Europe:** Italy (Codice Fiscale), Spain (DNI/NIE), Portugal (NIF), Greece (AMKA), Turkey (TC Kimlik).
+    - **Eastern Europe:** Poland (PESEL), Romania (CNP), Ukraine (RNTRC), Bulgaria (EGN), etc.
+    - **Microstates:** Andorra, Liechtenstein, Monaco, San Marino, Vatican.
 
-*IBAN · Payment References · Cards · VAT · Business Numbers*
+### 🌍 **Global Expansion (New in v1.4.0)**AN · Payment References · Cards · VAT · Business Numbers*
 
 [![NuGet Version](https://img.shields.io/nuget/v/Finova.svg?style=flat&logo=nuget)](https://www.nuget.org/packages/Finova/)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Finova.svg?style=flat&logo=nuget)](https://www.nuget.org/packages/Finova/)
@@ -50,13 +56,23 @@
 Fast, offline regex and checksum validation for European and International formats.
 - **IBAN Validation:**
     - **Parsing & Validation:** Extracts country code, check digits, bank code, branch code, and account number.
-    - **Country Specific Rules:** Supports specific validation rules for **51 countries** (Belgium, France, Germany, Italy, Spain, UK, Netherlands, etc.).
+    - **Country Specific Rules:** Supports specific validation rules for **51 European countries and territories** (Belgium, France, Germany, Italy, Spain, UK, Netherlands, etc.).
     - **Generic Validation:** Supports parsing and validating checksums for all ISO-compliant countries.
+- **BBAN Validation (New in v1.4.0):**
+    - **Dedicated Validators:** Specific validators for **51 European countries** (e.g., `BelgiumBbanValidator`, `FranceBbanValidator`).
+    - **Zero Allocation:** High-performance static methods (`Validate(string)`) for critical paths.
+    - **Unified Interface:** `IBbanValidator` for dependency injection scenarios.
 - **Payment Cards:**
     - **Luhn Algorithm:** Mod 10 validation for PAN numbers.
-    - **Brand Detection:** Identifies Visa, Mastercard, Amex, Discover, JCB, Maestro.
+    - **Brand Detection:** Identifies Visa, Mastercard, Amex, Discover, JCB, Maestro, RuPay, Mir, Verve, Troy.
     - **Secure CVV Check:** Format-only validation (Safe for PCI-DSS).
 - **BIC/SWIFT:** Structural validation (ISO 9362) & Cross-check with IBAN country code.
+- **Bank Routing Numbers:** Validates legacy bank codes for major European countries:
+    - **Germany:** Bankleitzahl (BLZ)
+    - **United Kingdom:** Sort Code
+    - **France:** Code Banque
+    - **Italy:** ABI Code
+    - **Spain:** Código de Entidad
 
 ### 🧾 **Payment References**
 - **ISO 11649 (RF):** Generates and validates international `RF` creditor references.
@@ -67,10 +83,99 @@ Fast, offline regex and checksum validation for European and International forma
     - **Sweden:** OCR
     - **Switzerland:** QR Reference
     - **Slovenia:** SI12
+    - **Denmark:** FIK / GIK
+    - **Italy:** CBILL / PagoPA
+    - **Portugal:** Multibanco
 
 ### 🏢 **Business Numbers**
-- **Enterprise Numbers:** Validates Belgian KBO/BCE (Mod97) & French SIRET/SIREN (Luhn).
-- **VAT Numbers:** Validates formatting and check digits for EU-27 countries.
+- **Tax IDs:** Validates business registration numbers for **51 European countries** (e.g., Belgian KBO, French SIREN, Italian P.IVA, etc.).
+- **VAT Numbers:** Validates formatting and check digits for **European countries** (EU + UK, Norway, Switzerland, etc.).
+
+### � **National Identity (New in v1.6.0)**
+- **Full European Coverage:** Validates National ID / Citizen ID numbers for **all 51 European countries and territories**.
+    - **Western Europe:** Belgium (NN), France (NIR), Germany (Steuer-ID), Netherlands (BSN), UK (NINO), etc.
+    - **Northern Europe:** Sweden (Personnummer), Norway (Fødselsnummer), Denmark (CPR), Finland (HETU), Iceland (Kennitala).
+    - **Southern Europe:** Italy (Codice Fiscale), Spain (DNI/NIE), Portugal (NIF), Greece (AMKA), Turkey (TC Kimlik).
+    - **Eastern Europe:** Poland (PESEL), Romania (CNP), Ukraine (RNTRC), Bulgaria (EGN), etc.
+    - **Microstates:** Andorra, Liechtenstein, Monaco, San Marino, Vatican.
+
+### �🌍 **Global Expansion (New in v1.4.0)**
+Finova now supports major economies across North America, South America, Asia, and Oceania.
+
+| Region | Country | Validators |
+| :--- | :--- | :--- |
+| **North America** | 🇺🇸 USA | Routing Number, EIN |
+| | 🇨🇦 Canada | SIN, Business Number (BN), Routing Number |
+| **South America** | 🇧🇷 Brazil | CPF, CNPJ, Routing Number |
+| | 🇲🇽 Mexico | CURP, RFC |
+| **Asia** | 🇨🇳 China | RIC, USCC, CNAPS |
+| | 🇯🇵 Japan | My Number, Corporate Number, Bank Account |
+| | 🇮🇳 India | Aadhaar, PAN, IFSC |
+| | 🇸🇬 Singapore | NRIC, UEN, Bank Account |
+| **Oceania** | 🇦🇺 Australia | TFN, ABN, BSB |
+
+> **New in v1.4.0:** Full **Parsing** support (extracting metadata) is now available for:
+> - **Routing Numbers:** USA (ABA), Canada (CC), Australia (BSB), India (IFSC), China (CNAPS), Brazil (COMPE).
+> - **Bank Accounts:** Japan, Singapore.
+
+<details>
+<summary><strong>View Full List of Supported Countries (51)</strong></summary>
+
+| Country | Code | IBAN | VAT | Tax ID | Payment Ref |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| Albania | AL | ✅ | ✅ | ✅ | - |
+| Andorra | AD | ✅ | ✅ | ✅ | - |
+| Austria | AT | ✅ | ✅ | ✅ | - |
+| Azerbaijan | AZ | ✅ | ✅ | ✅ | - |
+| Belarus | BY | ✅ | ✅ | ✅ | - |
+| Belgium | BE | ✅ | ✅ | ✅ | ✅ |
+| Bosnia & Herzegovina | BA | ✅ | ✅ | ✅ | - |
+| Bulgaria | BG | ✅ | ✅ | ✅ | - |
+| Croatia | HR | ✅ | ✅ | ✅ | - |
+| Cyprus | CY | ✅ | ✅ | ✅ | - |
+| Czech Republic | CZ | ✅ | ✅ | ✅ | - |
+| Denmark | DK | ✅ | ✅ | ✅ | ✅ |
+| Estonia | EE | ✅ | ✅ | ✅ | - |
+| Faroe Islands | FO | ✅ | ✅ | ✅ | - |
+| Finland | FI | ✅ | ✅ | ✅ | ✅ |
+| France | FR | ✅ | ✅ | ✅ | - |
+| Georgia | GE | ✅ | ✅ | ✅ | - |
+| Germany | DE | ✅ | ✅ | ✅ | - |
+| Gibraltar | GI | ✅ | ✅ | ✅ | - |
+| Greece | GR | ✅ | ✅ | ✅ | - |
+| Greenland | GL | ✅ | - | ✅ | - |
+| Hungary | HU | ✅ | ✅ | ✅ | - |
+| Iceland | IS | ✅ | ✅ | ✅ | - |
+| Ireland | IE | ✅ | ✅ | ✅ | - |
+| Italy | IT | ✅ | ✅ | ✅ | ✅ |
+| Kosovo | XK | ✅ | - | ✅ | - |
+| Latvia | LV | ✅ | ✅ | ✅ | - |
+| Liechtenstein | LI | ✅ | ✅ | ✅ | - |
+| Lithuania | LT | ✅ | ✅ | ✅ | - |
+| Luxembourg | LU | ✅ | ✅ | ✅ | - |
+| Malta | MT | ✅ | ✅ | ✅ | - |
+| Moldova | MD | ✅ | ✅ | ✅ | - |
+| Monaco | MC | ✅ | ✅ | ✅ | - |
+| Montenegro | ME | ✅ | ✅ | ✅ | - |
+| Netherlands | NL | ✅ | ✅ | ✅ | - |
+| North Macedonia | MK | ✅ | ✅ | ✅ | - |
+| Norway | NO | ✅ | ✅ | ✅ | ✅ |
+| Poland | PL | ✅ | ✅ | ✅ | - |
+| Portugal | PT | ✅ | ✅ | ✅ | ✅ |
+| Romania | RO | ✅ | ✅ | ✅ | - |
+| San Marino | SM | ✅ | ✅ | ✅ | - |
+| Serbia | RS | ✅ | ✅ | ✅ | - |
+| Slovakia | SK | ✅ | ✅ | ✅ | - |
+| Slovenia | SI | ✅ | ✅ | ✅ | ✅ |
+| Spain | ES | ✅ | ✅ | ✅ | - |
+| Sweden | SE | ✅ | ✅ | ✅ | ✅ |
+| Switzerland | CH | ✅ | ✅ | ✅ | ✅ |
+| Turkey | TR | ✅ | ✅ | ✅ | - |
+| Ukraine | UA | ✅ | ✅ | ✅ | - |
+| United Kingdom | GB | ✅ | ✅ | ✅ | - |
+| Vatican City | VA | ✅ | ✅ | ✅ | - |
+
+</details>
 
 ### 🔗 **FluentValidation Integration**
 - **Extensions:** `MustBeValidIban`, `MustBeValidBic`, `MustBeValidVat`, `MustBeValidPaymentReference`, etc.
@@ -78,7 +183,29 @@ Fast, offline regex and checksum validation for European and International forma
 
 ---
 
-## 📦 Installation
+## � Dependency Injection & Global Services
+
+Finova provides global composite services that automatically delegate validation to the correct country-specific logic.
+
+```csharp
+// 1. Register Finova
+services.AddFinova();
+
+// 2. Inject Services
+public class MyService(ITaxIdService taxIdService, IBankAccountService bankAccountService)
+{
+    public void Validate()
+    {
+        // Validates US EIN
+        var result1 = taxIdService.Validate("US", "12-3456789");
+
+        // Validates Singapore Bank Account
+        var result2 = bankAccountService.Validate("SG", "1234567890");
+    }
+}
+```
+
+## �📦 Installation
 
 Install via the NuGet Package Manager:
 
@@ -96,7 +223,7 @@ Install-Package Finova
 
 ## 📖 Quick Start
 
-### 1\. Validate an IBAN
+### 1. Validate an IBAN
 
 ```csharp
 using Finova.Services;
@@ -105,13 +232,13 @@ using Finova.Services;
 // (Does NOT check if account exists)
 bool isValid = EuropeIbanValidator.ValidateIban("BE68539007547034").IsValid;
 
-if (isValid) 
+if (isValid)
 {
     Console.WriteLine("IBAN structure is valid");
 }
 ```
 
-### 2\. Validate a Payment Card
+### 2. Validate a Payment Card
 
 ```csharp
 using Finova.Core.PaymentCard;
@@ -125,7 +252,7 @@ if (result.IsValid)
 }
 ```
 
-### 3\. Generate a Payment Reference
+### 3. Generate a Payment Reference
 
 ```csharp
 using Finova.Generators;
@@ -140,13 +267,41 @@ string ogm = generator.Generate("123456", PaymentReferenceFormat.LocalBelgian);
 string isoRef = generator.Generate("INVOICE2024", PaymentReferenceFormat.IsoRf);
 ```
 
-### 4\. FluentValidation Integration
+### 4. Global Bank Validation (New in v1.4.0)
+
+```csharp
+using Finova.Services;
+
+// Validate US Routing Number (ABA)
+var usResult = GlobalBankValidator.ValidateRoutingNumber("US", "121000248");
+if (usResult.IsValid) Console.WriteLine("Valid US Routing Number");
+
+// Validate Singapore Bank Account
+var sgResult = GlobalBankValidator.ValidateBankAccount("SG", "1234567890");
+if (sgResult.IsValid) Console.WriteLine("Valid Singapore Account");
+```
+
+### 5. FluentValidation Integration
 
 ```csharp
 using FluentValidation;
 using Finova.Extensions.FluentValidation;
 
 public class CustomerValidator : AbstractValidator<Customer>
+{
+    public CustomerValidator()
+    {
+        RuleFor(x => x.Iban).MustBeValidIban();
+        RuleFor(x => x.VatNumber).MustBeValidVat();
+        RuleFor(x => x.Bic).MustBeValidBic();
+
+        // New in v1.4.0: Global Bank Validation
+        RuleFor(x => x.RoutingNumber).MustBeValidBankRoutingNumber(x => x.CountryCode);
+        RuleFor(x => x.AccountNumber).MustBeValidBankAccountNumber(x => x.CountryCode);
+    }
+}
+```
+
 #### Option A: Dependency Injection (Recommended)
 
 Register Finova in your `Program.cs`:
@@ -156,7 +311,7 @@ using Finova.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Registers all validators (IBAN, VAT, Enterprise, PaymentReference, etc.)
+// Registers all validators (IBAN, VAT, TaxID, PaymentReference, etc.)
 builder.Services.AddFinova();
 
 var app = builder.Build();
@@ -166,20 +321,20 @@ Inject and use the validators in your services:
 
 ```csharp
 using Finova.Core.Vat;
-using Finova.Core.Enterprise;
+using Finova.Services;
 
 public class BusinessService
 {
     private readonly IVatValidator _vatValidator;
-    private readonly IEnterpriseValidator _enterpriseValidator;
+    private readonly ITaxIdService _taxIdService;
 
-    public BusinessService(IVatValidator vatValidator, IEnterpriseValidator enterpriseValidator)
+    public BusinessService(IVatValidator vatValidator, ITaxIdService taxIdService)
     {
         _vatValidator = vatValidator;
-        _enterpriseValidator = enterpriseValidator;
+        _taxIdService = taxIdService;
     }
 
-    public void RegisterCompany(string vatNumber, string enterpriseNumber)
+    public void RegisterCompany(string countryCode, string vatNumber, string taxId)
     {
         // Validates VAT format and checksum for any EU country
         if (!_vatValidator.Validate(vatNumber).IsValid)
@@ -187,10 +342,10 @@ public class BusinessService
             throw new Exception("Invalid VAT Number");
         }
 
-        // Validates Enterprise Number (e.g., SIRET, KBO)
-        if (!_enterpriseValidator.Validate(enterpriseNumber).IsValid)
+        // Validates Tax ID (e.g., SIRET, KBO, EIN)
+        if (!_taxIdService.Validate(countryCode, taxId).IsValid)
         {
-            throw new Exception("Invalid Enterprise Number");
+            throw new Exception("Invalid Tax ID");
         }
     }
 }
@@ -202,85 +357,122 @@ You can also use the static helpers directly without DI:
 
 ```csharp
 using Finova.Services;
-using Finova.Core.Enterprise;
 
 // 1. Validate VAT Number (Auto-detects country)
-bool isVatValid = EuropeVatValidator.Validate("FR12345678901").IsValid;
+bool isVatValid = EuropeVatValidator.ValidateVat("FR12345678901").IsValid;
 
-// 2. Validate Enterprise Number (Auto-detects country)
-bool isEntValid = EuropeEnterpriseValidator.ValidateEnterpriseNumber("BE0123456789").IsValid;
+// 2. Validate Tax ID (Requires Country Code)
+bool isTaxIdValid = GlobalIdentityValidator.ValidateTaxId("BE", "0123456789").IsValid;
+```
 
-// 3. Validate Specific Enterprise Type
-bool isSiretValid = EuropeEnterpriseValidator.ValidateEnterpriseNumber(
-    "73282932000074", 
-    EnterpriseNumberType.FranceSiret
-).IsValid;
+### 5. Tax ID Validator Usage
+
+Finova provides a unified validator for Global Tax IDs (including European Enterprise Numbers), supporting **51+ countries**.
+
+```csharp
+using Finova.Services;
+
+// 1. Validate Tax ID
+// Validates based on the country code provided (e.g., "DE", "FR", "US")
+var result = GlobalIdentityValidator.ValidateTaxId("GB", "12345678");
+if (result.IsValid)
+{
+    Console.WriteLine("Valid UK Tax ID");
+}
+
+// 2. Validate Non-European Tax IDs
+// Supports global formats like US EIN, Brazil CNPJ, etc.
+var usResult = GlobalIdentityValidator.ValidateTaxId("US", "12-3456789");
+```
+
+### 6. Advanced Usage (Custom Validators)
+
+For advanced scenarios where you need to implement custom validation logic or use specific algorithms directly, you can use the `ChecksumHelper` class.
+
+> **Note:** This is intended for developers building custom extensions. For standard use cases, prefer the high-level validators.
+
+```csharp
+using Finova.Core.Common;
+
+// 1. Validate using Luhn Algorithm (Mod 10)
+bool isLuhnValid = ChecksumHelper.ValidateLuhn("79927398713");
+
+// 2. Validate using ISO 7064 Mod 97-10 (IBANs)
+bool isMod97Valid = ChecksumHelper.ValidateModulo97("1234567890123456789012345678901");
+
+// 3. Calculate Weighted Modulo 11
+int[] weights = { 2, 3, 4, 5, 6, 7 };
+int remainder = ChecksumHelper.CalculateWeightedModulo11("123456", weights);
 ```
 
 -----
-using Finova.Countries.Europe.France.Validators;
-using Finova.Countries.Europe.Belgium.Validators;
 
-// 1. Get detailed SIRET components (SIREN + NIC)
-var details = FranceSiretValidator.GetSiretDetails("73282932000074");
-Console.WriteLine($"SIREN: {details.Siren}, NIC: {details.Nic}");
-
-// 2. Format a Belgian Enterprise Number
-string formatted = BelgiumEnterpriseValidator.Format("0456789123");
-// Output: 0456.789.123
-```
-
------
-
-# 🗺️ Roadmap
+## 🗺️ Roadmap
 
 Finova is strictly offline. Future updates focus on schema compliance, developer experience, and mathematical validation.
+
+### Upcoming Releases
+
+#### v1.4.0 - Global Expansion 🌎
+- **North America**: Support for USA (Routing Numbers, EIN) and Canada (Business Numbers).
+- **Asia**: Support for major Asian economies (Japan, Singapore, etc.).
+- **South America**: Support for Brazil (CNPJ/CPF) and others.
+- **Oceania**: Support for Australia (TFN, ABN, BSB).
+- **National IDs**: Added support for UK (NINO), Sweden, Norway, Finland, Denmark.
+- **Architecture**: Introduction of `Finova.Countries.NorthAmerica`, `Finova.Countries.Asia`, etc.
+- **Dependency Injection**: Enhanced auto-registration via Assembly Scanning.
+
+#### v1.5.0 - EPC QR Code Support 📱
+- **EPC QR String Generation**: Generate the raw payload string for European Payments Council (EPC) QR codes.
+- **Zero-Dependency**: Focus on string generation to maintain the "no external dependencies" rule (no image libraries required in core).
 
 ---
 
 ## ✅ v1.0.0 — Foundation *(Released)*
-- Belgian payment references (OGM/VCS)  
-- ISO 11649 international references  
-- Comprehensive testing and CI/CD  
+- Belgian payment references (OGM/VCS)
+- ISO 11649 international references
+- Comprehensive testing and CI/CD
 
 ---
 
 ## ✅ v1.1.0 — Core Expansion *(Released)*
-- **IBAN Expansion:** Italy (IT) & Spain (ES) specific rules  
-- **BIC/SWIFT:** Structural format validation (ISO 9362)  
-- **Payment Cards:** Luhn Algorithm & Brand Detection (Visa/MC/Amex)  
-- **Reference Validator:** RF Creditor Reference (ISO 11649)  
+- **IBAN Expansion:** Italy (IT) & Spain (ES) specific rules
+- **BIC/SWIFT:** Structural format validation (ISO 9362)
+- **Payment Cards:** Luhn Algorithm & Brand Detection (Visa/MC/Amex)
+- **Reference Validator:** RF Creditor Reference (ISO 11649)
 
 ---
 
 ## ✅ v1.2.0 — European Unification *(Released)*
-- **Finova.Europe:** Unified wrapper package for all SEPA countries  
-- **Smart Routing:** Auto-detect country rules via `EuropeValidator`  
+- **Finova.Europe:** Unified wrapper package for all SEPA countries
+- **Smart Routing:** Auto-detect country rules via `EuropeValidator`
 - **Extensions:** FluentValidation integration package (`Finova.Extensions.FluentValidation`)
 
 ---
 
 ## ✅ v1.3.0 — Corporate Identity *(Released)*
-- **VAT Numbers:** EU VAT checksums (VIES offline syntax)  
-- **Enterprise Numbers:** French SIRET/SIREN, Belgian KBO/BCE  
+- **VAT Numbers:** EU VAT checksums (VIES offline syntax)
+- **Tax IDs:** French SIRET/SIREN, Belgian KBO/BCE
 
 ---
 
 ## 🔮 v1.4.0 — National Identifiers *(Planned)*
-- **National IDs:** Netherlands KVK, Spain NIF/CIF  
-- **Modern Payment Strings:** EPC QR Code payload builder, Swiss QR parsing  
+- **National IDs:** Netherlands KVK, Spain NIF/CIF
+- **Modern Payment Strings:** EPC QR Code payload builder, Swiss QR parsing
+- **USA:** ABA routing number checksums
+- **Canada:** Transit number validation
+- **Australia:** BSB number validation
 
 ---
 
 ## 🔮 v1.5.0 — Global Routing *(Future)*
-- **USA:** ABA routing number checksums  
-- **Canada:** Transit number validation  
-- **Australia:** BSB number validation  
+- **EPC QR String Generation**: Generate the raw payload string for European Payments Council (EPC) QR codes.
+- **Zero-Dependency**: Focus on string generation to maintain the "no external dependencies" rule (no image libraries required in core).
 
 ---
 
 ## 🔭 Horizon *(Undetermined)*
-- AI-assisted anomaly detection  
+- AI-assisted anomaly detection
 
 -----
 

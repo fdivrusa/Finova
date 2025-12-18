@@ -23,7 +23,7 @@ public partial class DenmarkVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -34,14 +34,14 @@ public partial class DenmarkVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Denmark VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidDenmarkVatFormat);
         }
 
         int[] weights = { 2, 7, 6, 5, 4, 3, 2, 1 };
 
         if (!ChecksumHelper.ValidateWeightedModulo11(cleaned, weights, r => r == 0))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Denmark VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidDenmarkVatChecksum);
         }
 
         return ValidationResult.Success();

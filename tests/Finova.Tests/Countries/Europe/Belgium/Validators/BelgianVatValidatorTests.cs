@@ -207,7 +207,7 @@ public class BelgianVatValidatorTests
     {
         // Act
         var vatValid = BelgiumVatValidator.Validate(vat).IsValid;
-        var kboValid = BelgiumEnterpriseValidator.Validate(kbo).IsValid;
+        var kboValid = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(kbo).IsValid;
         var extractedKbo = BelgiumVatValidator.GetEnterpriseNumber(vat);
 
         // Assert
@@ -224,7 +224,7 @@ public class BelgianVatValidatorTests
         var vat = "BE" + kbo;
 
         // Act
-        var kboResult = BelgiumEnterpriseValidator.Validate(kbo).IsValid;
+        var kboResult = BelgiumEnterpriseValidator.ValidateEnterpriseNumber(kbo).IsValid;
         var vatResult = BelgiumVatValidator.Validate(vat).IsValid;
 
         // Assert

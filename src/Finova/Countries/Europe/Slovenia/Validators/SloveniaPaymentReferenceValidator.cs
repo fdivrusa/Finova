@@ -8,27 +8,18 @@ namespace Finova.Countries.Europe.Slovenia.Validators;
 /// <summary>
 /// Validator for Slovenian payment references (SI12).
 /// </summary>
-public class SloveniaPaymentReferenceValidator : IPaymentReferenceValidator
+public class SloveniaPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
         if (string.IsNullOrWhiteSpace(reference))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Reference cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         return SloveniaPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Slovenian SI12 reference.");
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalSlovenia)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by SloveniaPaymentReferenceValidator.");
-        }
-        return Validate(reference);
+            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSlovenianSi12Reference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

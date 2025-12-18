@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
-using Finova.Core.Enterprise;
+using Finova.Core.Identifiers;
 
 namespace Finova.Countries.Europe.France.Validators;
 
@@ -9,10 +9,9 @@ namespace Finova.Countries.Europe.France.Validators;
 /// Format: 14 digits (9 digits SIREN + 5 digits NIC).
 /// Checksum: Luhn algorithm.
 /// </summary>
-public partial class FranceSiretValidator : IEnterpriseValidator
+public partial class FranceSiretValidator : ITaxIdValidator
 {
     private const string CountryCodePrefix = "FR";
-    private const int SiretLength = 14;
 
     [GeneratedRegex(@"^\d{14}$")]
     private static partial Regex SiretRegex();
@@ -21,19 +20,7 @@ public partial class FranceSiretValidator : IEnterpriseValidator
 
     public ValidationResult Validate(string? number) => ValidateSiret(number);
 
-    public ValidationResult Validate(string? number, string countryCode)
-    {
-        return countryCode.Equals(CountryCodePrefix, StringComparison.OrdinalIgnoreCase)
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {countryCode} is not supported by this validator.");
-    }
 
-    public ValidationResult Validate(string? number, EnterpriseNumberType type)
-    {
-        return type == EnterpriseNumberType.FranceSiret
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Enterprise number type {type} is not supported by this validator.");
-    }
 
     public string? Parse(string? number) => number?.Trim().Replace(" ", "").Replace(".", "");
 
@@ -41,19 +28,19 @@ public partial class FranceSiretValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "SIRET number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.SiretCannotBeEmpty);
         }
 
         var normalized = number.Trim().Replace(" ", "").Replace(".", "");
 
         if (!SiretRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid format. Expected 14 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSiretFormat);
         }
 
         if (!LuhnCheck(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum (Luhn).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSiretChecksum);
         }
 
         return ValidationResult.Success();

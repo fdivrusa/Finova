@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
-using Finova.Core.Enterprise;
+using Finova.Core.Identifiers;
 
 namespace Finova.Countries.Europe.Austria.Validators;
 
@@ -9,7 +9,7 @@ namespace Finova.Countries.Europe.Austria.Validators;
 /// Format: 1-6 digits followed by a check letter (e.g., 123456x).
 /// Often prefixed with FN (e.g., FN 123456x).
 /// </summary>
-public partial class AustriaFirmenbuchValidator : IEnterpriseValidator
+public partial class AustriaFirmenbuchValidator : ITaxIdValidator
 {
     private const string CountryCodePrefix = "AT";
     [GeneratedRegex(@"^(?:FN\s?)?(\d{1,6})([a-zA-Z])$")]
@@ -19,27 +19,13 @@ public partial class AustriaFirmenbuchValidator : IEnterpriseValidator
 
     public ValidationResult Validate(string? number) => ValidateFirmenbuch(number);
 
-    public ValidationResult Validate(string? number, string countryCode)
-    {
-        return countryCode.Equals(CountryCodePrefix, StringComparison.OrdinalIgnoreCase)
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {countryCode} is not supported by this validator.");
-    }
-
-    public ValidationResult Validate(string? number, EnterpriseNumberType type)
-    {
-        return type == EnterpriseNumberType.AustriaFirmenbuch
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Enterprise number type {type} is not supported by this validator.");
-    }
-
     public string? Parse(string? number) => number?.Trim();
 
     public static ValidationResult ValidateFirmenbuch(string? number)
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Firmenbuchnummer cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.AustriaFirmenbuchEmpty);
         }
 
         var normalized = number.Trim();
@@ -47,11 +33,8 @@ public partial class AustriaFirmenbuchValidator : IEnterpriseValidator
         var match = FirmenbuchRegex().Match(normalized);
         if (!match.Success)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid format. Expected 1-6 digits followed by a letter (optional FN prefix).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.AustriaFirmenbuchInvalidFormat);
         }
-
-        // TODO: Implement checksum algorithm if available.
-        // The last character is a check letter, but the algorithm is not publicly documented in detail.
 
         return ValidationResult.Success();
     }

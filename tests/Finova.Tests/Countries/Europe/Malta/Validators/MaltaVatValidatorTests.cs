@@ -6,22 +6,17 @@ namespace Finova.Tests.Countries.Europe.Malta.Validators;
 public class MaltaVatValidatorTests
 {
     [Theory]
-    [InlineData("MT12345674")]
-    public void Validate_WithValidVat_ReturnsSuccess(string vat)
+    [InlineData("MT11679112", true)]
+    [InlineData("11679112", true)]
+    [InlineData("MT11679113", false)]
+    [InlineData("11679113", false)]
+    [InlineData("MT12345678", false)]
+    [InlineData("12345678", false)]
+    [InlineData("", false)]
+    [InlineData(null, false)]
+    public void Validate_ReturnsExpectedResult(string? vat, bool expected)
     {
-        var result = MaltaVatValidator.Validate(vat);
-        Assert.True(result.IsValid);
-    }
-
-    [Theory]
-    [InlineData(null)]
-    [InlineData("")]
-    [InlineData("MT1234567")] // Too short
-    [InlineData("MT123456789")] // Too long
-    [InlineData("XX12345678")] // Wrong prefix
-    public void Validate_WithInvalidVat_ReturnsFailure(string? vat)
-    {
-        var result = MaltaVatValidator.Validate(vat);
-        Assert.False(result.IsValid);
+        var result = MaltaVatValidator.ValidateVat(vat);
+        Assert.Equal(expected, result.IsValid);
     }
 }

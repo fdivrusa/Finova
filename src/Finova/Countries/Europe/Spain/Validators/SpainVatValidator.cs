@@ -28,7 +28,7 @@ public partial class SpainVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -39,7 +39,7 @@ public partial class SpainVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Spain VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidVatFormat, "Spain"));
         }
 
         // Checksum Validation
@@ -55,7 +55,7 @@ public partial class SpainVatValidator : IVatValidator
             if (!long.TryParse(numberPart, out long number))
             {
                 // Should be digits if first char is digit
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid DNI format.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidVatFormat, "Spain DNI"));
             }
 
             string controlChars = "TRWAGMYFPDXBNJZSQVHLCKE";
@@ -63,7 +63,7 @@ public partial class SpainVatValidator : IVatValidator
 
             if (lastChar != expectedChar)
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid DNI checksum.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "Spain DNI"));
             }
         }
         else if (firstChar == 'X' || firstChar == 'Y' || firstChar == 'Z')
@@ -75,7 +75,7 @@ public partial class SpainVatValidator : IVatValidator
 
             if (!long.TryParse(numberPart, out long number))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid NIE format.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidVatFormat, "Spain NIE"));
             }
 
             string controlChars = "TRWAGMYFPDXBNJZSQVHLCKE";
@@ -83,7 +83,7 @@ public partial class SpainVatValidator : IVatValidator
 
             if (lastChar != expectedChar)
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid NIE checksum.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "Spain NIE"));
             }
         }
         else
@@ -114,7 +114,7 @@ public partial class SpainVatValidator : IVatValidator
 
             if (!validDigit && !validLetter)
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid CIF checksum.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "Spain CIF"));
             }
         }
 

@@ -9,7 +9,7 @@ public class TurkeyVatValidatorTests
     [InlineData("1000000000")]
     public void Validate_WithValidVat_ReturnsSuccess(string vat)
     {
-        var result = TurkeyVatValidator.Validate(vat);
+        var result = TurkeyVknValidator.ValidateVkn(vat);
         Assert.True(result.IsValid);
     }
 
@@ -22,7 +22,7 @@ public class TurkeyVatValidatorTests
     [InlineData("1000000001")] // Invalid checksum
     public void Validate_WithInvalidVat_ReturnsFailure(string? vat)
     {
-        var result = TurkeyVatValidator.Validate(vat);
+        var result = TurkeyVknValidator.ValidateVkn(vat);
         Assert.False(result.IsValid);
     }
 }

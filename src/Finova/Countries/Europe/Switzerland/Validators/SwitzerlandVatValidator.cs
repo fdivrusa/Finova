@@ -27,7 +27,7 @@ public partial class SwitzerlandVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant()
@@ -46,7 +46,7 @@ public partial class SwitzerlandVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Switzerland VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidVatFormat, "Switzerland"));
         }
 
         // Checksum Validation (Mod 11)
@@ -57,13 +57,13 @@ public partial class SwitzerlandVatValidator : IVatValidator
         if (checkDigit == 11) checkDigit = 0;
         if (checkDigit == 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Switzerland VAT checksum (Result 10).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "Switzerland"));
         }
 
         int lastDigit = cleaned[8] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Switzerland VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "Switzerland"));
         }
 
         return ValidationResult.Success();

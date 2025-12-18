@@ -23,7 +23,7 @@ public partial class NorwayVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -38,7 +38,7 @@ public partial class NorwayVatValidator : IVatValidator
 
         if (cleaned.Length != 9 || !long.TryParse(cleaned, out _))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Norway VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidNorwayVatFormat);
         }
 
         // Checksum Validation (Mod 11)
@@ -53,13 +53,13 @@ public partial class NorwayVatValidator : IVatValidator
 
         if (checkDigit == 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Norway VAT checksum (Check digit 10).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNorwayVatChecksumForbidden);
         }
 
         int lastDigit = cleaned[8] - '0';
         if (checkDigit != lastDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Norway VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNorwayVatChecksum);
         }
 
         return ValidationResult.Success();

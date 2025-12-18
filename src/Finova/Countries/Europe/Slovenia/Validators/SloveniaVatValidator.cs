@@ -1,5 +1,7 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
+using Finova.Core.Enterprise;
+using Finova.Core.Identifiers;
 using Finova.Core.Vat;
 
 namespace Finova.Countries.Europe.Slovenia.Validators;
@@ -9,9 +11,9 @@ namespace Finova.Countries.Europe.Slovenia.Validators;
 /// Format: SI + 8 digits.
 /// Algorithm: Weighted Modulo 11.
 /// </summary>
-public partial class SloveniaVatValidator : IVatValidator
+public partial class SloveniaVatValidator : IVatValidator, ITaxIdValidator
 {
-    [GeneratedRegex(@"^SI\d{8}$")]
+    [GeneratedRegex(@"^\d{8}$")]
     private static partial Regex VatRegex();
 
     private const string VatPrefix = "SI";
@@ -21,15 +23,19 @@ public partial class SloveniaVatValidator : IVatValidator
 
     ValidationResult IValidator<VatDetails>.Validate(string? instance) => Validate(instance);
 
+    public ValidationResult Validate(string? number) => ValidateVat(number);
+
     public VatDetails? Parse(string? vat) => GetVatDetails(vat);
 
-    public static ValidationResult Validate(string? vat)
+    string? IValidator<string>.Parse(string? instance) => Normalize(instance);
+
+    public static ValidationResult ValidateVat(string? vat)
     {
         vat = VatSanitizer.Sanitize(vat);
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -38,29 +44,24 @@ public partial class SloveniaVatValidator : IVatValidator
             cleaned = cleaned[2..];
         }
 
-        if (!VatRegex().IsMatch(VatPrefix + cleaned))
+        if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Slovenia VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSloveniaVatFormat);
         }
 
         int sum = ChecksumHelper.CalculateWeightedSum(cleaned[..7], Weights);
         int remainder = sum % 11;
-        int checkDigit = 11 - remainder;
 
-        if (checkDigit == 10)
+        if (remainder == 1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Slovenia VAT checksum (Check digit 10 is invalid).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSloveniaVatChecksumForbidden);
         }
 
-        if (checkDigit == 11)
-        {
-            checkDigit = 0;
-        }
+        int checkDigit = remainder == 0 ? 0 : 11 - remainder;
 
-        int lastDigit = cleaned[7] - '0';
-        if (checkDigit != lastDigit)
+        if (checkDigit != (cleaned[7] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Slovenia VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSloveniaVatChecksum);
         }
 
         return ValidationResult.Success();
@@ -68,14 +69,13 @@ public partial class SloveniaVatValidator : IVatValidator
 
     public static VatDetails? GetVatDetails(string? vat)
     {
-        vat = VatSanitizer.Sanitize(vat);
-
-        if (!Validate(vat).IsValid)
+        var result = ValidateVat(vat);
+        if (!result.IsValid)
         {
             return null;
         }
 
-        var cleaned = vat!.Trim().ToUpperInvariant();
+        var cleaned = VatSanitizer.Sanitize(vat)!.Trim().ToUpperInvariant();
         if (cleaned.StartsWith(VatPrefix))
         {
             cleaned = cleaned[2..];
@@ -87,5 +87,12 @@ public partial class SloveniaVatValidator : IVatValidator
             VatNumber = cleaned,
             IsValid = true
         };
+    }
+
+    public static string? Normalize(string? number)
+    {
+        if (string.IsNullOrWhiteSpace(number)) return null;
+        var cleaned = number.ToUpperInvariant().Replace(VatPrefix, "").Replace(" ", "");
+        return VatRegex().IsMatch(cleaned) ? cleaned : null;
     }
 }

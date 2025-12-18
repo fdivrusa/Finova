@@ -28,7 +28,7 @@ public partial class MontenegroVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -39,7 +39,7 @@ public partial class MontenegroVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Montenegro VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidMontenegroVatFormat);
         }
 
         int sum = ChecksumHelper.CalculateWeightedSum(cleaned[..7], Weights);
@@ -48,7 +48,7 @@ public partial class MontenegroVatValidator : IVatValidator
 
         if (remainder == 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Montenegro VAT checksum (Remainder 10).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidMontenegroVatChecksumRemainder10);
         }
 
         checkDigit = 11 - remainder;
@@ -56,7 +56,7 @@ public partial class MontenegroVatValidator : IVatValidator
 
         if (checkDigit != (cleaned[7] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Montenegro VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidMontenegroVatChecksum);
         }
 
         return ValidationResult.Success();

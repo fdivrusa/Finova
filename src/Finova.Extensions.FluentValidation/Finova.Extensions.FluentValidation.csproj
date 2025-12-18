@@ -7,9 +7,10 @@
         <Title>Finova Extensions for FluentValidation</Title>
         <Description>
             FluentValidation extensions for the Finova financial toolkit.
-            Easily validate IBANs, BICs, and Payment Cards using .MustBeValidIban() syntax.
+            Easily validate IBANs, BICs, Payment Cards, VAT numbers, Tax IDs, and National IDs using
+            .MustBeValidIban(), .MustBeValidVat(), .MustBeValidNationalId(), etc.
         </Description>
-        <PackageTags>finova;fluentvalidation;validation;extensions;banking</PackageTags>
+        <PackageTags>finova;fluentvalidation;validation;extensions;banking;vat;enterprise;tax-id;national-id;fluent;rules;property-validator</PackageTags>
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <IncludeSymbols>true</IncludeSymbols>
@@ -17,7 +18,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" />
+        <PackageReference Include="FluentValidation" />
     </ItemGroup>
 
     <ItemGroup>

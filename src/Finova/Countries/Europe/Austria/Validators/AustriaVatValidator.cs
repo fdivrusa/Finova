@@ -20,7 +20,7 @@ public partial class AustriaVatValidator : IVatValidator
     public static ValidationResult Validate(string? vat)
     {
         vat = VatSanitizer.Sanitize(vat);
-        if (string.IsNullOrWhiteSpace(vat)) return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Empty.");
+        if (string.IsNullOrWhiteSpace(vat)) return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
 
         var normalized = vat.Trim().ToUpperInvariant();
         if (normalized.StartsWith("U") && normalized.Length == 9)
@@ -39,7 +39,7 @@ public partial class AustriaVatValidator : IVatValidator
 
         if (!AustriaVatRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid format. Expected ATU + 8 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidAustriaVatFormat);
         }
 
         string digitsStr = normalized.Substring(3, 7);
@@ -55,7 +55,7 @@ public partial class AustriaVatValidator : IVatValidator
 
         return calculated == checkDigit
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 
     public static VatDetails? GetVatDetails(string? vat)

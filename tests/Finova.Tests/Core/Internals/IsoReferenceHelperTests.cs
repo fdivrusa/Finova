@@ -1,3 +1,4 @@
+using Finova.Core.Common;
 using Finova.Core.PaymentReference.Internals;
 using FluentAssertions;
 using Xunit;
@@ -81,7 +82,7 @@ public class IsoReferenceHelperTests
 
         // Assert
         act.Should().Throw<ArgumentException>()
-            .WithMessage("Raw reference cannot be empty for ISO generation.*")
+            .WithMessage(ValidationMessages.InputCannotBeEmpty + "*")
             .And.ParamName.Should().Be("rawReference");
     }
 

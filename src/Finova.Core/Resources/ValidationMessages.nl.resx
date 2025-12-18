@@ -1,0 +1,1072 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="InputCannotBeEmpty" xml:space="preserve">
+    <value>Input mag niet leeg zijn.</value>
+  </data>
+  <data name="OngeldigFormat" xml:space="preserve">
+    <value>Ongeldig formaat.</value>
+  </data>
+  <data name="OngeldigChecksum" xml:space="preserve">
+    <value>Ongeldig controlesom.</value>
+  </data>
+  <data name="OngeldigLength" xml:space="preserve">
+    <value>Ongeldig lengte.</value>
+  </data>
+  <data name="OngeldigCountryCode" xml:space="preserve">
+    <value>Ongeldig country code.</value>
+  </data>
+  <data name="UnsupportedCountry" xml:space="preserve">
+    <value>Country not supported.</value>
+  </data>
+  <data name="OngeldigCheckDigit" xml:space="preserve">
+    <value>Ongeldig check digits.</value>
+  </data>
+  <data name="MustContainOnlyDigits" xml:space="preserve">
+    <value>Input mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="MustContainOnlyDigitsAndLetters" xml:space="preserve">
+    <value>Input mag alleen cijfers bevatten and letters.</value>
+  </data>
+  <data name="OngeldigLengthExpectedX" xml:space="preserve">
+    <value>Ongeldig lengte. Expected {0} characters.</value>
+  </data>
+  <data name="OngeldigLengthExpectedXGotY" xml:space="preserve">
+    <value>Ongeldig lengte. Expected {0}, got {1}.</value>
+  </data>
+  <data name="OngeldigVatFormat" xml:space="preserve">
+    <value>Ongeldig {0} VAT formaat.</value>
+  </data>
+  <data name="OngeldigVatChecksum" xml:space="preserve">
+    <value>Ongeldig {0} VAT controlesom.</value>
+  </data>
+  <data name="OngeldigIbanLength" xml:space="preserve">
+    <value>Ongeldig lengte. Expected {0}, got {1}.</value>
+  </data>
+  <data name="OngeldigIbanCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected {0}.</value>
+  </data>
+  <data name="OngeldigIbanFormatDigits" xml:space="preserve">
+    <value>{0} IBAN mag alleen cijfers bevatten after the country code.</value>
+  </data>
+  <data name="OngeldigIbanFormatAlphanumeric" xml:space="preserve">
+    <value>{0} IBAN must contain only alphanumeric characters after the country code.</value>
+  </data>
+  <data name="OngeldigCardNumberLuhn" xml:space="preserve">
+    <value>Ongeldig card number (Luhn check failed).</value>
+  </data>
+  <data name="OngeldigCardNumberFormat" xml:space="preserve">
+    <value>Card number contains invalid characters.</value>
+  </data>
+  <data name="OngeldigCvvDigits" xml:space="preserve">
+    <value>CVV mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="OngeldigCvvLength" xml:space="preserve">
+    <value>Ongeldig CVV lengte for {0}.</value>
+  </data>
+  <data name="CardExpired" xml:space="preserve">
+    <value>Card has expired.</value>
+  </data>
+  <data name="CardYearTooFar" xml:space="preserve">
+    <value>Expiration year is too far in the future.</value>
+  </data>
+  <data name="OngeldigMonth" xml:space="preserve">
+    <value>Ongeldig month.</value>
+  </data>
+  <data name="OngeldigRoutingNumberLength" xml:space="preserve">
+    <value>Routing number must be 9 digits.</value>
+  </data>
+  <data name="OngeldigRoutingNumberFormat" xml:space="preserve">
+    <value>Routing number mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="OngeldigRoutingNumberChecksum" xml:space="preserve">
+    <value>Ongeldig routing number controlesom.</value>
+  </data>
+  <data name="OngeldigCpfLength" xml:space="preserve">
+    <value>CPF must be 11 digits.</value>
+  </data>
+  <data name="OngeldigCpfFormat" xml:space="preserve">
+    <value>CPF mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="OngeldigCpfIdenticalDigits" xml:space="preserve">
+    <value>CPF cannot consist of all identical digits.</value>
+  </data>
+  <data name="OngeldigCpfChecksum1" xml:space="preserve">
+    <value>Ongeldig CPF controlesom (1st digit).</value>
+  </data>
+  <data name="OngeldigCpfChecksum2" xml:space="preserve">
+    <value>Ongeldig CPF controlesom (2nd digit).</value>
+  </data>
+  <data name="OngeldigCnpjLength" xml:space="preserve">
+    <value>CNPJ must be 14 digits.</value>
+  </data>
+  <data name="OngeldigCnpjFormat" xml:space="preserve">
+    <value>CNPJ mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="OngeldigCnpjIdenticalDigits" xml:space="preserve">
+    <value>CNPJ cannot consist of all identical digits.</value>
+  </data>
+  <data name="OngeldigCnpjChecksum1" xml:space="preserve">
+    <value>Ongeldig CNPJ controlesom (1st digit).</value>
+  </data>
+  <data name="OngeldigCnpjChecksum2" xml:space="preserve">
+    <value>Ongeldig CNPJ controlesom (2nd digit).</value>
+  </data>
+  <data name="OngeldigCurpLength" xml:space="preserve">
+    <value>CURP must be 18 characters.</value>
+  </data>
+  <data name="OngeldigCurpFormat" xml:space="preserve">
+    <value>Ongeldig CURP formaat.</value>
+  </data>
+  <data name="OngeldigCurpChecksum" xml:space="preserve">
+    <value>Ongeldig CURP controlesom.</value>
+  </data>
+  <data name="OngeldigUsccLength" xml:space="preserve">
+    <value>USCC must be 18 characters.</value>
+  </data>
+  <data name="OngeldigUsccCharacter" xml:space="preserve">
+    <value>Ongeldig character '{0}' in USCC.</value>
+  </data>
+  <data name="OngeldigUsccChecksum" xml:space="preserve">
+    <value>Ongeldig USCC controlesom.</value>
+  </data>
+  <data name="UnsupportedFormat" xml:space="preserve">
+    <value>Unsupported formaat: {0}.</value>
+  </data>
+  <data name="OngeldigRfcLength" xml:space="preserve">
+    <value>RFC must be 12 (Company) or 13 (Person) characters.</value>
+  </data>
+  <data name="OngeldigRfcFormat" xml:space="preserve">
+    <value>Ongeldig RFC formaat.</value>
+  </data>
+  <data name="OngeldigNricLength" xml:space="preserve">
+    <value>NRIC/FIN must be 9 characters.</value>
+  </data>
+  <data name="OngeldigNricPrefix" xml:space="preserve">
+    <value>Ongeldig NRIC/FIN prefix.</value>
+  </data>
+  <data name="OngeldigNricDigits" xml:space="preserve">
+    <value>NRIC/FIN must contain 7 digits.</value>
+  </data>
+  <data name="OngeldigNricChecksum" xml:space="preserve">
+    <value>Ongeldig NRIC/FIN controlesom.</value>
+  </data>
+  <data name="OngeldigCanadaRoutingNumberFormat" xml:space="preserve">
+    <value>Ongeldig Canadian Routing Number formaat. Must be 9 digits starting with 0.</value>
+  </data>
+  <data name="OngeldigBsbFormat" xml:space="preserve">
+    <value>Ongeldig BSB formaat. Must be 6 digits.</value>
+  </data>
+  <data name="OngeldigIfscFormat" xml:space="preserve">
+    <value>Ongeldig IFSC formaat. Must be 11 characters: 4 letters, 0, 6 alphanumeric.</value>
+  </data>
+  <data name="OngeldigPolandNipFormat" xml:space="preserve">
+    <value>Ongeldig Poland NIP formaat.</value>
+  </data>
+  <data name="OngeldigPolandNipChecksumForbidden" xml:space="preserve">
+    <value>Ongeldig Poland NIP controlesom (forbidden remainder).</value>
+  </data>
+  <data name="OngeldigPolandNipChecksum" xml:space="preserve">
+    <value>Ongeldig Poland NIP controlesom.</value>
+  </data>
+  <data name="OngeldigUkraineEdrpouFormat" xml:space="preserve">
+    <value>Ongeldig Ukraine EDRPOU formaat.</value>
+  </data>
+  <data name="OngeldigUkraineEdrpouChecksum" xml:space="preserve">
+    <value>Ongeldig Ukraine EDRPOU controlesom.</value>
+  </data>
+  <data name="OngeldigTurkeyVknFormat" xml:space="preserve">
+    <value>Ongeldig Turkey VKN formaat.</value>
+  </data>
+  <data name="OngeldigTurkeyVknChecksum" xml:space="preserve">
+    <value>Ongeldig Turkey VKN controlesom.</value>
+  </data>
+  <data name="OngeldigSwedenVatFormat" xml:space="preserve">
+    <value>Ongeldig Sweden VAT formaat.</value>
+  </data>
+  <data name="OngeldigSwedenVatChecksum" xml:space="preserve">
+    <value>Ongeldig Sweden VAT controlesom.</value>
+  </data>
+  <data name="OngeldigNorthMacedoniaVatFormat" xml:space="preserve">
+    <value>Ongeldig North Macedonia VAT formaat.</value>
+  </data>
+  <data name="OngeldigNorthMacedoniaVatChecksumForbidden" xml:space="preserve">
+    <value>Ongeldig North Macedonia VAT controlesom (Check digit 10).</value>
+  </data>
+  <data name="OngeldigNorthMacedoniaVatChecksum" xml:space="preserve">
+    <value>Ongeldig North Macedonia VAT controlesom.</value>
+  </data>
+  <data name="OngeldigSwitzerlandQrReferenceLength" xml:space="preserve">
+    <value>Swiss QR reference must be 27 digits.</value>
+  </data>
+  <data name="OngeldigBelgiumEnterpriseLength" xml:space="preserve">
+    <value>Enterprise number must be 10 digits (or 9 digits for old formaat).</value>
+  </data>
+  <data name="OngeldigBelgiumEnterpriseStart" xml:space="preserve">
+    <value>Enterprise number must start with 0 or 1.</value>
+  </data>
+  <data name="OngeldigBelgiumEnterpriseCheckDigitsNumeric" xml:space="preserve">
+    <value>Check digits must be numeric.</value>
+  </data>
+  <data name="OngeldigAzerbaijanVoenFormatSameDigits" xml:space="preserve">
+    <value>VOEN cannot consist of all same digits.</value>
+  </data>
+  <data name="OngeldigMonacoRciFormat" xml:space="preserve">
+    <value>Ongeldig RCI formaat.</value>
+  </data>
+  <data name="OngeldigMonacoIbanBankBranchDigits" xml:space="preserve">
+    <value>Monaco Bank/Branch must be digits.</value>
+  </data>
+  <data name="OngeldigMonacoIbanRibKeyDigits" xml:space="preserve">
+    <value>Monaco RIB Key must be digits.</value>
+  </data>
+  <data name="OngeldigMonacoIbanRibKey" xml:space="preserve">
+    <value>Ongeldig RIB Key.</value>
+  </data>
+  <data name="OngeldigSerbiaPibFormat" xml:space="preserve">
+    <value>Ongeldig Serbia PIB formaat.</value>
+  </data>
+  <data name="OngeldigSerbiaPibChecksum" xml:space="preserve">
+    <value>Ongeldig Serbia PIB controlesom.</value>
+  </data>
+  <data name="OngeldigSerbiaVatFormat" xml:space="preserve">
+    <value>Ongeldig Serbia VAT formaat.</value>
+  </data>
+  <data name="OngeldigSerbiaVatChecksum" xml:space="preserve">
+    <value>Ongeldig Serbia VAT controlesom.</value>
+  </data>
+  <data name="OngeldigSanMarinoVatFormat" xml:space="preserve">
+    <value>Ongeldig San Marino VAT formaat.</value>
+  </data>
+  <data name="OngeldigSanMarinoCoeFormat" xml:space="preserve">
+    <value>Ongeldig San Marino COE formaat.</value>
+  </data>
+  <data name="OngeldigCyprusVatFormat" xml:space="preserve">
+    <value>Ongeldig Cyprus VAT formaat.</value>
+  </data>
+  <data name="OngeldigCyprusVatChecksum" xml:space="preserve">
+    <value>Ongeldig Cyprus controlesom.</value>
+  </data>
+  <data name="OngeldigRomaniaVatFormat" xml:space="preserve">
+    <value>Ongeldig Romania VAT formaat.</value>
+  </data>
+  <data name="OngeldigRomaniaVatChecksum" xml:space="preserve">
+    <value>Ongeldig Romania VAT controlesom.</value>
+  </data>
+  <data name="OngeldigRomaniaCifFormat" xml:space="preserve">
+    <value>Ongeldig Romania CIF formaat.</value>
+  </data>
+  <data name="OngeldigRomaniaCifChecksum" xml:space="preserve">
+    <value>Ongeldig Romania CIF controlesom.</value>
+  </data>
+  <data name="OngeldigNorwayVatFormat" xml:space="preserve">
+    <value>Ongeldig Norway VAT formaat.</value>
+  </data>
+  <data name="OngeldigNorwayVatChecksumForbidden" xml:space="preserve">
+    <value>Ongeldig Norway VAT controlesom (Check digit 10).</value>
+  </data>
+  <data name="OngeldigNorwayVatChecksum" xml:space="preserve">
+    <value>Ongeldig Norway VAT controlesom.</value>
+  </data>
+  <data name="OngeldigNorwayKidReference" xml:space="preserve">
+    <value>Ongeldig Norwegian KID reference.</value>
+  </data>
+  <data name="OngeldigNorwayOrgNumberFormat" xml:space="preserve">
+    <value>Ongeldig Norway Org Number formaat.</value>
+  </data>
+  <data name="OngeldigNorwayOrgNumberChecksumForbidden" xml:space="preserve">
+    <value>Ongeldig Norway Org Number controlesom (forbidden remainder).</value>
+  </data>
+  <data name="OngeldigNorwayOrgNumberChecksum" xml:space="preserve">
+    <value>Ongeldig Norway Org Number controlesom.</value>
+  </data>
+  <data name="OngeldigNorwayKidLength" xml:space="preserve">
+    <value>Norwegian KID reference must be between 3 and 25 digits.</value>
+  </data>
+  <data name="OngeldigSingaporeUenLength" xml:space="preserve">
+    <value>UEN must be 9 or 10 characters.</value>
+  </data>
+  <data name="OngeldigSingaporeUenFormat" xml:space="preserve">
+    <value>Ongeldig UEN formaat.</value>
+  </data>
+  <data name="OngeldigJapanCorporateNumberLength" xml:space="preserve">
+    <value>Corporate Number must be 13 digits.</value>
+  </data>
+  <data name="OngeldigJapanCorporateNumberFormat" xml:space="preserve">
+    <value>Corporate Number mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="OngeldigJapanCorporateNumberChecksum" xml:space="preserve">
+    <value>Ongeldig Corporate Number controlesom.</value>
+  </data>
+  <data name="OngeldigJapanMyNumberLength" xml:space="preserve">
+    <value>My Number must be 12 digits.</value>
+  </data>
+  <data name="OngeldigJapanMyNumberFormat" xml:space="preserve">
+    <value>My Number mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="OngeldigJapanMyNumberChecksum" xml:space="preserve">
+    <value>Ongeldig My Number controlesom.</value>
+  </data>
+  <data name="OngeldigIndiaPanLength" xml:space="preserve">
+    <value>PAN must be 10 characters.</value>
+  </data>
+  <data name="OngeldigIndiaPanFormat" xml:space="preserve">
+    <value>Ongeldig PAN formaat.</value>
+  </data>
+  <data name="OngeldigIndiaPanStatus" xml:space="preserve">
+    <value>Ongeldig PAN status character (4th character).</value>
+  </data>
+  <data name="OngeldigIndiaAadhaarLength" xml:space="preserve">
+    <value>Aadhaar must be 12 digits.</value>
+  </data>
+  <data name="OngeldigIndiaAadhaarFormat" xml:space="preserve">
+    <value>Aadhaar mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="OngeldigIndiaAadhaarChecksum" xml:space="preserve">
+    <value>Ongeldig Aadhaar controlesom.</value>
+  </data>
+  <data name="OngeldigIcelandVatFormat" xml:space="preserve">
+    <value>Ongeldig Iceland VAT formaat.</value>
+  </data>
+  <data name="OngeldigCheckDigitsMod10Mod11" xml:space="preserve">
+    <value>Ongeldig check digits (neither Mod10 nor Mod11 matched).</value>
+  </data>
+  <data name="OngeldigSlovakiaVatFormat" xml:space="preserve">
+    <value>Ongeldig Slovakia VAT formaat.</value>
+  </data>
+  <data name="OngeldigSlovakiaVatFormatNonNumeric" xml:space="preserve">
+    <value>Ongeldig Slovakia VAT formaat (non-numeric).</value>
+  </data>
+  <data name="OngeldigSlovakiaVatChecksum" xml:space="preserve">
+    <value>Ongeldig Slovakia VAT controlesom.</value>
+  </data>
+  <data name="OngeldigNorthMacedoniaCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected MK.</value>
+  </data>
+  <data name="BankCodeMustBeNumeric" xml:space="preserve">
+    <value>Bank code must be numeric.</value>
+  </data>
+  <data name="AccountNumberMustBeAlphanumeric" xml:space="preserve">
+    <value>Account number must be alphanumeric.</value>
+  </data>
+  <data name="NationalCheckDigitsMustBeNumeric" xml:space="preserve">
+    <value>National check digits must be numeric.</value>
+  </data>
+  <data name="OngeldigMontenegroCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected ME.</value>
+  </data>
+  <data name="AccountNumberMustBeNumeric" xml:space="preserve">
+    <value>Account number must be numeric.</value>
+  </data>
+  <data name="OngeldigMontenegroVatFormat" xml:space="preserve">
+    <value>Ongeldig Montenegro VAT formaat.</value>
+  </data>
+  <data name="OngeldigMontenegroVatChecksumRemainder10" xml:space="preserve">
+    <value>Ongeldig Montenegro VAT controlesom (Remainder 10).</value>
+  </data>
+  <data name="OngeldigMontenegroVatChecksum" xml:space="preserve">
+    <value>Ongeldig Montenegro VAT controlesom.</value>
+  </data>
+  <data name="OngeldigBulgariaVatFormat" xml:space="preserve">
+    <value>Ongeldig Bulgaria VAT formaat.</value>
+  </data>
+  <data name="OngeldigBulgariaVatChecksum" xml:space="preserve">
+    <value>Ongeldig Bulgaria VAT controlesom.</value>
+  </data>
+  <data name="OngeldigLithuaniaVatFormat" xml:space="preserve">
+    <value>Ongeldig Lithuania VAT formaat.</value>
+  </data>
+  <data name="OngeldigLithuaniaVatChecksum" xml:space="preserve">
+    <value>Ongeldig Lithuania VAT controlesom.</value>
+  </data>
+  <data name="EnterpriseNumberCannotBeEmpty" xml:space="preserve">
+    <value>Enterprise number mag niet leeg zijn.</value>
+  </data>
+  <data name="PibMustBe8Digits" xml:space="preserve">
+    <value>PIB must be 8 digits.</value>
+  </data>
+  <data name="OngeldigChecksumRemainder1" xml:space="preserve">
+    <value>Ongeldig controlesom (Remainder 1).</value>
+  </data>
+  <data name="OngeldigNetherlandsVatFormat" xml:space="preserve">
+    <value>Ongeldig Netherlands VAT formaat.</value>
+  </data>
+  <data name="OngeldigNetherlandsVatChecksumMod97OrElfproef" xml:space="preserve">
+    <value>Ongeldig controlesom (Mod 97 or Elfproef).</value>
+  </data>
+  <data name="OngeldigNetherlandsCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected NL.</value>
+  </data>
+  <data name="NetherlandsBankCodeMustBeLetters" xml:space="preserve">
+    <value>Netherlands Bank Code must be letters.</value>
+  </data>
+  <data name="NetherlandsAccountNumberMustBeDigits" xml:space="preserve">
+    <value>Netherlands Account Number must be digits.</value>
+  </data>
+  <data name="OngeldigElfproefCheck" xml:space="preserve">
+    <value>Ongeldig Elfproef check.</value>
+  </data>
+  <data name="OngeldigNorthMacedoniaEdbFormat" xml:space="preserve">
+    <value>Ongeldig North Macedonia EDB formaat.</value>
+  </data>
+  <data name="OngeldigNorthMacedoniaEdbChecksumForbiddenRemainder" xml:space="preserve">
+    <value>Ongeldig North Macedonia EDB controlesom (forbidden remainder).</value>
+  </data>
+  <data name="OngeldigNorthMacedoniaEdbChecksum" xml:space="preserve">
+    <value>Ongeldig North Macedonia EDB controlesom.</value>
+  </data>
+  <data name="IdCardCannotBeEmpty" xml:space="preserve">
+    <value>ID Card mag niet leeg zijn.</value>
+  </data>
+  <data name="IdCardMustBe18Characters" xml:space="preserve">
+    <value>ID Card must be 18 characters.</value>
+  </data>
+  <data name="First17CharactersMustBeDigits" xml:space="preserve">
+    <value>First 17 characters must be digits.</value>
+  </data>
+  <data name="LastCharacterMustBeDigitOrX" xml:space="preserve">
+    <value>Last character must be a digit or 'X'.</value>
+  </data>
+  <data name="OngeldigIdCardChecksum" xml:space="preserve">
+    <value>Ongeldig ID Card controlesom.</value>
+  </data>
+  <data name="OngeldigLuxembourgVatFormat" xml:space="preserve">
+    <value>Ongeldig Luxembourg VAT formaat.</value>
+  </data>
+  <data name="OngeldigLuxembourgVatChecksum" xml:space="preserve">
+    <value>Ongeldig Luxembourg VAT controlesom.</value>
+  </data>
+  <data name="OngeldigKosovoCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected XK.</value>
+  </data>
+  <data name="KosovoIbanMustContainOnlyDigits" xml:space="preserve">
+    <value>Kosovo IBAN mag alleen cijfers bevatten after the country code.</value>
+  </data>
+  <data name="OngeldigMoldovaVatFormat" xml:space="preserve">
+    <value>Ongeldig Moldova VAT formaat.</value>
+  </data>
+  <data name="IdnoMustBe13Digits" xml:space="preserve">
+    <value>IDNO must be 13 digits.</value>
+  </data>
+  <data name="OngeldigMoldovaCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected MD.</value>
+  </data>
+  <data name="BankCodeMustBeAlphanumeric" xml:space="preserve">
+    <value>Bank code must be alphanumeric.</value>
+  </data>
+  <data name="OngeldigGreeceVatFormat" xml:space="preserve">
+    <value>Ongeldig Greece VAT formaat.</value>
+  </data>
+  <data name="OngeldigGreeceVatChecksum" xml:space="preserve">
+    <value>Ongeldig Greece VAT controlesom.</value>
+  </data>
+  <data name="OngeldigGreenlandCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected GL.</value>
+  </data>
+  <data name="GreenlandIbanMustContainOnlyDigits" xml:space="preserve">
+    <value>Greenland IBAN mag alleen cijfers bevatten after the country code.</value>
+  </data>
+  <data name="CvrNumberMustBe8Digits" xml:space="preserve">
+    <value>CVR number must be 8 digits.</value>
+  </data>
+  <data name="OngeldigGreeceCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected GR.</value>
+  </data>
+  <data name="GreeceBankBranchCodeMustBeDigits" xml:space="preserve">
+    <value>Greece Bank/Branch code must be digits.</value>
+  </data>
+  <data name="GreeceAccountNumberMustBeAlphanumeric" xml:space="preserve">
+    <value>Greece Account Number must be alphanumeric.</value>
+  </data>
+  <data name="AfmMustBe9Digits" xml:space="preserve">
+    <value>AFM must be 9 digits.</value>
+  </data>
+  <data name="OngeldigMaltaVatFormat" xml:space="preserve">
+    <value>Ongeldig Malta VAT formaat.</value>
+  </data>
+  <data name="OngeldigMaltaVatChecksum" xml:space="preserve">
+    <value>Ongeldig Malta VAT controlesom.</value>
+  </data>
+  <data name="OngeldigCroatiaVatFormat" xml:space="preserve">
+    <value>Ongeldig Croatia VAT formaat.</value>
+  </data>
+  <data name="OngeldigCroatiaVatChecksum" xml:space="preserve">
+    <value>Ongeldig Croatia VAT controlesom.</value>
+  </data>
+  <data name="OngeldigFranceCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected FR.</value>
+  </data>
+  <data name="FranceBankBranchCodeMustBeDigits" xml:space="preserve">
+    <value>France Bank/Branch code must be digits.</value>
+  </data>
+  <data name="FranceRibKeyMustBeDigits" xml:space="preserve">
+    <value>France RIB Key must be digits.</value>
+  </data>
+  <data name="OngeldigRibKey" xml:space="preserve">
+    <value>Ongeldig RIB Key.</value>
+  </data>
+  <data name="OngeldigFranceVatFormatPrefixOrDigits" xml:space="preserve">
+    <value>Ongeldig formaat. Expected FR prefix or 11 digits.</value>
+  </data>
+  <data name="FranceVatDigitsAfterPrefix" xml:space="preserve">
+    <value>VAT number mag alleen cijfers bevatten after prefix.</value>
+  </data>
+  <data name="OngeldigNumericFormat" xml:space="preserve">
+    <value>Ongeldig numeric formaat.</value>
+  </data>
+  <data name="OngeldigSirenFormat" xml:space="preserve">
+    <value>Ongeldig SIREN formaat.</value>
+  </data>
+  <data name="OngeldigChecksumKey" xml:space="preserve">
+    <value>Ongeldig controlesom (Key).</value>
+  </data>
+  <data name="OngeldigChecksumSirenLuhn" xml:space="preserve">
+    <value>Ongeldig controlesom (SIREN Luhn).</value>
+  </data>
+  <data name="OngeldigGibraltarCompanyNumberFormat" xml:space="preserve">
+    <value>Ongeldig Gibraltar Company Number formaat.</value>
+  </data>
+  <data name="OngeldigGibraltarCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected GI.</value>
+  </data>
+  <data name="GibraltarBankCodeMustBeLetters" xml:space="preserve">
+    <value>Gibraltar Bank Code must be letters.</value>
+  </data>
+  <data name="GibraltarAccountNumberMustBeAlphanumeric" xml:space="preserve">
+    <value>Gibraltar Account Number must be alphanumeric.</value>
+  </data>
+  <data name="OngeldigGermanyVatFormat" xml:space="preserve">
+    <value>Ongeldig Germany VAT formaat.</value>
+  </data>
+  <data name="SteuernummerCannotBeEmpty" xml:space="preserve">
+    <value>Steuernummer mag niet leeg zijn.</value>
+  </data>
+  <data name="SteuernummerMustBe13Digits" xml:space="preserve">
+    <value>Steuernummer must be 13 digits (Unified Federal Format).</value>
+  </data>
+  <data name="OngeldigGermanyCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected DE.</value>
+  </data>
+  <data name="GermanyIbanMustContainOnlyDigits" xml:space="preserve">
+    <value>Germany IBAN mag alleen cijfers bevatten after the country code.</value>
+  </data>
+  <data name="OngeldigIrelandVatFormat" xml:space="preserve">
+    <value>Ongeldig Ireland VAT formaat.</value>
+  </data>
+  <data name="OngeldigIrelandVatChecksum" xml:space="preserve">
+    <value>Ongeldig Ireland VAT controlesom.</value>
+  </data>
+  <data name="OngeldigIrelandCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected IE.</value>
+  </data>
+  <data name="IrelandBankCodeMustBeLetters" xml:space="preserve">
+    <value>Ireland Bank Code must be letters.</value>
+  </data>
+  <data name="IrelandSortCodeAccountNumberMustBeDigits" xml:space="preserve">
+    <value>Ireland Sort Code/Account Number must be digits.</value>
+  </data>
+  <data name="OngeldigMaltaCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected MT.</value>
+  </data>
+  <data name="MaltaBankBicMustBeLetters" xml:space="preserve">
+    <value>Malta Bank BIC must be letters.</value>
+  </data>
+  <data name="MaltaSortCodeMustBeDigits" xml:space="preserve">
+    <value>Malta Sort Code must be digits.</value>
+  </data>
+  <data name="MaltaAccountNumberMustBeAlphanumeric" xml:space="preserve">
+    <value>Malta Account Number must be alphanumeric.</value>
+  </data>
+  <data name="OngeldigDenmarkVatFormat" xml:space="preserve">
+    <value>Ongeldig Denmark VAT formaat.</value>
+  </data>
+  <data name="OngeldigDenmarkVatChecksum" xml:space="preserve">
+    <value>Ongeldig Denmark VAT controlesom.</value>
+  </data>
+  <data name="OngeldigDenmarkPaymentReference" xml:space="preserve">
+    <value>Ongeldig Danish FIK/GIK reference.</value>
+  </data>
+  <data name="OngeldigDenmarkCountryCode" xml:space="preserve">
+    <value>Ongeldig country code. Expected DK.</value>
+  </data>
+  <data name="DenmarkIbanMustContainOnlyDigits" xml:space="preserve">
+    <value>Denmark IBAN mag alleen cijfers bevatten after the country code.</value>
+  </data>
+  <data name="OngeldigGeorgiaVatFormat" xml:space="preserve">
+    <value>Ongeldig Georgia VAT formaat.</value>
+  </data>
+  <data name="OngeldigGeorgiaTaxIdLength" xml:space="preserve">
+    <value>Tax ID must be 9 digits.</value>
+  </data>
+  <data name="OngeldigGeorgiaTaxIdChecksumRemainder10" xml:space="preserve">
+    <value>Ongeldig controlesom (Remainder 10).</value>
+  </data>
+  <data name="OngeldigDenmarkFikLength" xml:space="preserve">
+    <value>FIK reference lengte invalid.</value>
+  </data>
+  <data name="OngeldigDenmarkFikCheckDigit" xml:space="preserve">
+    <value>Ongeldig FIK check digit (Luhn).</value>
+  </data>
+  <data name="HandelsregisternummerCannotBeEmpty" xml:space="preserve">
+    <value>Handelsregisternummer mag niet leeg zijn.</value>
+  </data>
+  <data name="OngeldigGermanyHandelsregisternummerFormat" xml:space="preserve">
+    <value>Ongeldig Handelsregisternummer formaat. Expected HRA or HRB followed by digits.</value>
+  </data>
+  <data name="SiretCannotBeEmpty" xml:space="preserve">
+    <value>SIRET number mag niet leeg zijn.</value>
+  </data>
+  <data name="OngeldigSiretFormat" xml:space="preserve">
+    <value>Ongeldig formaat. Expected 14 digits.</value>
+  </data>
+  <data name="OngeldigSiretChecksum" xml:space="preserve">
+    <value>Ongeldig controlesom (Luhn).</value>
+  </data>
+  <data name="OngeldigFinlandVatFormat" xml:space="preserve">
+    <value>Ongeldig Finland VAT formaat.</value>
+  </data>
+  <data name="OngeldigFinlandVatChecksumCheckDigit10" xml:space="preserve">
+    <value>Ongeldig controlesom (Check digit 10).</value>
+  </data>
+  <data name="OngeldigFinlandVatChecksum" xml:space="preserve">
+    <value>Ongeldig Finland VAT controlesom.</value>
+  </data>
+  <data name="IbanEmpty" xml:space="preserve">
+    <value>IBAN mag niet leeg zijn.</value>
+  </data>
+  <data name="VatNumberEmpty" xml:space="preserve">
+    <value>VAT number mag niet leeg zijn.</value>
+  </data>
+  <data name="FranceSirenEmpty" xml:space="preserve">
+    <value>SIREN number mag niet leeg zijn.</value>
+  </data>
+  <data name="FranceSirenOngeldigFormat" xml:space="preserve">
+    <value>Ongeldig formaat. Expected 9 digits.</value>
+  </data>
+  <data name="FranceSirenOngeldigChecksum" xml:space="preserve">
+    <value>Ongeldig controlesom (Luhn).</value>
+  </data>
+  <data name="FaroeIslandsVatOngeldigFormat" xml:space="preserve">
+    <value>Ongeldig Faroe Islands VAT formaat.</value>
+  </data>
+  <data name="FinlandBusinessIdEmpty" xml:space="preserve">
+    <value>Enterprise number mag niet leeg zijn.</value>
+  </data>
+  <data name="FinlandBusinessIdOngeldigLength" xml:space="preserve">
+    <value>Business ID must be 8 digits.</value>
+  </data>
+  <data name="FinlandBusinessIdOngeldigChecksumRemainder1" xml:space="preserve">
+    <value>Ongeldig controlesom (Remainder 1 is not allowed).</value>
+  </data>
+  <data name="CzechRepublicIbanOngeldigPrefixChecksum" xml:space="preserve">
+    <value>Ongeldig Czech Prefix controlesom.</value>
+  </data>
+  <data name="CzechRepublicIbanOngeldigAccountChecksum" xml:space="preserve">
+    <value>Ongeldig Czech Account Number controlesom.</value>
+  </data>
+  <data name="CzechRepublicIcoEmpty" xml:space="preserve">
+    <value>IČO mag niet leeg zijn.</value>
+  </data>
+  <data name="CzechRepublicIcoOngeldigFormat" xml:space="preserve">
+    <value>Ongeldig Czech Republic IČO formaat.</value>
+  </data>
+  <data name="CzechRepublicIcoOngeldigChecksum" xml:space="preserve">
+    <value>Ongeldig Czech Republic IČO controlesom.</value>
+  </data>
+  <data name="FinlandPaymentReferenceEmpty" xml:space="preserve">
+    <value>Reference mag niet leeg zijn.</value>
+  </data>
+  <data name="FinlandPaymentReferenceOngeldigFormat" xml:space="preserve">
+    <value>Ongeldig Finnish payment reference.</value>
+  </data>
+  <data name="CyprusTicEmpty" xml:space="preserve">
+    <value>TIC mag niet leeg zijn.</value>
+  </data>
+  <data name="CyprusTicOngeldigFormat" xml:space="preserve">
+    <value>Ongeldig Cyprus TIC formaat.</value>
+  </data>
+  <data name="CyprusTicOngeldigChecksum" xml:space="preserve">
+    <value>Ongeldig Cyprus TIC controlesom.</value>
+  </data>
+  <data name="CyprusIbanOngeldigBankCode" xml:space="preserve">
+    <value>Cyprus Bank Code must be digits.</value>
+  </data>
+  <data name="CyprusIbanOngeldigBranchCode" xml:space="preserve">
+    <value>Cyprus Branch Code must be digits.</value>
+  </data>
+  <data name="CyprusIbanOngeldigAccount" xml:space="preserve">
+    <value>Cyprus Account Number must be alphanumeric.</value>
+  </data>
+  <data name="AzerbaijanVatOngeldigFormat" xml:space="preserve">
+    <value>Ongeldig Azerbaijan VAT formaat.</value>
+  </data>
+  <data name="AzerbaijanIbanOngeldigBankCode" xml:space="preserve">
+    <value>Bank Code must be letters.</value>
+  </data>
+  <data name="AzerbaijanIbanOngeldigAccount" xml:space="preserve">
+    <value>Account Number must be alphanumeric.</value>
+  </data>
+  <data name="AustriaFirmenbuchEmpty" xml:space="preserve">
+    <value>Firmenbuchnummer mag niet leeg zijn.</value>
+  </data>
+  <data name="AustriaFirmenbuchOngeldigFormat" xml:space="preserve">
+    <value>Ongeldig formaat. Expected 1-6 digits followed by a letter (optional FN prefix).</value>
+  </data>
+  <data name="BulgariaIbanOngeldigBankCode" xml:space="preserve">
+    <value>Bulgaria Bank Code must be letters.</value>
+  </data>
+  <data name="BulgariaUicEmpty" xml:space="preserve">
+    <value>UIC mag niet leeg zijn.</value>
+  </data>
+  <data name="BulgariaUicOngeldigFormat" xml:space="preserve">
+    <value>Ongeldig UIC formaat (must be 9 or 13 digits).</value>
+  </data>
+  <data name="BulgariaUicOngeldigChecksum9" xml:space="preserve">
+    <value>Ongeldig UIC controlesom (9 digits).</value>
+  </data>
+  <data name="BulgariaUicOngeldigChecksumBase" xml:space="preserve">
+    <value>Ongeldig base UIC (first 9 digits).</value>
+  </data>
+  <data name="BulgariaUicOngeldigChecksum13" xml:space="preserve">
+    <value>Ongeldig UIC controlesom (13 digits).</value>
+  </data>
+  <data name="BelarusVatOngeldigFormat" xml:space="preserve">
+    <value>Ongeldig Belarus VAT formaat.</value>
+  </data>
+  <data name="BelarusVatOngeldigChecksumMod11" xml:space="preserve">
+    <value>Ongeldig controlesom (Mod 11 result is 10).</value>
+  </data>
+  <data name="AlbaniaIbanOngeldigBankCode" xml:space="preserve">
+    <value>Bank code must be numeric.</value>
+  </data>
+  <data name="AlbaniaIbanOngeldigBranchCode" xml:space="preserve">
+    <value>Branch code must be numeric.</value>
+  </data>
+  <data name="AlbaniaIbanOngeldigControlChar" xml:space="preserve">
+    <value>Control character must be alphanumeric.</value>
+  </data>
+  <data name="AlbaniaIbanOngeldigAccount" xml:space="preserve">
+    <value>Account number must be alphanumeric.</value>
+  </data>
+  <data name="OngeldigIsoReferenceLength" xml:space="preserve">
+    <value>Reference lengte must be between 5 and 25 characters.</value>
+  </data>
+  <data name="OngeldigIsoReferencePrefix" xml:space="preserve">
+    <value>Reference must start with 'RF'.</value>
+  </data>
+  <data name="OngeldigIsoReferenceCharacters" xml:space="preserve">
+    <value>Reference contains invalid characters.</value>
+  </data>
+  <data name="UnsupportedPaymentReferenceFormat" xml:space="preserve">
+    <value>Format {0} is not supported by IsoPaymentReferenceValidator.</value>
+  </data>
+  <data name="OngeldigLeiLength" xml:space="preserve">
+    <value>LEI must be exactly 20 characters.</value>
+  </data>
+  <data name="OngeldigLeiFormat" xml:space="preserve">
+    <value>LEI must contain only alphanumeric characters.</value>
+  </data>
+  <data name="LeiParsingFailed" xml:space="preserve">
+    <value>Failed to parse LEI for controlesom calculation.</value>
+  </data>
+  <data name="OngeldigLeiChecksum" xml:space="preserve">
+    <value>Ongeldig LEI controlesom.</value>
+  </data>
+  <data name="OngeldigBicLength" xml:space="preserve">
+    <value>BIC must be 8 or 11 characters long.</value>
+  </data>
+  <data name="OngeldigBicBankCode" xml:space="preserve">
+    <value>Bank code must contain only letters.</value>
+  </data>
+  <data name="OngeldigBicCountryCode" xml:space="preserve">
+    <value>Country code must contain only letters.</value>
+  </data>
+  <data name="OngeldigBicLocationCode" xml:space="preserve">
+    <value>Location code must be alphanumeric.</value>
+  </data>
+  <data name="OngeldigBicBranchCode" xml:space="preserve">
+    <value>Branch code must be alphanumeric.</value>
+  </data>
+  <data name="OngeldigIban" xml:space="preserve">
+    <value>Ongeldig IBAN.</value>
+  </data>
+  <data name="OngeldigBrazilBankCodeFormat" xml:space="preserve">
+    <value>Ongeldig Brazil Bank Code formaat.</value>
+  </data>
+  <data name="OngeldigAbnLength" xml:space="preserve">
+    <value>Ongeldig ABN lengte.</value>
+  </data>
+  <data name="OngeldigAbnFormat" xml:space="preserve">
+    <value>Ongeldig ABN formaat.</value>
+  </data>
+  <data name="OngeldigAbnChecksum" xml:space="preserve">
+    <value>Ongeldig ABN controlesom.</value>
+  </data>
+  <data name="OngeldigSinLength" xml:space="preserve">
+    <value>Ongeldig SIN lengte.</value>
+  </data>
+  <data name="OngeldigSinFormat" xml:space="preserve">
+    <value>Ongeldig SIN formaat.</value>
+  </data>
+  <data name="OngeldigSinChecksum" xml:space="preserve">
+    <value>Ongeldig SIN controlesom.</value>
+  </data>
+  <data name="OngeldigEinLength" xml:space="preserve">
+    <value>Ongeldig EIN lengte.</value>
+  </data>
+  <data name="OngeldigEinFormat" xml:space="preserve">
+    <value>Ongeldig EIN formaat.</value>
+  </data>
+  <data name="BankAccountMustBeDigits" xml:space="preserve">
+    <value>Bank account mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="OngeldigJapanBankAccountLength" xml:space="preserve">
+    <value>Ongeldig Japan bank account lengte.</value>
+  </data>
+  <data name="NoTaxIdValidatorRegistered" xml:space="preserve">
+    <value>Geen BTW-validator geregistreerd for this country.</value>
+  </data>
+  <data name="OngeldigTaxId" xml:space="preserve">
+    <value>Ongeldig Tax ID.</value>
+  </data>
+  <data name="NoNationalIdValidatorRegistered" xml:space="preserve">
+    <value>Geen nationaal ID-validator geregistreerd for this country.</value>
+  </data>
+  <data name="OngeldigNationalId" xml:space="preserve">
+    <value>Ongeldig National ID.</value>
+  </data>
+  <data name="OngeldigBnLength" xml:space="preserve">
+    <value>Ongeldig Business Number lengte.</value>
+  </data>
+  <data name="OngeldigBnFormat" xml:space="preserve">
+    <value>Ongeldig Business Number formaat.</value>
+  </data>
+  <data name="OngeldigBnChecksum" xml:space="preserve">
+    <value>Ongeldig Business Number controlesom.</value>
+  </data>
+  <data name="NoBankRoutingValidatorRegistered" xml:space="preserve">
+    <value>No Bank Routing validator registered for this country.</value>
+  </data>
+  <data name="OngeldigBankRoutingNumber" xml:space="preserve">
+    <value>Ongeldig Bank Routing Number.</value>
+  </data>
+  <data name="OngeldigVaticanIbanFormat" xml:space="preserve">
+    <value>Ongeldig Vatican IBAN formaat.</value>
+  </data>
+  <data name="OngeldigTfnLength" xml:space="preserve">
+    <value>Ongeldig TFN lengte.</value>
+  </data>
+  <data name="OngeldigTfnFormat" xml:space="preserve">
+    <value>Ongeldig TFN formaat.</value>
+  </data>
+  <data name="OngeldigTfnChecksum" xml:space="preserve">
+    <value>Ongeldig TFN controlesom.</value>
+  </data>
+  <data name="OngeldigVaticanVatFormat" xml:space="preserve">
+    <value>Ongeldig Vatican VAT formaat.</value>
+  </data>
+  <data name="OngeldigVaticanVatChecksum" xml:space="preserve">
+    <value>Ongeldig Vatican VAT controlesom.</value>
+  </data>
+  <data name="OngeldigSingaporeBankAccountLength" xml:space="preserve">
+    <value>Ongeldig Singapore bank account lengte.</value>
+  </data>
+  <data name="OngeldigUkBankCodeFormat" xml:space="preserve">
+    <value>Ongeldig UK Bank Code formaat.</value>
+  </data>
+  <data name="OngeldigUkSortCodeFormat" xml:space="preserve">
+    <value>Ongeldig UK Sort Code formaat.</value>
+  </data>
+  <data name="OngeldigCrnLength" xml:space="preserve">
+    <value>Ongeldig CRN lengte.</value>
+  </data>
+  <data name="OngeldigCrnFormat" xml:space="preserve">
+    <value>Ongeldig CRN formaat.</value>
+  </data>
+  <data name="OngeldigUkraineBankCodeFormat" xml:space="preserve">
+    <value>Ongeldig Ukraine Bank Code formaat.</value>
+  </data>
+  <data name="OngeldigUkraineAccountNumberFormat" xml:space="preserve">
+    <value>Ongeldig Ukraine Account Number formaat.</value>
+  </data>
+  <data name="OngeldigCnapsFormat" xml:space="preserve">
+    <value>Ongeldig CNAPS formaat.</value>
+  </data>
+  <data name="OngeldigVtalLength" xml:space="preserve">
+    <value>Ongeldig V-tal lengte.</value>
+  </data>
+  <data name="UnsupportedCountryCode" xml:space="preserve">
+    <value>Niet-ondersteunde landcode.</value>
+  </data>
+  <data name="OngeldigFinnishReferenceLength" xml:space="preserve">
+    <value>Ongeldig Finnish reference lengte.</value>
+  </data>
+  <data name="OngeldigSloveniaVatFormat" xml:space="preserve">
+    <value>Ongeldig Slovenia VAT formaat.</value>
+  </data>
+  <data name="OngeldigSloveniaVatChecksumForbidden" xml:space="preserve">
+    <value>Ongeldig Slovenia VAT controlesom (forbidden).</value>
+  </data>
+  <data name="OngeldigSloveniaVatChecksum" xml:space="preserve">
+    <value>Ongeldig Slovenia VAT controlesom.</value>
+  </data>
+  <data name="OngeldigSlovenianSi12Reference" xml:space="preserve">
+    <value>Ongeldig Slovenian SI12 reference.</value>
+  </data>
+  <data name="OngeldigSloveniaReferencePrefix" xml:space="preserve">
+    <value>Ongeldig Slovenia reference prefix.</value>
+  </data>
+  <data name="OngeldigSloveniaReferenceLength" xml:space="preserve">
+    <value>Ongeldig Slovenia reference lengte.</value>
+  </data>
+  <data name="OngeldigSlovakPrefixChecksum" xml:space="preserve">
+    <value>Ongeldig Slovak prefix controlesom.</value>
+  </data>
+  <data name="OngeldigSlovakAccountNumberChecksum" xml:space="preserve">
+    <value>Ongeldig Slovak account number controlesom.</value>
+  </data>
+  <data name="OngeldigNibKey" xml:space="preserve">
+    <value>Ongeldig NIB key.</value>
+  </data>
+  <data name="OngeldigSpanishDcCheck" xml:space="preserve">
+    <value>Ongeldig Spanish DC check.</value>
+  </data>
+  <data name="OngeldigCifFormat" xml:space="preserve">
+    <value>Ongeldig CIF formaat.</value>
+  </data>
+  <data name="OngeldigCifCheckLetter" xml:space="preserve">
+    <value>Ongeldig CIF check letter.</value>
+  </data>
+  <data name="OngeldigCifCheckDigit" xml:space="preserve">
+    <value>Ongeldig CIF check digit.</value>
+  </data>
+  <data name="OngeldigCifCheckCharacter" xml:space="preserve">
+    <value>Ongeldig CIF check character.</value>
+  </data>
+  <data name="OngeldigNorwayIbanFormat" xml:space="preserve">
+    <value>Ongeldig Norway IBAN formaat.</value>
+  </data>
+  <data name="OngeldigNorwayBbanChecksum" xml:space="preserve">
+    <value>Ongeldig Norway BBAN controlesom.</value>
+  </data>
+  <data name="OngeldigItalianIdentifierLength" xml:space="preserve">
+    <value>Ongeldig Italian identifier lengte.</value>
+  </data>
+  <data name="OngeldigSwissQrReference" xml:space="preserve">
+    <value>Ongeldig Swiss QR reference.</value>
+  </data>
+  <data name="OngeldigCodiceFiscaleFormat" xml:space="preserve">
+    <value>Ongeldig Codice Fiscale formaat.</value>
+  </data>
+  <data name="OngeldigCodiceFiscaleCheckDigit" xml:space="preserve">
+    <value>Ongeldig Codice Fiscale check digit.</value>
+  </data>
+  <data name="OngeldigPartitaIvaFormat" xml:space="preserve">
+    <value>Ongeldig Partita IVA formaat.</value>
+  </data>
+  <data name="OngeldigPartitaIvaCheckDigit" xml:space="preserve">
+    <value>Ongeldig Partita IVA check digit.</value>
+  </data>
+  <data name="OngeldigSwitzerlandClearingNumberFormat" xml:space="preserve">
+    <value>Ongeldig Switzerland Clearing Number formaat.</value>
+  </data>
+  <data name="OngeldigSwitzerlandAccountNumberFormat" xml:space="preserve">
+    <value>Ongeldig Switzerland Account Number formaat.</value>
+  </data>
+  <data name="OngeldigLuxembourgBankCode" xml:space="preserve">
+    <value>Ongeldig Luxembourg Bank Code.</value>
+  </data>
+  <data name="VatTooShortForCountryCode" xml:space="preserve">
+    <value>VAT too short for country code.</value>
+  </data>
+  <data name="OngeldigSanMarinoCin" xml:space="preserve">
+    <value>Ongeldig San Marino CIN.</value>
+  </data>
+  <data name="OngeldigSanMarinoAbiCab" xml:space="preserve">
+    <value>Ongeldig San Marino ABI/CAB.</value>
+  </data>
+  <data name="OngeldigTurkeyBankCode" xml:space="preserve">
+    <value>Ongeldig Turkey Bank Code.</value>
+  </data>
+  <data name="OngeldigTurkeyReserveChar" xml:space="preserve">
+    <value>Ongeldig Turkey Reserve Char.</value>
+  </data>
+  <data name="OngeldigTurkeyAccountNumber" xml:space="preserve">
+    <value>Ongeldig Turkey Account Number.</value>
+  </data>
+  <data name="OngeldigSerbiaIbanFormat" xml:space="preserve">
+    <value>Ongeldig Serbia IBAN formaat.</value>
+  </data>
+  <data name="OngeldigSwedishOcrReference" xml:space="preserve">
+    <value>Ongeldig Swedish OCR reference.</value>
+  </data>
+  <data name="OngeldigRomaniaIbanFormat" xml:space="preserve">
+    <value>Ongeldig Romania IBAN formaat.</value>
+  </data>
+  <data name="OngeldigPvmLength" xml:space="preserve">
+    <value>Ongeldig PVM lengte.</value>
+  </data>
+  <data name="OngeldigSwedishOcrLength" xml:space="preserve">
+    <value>Ongeldig Swedish OCR lengte.</value>
+  </data>
+  <data name="OngeldigLengthDigit" xml:space="preserve">
+    <value>Ongeldig lengte digit.</value>
+  </data>
+</root>

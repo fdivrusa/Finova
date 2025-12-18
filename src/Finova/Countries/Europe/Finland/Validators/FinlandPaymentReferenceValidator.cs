@@ -12,25 +12,16 @@ namespace Finova.Countries.Europe.Finland.Validators;
 /// <summary>
 /// Validator for Finnish payment references (Viitenumero).
 /// </summary>
-public class FinlandPaymentReferenceValidator : IPaymentReferenceValidator
+public class FinlandPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
         if (string.IsNullOrWhiteSpace(reference))
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Reference cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.FinlandPaymentReferenceEmpty);
 
         return FinlandPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Finnish payment reference.");
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalFinland)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by FinlandPaymentReferenceValidator.");
-        }
-        return Validate(reference);
+            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.FinlandPaymentReferenceInvalidFormat);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

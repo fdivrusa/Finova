@@ -23,10 +23,16 @@ public partial class LiechtensteinVatValidator : IVatValidator
     {
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
-        return SwitzerlandVatValidator.Validate(vat);
+        var cleaned = VatSanitizer.Sanitize(vat)!.Trim().ToUpperInvariant();
+        if (cleaned.StartsWith("LI"))
+        {
+            cleaned = cleaned[2..];
+        }
+
+        return SwitzerlandVatValidator.Validate(cleaned);
     }
 
     public static VatDetails? GetVatDetails(string? vat)

@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
-using Finova.Core.Enterprise;
+using Finova.Core.Identifiers;
 
 namespace Finova.Countries.Europe.France.Validators;
 
@@ -9,7 +9,7 @@ namespace Finova.Countries.Europe.France.Validators;
 /// Format: 9 digits.
 /// Checksum: Luhn algorithm.
 /// </summary>
-public partial class FranceSirenValidator : IEnterpriseValidator
+public partial class FranceSirenValidator : ITaxIdValidator
 {
     private const string CountryCodePrefix = "FR";
     private const int SirenLength = 9;
@@ -21,19 +21,7 @@ public partial class FranceSirenValidator : IEnterpriseValidator
 
     public ValidationResult Validate(string? number) => ValidateSiren(number);
 
-    public ValidationResult Validate(string? number, string countryCode)
-    {
-        return countryCode.Equals(CountryCodePrefix, StringComparison.OrdinalIgnoreCase)
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {countryCode} is not supported by this validator.");
-    }
 
-    public ValidationResult Validate(string? number, EnterpriseNumberType type)
-    {
-        return type == EnterpriseNumberType.FranceSiren
-            ? Validate(number)
-            : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Enterprise number type {type} is not supported by this validator.");
-    }
 
     public string? Parse(string? number) => number?.Trim().Replace(" ", "").Replace(".", "");
 
@@ -41,19 +29,19 @@ public partial class FranceSirenValidator : IEnterpriseValidator
     {
         if (string.IsNullOrWhiteSpace(number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "SIREN number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.FranceSirenEmpty);
         }
 
         var normalized = number.Trim().Replace(" ", "").Replace(".", "");
 
         if (!SirenRegex().IsMatch(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid format. Expected 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.FranceSirenInvalidFormat);
         }
 
         if (!LuhnCheck(normalized))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum (Luhn).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.FranceSirenInvalidChecksum);
         }
 
         return ValidationResult.Success();

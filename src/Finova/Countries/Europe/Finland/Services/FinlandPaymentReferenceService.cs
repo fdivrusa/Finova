@@ -1,5 +1,6 @@
 using Finova.Core.Common;
 using Finova.Core.PaymentReference;
+using Finova.Core.PaymentReference.Internals;
 using System.Text.RegularExpressions;
 
 
@@ -9,20 +10,58 @@ namespace Finova.Countries.Europe.Finland.Services;
 /// <summary>
 /// Service for generating and validating Finnish payment references (Viitenumero).
 /// </summary>
-public partial class FinlandPaymentReferenceService : IsoPaymentReferenceGenerator
+public partial class FinlandPaymentReferenceService : IPaymentReferenceGenerator
 {
-    public override string CountryCode => "FI";
+    public string CountryCode => "FI";
 
     [GeneratedRegex(@"[^\d]")]
     private static partial Regex DigitsOnlyRegex();
 
-    public override string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalFinland) => format switch
+    public string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalFinland) => format switch
     {
         PaymentReferenceFormat.LocalFinland => GenerateFinnishReference(rawReference),
-        PaymentReferenceFormat.IsoRf => base.Generate(rawReference, format),
+        PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
         _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
     };
 
+    public PaymentReferenceDetails Parse(string reference)
+    {
+        var validation = ValidateStatic(reference);
+        if (!validation.IsValid)
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = string.Empty,
+                Format = PaymentReferenceFormat.Unknown,
+                IsValid = false
+            };
+        }
+
+        if (reference.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = IsoReferenceHelper.Parse(reference),
+                Format = PaymentReferenceFormat.IsoRf,
+                IsValid = true
+            };
+        }
+
+        // Finnish Reference
+        var digits = DigitsOnlyRegex().Replace(reference, "");
+        // Last digit is check digit
+        var data = digits[..^1];
+
+        return new PaymentReferenceDetails
+        {
+            Reference = reference,
+            Content = data,
+            Format = PaymentReferenceFormat.LocalFinland,
+            IsValid = true
+        };
+    }
 
     #region Static Methods (for Direct Usage)
 
@@ -37,7 +76,20 @@ public partial class FinlandPaymentReferenceService : IsoPaymentReferenceGenerat
     /// <summary>
     /// Validates a Finnish payment reference.
     /// </summary>
-    public static ValidationResult ValidateStatic(string communication) => ValidateFinnishReference(communication);
+    public static ValidationResult ValidateStatic(string communication)
+    {
+        if (string.IsNullOrWhiteSpace(communication))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        }
+
+        if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return IsoReferenceValidator.Validate(communication);
+        }
+
+        return ValidateFinnishReference(communication);
+    }
 
     #endregion
 
@@ -46,7 +98,7 @@ public partial class FinlandPaymentReferenceService : IsoPaymentReferenceGenerat
         var cleanRef = DigitsOnlyRegex().Replace(rawReference, "");
         if (string.IsNullOrEmpty(cleanRef))
         {
-            throw new ArgumentException("Reference cannot be empty.");
+            throw new ArgumentException(ValidationMessages.InputCannotBeEmpty);
         }
 
         if (cleanRef.Length < 3 || cleanRef.Length > 19)
@@ -62,14 +114,14 @@ public partial class FinlandPaymentReferenceService : IsoPaymentReferenceGenerat
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var digits = DigitsOnlyRegex().Replace(communication, "");
 
         if (digits.Length < 4 || digits.Length > 20)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Finnish reference must be between 4 and 20 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidFinnishReferenceLength);
         }
 
         var data = digits[..^1];
@@ -79,7 +131,7 @@ public partial class FinlandPaymentReferenceService : IsoPaymentReferenceGenerat
 
         return checkDigitStr == calculatedCheckDigit.ToString()
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidCheckDigit);
     }
 
     private static int CalculateCheckDigit731(string data)

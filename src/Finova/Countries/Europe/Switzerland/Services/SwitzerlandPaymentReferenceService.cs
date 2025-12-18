@@ -1,4 +1,6 @@
 using Finova.Core.PaymentReference;
+using Finova.Core.PaymentReference.Internals;
+using Finova.Core.Common;
 using System.Text.RegularExpressions;
 
 
@@ -9,9 +11,9 @@ namespace Finova.Countries.Europe.Switzerland.Services;
 /// Service for generating and validating Swiss payment references (QR-Reference / ISR).
 /// Uses Modulo 10 Recursive algorithm.
 /// </summary>
-public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGenerator
+public partial class SwitzerlandPaymentReferenceService : IPaymentReferenceGenerator
 {
-    public override string CountryCode => "CH";
+    public string CountryCode => "CH";
 
     [GeneratedRegex(@"[^\d]")]
     private static partial Regex DigitsOnlyRegex();
@@ -20,14 +22,51 @@ public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGen
     /// Generates a Swiss QR-Reference.
     /// The reference is always 27 digits long.
     /// </summary>
-    public override string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalSwitzerland) => format switch
+    public string Generate(string rawReference, PaymentReferenceFormat format = PaymentReferenceFormat.LocalSwitzerland) => format switch
     {
         PaymentReferenceFormat.LocalSwitzerland => GenerateQrReference(rawReference),
-        PaymentReferenceFormat.IsoRf => base.Generate(rawReference, format),
+        PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
         _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
     };
 
+    public PaymentReferenceDetails Parse(string reference)
+    {
+        var validation = ValidateStatic(reference);
+        if (!validation.IsValid)
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = string.Empty,
+                Format = PaymentReferenceFormat.Unknown,
+                IsValid = false
+            };
+        }
 
+        if (reference.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
+                Content = IsoReferenceHelper.Parse(reference),
+                Format = PaymentReferenceFormat.IsoRf,
+                IsValid = true
+            };
+        }
+
+        // Swiss QR Reference
+        var digits = DigitsOnlyRegex().Replace(reference, "");
+        // Last digit is check digit
+        var data = digits[..^1];
+
+        return new PaymentReferenceDetails
+        {
+            Reference = reference,
+            Content = data,
+            Format = PaymentReferenceFormat.LocalSwitzerland,
+            IsValid = true
+        };
+    }
 
     #region Static Methods (for Direct Usage)
 
@@ -39,7 +78,20 @@ public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGen
     /// <summary>
     /// Validates a Swiss QR-Reference.
     /// </summary>
-    public static Core.Common.ValidationResult ValidateStatic(string communication) => ValidateQrReference(communication);
+    public static Core.Common.ValidationResult ValidateStatic(string communication)
+    {
+        if (string.IsNullOrWhiteSpace(communication))
+        {
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, Core.Common.ValidationMessages.InputCannotBeEmpty);
+        }
+
+        if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
+            return IsoReferenceValidator.Validate(communication);
+        }
+
+        return ValidateQrReference(communication);
+    }
 
     #endregion
 
@@ -49,7 +101,7 @@ public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGen
 
         if (string.IsNullOrEmpty(cleanRef))
         {
-            throw new ArgumentException("Reference cannot be empty.");
+            throw new ArgumentException(ValidationMessages.InputCannotBeEmpty);
         }
 
         if (cleanRef.Length > 26)
@@ -68,7 +120,7 @@ public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGen
     {
         if (string.IsNullOrWhiteSpace(communication))
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, "Communication cannot be empty.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidInput, Core.Common.ValidationMessages.InputCannotBeEmpty);
         }
 
         var digits = DigitsOnlyRegex().Replace(communication, "");
@@ -76,7 +128,7 @@ public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGen
         // Swiss QR Reference is strictly 27 digits
         if (digits.Length != 27)
         {
-            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, "Swiss QR reference must be 27 digits.");
+            return Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidLength, Core.Common.ValidationMessages.InvalidSwitzerlandQrReferenceLength);
         }
 
         var data = digits[..^1];
@@ -85,7 +137,7 @@ public partial class SwitzerlandPaymentReferenceService : IsoPaymentReferenceGen
 
         return checkDigitStr == calculatedCheckDigit.ToString()
             ? Core.Common.ValidationResult.Success()
-            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, "Invalid check digits.");
+            : Core.Common.ValidationResult.Failure(Core.Common.ValidationErrorCode.InvalidCheckDigit, Core.Common.ValidationMessages.InvalidCheckDigit);
     }
 
     private static int CalculateMod10Recursive(string data)

@@ -35,6 +35,11 @@ src/
 - Provides extension methods for FluentValidation (`MustBeValidIban`, etc.).
 - Depends on `Finova` and `FluentValidation`.
 
+### 4. Dependency Injection
+- Finova uses **Assembly Scanning** to automatically register validators.
+- New validators added to the `Finova.Countries.[Region]` namespace are automatically picked up by the DI container.
+- This eliminates the need for manual registration in extension methods.
+
 ## 📦 NuGet Package
 
 The `Finova` NuGet package is a single package that includes:

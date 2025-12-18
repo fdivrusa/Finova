@@ -20,8 +20,8 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IIbanParser, IbanParser>();
         services.AddSingleton<IBicValidator, BicValidator>();
         services.AddSingleton<IPaymentCardValidator, PaymentCardValidator>();
-        services.AddSingleton<IPaymentReferenceValidator, IsoPaymentReferenceValidator>();
-        services.AddSingleton<IPaymentReferenceGenerator, IsoPaymentReferenceGenerator>();
+        services.AddSingleton<IIsoPaymentReferenceValidator, IsoPaymentReferenceValidator>();
+        services.AddSingleton<IIsoPaymentReferenceGenerator, IsoPaymentReferenceGenerator>();
 
         return services;
     }

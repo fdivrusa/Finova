@@ -8,27 +8,18 @@ namespace Finova.Countries.Europe.Norway.Validators;
 /// <summary>
 /// Validator for Norwegian payment references (KID).
 /// </summary>
-public class NorwayPaymentReferenceValidator : IPaymentReferenceValidator
+public class NorwayPaymentReferenceValidator : IValidator<PaymentReferenceDetails>
 {
     public ValidationResult Validate(string? reference)
     {
         if (string.IsNullOrWhiteSpace(reference))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "Reference cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         return NorwayPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Norwegian KID reference.");
-    }
-
-    public ValidationResult Validate(string? reference, PaymentReferenceFormat format)
-    {
-        if (format != PaymentReferenceFormat.LocalNorway)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by NorwayPaymentReferenceValidator.");
-        }
-        return Validate(reference);
+            : ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidNorwayKidReference);
     }
 
     public PaymentReferenceDetails? Parse(string? reference)

@@ -6,7 +6,7 @@ namespace Finova.Countries.Europe.CzechRepublic.Validators;
 
 public partial class CzechRepublicVatValidator : IVatValidator
 {
-    [GeneratedRegex(@"^CZ\d{8,10}$")]
+    [GeneratedRegex(@"^\d{8,10}$")]
     private static partial Regex VatRegex();
 
     private const string VatPrefix = "CZ";
@@ -23,7 +23,7 @@ public partial class CzechRepublicVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -32,18 +32,14 @@ public partial class CzechRepublicVatValidator : IVatValidator
             cleaned = cleaned[2..];
         }
 
-        if (!VatRegex().IsMatch(VatPrefix + cleaned)) // Regex expects CZ prefix
+        if (!VatRegex().IsMatch(cleaned))
         {
-            // Regex check might fail if we stripped CZ. Let's check digits only.
-            if (!long.TryParse(cleaned, out _))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Czech Republic VAT format.");
-            }
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidVatFormat, "Czech Republic"));
         }
 
         if (cleaned.Length < 8 || cleaned.Length > 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidLength);
         }
 
         // Checksum Validation
@@ -61,7 +57,7 @@ public partial class CzechRepublicVatValidator : IVatValidator
             int lastDigit = cleaned[7] - '0';
             if (checkDigit != lastDigit)
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Czech Republic VAT checksum.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "Czech Republic"));
             }
         }
         // Special (Individuals): 9 or 10 digits. Divisible by 11.
@@ -69,7 +65,7 @@ public partial class CzechRepublicVatValidator : IVatValidator
         {
             if (!ChecksumHelper.IsDivisibleBy(cleaned, 11))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Czech Republic VAT checksum (Must be divisible by 11).");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "Czech Republic"));
             }
         }
 

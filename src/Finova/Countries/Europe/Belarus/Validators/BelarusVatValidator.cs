@@ -23,7 +23,7 @@ public partial class BelarusVatValidator : IVatValidator
 
         if (string.IsNullOrWhiteSpace(vat))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "VAT number cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.VatNumberEmpty);
         }
 
         var cleaned = vat.Trim().ToUpperInvariant();
@@ -34,7 +34,7 @@ public partial class BelarusVatValidator : IVatValidator
 
         if (!VatRegex().IsMatch(cleaned))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Belarus VAT format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BelarusVatInvalidFormat);
         }
 
         int[] weights = { 29, 23, 19, 17, 13, 7, 5, 3 };
@@ -46,12 +46,12 @@ public partial class BelarusVatValidator : IVatValidator
 
         if (calculated == 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum (Mod 11 result is 10).");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.BelarusVatInvalidChecksumMod11);
         }
 
         if (calculated != checkDigit)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
         }
 
         return ValidationResult.Success();

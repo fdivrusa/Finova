@@ -15,44 +15,31 @@ public class GreeceIbanValidator : IIbanValidator
     {
         if (string.IsNullOrWhiteSpace(iban))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, "IBAN cannot be empty.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
         var normalized = IbanHelper.NormalizeIban(iban);
 
         if (normalized.Length != GreeceIbanLength)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, $"Invalid length. Expected {GreeceIbanLength}, got {normalized.Length}.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedXGotY, GreeceIbanLength, normalized.Length));
         }
 
         if (!normalized.StartsWith("GR", StringComparison.OrdinalIgnoreCase))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, "Invalid country code. Expected GR.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidCountryCode, ValidationMessages.InvalidGreeceCountryCode);
         }
 
-
-        // Bank Code (Pos 4-6) and Branch Code (Pos 7-10) must be digits
-        // Range: 4 to 11
-        for (int i = 4; i < 11; i++)
+        // Validate BBAN
+        string bban = normalized.Substring(4);
+        var bbanResult = GreeceBbanValidator.Validate(bban);
+        if (!bbanResult.IsValid)
         {
-            if (!char.IsDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Greece Bank/Branch code must be digits.");
-            }
-        }
-
-        // Account Number (Pos 11-26) can be Alphanumeric
-        // Range: 11 to 27
-        for (int i = 11; i < GreeceIbanLength; i++)
-        {
-            if (!char.IsLetterOrDigit(normalized[i]))
-            {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Greece Account Number must be alphanumeric.");
-            }
+            return bbanResult;
         }
 
         // 4. Checksum Validation (Modulo 97)
         return IbanHelper.IsValidIban(normalized)
             ? ValidationResult.Success()
-            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
     }
 }

@@ -24,8 +24,8 @@ public class FinlandPaymentReferenceServiceTests
 
     [Theory]
     [InlineData("123456", "1234561")] // Example from calculation: 123456 -> 1
-    [InlineData("100", "1009")] // 1*7 + 0*3 + 0*1 = 7. 10-7=3. Wait. 100: 1*1 + 0*3 + 0*7 = 1. 10-1=9. Correct.
-    [InlineData("123", "1232")] // 1*1 + 2*3 + 3*7 = 1+6+21=28. 30-28=2. Correct.
+    [InlineData("100", "1009")] // 1*7 + 0*3 + 0*1 = 7. 10-7=3.
+    [InlineData("123", "1232")] // 1*1 + 2*3 + 3*7 = 1+6+21=28. 30-28=2.
     public void Generate_WithLocalFinlandFormat_ReturnsCorrectReference(string input, string expected)
     {
         // Act
