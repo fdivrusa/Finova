@@ -52,7 +52,7 @@ Fast, offline regex and checksum validation for European and International forma
     - **Parsing & Validation:** Extracts country code, check digits, bank code, branch code, and account number.
     - **Country Specific Rules:** Supports specific validation rules for **51 European countries and territories** (Belgium, France, Germany, Italy, Spain, UK, Netherlands, etc.).
     - **Generic Validation:** Supports parsing and validating checksums for all ISO-compliant countries.
-- **BBAN Validation (New in v1.5.0):**
+- **BBAN Validation (New in v1.4.0):**
     - **Dedicated Validators:** Specific validators for **51 European countries** (e.g., `BelgiumBbanValidator`, `FranceBbanValidator`).
     - **Zero Allocation:** High-performance static methods (`Validate(string)`) for critical paths.
     - **Unified Interface:** `IBbanValidator` for dependency injection scenarios.
@@ -463,13 +463,15 @@ Finova is strictly offline. Future updates focus on schema compliance, developer
 ## 🔮 v1.4.0 — National Identifiers *(Planned)*
 - **National IDs:** Netherlands KVK, Spain NIF/CIF
 - **Modern Payment Strings:** EPC QR Code payload builder, Swiss QR parsing
+- **USA:** ABA routing number checksums
+- **Canada:** Transit number validation
+- **Australia:** BSB number validation
 
 ---
 
 ## 🔮 v1.5.0 — Global Routing *(Future)*
-- **USA:** ABA routing number checksums
-- **Canada:** Transit number validation
-- **Australia:** BSB number validation
+- **EPC QR String Generation**: Generate the raw payload string for European Payments Council (EPC) QR codes.
+- **Zero-Dependency**: Focus on string generation to maintain the "no external dependencies" rule (no image libraries required in core).
 
 ---
 
