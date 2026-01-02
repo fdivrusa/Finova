@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -1226,5 +1227,38 @@
   </data>
   <data name="RegistrikoodCannotBeEmpty" xml:space="preserve">
     <value>Registrikood darf nicht leer sein.</value>
+  </data>
+  <data name="InvalidIsinLength" xml:space="preserve">
+    <value>ISIN muss genau 12 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidIsinFormat" xml:space="preserve">
+    <value>ISIN muss mit 2 Buchstaben beginnen, gefolgt von 9 alphanumerischen Zeichen und 1 Prüfziffer.</value>
+  </data>
+  <data name="InvalidIsinChecksum" xml:space="preserve">
+    <value>Ungültige ISIN-Prüfsumme.</value>
+  </data>
+  <data name="InvalidCusipLength" xml:space="preserve">
+    <value>CUSIP muss genau 9 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidCusipFormat" xml:space="preserve">
+    <value>CUSIP muss 8 alphanumerische Zeichen gefolgt von 1 Prüfziffer enthalten.</value>
+  </data>
+  <data name="InvalidCusipChecksum" xml:space="preserve">
+    <value>Ungültige CUSIP-Prüfsumme.</value>
+  </data>
+  <data name="InvalidSedolLength" xml:space="preserve">
+    <value>SEDOL muss genau 7 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidSedolFormat" xml:space="preserve">
+    <value>SEDOL enthält ungültige Zeichen. Vokale (A, E, I, O, U) sind nicht erlaubt.</value>
+  </data>
+  <data name="InvalidSedolChecksum" xml:space="preserve">
+    <value>Ungültige SEDOL-Prüfsumme.</value>
+  </data>
+  <data name="InvalidCurrencyLength" xml:space="preserve">
+    <value>Währungscode muss genau 3 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidCurrencyCode" xml:space="preserve">
+    <value>Unbekannter Währungscode.</value>
   </data>
 </root>

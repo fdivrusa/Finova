@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -1227,5 +1226,38 @@
   </data>
   <data name="VatTooShortForCountryCode" xml:space="preserve">
     <value>Le numéro de TVA est trop court pour extraire le code pays.</value>
+  </data>
+  <data name="InvalidIsinLength" xml:space="preserve">
+    <value>L'ISIN doit contenir exactement 12 caractères.</value>
+  </data>
+  <data name="InvalidIsinFormat" xml:space="preserve">
+    <value>L'ISIN doit commencer par 2 lettres suivies de 9 caractères alphanumériques et 1 chiffre de contrôle.</value>
+  </data>
+  <data name="InvalidIsinChecksum" xml:space="preserve">
+    <value>Somme de contrôle ISIN invalide.</value>
+  </data>
+  <data name="InvalidCusipLength" xml:space="preserve">
+    <value>Le CUSIP doit contenir exactement 9 caractères.</value>
+  </data>
+  <data name="InvalidCusipFormat" xml:space="preserve">
+    <value>Le CUSIP doit contenir 8 caractères alphanumériques suivis de 1 chiffre de contrôle.</value>
+  </data>
+  <data name="InvalidCusipChecksum" xml:space="preserve">
+    <value>Somme de contrôle CUSIP invalide.</value>
+  </data>
+  <data name="InvalidSedolLength" xml:space="preserve">
+    <value>Le SEDOL doit contenir exactement 7 caractères.</value>
+  </data>
+  <data name="InvalidSedolFormat" xml:space="preserve">
+    <value>Le SEDOL contient des caractères invalides. Les voyelles (A, E, I, O, U) ne sont pas autorisées.</value>
+  </data>
+  <data name="InvalidSedolChecksum" xml:space="preserve">
+    <value>Somme de contrôle SEDOL invalide.</value>
+  </data>
+  <data name="InvalidCurrencyLength" xml:space="preserve">
+    <value>Le code devise doit contenir exactement 3 caractères.</value>
+  </data>
+  <data name="InvalidCurrencyCode" xml:space="preserve">
+    <value>Code devise inconnu.</value>
   </data>
 </root>
