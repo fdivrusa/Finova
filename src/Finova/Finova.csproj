@@ -4,6 +4,7 @@
         <IsPackable>true</IsPackable>
 
         <PackageId>Finova</PackageId>
+        <Version>1.4.0-alpha.4</Version>
         <Title>Finova: Financial Validation Toolkit (IBAN, BIC, Cards)</Title>
         <Product>Finova SDK</Product>
         <Description>
@@ -12,7 +13,8 @@
             Features:
             ✔️ Universal IBAN Parser: Auto-detects and validates rules for Europe (DE, IT, ES, FR,
             BE, NL, UK) and Global formats.
-            ✔️ National IDs: Validates National ID / Citizen ID numbers for 51 European countries (e.g., France NIR, Italy Codice Fiscale, UK NINO).
+            ✔️ National IDs: Validates National ID / Citizen ID numbers for 51 European countries
+            (e.g., France NIR, Italy Codice Fiscale, UK NINO).
             ✔️ Enterprise Numbers: Validates French SIRET/SIREN, Belgian KBO/BCE, German
             Steuernummer, and more (51 countries).
             ✔️ VAT Numbers: Validates EU VAT formats and checksums (VIES offline syntax).

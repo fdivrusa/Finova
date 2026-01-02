@@ -40,6 +40,9 @@ public static class ServiceCollectionExtensions
         services.AddFinovaSouthAmerica();
         services.AddFinovaAsia();
         services.AddFinovaOceania();
+        services.AddFinovaMiddleEast();
+        services.AddFinovaAfrica();
+        services.AddFinovaSoutheastAsia();
 
         return services;
     }

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -53,1020 +54,1178 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="InputCannotBeEmpty" xml:space="preserve">
-    <value>Input mag niet leeg zijn.</value>
+    <value>Invoer mag niet leeg zijn.</value>
   </data>
-  <data name="OngeldigFormat" xml:space="preserve">
+  <data name="InvalidFormat" xml:space="preserve">
     <value>Ongeldig formaat.</value>
   </data>
-  <data name="OngeldigChecksum" xml:space="preserve">
-    <value>Ongeldig controlesom.</value>
+  <data name="InvalidChecksum" xml:space="preserve">
+    <value>Ongeldige controlesom.</value>
   </data>
-  <data name="OngeldigLength" xml:space="preserve">
-    <value>Ongeldig lengte.</value>
+  <data name="InvalidLength" xml:space="preserve">
+    <value>Ongeldige lengte.</value>
   </data>
-  <data name="OngeldigCountryCode" xml:space="preserve">
-    <value>Ongeldig country code.</value>
+  <data name="InvalidCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode.</value>
   </data>
   <data name="UnsupportedCountry" xml:space="preserve">
-    <value>Country not supported.</value>
+    <value>Land niet ondersteund.</value>
   </data>
-  <data name="OngeldigCheckDigit" xml:space="preserve">
-    <value>Ongeldig check digits.</value>
+  <data name="InvalidCheckDigit" xml:space="preserve">
+    <value>Ongeldige controlecijfers.</value>
   </data>
   <data name="MustContainOnlyDigits" xml:space="preserve">
-    <value>Input mag alleen cijfers bevatten.</value>
+    <value>Invoer mag alleen cijfers bevatten.</value>
   </data>
   <data name="MustContainOnlyDigitsAndLetters" xml:space="preserve">
-    <value>Input mag alleen cijfers bevatten and letters.</value>
+    <value>Invoer mag alleen cijfers en letters bevatten.</value>
   </data>
-  <data name="OngeldigLengthExpectedX" xml:space="preserve">
-    <value>Ongeldig lengte. Expected {0} characters.</value>
+  <data name="InvalidLengthExpectedX" xml:space="preserve">
+    <value>Ongeldige lengte. Verwacht {0} tekens.</value>
   </data>
-  <data name="OngeldigLengthExpectedXGotY" xml:space="preserve">
-    <value>Ongeldig lengte. Expected {0}, got {1}.</value>
+  <data name="InvalidLengthExpectedXGotY" xml:space="preserve">
+    <value>Ongeldige lengte. Verwacht {0}, ontvangen {1}.</value>
   </data>
-  <data name="OngeldigVatFormat" xml:space="preserve">
-    <value>Ongeldig {0} VAT formaat.</value>
+  <data name="InvalidVatFormat" xml:space="preserve">
+    <value>Ongeldig {0} BTW-formaat.</value>
   </data>
-  <data name="OngeldigVatChecksum" xml:space="preserve">
-    <value>Ongeldig {0} VAT controlesom.</value>
+  <data name="InvalidVatChecksum" xml:space="preserve">
+    <value>Ongeldige {0} BTW-controlesom.</value>
   </data>
-  <data name="OngeldigIbanLength" xml:space="preserve">
-    <value>Ongeldig lengte. Expected {0}, got {1}.</value>
+  <data name="InvalidIbanLength" xml:space="preserve">
+    <value>Ongeldige lengte. Verwacht {0}, ontvangen {1}.</value>
   </data>
-  <data name="OngeldigIbanCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected {0}.</value>
+  <data name="InvalidIbanCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht {0}.</value>
   </data>
-  <data name="OngeldigIbanFormatDigits" xml:space="preserve">
-    <value>{0} IBAN mag alleen cijfers bevatten after the country code.</value>
+  <data name="InvalidIbanFormatDigits" xml:space="preserve">
+    <value>{0} IBAN mag na de landcode alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigIbanFormatAlphanumeric" xml:space="preserve">
-    <value>{0} IBAN must contain only alphanumeric characters after the country code.</value>
+  <data name="InvalidIbanFormatAlphanumeric" xml:space="preserve">
+    <value>{0} IBAN mag na de landcode alleen alphanumerieke tekens bevatten.</value>
   </data>
-  <data name="OngeldigCardNumberLuhn" xml:space="preserve">
-    <value>Ongeldig card number (Luhn check failed).</value>
+  <data name="InvalidCardNumberLuhn" xml:space="preserve">
+    <value>Ongeldig kaartnummer (Luhn-controle mislukt).</value>
   </data>
-  <data name="OngeldigCardNumberFormat" xml:space="preserve">
-    <value>Card number contains invalid characters.</value>
+  <data name="InvalidCardNumberFormat" xml:space="preserve">
+    <value>Kaartnummer bevat ongeldige tekens.</value>
   </data>
-  <data name="OngeldigCvvDigits" xml:space="preserve">
+  <data name="InvalidCvvDigits" xml:space="preserve">
     <value>CVV mag alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigCvvLength" xml:space="preserve">
-    <value>Ongeldig CVV lengte for {0}.</value>
+  <data name="InvalidCvvLength" xml:space="preserve">
+    <value>Ongeldige CVV-lengte voor {0}.</value>
   </data>
   <data name="CardExpired" xml:space="preserve">
-    <value>Card has expired.</value>
+    <value>Kaart is verlopen.</value>
   </data>
   <data name="CardYearTooFar" xml:space="preserve">
-    <value>Expiration year is too far in the future.</value>
+    <value>Vervaldatum ligt te ver in de toekomst.</value>
   </data>
-  <data name="OngeldigMonth" xml:space="preserve">
-    <value>Ongeldig month.</value>
+  <data name="InvalidMonth" xml:space="preserve">
+    <value>Ongeldige maand.</value>
   </data>
-  <data name="OngeldigRoutingNumberLength" xml:space="preserve">
-    <value>Routing number must be 9 digits.</value>
+  <data name="InvalidRoutingNumberLength" xml:space="preserve">
+    <value>Routingnummer moet 9 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigRoutingNumberFormat" xml:space="preserve">
-    <value>Routing number mag alleen cijfers bevatten.</value>
+  <data name="InvalidRoutingNumberFormat" xml:space="preserve">
+    <value>Routingnummer mag alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigRoutingNumberChecksum" xml:space="preserve">
-    <value>Ongeldig routing number controlesom.</value>
+  <data name="InvalidRoutingNumberChecksum" xml:space="preserve">
+    <value>Ongeldige routingnummer-controlesom.</value>
   </data>
-  <data name="OngeldigCpfLength" xml:space="preserve">
-    <value>CPF must be 11 digits.</value>
+  <data name="InvalidCpfLength" xml:space="preserve">
+    <value>CPF moet 11 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigCpfFormat" xml:space="preserve">
+  <data name="InvalidCpfFormat" xml:space="preserve">
     <value>CPF mag alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigCpfIdenticalDigits" xml:space="preserve">
-    <value>CPF cannot consist of all identical digits.</value>
+  <data name="InvalidCpfIdenticalDigits" xml:space="preserve">
+    <value>CPF mag niet uit identieke cijfers bestaan.</value>
   </data>
-  <data name="OngeldigCpfChecksum1" xml:space="preserve">
-    <value>Ongeldig CPF controlesom (1st digit).</value>
+  <data name="InvalidCpfChecksum1" xml:space="preserve">
+    <value>Ongeldige CPF-controlesom (1e cijfer).</value>
   </data>
-  <data name="OngeldigCpfChecksum2" xml:space="preserve">
-    <value>Ongeldig CPF controlesom (2nd digit).</value>
+  <data name="InvalidCpfChecksum2" xml:space="preserve">
+    <value>Ongeldige CPF-controlesom (2e cijfer).</value>
   </data>
-  <data name="OngeldigCnpjLength" xml:space="preserve">
-    <value>CNPJ must be 14 digits.</value>
+  <data name="InvalidCnpjLength" xml:space="preserve">
+    <value>CNPJ moet 14 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigCnpjFormat" xml:space="preserve">
+  <data name="InvalidCnpjFormat" xml:space="preserve">
     <value>CNPJ mag alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigCnpjIdenticalDigits" xml:space="preserve">
-    <value>CNPJ cannot consist of all identical digits.</value>
+  <data name="InvalidCnpjIdenticalDigits" xml:space="preserve">
+    <value>CNPJ mag niet uit identieke cijfers bestaan.</value>
   </data>
-  <data name="OngeldigCnpjChecksum1" xml:space="preserve">
-    <value>Ongeldig CNPJ controlesom (1st digit).</value>
+  <data name="InvalidCnpjChecksum1" xml:space="preserve">
+    <value>Ongeldige CNPJ-controlesom (1e cijfer).</value>
   </data>
-  <data name="OngeldigCnpjChecksum2" xml:space="preserve">
-    <value>Ongeldig CNPJ controlesom (2nd digit).</value>
+  <data name="InvalidCnpjChecksum2" xml:space="preserve">
+    <value>Ongeldige CNPJ-controlesom (2e cijfer).</value>
   </data>
-  <data name="OngeldigCurpLength" xml:space="preserve">
-    <value>CURP must be 18 characters.</value>
+  <data name="InvalidCurpLength" xml:space="preserve">
+    <value>CURP moet 18 tekens bevatten.</value>
   </data>
-  <data name="OngeldigCurpFormat" xml:space="preserve">
-    <value>Ongeldig CURP formaat.</value>
+  <data name="InvalidCurpFormat" xml:space="preserve">
+    <value>Ongeldig CURP-formaat.</value>
   </data>
-  <data name="OngeldigCurpChecksum" xml:space="preserve">
-    <value>Ongeldig CURP controlesom.</value>
+  <data name="InvalidCurpChecksum" xml:space="preserve">
+    <value>Ongeldige CURP-controlesom.</value>
   </data>
-  <data name="OngeldigUsccLength" xml:space="preserve">
-    <value>USCC must be 18 characters.</value>
+  <data name="InvalidUsccLength" xml:space="preserve">
+    <value>USCC moet 18 tekens bevatten.</value>
   </data>
-  <data name="OngeldigUsccCharacter" xml:space="preserve">
-    <value>Ongeldig character '{0}' in USCC.</value>
+  <data name="InvalidUsccCharacter" xml:space="preserve">
+    <value>Ongeldig teken '{0}' in USCC.</value>
   </data>
-  <data name="OngeldigUsccChecksum" xml:space="preserve">
-    <value>Ongeldig USCC controlesom.</value>
+  <data name="InvalidUsccChecksum" xml:space="preserve">
+    <value>Ongeldige USCC-controlesom.</value>
   </data>
   <data name="UnsupportedFormat" xml:space="preserve">
-    <value>Unsupported formaat: {0}.</value>
+    <value>Niet-ondersteund formaat: {0}.</value>
   </data>
-  <data name="OngeldigRfcLength" xml:space="preserve">
-    <value>RFC must be 12 (Company) or 13 (Person) characters.</value>
+  <data name="InvalidRfcLength" xml:space="preserve">
+    <value>RFC moet 12 (Bedrijf) of 13 (Persoon) tekens bevatten.</value>
   </data>
-  <data name="OngeldigRfcFormat" xml:space="preserve">
-    <value>Ongeldig RFC formaat.</value>
+  <data name="InvalidRfcFormat" xml:space="preserve">
+    <value>Ongeldig RFC-formaat.</value>
   </data>
-  <data name="OngeldigNricLength" xml:space="preserve">
-    <value>NRIC/FIN must be 9 characters.</value>
+  <data name="InvalidNricLength" xml:space="preserve">
+    <value>NRIC/FIN moet 9 tekens bevatten.</value>
   </data>
-  <data name="OngeldigNricPrefix" xml:space="preserve">
-    <value>Ongeldig NRIC/FIN prefix.</value>
+  <data name="InvalidNricPrefix" xml:space="preserve">
+    <value>Ongeldige NRIC/FIN-prefix.</value>
   </data>
-  <data name="OngeldigNricDigits" xml:space="preserve">
-    <value>NRIC/FIN must contain 7 digits.</value>
+  <data name="InvalidNricDigits" xml:space="preserve">
+    <value>NRIC/FIN moet 7 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigNricChecksum" xml:space="preserve">
-    <value>Ongeldig NRIC/FIN controlesom.</value>
+  <data name="InvalidNricChecksum" xml:space="preserve">
+    <value>Ongeldige NRIC/FIN-controlesom.</value>
   </data>
-  <data name="OngeldigCanadaRoutingNumberFormat" xml:space="preserve">
-    <value>Ongeldig Canadian Routing Number formaat. Must be 9 digits starting with 0.</value>
+  <data name="InvalidCanadaRoutingNumberFormat" xml:space="preserve">
+    <value>Ongeldig Canadees routingnummer-formaat. Moet 9 cijfers bevatten en beginnen met 0.</value>
   </data>
-  <data name="OngeldigBsbFormat" xml:space="preserve">
-    <value>Ongeldig BSB formaat. Must be 6 digits.</value>
+  <data name="InvalidBsbFormat" xml:space="preserve">
+    <value>Ongeldig BSB-formaat. Moet 6 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigIfscFormat" xml:space="preserve">
-    <value>Ongeldig IFSC formaat. Must be 11 characters: 4 letters, 0, 6 alphanumeric.</value>
+  <data name="InvalidIfscFormat" xml:space="preserve">
+    <value>Ongeldig IFSC-formaat. Moet 11 tekens bevatten: 4 letters, 0, 6 alfanumeriek.</value>
   </data>
-  <data name="OngeldigPolandNipFormat" xml:space="preserve">
-    <value>Ongeldig Poland NIP formaat.</value>
+  <data name="InvalidPolandNipFormat" xml:space="preserve">
+    <value>Ongeldig Polen NIP-formaat.</value>
   </data>
-  <data name="OngeldigPolandNipChecksumForbidden" xml:space="preserve">
-    <value>Ongeldig Poland NIP controlesom (forbidden remainder).</value>
+  <data name="InvalidPolandNipChecksumForbidden" xml:space="preserve">
+    <value>Ongeldige Polen NIP-controlesom (verboden rest).</value>
   </data>
-  <data name="OngeldigPolandNipChecksum" xml:space="preserve">
-    <value>Ongeldig Poland NIP controlesom.</value>
+  <data name="InvalidPolandNipChecksum" xml:space="preserve">
+    <value>Ongeldige Polen NIP-controlesom.</value>
   </data>
-  <data name="OngeldigUkraineEdrpouFormat" xml:space="preserve">
-    <value>Ongeldig Ukraine EDRPOU formaat.</value>
+  <data name="InvalidUkraineEdrpouFormat" xml:space="preserve">
+    <value>Ongeldig Oekraïne EDRPOU-formaat.</value>
   </data>
-  <data name="OngeldigUkraineEdrpouChecksum" xml:space="preserve">
-    <value>Ongeldig Ukraine EDRPOU controlesom.</value>
+  <data name="InvalidUkraineEdrpouChecksum" xml:space="preserve">
+    <value>Ongeldige Oekraïne EDRPOU-controlesom.</value>
   </data>
-  <data name="OngeldigTurkeyVknFormat" xml:space="preserve">
-    <value>Ongeldig Turkey VKN formaat.</value>
+  <data name="InvalidTurkeyVknFormat" xml:space="preserve">
+    <value>Ongeldig Turkije VKN-formaat.</value>
   </data>
-  <data name="OngeldigTurkeyVknChecksum" xml:space="preserve">
-    <value>Ongeldig Turkey VKN controlesom.</value>
+  <data name="InvalidTurkeyVknChecksum" xml:space="preserve">
+    <value>Ongeldige Turkije VKN-controlesom.</value>
   </data>
-  <data name="OngeldigSwedenVatFormat" xml:space="preserve">
-    <value>Ongeldig Sweden VAT formaat.</value>
+  <data name="InvalidSwedenVatFormat" xml:space="preserve">
+    <value>Ongeldig Zweden BTW-formaat.</value>
   </data>
-  <data name="OngeldigSwedenVatChecksum" xml:space="preserve">
-    <value>Ongeldig Sweden VAT controlesom.</value>
+  <data name="InvalidSwedenVatChecksum" xml:space="preserve">
+    <value>Ongeldige Zweden BTW-controlesom.</value>
   </data>
-  <data name="OngeldigNorthMacedoniaVatFormat" xml:space="preserve">
-    <value>Ongeldig North Macedonia VAT formaat.</value>
+  <data name="InvalidNorthMacedoniaVatFormat" xml:space="preserve">
+    <value>Ongeldig Noord-Macedonië BTW-formaat.</value>
   </data>
-  <data name="OngeldigNorthMacedoniaVatChecksumForbidden" xml:space="preserve">
-    <value>Ongeldig North Macedonia VAT controlesom (Check digit 10).</value>
+  <data name="InvalidNorthMacedoniaVatChecksumForbidden" xml:space="preserve">
+    <value>Ongeldige Noord-Macedonië BTW-controlesom (Controlecijfer 10).</value>
   </data>
-  <data name="OngeldigNorthMacedoniaVatChecksum" xml:space="preserve">
-    <value>Ongeldig North Macedonia VAT controlesom.</value>
+  <data name="InvalidNorthMacedoniaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Noord-Macedonië BTW-controlesom.</value>
   </data>
-  <data name="OngeldigSwitzerlandQrReferenceLength" xml:space="preserve">
-    <value>Swiss QR reference must be 27 digits.</value>
+  <data name="InvalidSwitzerlandQrReferenceLength" xml:space="preserve">
+    <value>Zwitserse QR-referentie moet 27 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigBelgiumEnterpriseLength" xml:space="preserve">
-    <value>Enterprise number must be 10 digits (or 9 digits for old formaat).</value>
+  <data name="InvalidBelgiumEnterpriseLength" xml:space="preserve">
+    <value>Ondernemingsnummer moet 10 cijfers (of 9 cijfers voor oud formaat) bevatten.</value>
   </data>
-  <data name="OngeldigBelgiumEnterpriseStart" xml:space="preserve">
-    <value>Enterprise number must start with 0 or 1.</value>
+  <data name="InvalidBelgiumEnterpriseStart" xml:space="preserve">
+    <value>Ondernemingsnummer moet beginnen met 0 of 1.</value>
   </data>
-  <data name="OngeldigBelgiumEnterpriseCheckDigitsNumeric" xml:space="preserve">
-    <value>Check digits must be numeric.</value>
+  <data name="InvalidBelgiumEnterpriseCheckDigitsNumeric" xml:space="preserve">
+    <value>Controlecijfers moeten numeriek zijn.</value>
   </data>
-  <data name="OngeldigAzerbaijanVoenFormatSameDigits" xml:space="preserve">
-    <value>VOEN cannot consist of all same digits.</value>
+  <data name="InvalidAzerbaijanVoenFormatSameDigits" xml:space="preserve">
+    <value>VOEN mag niet uit identieke cijfers bestaan.</value>
   </data>
-  <data name="OngeldigMonacoRciFormat" xml:space="preserve">
-    <value>Ongeldig RCI formaat.</value>
+  <data name="InvalidMonacoRciFormat" xml:space="preserve">
+    <value>Ongeldig RCI-formaat.</value>
   </data>
-  <data name="OngeldigMonacoIbanBankBranchDigits" xml:space="preserve">
-    <value>Monaco Bank/Branch must be digits.</value>
+  <data name="InvalidMonacoIbanBankBranchDigits" xml:space="preserve">
+    <value>Monaco Bank/Filiaal moet uit cijfers bestaan.</value>
   </data>
-  <data name="OngeldigMonacoIbanRibKeyDigits" xml:space="preserve">
-    <value>Monaco RIB Key must be digits.</value>
+  <data name="InvalidMonacoIbanRibKeyDigits" xml:space="preserve">
+    <value>Monaco RIB-sleutel moet uit cijfers bestaan.</value>
   </data>
-  <data name="OngeldigMonacoIbanRibKey" xml:space="preserve">
-    <value>Ongeldig RIB Key.</value>
+  <data name="InvalidMonacoIbanRibKey" xml:space="preserve">
+    <value>Ongeldige RIB-sleutel.</value>
   </data>
-  <data name="OngeldigSerbiaPibFormat" xml:space="preserve">
-    <value>Ongeldig Serbia PIB formaat.</value>
+  <data name="InvalidSerbiaPibFormat" xml:space="preserve">
+    <value>Ongeldig Servië PIB-formaat.</value>
   </data>
-  <data name="OngeldigSerbiaPibChecksum" xml:space="preserve">
-    <value>Ongeldig Serbia PIB controlesom.</value>
+  <data name="InvalidSerbiaPibChecksum" xml:space="preserve">
+    <value>Ongeldige Servië PIB-controlesom.</value>
   </data>
-  <data name="OngeldigSerbiaVatFormat" xml:space="preserve">
-    <value>Ongeldig Serbia VAT formaat.</value>
+  <data name="InvalidSerbiaVatFormat" xml:space="preserve">
+    <value>Ongeldig Servië BTW-formaat.</value>
   </data>
-  <data name="OngeldigSerbiaVatChecksum" xml:space="preserve">
-    <value>Ongeldig Serbia VAT controlesom.</value>
+  <data name="InvalidSerbiaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Servië BTW-controlesom.</value>
   </data>
-  <data name="OngeldigSanMarinoVatFormat" xml:space="preserve">
-    <value>Ongeldig San Marino VAT formaat.</value>
+  <data name="InvalidSanMarinoVatFormat" xml:space="preserve">
+    <value>Ongeldig San Marino BTW-formaat.</value>
   </data>
-  <data name="OngeldigSanMarinoCoeFormat" xml:space="preserve">
-    <value>Ongeldig San Marino COE formaat.</value>
+  <data name="InvalidSanMarinoCoeFormat" xml:space="preserve">
+    <value>Ongeldig San Marino COE-formaat.</value>
   </data>
-  <data name="OngeldigCyprusVatFormat" xml:space="preserve">
-    <value>Ongeldig Cyprus VAT formaat.</value>
+  <data name="InvalidCyprusVatFormat" xml:space="preserve">
+    <value>Ongeldig Cyprus BTW-formaat.</value>
   </data>
-  <data name="OngeldigCyprusVatChecksum" xml:space="preserve">
-    <value>Ongeldig Cyprus controlesom.</value>
+  <data name="InvalidCyprusVatChecksum" xml:space="preserve">
+    <value>Ongeldige Cyprus controlesom.</value>
   </data>
-  <data name="OngeldigRomaniaVatFormat" xml:space="preserve">
-    <value>Ongeldig Romania VAT formaat.</value>
+  <data name="InvalidRomaniaVatFormat" xml:space="preserve">
+    <value>Ongeldig Roemenië BTW-formaat.</value>
   </data>
-  <data name="OngeldigRomaniaVatChecksum" xml:space="preserve">
-    <value>Ongeldig Romania VAT controlesom.</value>
+  <data name="InvalidRomaniaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Roemenië BTW-controlesom.</value>
   </data>
-  <data name="OngeldigRomaniaCifFormat" xml:space="preserve">
-    <value>Ongeldig Romania CIF formaat.</value>
+  <data name="InvalidRomaniaCifFormat" xml:space="preserve">
+    <value>Ongeldig Roemenië CIF-formaat.</value>
   </data>
-  <data name="OngeldigRomaniaCifChecksum" xml:space="preserve">
-    <value>Ongeldig Romania CIF controlesom.</value>
+  <data name="InvalidRomaniaCifChecksum" xml:space="preserve">
+    <value>Ongeldige Roemenië CIF-controlesom.</value>
   </data>
-  <data name="OngeldigNorwayVatFormat" xml:space="preserve">
-    <value>Ongeldig Norway VAT formaat.</value>
+  <data name="InvalidNorwayVatFormat" xml:space="preserve">
+    <value>Ongeldig Noorwegen BTW-formaat.</value>
   </data>
-  <data name="OngeldigNorwayVatChecksumForbidden" xml:space="preserve">
-    <value>Ongeldig Norway VAT controlesom (Check digit 10).</value>
+  <data name="InvalidNorwayVatChecksumForbidden" xml:space="preserve">
+    <value>Ongeldige Noorwegen BTW-controlesom (Controlecijfer 10).</value>
   </data>
-  <data name="OngeldigNorwayVatChecksum" xml:space="preserve">
-    <value>Ongeldig Norway VAT controlesom.</value>
+  <data name="InvalidNorwayVatChecksum" xml:space="preserve">
+    <value>Ongeldige Noorwegen BTW-controlesom.</value>
   </data>
-  <data name="OngeldigNorwayKidReference" xml:space="preserve">
-    <value>Ongeldig Norwegian KID reference.</value>
+  <data name="InvalidNorwayKidReference" xml:space="preserve">
+    <value>Ongeldige Noorse KID-referentie.</value>
   </data>
-  <data name="OngeldigNorwayOrgNumberFormat" xml:space="preserve">
-    <value>Ongeldig Norway Org Number formaat.</value>
+  <data name="InvalidNorwayOrgNumberFormat" xml:space="preserve">
+    <value>Ongeldig Noorwegen Org-nummer-formaat.</value>
   </data>
-  <data name="OngeldigNorwayOrgNumberChecksumForbidden" xml:space="preserve">
-    <value>Ongeldig Norway Org Number controlesom (forbidden remainder).</value>
+  <data name="InvalidNorwayOrgNumberChecksumForbidden" xml:space="preserve">
+    <value>Ongeldige Noorwegen Org-nummer-controlesom (verboden rest).</value>
   </data>
-  <data name="OngeldigNorwayOrgNumberChecksum" xml:space="preserve">
-    <value>Ongeldig Norway Org Number controlesom.</value>
+  <data name="InvalidNorwayOrgNumberChecksum" xml:space="preserve">
+    <value>Ongeldige Noorwegen Org-nummer-controlesom.</value>
   </data>
-  <data name="OngeldigNorwayKidLength" xml:space="preserve">
-    <value>Norwegian KID reference must be between 3 and 25 digits.</value>
+  <data name="InvalidNorwayKidLength" xml:space="preserve">
+    <value>Noorse KID-referentie moet tussen 3 en 25 cijfers lang zijn.</value>
   </data>
-  <data name="OngeldigSingaporeUenLength" xml:space="preserve">
-    <value>UEN must be 9 or 10 characters.</value>
+  <data name="InvalidSingaporeUenLength" xml:space="preserve">
+    <value>UEN moet 9 of 10 tekens bevatten.</value>
   </data>
-  <data name="OngeldigSingaporeUenFormat" xml:space="preserve">
-    <value>Ongeldig UEN formaat.</value>
+  <data name="InvalidSingaporeUenFormat" xml:space="preserve">
+    <value>Ongeldig UEN-formaat.</value>
   </data>
-  <data name="OngeldigJapanCorporateNumberLength" xml:space="preserve">
-    <value>Corporate Number must be 13 digits.</value>
+  <data name="InvalidJapanCorporateNumberLength" xml:space="preserve">
+    <value>Ondernemingsnummer moet 13 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigJapanCorporateNumberFormat" xml:space="preserve">
-    <value>Corporate Number mag alleen cijfers bevatten.</value>
+  <data name="InvalidJapanCorporateNumberFormat" xml:space="preserve">
+    <value>Ondernemingsnummer mag alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigJapanCorporateNumberChecksum" xml:space="preserve">
-    <value>Ongeldig Corporate Number controlesom.</value>
+  <data name="InvalidJapanCorporateNumberChecksum" xml:space="preserve">
+    <value>Ongeldige ondernemingsnummer-controlesom.</value>
   </data>
-  <data name="OngeldigJapanMyNumberLength" xml:space="preserve">
-    <value>My Number must be 12 digits.</value>
+  <data name="InvalidJapanMyNumberLength" xml:space="preserve">
+    <value>My Number moet 12 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigJapanMyNumberFormat" xml:space="preserve">
+  <data name="InvalidJapanMyNumberFormat" xml:space="preserve">
     <value>My Number mag alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigJapanMyNumberChecksum" xml:space="preserve">
-    <value>Ongeldig My Number controlesom.</value>
+  <data name="InvalidJapanMyNumberChecksum" xml:space="preserve">
+    <value>Ongeldige My Number-controlesom.</value>
   </data>
-  <data name="OngeldigIndiaPanLength" xml:space="preserve">
-    <value>PAN must be 10 characters.</value>
+  <data name="InvalidIndiaPanLength" xml:space="preserve">
+    <value>PAN moet 10 tekens bevatten.</value>
   </data>
-  <data name="OngeldigIndiaPanFormat" xml:space="preserve">
-    <value>Ongeldig PAN formaat.</value>
+  <data name="InvalidIndiaPanFormat" xml:space="preserve">
+    <value>Ongeldig PAN-formaat.</value>
   </data>
-  <data name="OngeldigIndiaPanStatus" xml:space="preserve">
-    <value>Ongeldig PAN status character (4th character).</value>
+  <data name="InvalidIndiaPanStatus" xml:space="preserve">
+    <value>Ongeldig PAN-status teken (4e teken).</value>
   </data>
-  <data name="OngeldigIndiaAadhaarLength" xml:space="preserve">
-    <value>Aadhaar must be 12 digits.</value>
+  <data name="InvalidIndiaAadhaarLength" xml:space="preserve">
+    <value>Aadhaar moet 12 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigIndiaAadhaarFormat" xml:space="preserve">
+  <data name="InvalidIndiaAadhaarFormat" xml:space="preserve">
     <value>Aadhaar mag alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigIndiaAadhaarChecksum" xml:space="preserve">
-    <value>Ongeldig Aadhaar controlesom.</value>
+  <data name="InvalidIndiaAadhaarChecksum" xml:space="preserve">
+    <value>Ongeldige Aadhaar-controlesom.</value>
   </data>
-  <data name="OngeldigIcelandVatFormat" xml:space="preserve">
-    <value>Ongeldig Iceland VAT formaat.</value>
+  <data name="InvalidIcelandVatFormat" xml:space="preserve">
+    <value>Ongeldig IJsland BTW-formaat.</value>
   </data>
-  <data name="OngeldigCheckDigitsMod10Mod11" xml:space="preserve">
-    <value>Ongeldig check digits (neither Mod10 nor Mod11 matched).</value>
+  <data name="InvalidCheckDigitsMod10Mod11" xml:space="preserve">
+    <value>Ongeldige controlecijfers (noch Mod10 noch Mod11 kwam overeen).</value>
   </data>
-  <data name="OngeldigSlovakiaVatFormat" xml:space="preserve">
-    <value>Ongeldig Slovakia VAT formaat.</value>
+  <data name="InvalidSlovakiaVatFormat" xml:space="preserve">
+    <value>Ongeldig Slowakije BTW-formaat.</value>
   </data>
-  <data name="OngeldigSlovakiaVatFormatNonNumeric" xml:space="preserve">
-    <value>Ongeldig Slovakia VAT formaat (non-numeric).</value>
+  <data name="InvalidSlovakiaVatFormatNonNumeric" xml:space="preserve">
+    <value>Ongeldig Slowakije BTW-formaat (niet-numeriek).</value>
   </data>
-  <data name="OngeldigSlovakiaVatChecksum" xml:space="preserve">
-    <value>Ongeldig Slovakia VAT controlesom.</value>
+  <data name="InvalidSlovakiaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Slowakije BTW-controlesom.</value>
   </data>
-  <data name="OngeldigNorthMacedoniaCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected MK.</value>
+  <data name="InvalidNorthMacedoniaCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht MK.</value>
   </data>
   <data name="BankCodeMustBeNumeric" xml:space="preserve">
-    <value>Bank code must be numeric.</value>
+    <value>Bankcode moet numeriek zijn.</value>
   </data>
   <data name="AccountNumberMustBeAlphanumeric" xml:space="preserve">
-    <value>Account number must be alphanumeric.</value>
+    <value>Kontonummer moet alfanumeriek zijn.</value>
   </data>
   <data name="NationalCheckDigitsMustBeNumeric" xml:space="preserve">
-    <value>National check digits must be numeric.</value>
+    <value>Nationale controlecijfers moeten numeriek zijn.</value>
   </data>
-  <data name="OngeldigMontenegroCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected ME.</value>
+  <data name="InvalidMontenegroCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht ME.</value>
   </data>
   <data name="AccountNumberMustBeNumeric" xml:space="preserve">
-    <value>Account number must be numeric.</value>
+    <value>Kontonummer moet numeriek zijn.</value>
   </data>
-  <data name="OngeldigMontenegroVatFormat" xml:space="preserve">
-    <value>Ongeldig Montenegro VAT formaat.</value>
+  <data name="InvalidMontenegroVatFormat" xml:space="preserve">
+    <value>Ongeldig Montenegro BTW-formaat.</value>
   </data>
-  <data name="OngeldigMontenegroVatChecksumRemainder10" xml:space="preserve">
-    <value>Ongeldig Montenegro VAT controlesom (Remainder 10).</value>
+  <data name="InvalidMontenegroVatChecksumRemainder10" xml:space="preserve">
+    <value>Ongeldige Montenegro BTW-controlesom (Rest 10).</value>
   </data>
-  <data name="OngeldigMontenegroVatChecksum" xml:space="preserve">
-    <value>Ongeldig Montenegro VAT controlesom.</value>
+  <data name="InvalidMontenegroVatChecksum" xml:space="preserve">
+    <value>Ongeldige Montenegro BTW-controlesom.</value>
   </data>
-  <data name="OngeldigBulgariaVatFormat" xml:space="preserve">
-    <value>Ongeldig Bulgaria VAT formaat.</value>
+  <data name="InvalidBulgariaVatFormat" xml:space="preserve">
+    <value>Ongeldig Bulgarije BTW-formaat.</value>
   </data>
-  <data name="OngeldigBulgariaVatChecksum" xml:space="preserve">
-    <value>Ongeldig Bulgaria VAT controlesom.</value>
+  <data name="InvalidBulgariaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Bulgarije BTW-controlesom.</value>
   </data>
-  <data name="OngeldigLithuaniaVatFormat" xml:space="preserve">
-    <value>Ongeldig Lithuania VAT formaat.</value>
+  <data name="InvalidLithuaniaVatFormat" xml:space="preserve">
+    <value>Ongeldig Litouwen BTW-formaat.</value>
   </data>
-  <data name="OngeldigLithuaniaVatChecksum" xml:space="preserve">
-    <value>Ongeldig Lithuania VAT controlesom.</value>
+  <data name="InvalidLithuaniaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Litouwen BTW-controlesom.</value>
   </data>
   <data name="EnterpriseNumberCannotBeEmpty" xml:space="preserve">
-    <value>Enterprise number mag niet leeg zijn.</value>
+    <value>Ondernemingsnummer mag niet leeg zijn.</value>
   </data>
   <data name="PibMustBe8Digits" xml:space="preserve">
-    <value>PIB must be 8 digits.</value>
+    <value>PIB moet 8 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigChecksumRemainder1" xml:space="preserve">
-    <value>Ongeldig controlesom (Remainder 1).</value>
+  <data name="InvalidChecksumRemainder1" xml:space="preserve">
+    <value>Ongeldige controlesom (Rest 1).</value>
   </data>
-  <data name="OngeldigNetherlandsVatFormat" xml:space="preserve">
-    <value>Ongeldig Netherlands VAT formaat.</value>
+  <data name="InvalidNetherlandsVatFormat" xml:space="preserve">
+    <value>Ongeldig Nederland BTW-formaat.</value>
   </data>
-  <data name="OngeldigNetherlandsVatChecksumMod97OrElfproef" xml:space="preserve">
-    <value>Ongeldig controlesom (Mod 97 or Elfproef).</value>
+  <data name="InvalidNetherlandsVatChecksumMod97OrElfproef" xml:space="preserve">
+    <value>Ongeldige controlesom (Mod 97 of Elfproef).</value>
   </data>
-  <data name="OngeldigNetherlandsCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected NL.</value>
+  <data name="InvalidNetherlandsCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht NL.</value>
   </data>
   <data name="NetherlandsBankCodeMustBeLetters" xml:space="preserve">
-    <value>Netherlands Bank Code must be letters.</value>
+    <value>Nederlandse bankcode moet uit letters bestaan.</value>
   </data>
   <data name="NetherlandsAccountNumberMustBeDigits" xml:space="preserve">
-    <value>Netherlands Account Number must be digits.</value>
+    <value>Nederlands rekeningnummer moet uit cijfers bestaan.</value>
   </data>
-  <data name="OngeldigElfproefCheck" xml:space="preserve">
-    <value>Ongeldig Elfproef check.</value>
+  <data name="InvalidElfproefCheck" xml:space="preserve">
+    <value>Ongeldige Elfproef-controle.</value>
   </data>
-  <data name="OngeldigNorthMacedoniaEdbFormat" xml:space="preserve">
-    <value>Ongeldig North Macedonia EDB formaat.</value>
+  <data name="InvalidNorthMacedoniaEdbFormat" xml:space="preserve">
+    <value>Ongeldig Noord-Macedonië EDB-formaat.</value>
   </data>
-  <data name="OngeldigNorthMacedoniaEdbChecksumForbiddenRemainder" xml:space="preserve">
-    <value>Ongeldig North Macedonia EDB controlesom (forbidden remainder).</value>
+  <data name="InvalidNorthMacedoniaEdbChecksumForbiddenRemainder" xml:space="preserve">
+    <value>Ongeldige Noord-Macedonië EDB-controlesom (verboden rest).</value>
   </data>
-  <data name="OngeldigNorthMacedoniaEdbChecksum" xml:space="preserve">
-    <value>Ongeldig North Macedonia EDB controlesom.</value>
+  <data name="InvalidNorthMacedoniaEdbChecksum" xml:space="preserve">
+    <value>Ongeldige Noord-Macedonië EDB-controlesom.</value>
   </data>
   <data name="IdCardCannotBeEmpty" xml:space="preserve">
-    <value>ID Card mag niet leeg zijn.</value>
+    <value>ID-kaart mag niet leeg zijn.</value>
   </data>
   <data name="IdCardMustBe18Characters" xml:space="preserve">
-    <value>ID Card must be 18 characters.</value>
+    <value>ID-kaart moet 18 tekens bevatten.</value>
   </data>
   <data name="First17CharactersMustBeDigits" xml:space="preserve">
-    <value>First 17 characters must be digits.</value>
+    <value>Eerste 17 tekens moeten cijfers zijn.</value>
   </data>
   <data name="LastCharacterMustBeDigitOrX" xml:space="preserve">
-    <value>Last character must be a digit or 'X'.</value>
+    <value>Laatste teken moet een cijfer of 'X' zijn.</value>
   </data>
-  <data name="OngeldigIdCardChecksum" xml:space="preserve">
-    <value>Ongeldig ID Card controlesom.</value>
+  <data name="InvalidIdCardChecksum" xml:space="preserve">
+    <value>Ongeldige ID-kaart-controlesom.</value>
   </data>
-  <data name="OngeldigLuxembourgVatFormat" xml:space="preserve">
-    <value>Ongeldig Luxembourg VAT formaat.</value>
+  <data name="InvalidLuxembourgVatFormat" xml:space="preserve">
+    <value>Ongeldig Luxemburg BTW-formaat.</value>
   </data>
-  <data name="OngeldigLuxembourgVatChecksum" xml:space="preserve">
-    <value>Ongeldig Luxembourg VAT controlesom.</value>
+  <data name="InvalidLuxembourgVatChecksum" xml:space="preserve">
+    <value>Ongeldige Luxemburg BTW-controlesom.</value>
   </data>
-  <data name="OngeldigKosovoCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected XK.</value>
+  <data name="InvalidKosovoCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht XK.</value>
   </data>
   <data name="KosovoIbanMustContainOnlyDigits" xml:space="preserve">
-    <value>Kosovo IBAN mag alleen cijfers bevatten after the country code.</value>
+    <value>Kosovo IBAN mag na de landcode alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigMoldovaVatFormat" xml:space="preserve">
-    <value>Ongeldig Moldova VAT formaat.</value>
+  <data name="InvalidMoldovaVatFormat" xml:space="preserve">
+    <value>Ongeldig Moldavië BTW-formaat.</value>
   </data>
   <data name="IdnoMustBe13Digits" xml:space="preserve">
-    <value>IDNO must be 13 digits.</value>
+    <value>IDNO moet 13 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigMoldovaCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected MD.</value>
+  <data name="InvalidMoldovaCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht MD.</value>
   </data>
   <data name="BankCodeMustBeAlphanumeric" xml:space="preserve">
-    <value>Bank code must be alphanumeric.</value>
+    <value>Bankcode moet alfanumeriek zijn.</value>
   </data>
-  <data name="OngeldigGreeceVatFormat" xml:space="preserve">
-    <value>Ongeldig Greece VAT formaat.</value>
+  <data name="InvalidGreeceVatFormat" xml:space="preserve">
+    <value>Ongeldig Griekenland BTW-formaat.</value>
   </data>
-  <data name="OngeldigGreeceVatChecksum" xml:space="preserve">
-    <value>Ongeldig Greece VAT controlesom.</value>
+  <data name="InvalidGreeceVatChecksum" xml:space="preserve">
+    <value>Ongeldige Griekenland BTW-controlesom.</value>
   </data>
-  <data name="OngeldigGreenlandCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected GL.</value>
+  <data name="InvalidGreenlandCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht GL.</value>
   </data>
   <data name="GreenlandIbanMustContainOnlyDigits" xml:space="preserve">
-    <value>Greenland IBAN mag alleen cijfers bevatten after the country code.</value>
+    <value>Groenland IBAN mag na de landcode alleen cijfers bevatten.</value>
   </data>
   <data name="CvrNumberMustBe8Digits" xml:space="preserve">
-    <value>CVR number must be 8 digits.</value>
+    <value>CVR-nummer moet 8 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigGreeceCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected GR.</value>
+  <data name="InvalidGreeceCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht GR.</value>
   </data>
   <data name="GreeceBankBranchCodeMustBeDigits" xml:space="preserve">
-    <value>Greece Bank/Branch code must be digits.</value>
+    <value>Griekenland Bank/Filiaalcode moet uit cijfers bestaan.</value>
   </data>
   <data name="GreeceAccountNumberMustBeAlphanumeric" xml:space="preserve">
-    <value>Greece Account Number must be alphanumeric.</value>
+    <value>Griekenland rekeningnummer moet alfanumeriek zijn.</value>
   </data>
   <data name="AfmMustBe9Digits" xml:space="preserve">
-    <value>AFM must be 9 digits.</value>
+    <value>AFM moet 9 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigMaltaVatFormat" xml:space="preserve">
-    <value>Ongeldig Malta VAT formaat.</value>
+  <data name="InvalidMaltaVatFormat" xml:space="preserve">
+    <value>Ongeldig Malta BTW-formaat.</value>
   </data>
-  <data name="OngeldigMaltaVatChecksum" xml:space="preserve">
-    <value>Ongeldig Malta VAT controlesom.</value>
+  <data name="InvalidMaltaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Malta BTW-controlesom.</value>
   </data>
-  <data name="OngeldigCroatiaVatFormat" xml:space="preserve">
-    <value>Ongeldig Croatia VAT formaat.</value>
+  <data name="InvalidCroatiaVatFormat" xml:space="preserve">
+    <value>Ongeldig Kroatië BTW-formaat.</value>
   </data>
-  <data name="OngeldigCroatiaVatChecksum" xml:space="preserve">
-    <value>Ongeldig Croatia VAT controlesom.</value>
+  <data name="InvalidCroatiaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Kroatië BTW-controlesom.</value>
   </data>
-  <data name="OngeldigFranceCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected FR.</value>
+  <data name="InvalidFranceCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht FR.</value>
   </data>
   <data name="FranceBankBranchCodeMustBeDigits" xml:space="preserve">
-    <value>France Bank/Branch code must be digits.</value>
+    <value>Frankrijk Bank/Filiaalcode moet uit cijfers bestaan.</value>
   </data>
   <data name="FranceRibKeyMustBeDigits" xml:space="preserve">
-    <value>France RIB Key must be digits.</value>
+    <value>Frankrijk RIB-sleutel moet uit cijfers bestaan.</value>
   </data>
-  <data name="OngeldigRibKey" xml:space="preserve">
-    <value>Ongeldig RIB Key.</value>
+  <data name="InvalidRibKey" xml:space="preserve">
+    <value>Ongeldige RIB-sleutel.</value>
   </data>
-  <data name="OngeldigFranceVatFormatPrefixOrDigits" xml:space="preserve">
-    <value>Ongeldig formaat. Expected FR prefix or 11 digits.</value>
+  <data name="InvalidFranceVatFormatPrefixOrDigits" xml:space="preserve">
+    <value>Ongeldig formaat. Verwacht FR-prefix of 11 cijfers.</value>
   </data>
   <data name="FranceVatDigitsAfterPrefix" xml:space="preserve">
-    <value>VAT number mag alleen cijfers bevatten after prefix.</value>
+    <value>BTW-nummer mag na de prefix alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigNumericFormat" xml:space="preserve">
-    <value>Ongeldig numeric formaat.</value>
+  <data name="InvalidNumericFormat" xml:space="preserve">
+    <value>Ongeldig numeriek formaat.</value>
   </data>
-  <data name="OngeldigSirenFormat" xml:space="preserve">
-    <value>Ongeldig SIREN formaat.</value>
+  <data name="InvalidSirenFormat" xml:space="preserve">
+    <value>Ongeldig SIREN-formaat.</value>
   </data>
-  <data name="OngeldigChecksumKey" xml:space="preserve">
-    <value>Ongeldig controlesom (Key).</value>
+  <data name="InvalidChecksumKey" xml:space="preserve">
+    <value>Ongeldige controlesom (Sleutel).</value>
   </data>
-  <data name="OngeldigChecksumSirenLuhn" xml:space="preserve">
-    <value>Ongeldig controlesom (SIREN Luhn).</value>
+  <data name="InvalidChecksumSirenLuhn" xml:space="preserve">
+    <value>Ongeldige controlesom (SIREN Luhn).</value>
   </data>
-  <data name="OngeldigGibraltarCompanyNumberFormat" xml:space="preserve">
-    <value>Ongeldig Gibraltar Company Number formaat.</value>
+  <data name="InvalidGibraltarCompanyNumberFormat" xml:space="preserve">
+    <value>Ongeldig Gibraltar bedrijfsnummer-formaat.</value>
   </data>
-  <data name="OngeldigGibraltarCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected GI.</value>
+  <data name="InvalidGibraltarCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht GI.</value>
   </data>
   <data name="GibraltarBankCodeMustBeLetters" xml:space="preserve">
-    <value>Gibraltar Bank Code must be letters.</value>
+    <value>Gibraltar bankcode moet uit letters bestaan.</value>
   </data>
   <data name="GibraltarAccountNumberMustBeAlphanumeric" xml:space="preserve">
-    <value>Gibraltar Account Number must be alphanumeric.</value>
+    <value>Gibraltar rekeningnummer moet alfanumeriek zijn.</value>
   </data>
-  <data name="OngeldigGermanyVatFormat" xml:space="preserve">
-    <value>Ongeldig Germany VAT formaat.</value>
+  <data name="InvalidGermanyVatFormat" xml:space="preserve">
+    <value>Ongeldig Duitsland BTW-formaat.</value>
   </data>
   <data name="SteuernummerCannotBeEmpty" xml:space="preserve">
     <value>Steuernummer mag niet leeg zijn.</value>
   </data>
   <data name="SteuernummerMustBe13Digits" xml:space="preserve">
-    <value>Steuernummer must be 13 digits (Unified Federal Format).</value>
+    <value>Steuernummer moet 13 cijfers bevatten (Uniform Federaal Formaat).</value>
   </data>
-  <data name="OngeldigGermanyCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected DE.</value>
+  <data name="InvalidGermanyCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht DE.</value>
   </data>
   <data name="GermanyIbanMustContainOnlyDigits" xml:space="preserve">
-    <value>Germany IBAN mag alleen cijfers bevatten after the country code.</value>
+    <value>Duitsland IBAN mag na de landcode alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigIrelandVatFormat" xml:space="preserve">
-    <value>Ongeldig Ireland VAT formaat.</value>
+  <data name="InvalidIrelandVatFormat" xml:space="preserve">
+    <value>Ongeldig Ierland BTW-formaat.</value>
   </data>
-  <data name="OngeldigIrelandVatChecksum" xml:space="preserve">
-    <value>Ongeldig Ireland VAT controlesom.</value>
+  <data name="InvalidIrelandVatChecksum" xml:space="preserve">
+    <value>Ongeldige Ierland BTW-controlesom.</value>
   </data>
-  <data name="OngeldigIrelandCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected IE.</value>
+  <data name="InvalidIrelandCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht IE.</value>
   </data>
   <data name="IrelandBankCodeMustBeLetters" xml:space="preserve">
-    <value>Ireland Bank Code must be letters.</value>
+    <value>Ierland bankcode moet uit letters bestaan.</value>
   </data>
   <data name="IrelandSortCodeAccountNumberMustBeDigits" xml:space="preserve">
-    <value>Ireland Sort Code/Account Number must be digits.</value>
+    <value>Ierland Sort Code/Rekeningnummer moet uit cijfers bestaan.</value>
   </data>
-  <data name="OngeldigMaltaCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected MT.</value>
+  <data name="InvalidMaltaCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht MT.</value>
   </data>
   <data name="MaltaBankBicMustBeLetters" xml:space="preserve">
-    <value>Malta Bank BIC must be letters.</value>
+    <value>Malta Bank BIC moet uit letters bestaan.</value>
   </data>
   <data name="MaltaSortCodeMustBeDigits" xml:space="preserve">
-    <value>Malta Sort Code must be digits.</value>
+    <value>Malta Sort Code moet uit cijfers bestaan.</value>
   </data>
   <data name="MaltaAccountNumberMustBeAlphanumeric" xml:space="preserve">
-    <value>Malta Account Number must be alphanumeric.</value>
+    <value>Malta rekeningnummer moet alfanumeriek zijn.</value>
   </data>
-  <data name="OngeldigDenmarkVatFormat" xml:space="preserve">
-    <value>Ongeldig Denmark VAT formaat.</value>
+  <data name="InvalidDenmarkVatFormat" xml:space="preserve">
+    <value>Ongeldig Denemarken BTW-formaat.</value>
   </data>
-  <data name="OngeldigDenmarkVatChecksum" xml:space="preserve">
-    <value>Ongeldig Denmark VAT controlesom.</value>
+  <data name="InvalidDenmarkVatChecksum" xml:space="preserve">
+    <value>Ongeldige Denemarken BTW-controlesom.</value>
   </data>
-  <data name="OngeldigDenmarkPaymentReference" xml:space="preserve">
-    <value>Ongeldig Danish FIK/GIK reference.</value>
+  <data name="InvalidDenmarkPaymentReference" xml:space="preserve">
+    <value>Ongeldige Deense FIK/GIK-referentie.</value>
   </data>
-  <data name="OngeldigDenmarkCountryCode" xml:space="preserve">
-    <value>Ongeldig country code. Expected DK.</value>
+  <data name="InvalidDenmarkCountryCode" xml:space="preserve">
+    <value>Ongeldige landcode. Verwacht DK.</value>
   </data>
   <data name="DenmarkIbanMustContainOnlyDigits" xml:space="preserve">
-    <value>Denmark IBAN mag alleen cijfers bevatten after the country code.</value>
+    <value>Denemarken IBAN mag na de landcode alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigGeorgiaVatFormat" xml:space="preserve">
-    <value>Ongeldig Georgia VAT formaat.</value>
+  <data name="InvalidGeorgiaVatFormat" xml:space="preserve">
+    <value>Ongeldig Georgië BTW-formaat.</value>
   </data>
-  <data name="OngeldigGeorgiaTaxIdLength" xml:space="preserve">
-    <value>Tax ID must be 9 digits.</value>
+  <data name="InvalidGeorgiaTaxIdLength" xml:space="preserve">
+    <value>Belasting-ID moet 9 cijfers bevatten.</value>
   </data>
-  <data name="OngeldigGeorgiaTaxIdChecksumRemainder10" xml:space="preserve">
-    <value>Ongeldig controlesom (Remainder 10).</value>
+  <data name="InvalidGeorgiaTaxIdChecksumRemainder10" xml:space="preserve">
+    <value>Ongeldige controlesom (Rest 10).</value>
   </data>
-  <data name="OngeldigDenmarkFikLength" xml:space="preserve">
-    <value>FIK reference lengte invalid.</value>
+  <data name="InvalidDenmarkFikLength" xml:space="preserve">
+    <value>FIK-referentielengte ongeldig.</value>
   </data>
-  <data name="OngeldigDenmarkFikCheckDigit" xml:space="preserve">
-    <value>Ongeldig FIK check digit (Luhn).</value>
+  <data name="InvalidDenmarkFikCheckDigit" xml:space="preserve">
+    <value>Ongeldig FIK-controlecijfer (Luhn).</value>
   </data>
   <data name="HandelsregisternummerCannotBeEmpty" xml:space="preserve">
     <value>Handelsregisternummer mag niet leeg zijn.</value>
   </data>
-  <data name="OngeldigGermanyHandelsregisternummerFormat" xml:space="preserve">
-    <value>Ongeldig Handelsregisternummer formaat. Expected HRA or HRB followed by digits.</value>
+  <data name="InvalidGermanyHandelsregisternummerFormat" xml:space="preserve">
+    <value>Ongeldig Handelsregisternummer-formaat. Verwacht HRA of HRB gevolgd door cijfers.</value>
   </data>
   <data name="SiretCannotBeEmpty" xml:space="preserve">
-    <value>SIRET number mag niet leeg zijn.</value>
+    <value>SIRET-nummer mag niet leeg zijn.</value>
   </data>
-  <data name="OngeldigSiretFormat" xml:space="preserve">
-    <value>Ongeldig formaat. Expected 14 digits.</value>
+  <data name="InvalidSiretFormat" xml:space="preserve">
+    <value>Ongeldig formaat. Verwacht 14 cijfers.</value>
   </data>
-  <data name="OngeldigSiretChecksum" xml:space="preserve">
-    <value>Ongeldig controlesom (Luhn).</value>
+  <data name="InvalidSiretChecksum" xml:space="preserve">
+    <value>Ongeldige controlesom (Luhn).</value>
   </data>
-  <data name="OngeldigFinlandVatFormat" xml:space="preserve">
-    <value>Ongeldig Finland VAT formaat.</value>
+  <data name="InvalidFinlandVatFormat" xml:space="preserve">
+    <value>Ongeldig Finland BTW-formaat.</value>
   </data>
-  <data name="OngeldigFinlandVatChecksumCheckDigit10" xml:space="preserve">
-    <value>Ongeldig controlesom (Check digit 10).</value>
+  <data name="InvalidFinlandVatChecksumCheckDigit10" xml:space="preserve">
+    <value>Ongeldige controlesom (Controlecijfer 10).</value>
   </data>
-  <data name="OngeldigFinlandVatChecksum" xml:space="preserve">
-    <value>Ongeldig Finland VAT controlesom.</value>
+  <data name="InvalidFinlandVatChecksum" xml:space="preserve">
+    <value>Ongeldige Finland BTW-controlesom.</value>
   </data>
   <data name="IbanEmpty" xml:space="preserve">
     <value>IBAN mag niet leeg zijn.</value>
   </data>
   <data name="VatNumberEmpty" xml:space="preserve">
-    <value>VAT number mag niet leeg zijn.</value>
+    <value>BTW-nummer mag niet leeg zijn.</value>
   </data>
   <data name="FranceSirenEmpty" xml:space="preserve">
-    <value>SIREN number mag niet leeg zijn.</value>
+    <value>SIREN-nummer mag niet leeg zijn.</value>
   </data>
-  <data name="FranceSirenOngeldigFormat" xml:space="preserve">
-    <value>Ongeldig formaat. Expected 9 digits.</value>
+  <data name="FranceSirenInvalidFormat" xml:space="preserve">
+    <value>Ongeldig formaat. Verwacht 9 cijfers.</value>
   </data>
-  <data name="FranceSirenOngeldigChecksum" xml:space="preserve">
-    <value>Ongeldig controlesom (Luhn).</value>
+  <data name="FranceSirenInvalidChecksum" xml:space="preserve">
+    <value>Ongeldige controlesom (Luhn).</value>
   </data>
-  <data name="FaroeIslandsVatOngeldigFormat" xml:space="preserve">
-    <value>Ongeldig Faroe Islands VAT formaat.</value>
+  <data name="FaroeIslandsVatInvalidFormat" xml:space="preserve">
+    <value>Ongeldig Faeröer Eilanden BTW-formaat.</value>
   </data>
   <data name="FinlandBusinessIdEmpty" xml:space="preserve">
-    <value>Enterprise number mag niet leeg zijn.</value>
+    <value>Ondernemingsnummer mag niet leeg zijn.</value>
   </data>
-  <data name="FinlandBusinessIdOngeldigLength" xml:space="preserve">
-    <value>Business ID must be 8 digits.</value>
+  <data name="FinlandBusinessIdInvalidLength" xml:space="preserve">
+    <value>Bedrijfs-ID moet 8 cijfers bevatten.</value>
   </data>
-  <data name="FinlandBusinessIdOngeldigChecksumRemainder1" xml:space="preserve">
-    <value>Ongeldig controlesom (Remainder 1 is not allowed).</value>
+  <data name="FinlandBusinessIdInvalidChecksumRemainder1" xml:space="preserve">
+    <value>Ongeldige controlesom (Rest 1 is niet toegestaan).</value>
   </data>
-  <data name="CzechRepublicIbanOngeldigPrefixChecksum" xml:space="preserve">
-    <value>Ongeldig Czech Prefix controlesom.</value>
+  <data name="CzechRepublicIbanInvalidPrefixChecksum" xml:space="preserve">
+    <value>Ongeldige Tsjechische prefix-controlesom.</value>
   </data>
-  <data name="CzechRepublicIbanOngeldigAccountChecksum" xml:space="preserve">
-    <value>Ongeldig Czech Account Number controlesom.</value>
+  <data name="CzechRepublicIbanInvalidAccountChecksum" xml:space="preserve">
+    <value>Ongeldige Tsjechische rekeningnummer-controlesom.</value>
   </data>
   <data name="CzechRepublicIcoEmpty" xml:space="preserve">
     <value>IČO mag niet leeg zijn.</value>
   </data>
-  <data name="CzechRepublicIcoOngeldigFormat" xml:space="preserve">
-    <value>Ongeldig Czech Republic IČO formaat.</value>
+  <data name="CzechRepublicIcoInvalidFormat" xml:space="preserve">
+    <value>Ongeldig Tsjechië IČO-formaat.</value>
   </data>
-  <data name="CzechRepublicIcoOngeldigChecksum" xml:space="preserve">
-    <value>Ongeldig Czech Republic IČO controlesom.</value>
+  <data name="CzechRepublicIcoInvalidChecksum" xml:space="preserve">
+    <value>Ongeldige Tsjechië IČO-controlesom.</value>
   </data>
   <data name="FinlandPaymentReferenceEmpty" xml:space="preserve">
-    <value>Reference mag niet leeg zijn.</value>
+    <value>Referentie mag niet leeg zijn.</value>
   </data>
-  <data name="FinlandPaymentReferenceOngeldigFormat" xml:space="preserve">
-    <value>Ongeldig Finnish payment reference.</value>
+  <data name="FinlandPaymentReferenceInvalidFormat" xml:space="preserve">
+    <value>Ongeldige Finse betalingsreferentie.</value>
   </data>
   <data name="CyprusTicEmpty" xml:space="preserve">
     <value>TIC mag niet leeg zijn.</value>
   </data>
-  <data name="CyprusTicOngeldigFormat" xml:space="preserve">
-    <value>Ongeldig Cyprus TIC formaat.</value>
+  <data name="CyprusTicInvalidFormat" xml:space="preserve">
+    <value>Ongeldig Cyprus TIC-formaat.</value>
   </data>
-  <data name="CyprusTicOngeldigChecksum" xml:space="preserve">
-    <value>Ongeldig Cyprus TIC controlesom.</value>
+  <data name="CyprusTicInvalidChecksum" xml:space="preserve">
+    <value>Ongeldige Cyprus TIC-controlesom.</value>
   </data>
-  <data name="CyprusIbanOngeldigBankCode" xml:space="preserve">
-    <value>Cyprus Bank Code must be digits.</value>
+  <data name="CyprusIbanInvalidBankCode" xml:space="preserve">
+    <value>Cyprus bankcode moet uit cijfers bestaan.</value>
   </data>
-  <data name="CyprusIbanOngeldigBranchCode" xml:space="preserve">
-    <value>Cyprus Branch Code must be digits.</value>
+  <data name="CyprusIbanInvalidBranchCode" xml:space="preserve">
+    <value>Cyprus filiaalcode moet uit cijfers bestaan.</value>
   </data>
-  <data name="CyprusIbanOngeldigAccount" xml:space="preserve">
-    <value>Cyprus Account Number must be alphanumeric.</value>
+  <data name="CyprusIbanInvalidAccount" xml:space="preserve">
+    <value>Cyprus rekeningnummer moet alfanumeriek zijn.</value>
   </data>
-  <data name="AzerbaijanVatOngeldigFormat" xml:space="preserve">
-    <value>Ongeldig Azerbaijan VAT formaat.</value>
+  <data name="AzerbaijanVatInvalidFormat" xml:space="preserve">
+    <value>Ongeldig Azerbeidzjan BTW-formaat.</value>
   </data>
-  <data name="AzerbaijanIbanOngeldigBankCode" xml:space="preserve">
-    <value>Bank Code must be letters.</value>
+  <data name="AzerbaijanIbanInvalidBankCode" xml:space="preserve">
+    <value>Bankcode moet uit letters bestaan.</value>
   </data>
-  <data name="AzerbaijanIbanOngeldigAccount" xml:space="preserve">
-    <value>Account Number must be alphanumeric.</value>
+  <data name="AzerbaijanIbanInvalidAccount" xml:space="preserve">
+    <value>Rekeningnummer moet alfanumeriek zijn.</value>
   </data>
   <data name="AustriaFirmenbuchEmpty" xml:space="preserve">
     <value>Firmenbuchnummer mag niet leeg zijn.</value>
   </data>
-  <data name="AustriaFirmenbuchOngeldigFormat" xml:space="preserve">
-    <value>Ongeldig formaat. Expected 1-6 digits followed by a letter (optional FN prefix).</value>
+  <data name="AustriaFirmenbuchInvalidFormat" xml:space="preserve">
+    <value>Ongeldig formaat. Verwacht 1-6 cijfers gevolgd door een letter (optioneel FN-prefix).</value>
   </data>
-  <data name="BulgariaIbanOngeldigBankCode" xml:space="preserve">
-    <value>Bulgaria Bank Code must be letters.</value>
+  <data name="BulgariaIbanInvalidBankCode" xml:space="preserve">
+    <value>Bulgarije bankcode moet uit letters bestaan.</value>
   </data>
   <data name="BulgariaUicEmpty" xml:space="preserve">
     <value>UIC mag niet leeg zijn.</value>
   </data>
-  <data name="BulgariaUicOngeldigFormat" xml:space="preserve">
-    <value>Ongeldig UIC formaat (must be 9 or 13 digits).</value>
+  <data name="BulgariaUicInvalidFormat" xml:space="preserve">
+    <value>Ongeldig UIC-formaat (moet 9 of 13 cijfers bevatten).</value>
   </data>
-  <data name="BulgariaUicOngeldigChecksum9" xml:space="preserve">
-    <value>Ongeldig UIC controlesom (9 digits).</value>
+  <data name="BulgariaUicInvalidChecksum9" xml:space="preserve">
+    <value>Ongeldige UIC-controlesom (9 cijfers).</value>
   </data>
-  <data name="BulgariaUicOngeldigChecksumBase" xml:space="preserve">
-    <value>Ongeldig base UIC (first 9 digits).</value>
+  <data name="BulgariaUicInvalidChecksumBase" xml:space="preserve">
+    <value>Ongeldige basis-UIC (eerste 9 cijfers).</value>
   </data>
-  <data name="BulgariaUicOngeldigChecksum13" xml:space="preserve">
-    <value>Ongeldig UIC controlesom (13 digits).</value>
+  <data name="BulgariaUicInvalidChecksum13" xml:space="preserve">
+    <value>Ongeldige UIC-controlesom (13 cijfers).</value>
   </data>
-  <data name="BelarusVatOngeldigFormat" xml:space="preserve">
-    <value>Ongeldig Belarus VAT formaat.</value>
+  <data name="BelarusVatInvalidFormat" xml:space="preserve">
+    <value>Ongeldig Wit-Rusland BTW-formaat.</value>
   </data>
-  <data name="BelarusVatOngeldigChecksumMod11" xml:space="preserve">
-    <value>Ongeldig controlesom (Mod 11 result is 10).</value>
+  <data name="BelarusVatInvalidChecksumMod11" xml:space="preserve">
+    <value>Ongeldige controlesom (Mod 11 resultaat is 10).</value>
   </data>
-  <data name="AlbaniaIbanOngeldigBankCode" xml:space="preserve">
-    <value>Bank code must be numeric.</value>
+  <data name="AlbaniaIbanInvalidBankCode" xml:space="preserve">
+    <value>Bankcode moet numeriek zijn.</value>
   </data>
-  <data name="AlbaniaIbanOngeldigBranchCode" xml:space="preserve">
-    <value>Branch code must be numeric.</value>
+  <data name="AlbaniaIbanInvalidBranchCode" xml:space="preserve">
+    <value>Filiaalcode moet numeriek zijn.</value>
   </data>
-  <data name="AlbaniaIbanOngeldigControlChar" xml:space="preserve">
-    <value>Control character must be alphanumeric.</value>
+  <data name="AlbaniaIbanInvalidControlChar" xml:space="preserve">
+    <value>Controleteken moet alfanumeriek zijn.</value>
   </data>
-  <data name="AlbaniaIbanOngeldigAccount" xml:space="preserve">
-    <value>Account number must be alphanumeric.</value>
+  <data name="AlbaniaIbanInvalidAccount" xml:space="preserve">
+    <value>Rekeningnummer moet alfanumeriek zijn.</value>
   </data>
-  <data name="OngeldigIsoReferenceLength" xml:space="preserve">
-    <value>Reference lengte must be between 5 and 25 characters.</value>
+  <data name="InvalidIsoReferenceLength" xml:space="preserve">
+    <value>Referentielengte moet tussen 5 en 25 tekens liggen.</value>
   </data>
-  <data name="OngeldigIsoReferencePrefix" xml:space="preserve">
-    <value>Reference must start with 'RF'.</value>
+  <data name="InvalidIsoReferencePrefix" xml:space="preserve">
+    <value>Referentie moet beginnen met 'RF'.</value>
   </data>
-  <data name="OngeldigIsoReferenceCharacters" xml:space="preserve">
-    <value>Reference contains invalid characters.</value>
+  <data name="InvalidIsoReferenceCharacters" xml:space="preserve">
+    <value>Referentie bevat ongeldige tekens.</value>
   </data>
   <data name="UnsupportedPaymentReferenceFormat" xml:space="preserve">
-    <value>Format {0} is not supported by IsoPaymentReferenceValidator.</value>
+    <value>Formaat {0} wordt niet ondersteund door IsoPaymentReferenceValidator.</value>
   </data>
-  <data name="OngeldigLeiLength" xml:space="preserve">
-    <value>LEI must be exactly 20 characters.</value>
+  <data name="InvalidLeiLength" xml:space="preserve">
+    <value>LEI moet precies 20 tekens lang zijn.</value>
   </data>
-  <data name="OngeldigLeiFormat" xml:space="preserve">
-    <value>LEI must contain only alphanumeric characters.</value>
+  <data name="InvalidLeiFormat" xml:space="preserve">
+    <value>LEI mag alleen alfanumerieke tekens bevatten.</value>
   </data>
   <data name="LeiParsingFailed" xml:space="preserve">
-    <value>Failed to parse LEI for controlesom calculation.</value>
+    <value>Parsen van LEI voor controlesom-berekening mislukt.</value>
   </data>
-  <data name="OngeldigLeiChecksum" xml:space="preserve">
-    <value>Ongeldig LEI controlesom.</value>
+  <data name="InvalidLeiChecksum" xml:space="preserve">
+    <value>Ongeldige LEI-controlesom.</value>
   </data>
-  <data name="OngeldigBicLength" xml:space="preserve">
-    <value>BIC must be 8 or 11 characters long.</value>
+  <data name="InvalidBicLength" xml:space="preserve">
+    <value>BIC moet 8 of 11 tekens lang zijn.</value>
   </data>
-  <data name="OngeldigBicBankCode" xml:space="preserve">
-    <value>Bank code must contain only letters.</value>
+  <data name="InvalidBicBankCode" xml:space="preserve">
+    <value>Bankcode mag alleen letters bevatten.</value>
   </data>
-  <data name="OngeldigBicCountryCode" xml:space="preserve">
-    <value>Country code must contain only letters.</value>
+  <data name="InvalidBicCountryCode" xml:space="preserve">
+    <value>Landcode mag alleen letters bevatten.</value>
   </data>
-  <data name="OngeldigBicLocationCode" xml:space="preserve">
-    <value>Location code must be alphanumeric.</value>
+  <data name="InvalidBicLocationCode" xml:space="preserve">
+    <value>Locatiecode moet alfanumeriek zijn.</value>
   </data>
-  <data name="OngeldigBicBranchCode" xml:space="preserve">
-    <value>Branch code must be alphanumeric.</value>
+  <data name="InvalidBicBranchCode" xml:space="preserve">
+    <value>Filiaalcode moet alfanumeriek zijn.</value>
   </data>
-  <data name="OngeldigIban" xml:space="preserve">
-    <value>Ongeldig IBAN.</value>
+  <data name="InvalidIban" xml:space="preserve">
+    <value>Ongeldige IBAN.</value>
   </data>
-  <data name="OngeldigBrazilBankCodeFormat" xml:space="preserve">
-    <value>Ongeldig Brazil Bank Code formaat.</value>
+  <data name="InvalidBrazilBankCodeFormat" xml:space="preserve">
+    <value>Ongeldig Brazilië bankcode-formaat.</value>
   </data>
-  <data name="OngeldigAbnLength" xml:space="preserve">
-    <value>Ongeldig ABN lengte.</value>
+  <data name="InvalidAbnLength" xml:space="preserve">
+    <value>Ongeldige ABN-lengte.</value>
   </data>
-  <data name="OngeldigAbnFormat" xml:space="preserve">
-    <value>Ongeldig ABN formaat.</value>
+  <data name="InvalidAbnFormat" xml:space="preserve">
+    <value>Ongeldig ABN-formaat.</value>
   </data>
-  <data name="OngeldigAbnChecksum" xml:space="preserve">
-    <value>Ongeldig ABN controlesom.</value>
+  <data name="InvalidAbnChecksum" xml:space="preserve">
+    <value>Ongeldige ABN-controlesom.</value>
   </data>
-  <data name="OngeldigSinLength" xml:space="preserve">
-    <value>Ongeldig SIN lengte.</value>
+  <data name="InvalidSinLength" xml:space="preserve">
+    <value>Ongeldige SIN-lengte.</value>
   </data>
-  <data name="OngeldigSinFormat" xml:space="preserve">
-    <value>Ongeldig SIN formaat.</value>
+  <data name="InvalidSinFormat" xml:space="preserve">
+    <value>Ongeldig SIN-formaat.</value>
   </data>
-  <data name="OngeldigSinChecksum" xml:space="preserve">
-    <value>Ongeldig SIN controlesom.</value>
+  <data name="InvalidSinChecksum" xml:space="preserve">
+    <value>Ongeldige SIN-controlesom.</value>
   </data>
-  <data name="OngeldigEinLength" xml:space="preserve">
-    <value>Ongeldig EIN lengte.</value>
+  <data name="InvalidEinLength" xml:space="preserve">
+    <value>Ongeldige EIN-lengte.</value>
   </data>
-  <data name="OngeldigEinFormat" xml:space="preserve">
-    <value>Ongeldig EIN formaat.</value>
+  <data name="InvalidEinFormat" xml:space="preserve">
+    <value>Ongeldig EIN-formaat.</value>
   </data>
   <data name="BankAccountMustBeDigits" xml:space="preserve">
-    <value>Bank account mag alleen cijfers bevatten.</value>
+    <value>Rekeningnummer mag alleen cijfers bevatten.</value>
   </data>
-  <data name="OngeldigJapanBankAccountLength" xml:space="preserve">
-    <value>Ongeldig Japan bank account lengte.</value>
+  <data name="InvalidJapanBankAccountLength" xml:space="preserve">
+    <value>Ongeldige Japanse rekeningnummer-lengte.</value>
   </data>
   <data name="NoTaxIdValidatorRegistered" xml:space="preserve">
-    <value>Geen BTW-validator geregistreerd for this country.</value>
+    <value>Geen BTW-validator geregistreerd voor dit land.</value>
   </data>
-  <data name="OngeldigTaxId" xml:space="preserve">
-    <value>Ongeldig Tax ID.</value>
+  <data name="InvalidTaxId" xml:space="preserve">
+    <value>Ongeldige BTW-ID.</value>
   </data>
   <data name="NoNationalIdValidatorRegistered" xml:space="preserve">
-    <value>Geen nationaal ID-validator geregistreerd for this country.</value>
+    <value>Geen nationaal ID-validator geregistreerd voor dit land.</value>
   </data>
-  <data name="OngeldigNationalId" xml:space="preserve">
-    <value>Ongeldig National ID.</value>
+  <data name="InvalidNationalId" xml:space="preserve">
+    <value>Ongeldige nationale ID.</value>
   </data>
-  <data name="OngeldigBnLength" xml:space="preserve">
-    <value>Ongeldig Business Number lengte.</value>
+  <data name="InvalidBnLength" xml:space="preserve">
+    <value>Ongeldige ondernemingsnummer-lengte.</value>
   </data>
-  <data name="OngeldigBnFormat" xml:space="preserve">
-    <value>Ongeldig Business Number formaat.</value>
+  <data name="InvalidBnFormat" xml:space="preserve">
+    <value>Ongeldig ondernemingsnummer-formaat.</value>
   </data>
-  <data name="OngeldigBnChecksum" xml:space="preserve">
-    <value>Ongeldig Business Number controlesom.</value>
+  <data name="InvalidBnChecksum" xml:space="preserve">
+    <value>Ongeldige ondernemingsnummer-controlesom.</value>
   </data>
   <data name="NoBankRoutingValidatorRegistered" xml:space="preserve">
-    <value>No Bank Routing validator registered for this country.</value>
+    <value>Geen bankleitzahl-validator geregistreerd voor dit land.</value>
   </data>
-  <data name="OngeldigBankRoutingNumber" xml:space="preserve">
-    <value>Ongeldig Bank Routing Number.</value>
+  <data name="InvalidBankRoutingNumber" xml:space="preserve">
+    <value>Ongeldige bankleitzahl.</value>
   </data>
-  <data name="OngeldigVaticanIbanFormat" xml:space="preserve">
-    <value>Ongeldig Vatican IBAN formaat.</value>
+  <data name="InvalidVaticanIbanFormat" xml:space="preserve">
+    <value>Ongeldig Vaticaan IBAN-formaat.</value>
   </data>
-  <data name="OngeldigTfnLength" xml:space="preserve">
-    <value>Ongeldig TFN lengte.</value>
+  <data name="InvalidTfnLength" xml:space="preserve">
+    <value>Ongeldige TFN-lengte.</value>
   </data>
-  <data name="OngeldigTfnFormat" xml:space="preserve">
-    <value>Ongeldig TFN formaat.</value>
+  <data name="InvalidTfnFormat" xml:space="preserve">
+    <value>Ongeldig TFN-formaat.</value>
   </data>
-  <data name="OngeldigTfnChecksum" xml:space="preserve">
-    <value>Ongeldig TFN controlesom.</value>
+  <data name="InvalidTfnChecksum" xml:space="preserve">
+    <value>Ongeldige TFN-controlesom.</value>
   </data>
-  <data name="OngeldigVaticanVatFormat" xml:space="preserve">
-    <value>Ongeldig Vatican VAT formaat.</value>
+  <data name="InvalidVaticanVatFormat" xml:space="preserve">
+    <value>Ongeldig Vaticaan BTW-formaat.</value>
   </data>
-  <data name="OngeldigVaticanVatChecksum" xml:space="preserve">
-    <value>Ongeldig Vatican VAT controlesom.</value>
+  <data name="InvalidVaticanVatChecksum" xml:space="preserve">
+    <value>Ongeldige Vaticaan BTW-controlesom.</value>
   </data>
-  <data name="OngeldigSingaporeBankAccountLength" xml:space="preserve">
-    <value>Ongeldig Singapore bank account lengte.</value>
+  <data name="InvalidSingaporeBankAccountLength" xml:space="preserve">
+    <value>Ongeldige Singapore rekeningnummer-lengte.</value>
   </data>
-  <data name="OngeldigUkBankCodeFormat" xml:space="preserve">
-    <value>Ongeldig UK Bank Code formaat.</value>
+  <data name="InvalidUkBankCodeFormat" xml:space="preserve">
+    <value>Ongeldig UK bankcode-formaat.</value>
   </data>
-  <data name="OngeldigUkSortCodeFormat" xml:space="preserve">
-    <value>Ongeldig UK Sort Code formaat.</value>
+  <data name="InvalidUkSortCodeFormat" xml:space="preserve">
+    <value>Ongeldig UK Sort Code-formaat.</value>
   </data>
-  <data name="OngeldigCrnLength" xml:space="preserve">
-    <value>Ongeldig CRN lengte.</value>
+  <data name="InvalidCrnLength" xml:space="preserve">
+    <value>Ongeldige CRN-lengte.</value>
   </data>
-  <data name="OngeldigCrnFormat" xml:space="preserve">
-    <value>Ongeldig CRN formaat.</value>
+  <data name="InvalidCrnFormat" xml:space="preserve">
+    <value>Ongeldig CRN-formaat.</value>
   </data>
-  <data name="OngeldigUkraineBankCodeFormat" xml:space="preserve">
-    <value>Ongeldig Ukraine Bank Code formaat.</value>
+  <data name="InvalidUkraineBankCodeFormat" xml:space="preserve">
+    <value>Ongeldig Oekraïne bankcode-formaat.</value>
   </data>
-  <data name="OngeldigUkraineAccountNumberFormat" xml:space="preserve">
-    <value>Ongeldig Ukraine Account Number formaat.</value>
+  <data name="InvalidUkraineAccountNumberFormat" xml:space="preserve">
+    <value>Ongeldig Oekraïne rekeningnummer-formaat.</value>
   </data>
-  <data name="OngeldigCnapsFormat" xml:space="preserve">
-    <value>Ongeldig CNAPS formaat.</value>
+  <data name="InvalidCnapsFormat" xml:space="preserve">
+    <value>Ongeldig CNAPS-formaat.</value>
   </data>
-  <data name="OngeldigVtalLength" xml:space="preserve">
-    <value>Ongeldig V-tal lengte.</value>
+  <data name="InvalidVtalLength" xml:space="preserve">
+    <value>Ongeldige V-tal-lengte.</value>
   </data>
   <data name="UnsupportedCountryCode" xml:space="preserve">
     <value>Niet-ondersteunde landcode.</value>
   </data>
-  <data name="OngeldigFinnishReferenceLength" xml:space="preserve">
-    <value>Ongeldig Finnish reference lengte.</value>
+  <data name="InvalidFinnishReferenceLength" xml:space="preserve">
+    <value>Ongeldige Finse referentielengte.</value>
   </data>
-  <data name="OngeldigSloveniaVatFormat" xml:space="preserve">
-    <value>Ongeldig Slovenia VAT formaat.</value>
+  <data name="InvalidSloveniaVatFormat" xml:space="preserve">
+    <value>Ongeldig Slovenië BTW-formaat.</value>
   </data>
-  <data name="OngeldigSloveniaVatChecksumForbidden" xml:space="preserve">
-    <value>Ongeldig Slovenia VAT controlesom (forbidden).</value>
+  <data name="InvalidSloveniaVatChecksumForbidden" xml:space="preserve">
+    <value>Ongeldige Slovenië BTW-controlesom (verboden).</value>
   </data>
-  <data name="OngeldigSloveniaVatChecksum" xml:space="preserve">
-    <value>Ongeldig Slovenia VAT controlesom.</value>
+  <data name="InvalidSloveniaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Slovenië BTW-controlesom.</value>
   </data>
-  <data name="OngeldigSlovenianSi12Reference" xml:space="preserve">
-    <value>Ongeldig Slovenian SI12 reference.</value>
+  <data name="InvalidSlovenianSi12Reference" xml:space="preserve">
+    <value>Ongeldige Sloveense SI12-referentie.</value>
   </data>
-  <data name="OngeldigSloveniaReferencePrefix" xml:space="preserve">
-    <value>Ongeldig Slovenia reference prefix.</value>
+  <data name="InvalidSloveniaReferencePrefix" xml:space="preserve">
+    <value>Ongeldige Slovenië referentie-prefix.</value>
   </data>
-  <data name="OngeldigSloveniaReferenceLength" xml:space="preserve">
-    <value>Ongeldig Slovenia reference lengte.</value>
+  <data name="InvalidSloveniaReferenceLength" xml:space="preserve">
+    <value>Ongeldige Slovenië referentielengte.</value>
   </data>
-  <data name="OngeldigSlovakPrefixChecksum" xml:space="preserve">
-    <value>Ongeldig Slovak prefix controlesom.</value>
+  <data name="InvalidSlovakPrefixChecksum" xml:space="preserve">
+    <value>Ongeldige Slowaakse prefix-controlesom.</value>
   </data>
-  <data name="OngeldigSlovakAccountNumberChecksum" xml:space="preserve">
-    <value>Ongeldig Slovak account number controlesom.</value>
+  <data name="InvalidSlovakAccountNumberChecksum" xml:space="preserve">
+    <value>Ongeldige Slowaakse rekeningnummer-controlesom.</value>
   </data>
-  <data name="OngeldigNibKey" xml:space="preserve">
-    <value>Ongeldig NIB key.</value>
+  <data name="InvalidNibKey" xml:space="preserve">
+    <value>Ongeldige NIB-sleutel.</value>
   </data>
-  <data name="OngeldigSpanishDcCheck" xml:space="preserve">
-    <value>Ongeldig Spanish DC check.</value>
+  <data name="InvalidSpanishDcCheck" xml:space="preserve">
+    <value>Ongeldige Spaanse DC-controle.</value>
   </data>
-  <data name="OngeldigCifFormat" xml:space="preserve">
-    <value>Ongeldig CIF formaat.</value>
+  <data name="InvalidCifFormat" xml:space="preserve">
+    <value>Ongeldig CIF-formaat.</value>
   </data>
-  <data name="OngeldigCifCheckLetter" xml:space="preserve">
-    <value>Ongeldig CIF check letter.</value>
+  <data name="InvalidCifCheckLetter" xml:space="preserve">
+    <value>Ongeldige CIF-controleletter.</value>
   </data>
-  <data name="OngeldigCifCheckDigit" xml:space="preserve">
-    <value>Ongeldig CIF check digit.</value>
+  <data name="InvalidCifCheckDigit" xml:space="preserve">
+    <value>Ongeldig CIF-controlecijfer.</value>
   </data>
-  <data name="OngeldigCifCheckCharacter" xml:space="preserve">
-    <value>Ongeldig CIF check character.</value>
+  <data name="InvalidCifCheckCharacter" xml:space="preserve">
+    <value>Ongeldig CIF-controleteken.</value>
   </data>
-  <data name="OngeldigNorwayIbanFormat" xml:space="preserve">
-    <value>Ongeldig Norway IBAN formaat.</value>
+  <data name="InvalidNorwayIbanFormat" xml:space="preserve">
+    <value>Ongeldig Noorwegen IBAN-formaat.</value>
   </data>
-  <data name="OngeldigNorwayBbanChecksum" xml:space="preserve">
-    <value>Ongeldig Norway BBAN controlesom.</value>
+  <data name="InvalidNorwayBbanChecksum" xml:space="preserve">
+    <value>Ongeldige Noorwegen BBAN-controlesom.</value>
   </data>
-  <data name="OngeldigItalianIdentifierLength" xml:space="preserve">
-    <value>Ongeldig Italian identifier lengte.</value>
+  <data name="InvalidItalianIdentifierLength" xml:space="preserve">
+    <value>Ongeldige Italiaanse identificatielengte.</value>
   </data>
-  <data name="OngeldigSwissQrReference" xml:space="preserve">
-    <value>Ongeldig Swiss QR reference.</value>
+  <data name="InvalidSwissQrReference" xml:space="preserve">
+    <value>Ongeldige Zwitserse QR-referentie.</value>
   </data>
-  <data name="OngeldigCodiceFiscaleFormat" xml:space="preserve">
-    <value>Ongeldig Codice Fiscale formaat.</value>
+  <data name="InvalidCodiceFiscaleFormat" xml:space="preserve">
+    <value>Ongeldig Codice Fiscale-formaat.</value>
   </data>
-  <data name="OngeldigCodiceFiscaleCheckDigit" xml:space="preserve">
-    <value>Ongeldig Codice Fiscale check digit.</value>
+  <data name="InvalidCodiceFiscaleCheckDigit" xml:space="preserve">
+    <value>Ongeldig Codice Fiscale-controlecijfer.</value>
   </data>
-  <data name="OngeldigPartitaIvaFormat" xml:space="preserve">
-    <value>Ongeldig Partita IVA formaat.</value>
+  <data name="InvalidPartitaIvaFormat" xml:space="preserve">
+    <value>Ongeldig Partita IVA-formaat.</value>
   </data>
-  <data name="OngeldigPartitaIvaCheckDigit" xml:space="preserve">
-    <value>Ongeldig Partita IVA check digit.</value>
+  <data name="InvalidPartitaIvaCheckDigit" xml:space="preserve">
+    <value>Ongeldig Partita IVA-controlecijfer.</value>
   </data>
-  <data name="OngeldigSwitzerlandClearingNumberFormat" xml:space="preserve">
-    <value>Ongeldig Switzerland Clearing Number formaat.</value>
+  <data name="InvalidSwitzerlandClearingNumberFormat" xml:space="preserve">
+    <value>Ongeldig Zwitserland clearingnummer-formaat.</value>
   </data>
-  <data name="OngeldigSwitzerlandAccountNumberFormat" xml:space="preserve">
-    <value>Ongeldig Switzerland Account Number formaat.</value>
+  <data name="InvalidSwitzerlandAccountNumberFormat" xml:space="preserve">
+    <value>Ongeldig Zwitserland rekeningnummer-formaat.</value>
   </data>
-  <data name="OngeldigLuxembourgBankCode" xml:space="preserve">
-    <value>Ongeldig Luxembourg Bank Code.</value>
+  <data name="InvalidLuxembourgBankCode" xml:space="preserve">
+    <value>Ongeldige Luxemburg bankcode.</value>
   </data>
   <data name="VatTooShortForCountryCode" xml:space="preserve">
-    <value>VAT too short for country code.</value>
+    <value>BTW te kort voor landcode.</value>
   </data>
-  <data name="OngeldigSanMarinoCin" xml:space="preserve">
-    <value>Ongeldig San Marino CIN.</value>
+  <data name="InvalidSanMarinoCin" xml:space="preserve">
+    <value>Ongeldige San Marino CIN.</value>
   </data>
-  <data name="OngeldigSanMarinoAbiCab" xml:space="preserve">
-    <value>Ongeldig San Marino ABI/CAB.</value>
+  <data name="InvalidSanMarinoAbiCab" xml:space="preserve">
+    <value>Ongeldige San Marino ABI/CAB.</value>
   </data>
-  <data name="OngeldigTurkeyBankCode" xml:space="preserve">
-    <value>Ongeldig Turkey Bank Code.</value>
+  <data name="InvalidTurkeyBankCode" xml:space="preserve">
+    <value>Ongeldige Turkije bankcode.</value>
   </data>
-  <data name="OngeldigTurkeyReserveChar" xml:space="preserve">
-    <value>Ongeldig Turkey Reserve Char.</value>
+  <data name="InvalidTurkeyReserveChar" xml:space="preserve">
+    <value>Ongeldig Turkije reserveteken.</value>
   </data>
-  <data name="OngeldigTurkeyAccountNumber" xml:space="preserve">
-    <value>Ongeldig Turkey Account Number.</value>
+  <data name="InvalidTurkeyAccountNumber" xml:space="preserve">
+    <value>Ongeldig Turkije rekeningnummer.</value>
   </data>
-  <data name="OngeldigSerbiaIbanFormat" xml:space="preserve">
-    <value>Ongeldig Serbia IBAN formaat.</value>
+  <data name="InvalidSerbiaIbanFormat" xml:space="preserve">
+    <value>Ongeldig Servië IBAN-formaat.</value>
   </data>
-  <data name="OngeldigSwedishOcrReference" xml:space="preserve">
-    <value>Ongeldig Swedish OCR reference.</value>
+  <data name="InvalidSwedishOcrReference" xml:space="preserve">
+    <value>Ongeldige Zweedse OCR-referentie.</value>
   </data>
-  <data name="OngeldigRomaniaIbanFormat" xml:space="preserve">
-    <value>Ongeldig Romania IBAN formaat.</value>
+  <data name="InvalidRomaniaIbanFormat" xml:space="preserve">
+    <value>Ongeldig Roemenië IBAN-formaat.</value>
   </data>
-  <data name="OngeldigPvmLength" xml:space="preserve">
-    <value>Ongeldig PVM lengte.</value>
+  <data name="BulgariaUicInvalidChecksum10" xml:space="preserve">
+    <value>Ongeldige Bulgaarse UIC-controlesom (10 cijfers).</value>
   </data>
-  <data name="OngeldigSwedishOcrLength" xml:space="preserve">
-    <value>Ongeldig Swedish OCR lengte.</value>
+  <data name="BulgariaUicInvalidChecksum11" xml:space="preserve">
+    <value>Ongeldige Bulgaarse UIC-controlesom (11 cijfers).</value>
   </data>
-  <data name="OngeldigLengthDigit" xml:space="preserve">
-    <value>Ongeldig lengte digit.</value>
+  <data name="BulgariaUicInvalidChecksum12" xml:space="preserve">
+    <value>Ongeldige Bulgaarse UIC-controlesom (12 cijfers).</value>
+  </data>
+  <data name="EstoniaIbanMustBeDigits" xml:space="preserve">
+    <value>Ests IBAN moet uit cijfers bestaan.</value>
+  </data>
+  <data name="HungaryIbanMustBeDigits" xml:space="preserve">
+    <value>Hongaars IBAN moet uit cijfers bestaan.</value>
+  </data>
+  <data name="IcelandIbanMustContainOnlyDigits" xml:space="preserve">
+    <value>IJslands IBAN mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="InvalidAustriaVatFormat" xml:space="preserve">
+    <value>Ongeldig Oostenrijks BTW-formaat.</value>
+  </data>
+  <data name="InvalidBelgiumOgmVcsReference" xml:space="preserve">
+    <value>Ongeldige Belgische OGM/VCS-referentie.</value>
+  </data>
+  <data name="InvalidBelgiumVatFormat" xml:space="preserve">
+    <value>Ongeldig Belgisch BTW-formaat.</value>
+  </data>
+  <data name="InvalidBosniaAndHerzegovinaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Bosnische BTW-controlesom.</value>
+  </data>
+  <data name="InvalidBosniaAndHerzegovinaVatChecksumRemainderOne" xml:space="preserve">
+    <value>Ongeldige Bosnische BTW-controlesom (rest 1).</value>
+  </data>
+  <data name="InvalidBosniaAndHerzegovinaVatFormat" xml:space="preserve">
+    <value>Ongeldig Bosnisch BTW-formaat.</value>
+  </data>
+  <data name="InvalidCin" xml:space="preserve">
+    <value>Ongeldige CIN.</value>
+  </data>
+  <data name="InvalidCnpjRepeated" xml:space="preserve">
+    <value>Ongeldige herhaalde CNPJ-cijfers.</value>
+  </data>
+  <data name="InvalidCpfRepeated" xml:space="preserve">
+    <value>Ongeldige herhaalde CPF-cijfers.</value>
+  </data>
+  <data name="InvalidEstoniaBbanStructure" xml:space="preserve">
+    <value>Ongeldige Estse BBAN-structuur.</value>
+  </data>
+  <data name="InvalidEstoniaRegistrikoodChecksum" xml:space="preserve">
+    <value>Ongeldige Estse Registrikood-controlesom.</value>
+  </data>
+  <data name="InvalidEstoniaRegistrikoodFormat" xml:space="preserve">
+    <value>Ongeldig Ests Registrikood-formaat.</value>
+  </data>
+  <data name="InvalidEstoniaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Estse BTW-controlesom.</value>
+  </data>
+  <data name="InvalidEstoniaVatFormat" xml:space="preserve">
+    <value>Ongeldig Ests BTW-formaat.</value>
+  </data>
+  <data name="InvalidHungaryAdoszamLength" xml:space="preserve">
+    <value>Ongeldige Hongaarse Adószám-lengte.</value>
+  </data>
+  <data name="InvalidHungaryVatChecksum" xml:space="preserve">
+    <value>Ongeldige Hongaarse BTW-controlesom.</value>
+  </data>
+  <data name="InvalidHungaryVatFormat" xml:space="preserve">
+    <value>Ongeldig Hongaars BTW-formaat.</value>
+  </data>
+  <data name="InvalidIcelandCountryCode" xml:space="preserve">
+    <value>Ongeldige IJslandse landcode.</value>
+  </data>
+  <data name="InvalidIcelandKennitala" xml:space="preserve">
+    <value>Ongeldige IJslandse Kennitala.</value>
+  </data>
+  <data name="InvalidItalyCountryCode" xml:space="preserve">
+    <value>Ongeldige Italiaanse landcode.</value>
+  </data>
+  <data name="InvalidItalyIuvCheckDigit" xml:space="preserve">
+    <value>Ongeldig Italiaans IUV-controlecijfer.</value>
+  </data>
+  <data name="InvalidItalyIuvLength" xml:space="preserve">
+    <value>Ongeldige Italiaanse IUV-lengte.</value>
+  </data>
+  <data name="InvalidItalyIuvReference" xml:space="preserve">
+    <value>Ongeldige Italiaanse IUV-referentie.</value>
+  </data>
+  <data name="InvalidKennitalaChecksum" xml:space="preserve">
+    <value>Ongeldige Kennitala-controlesom.</value>
+  </data>
+  <data name="InvalidKennitalaDate" xml:space="preserve">
+    <value>Ongeldige Kennitala-datum.</value>
+  </data>
+  <data name="InvalidKennitalaFormat" xml:space="preserve">
+    <value>Ongeldig Kennitala-formaat.</value>
+  </data>
+  <data name="InvalidKosovoFiscalNumberLength" xml:space="preserve">
+    <value>Ongeldige lengte fiscaal nummer Kosovo.</value>
+  </data>
+  <data name="InvalidLatviaCountryCode" xml:space="preserve">
+    <value>Ongeldige Letse landcode.</value>
+  </data>
+  <data name="InvalidLatviaPvnLength" xml:space="preserve">
+    <value>Ongeldige Letse PVN-lengte.</value>
+  </data>
+  <data name="InvalidLatviaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Letse BTW-controlesom.</value>
+  </data>
+  <data name="InvalidLatviaVatChecksumResultMinusOne" xml:space="preserve">
+    <value>Ongeldige Letse BTW-controlesom (resultaat -1).</value>
+  </data>
+  <data name="InvalidLatviaVatFormat" xml:space="preserve">
+    <value>Ongeldig Lets BTW-formaat.</value>
+  </data>
+  <data name="InvalidLiechtensteinCountryCode" xml:space="preserve">
+    <value>Ongeldige Liechtensteinse landcode.</value>
+  </data>
+  <data name="InvalidLiechtensteinPeidChecksumCheckDigit10" xml:space="preserve">
+    <value>Ongeldige Liechtensteinse PEID-controlesom (cijfer 10).</value>
+  </data>
+  <data name="InvalidLiechtensteinPeidLength" xml:space="preserve">
+    <value>Ongeldige Liechtensteinse PEID-lengte.</value>
+  </data>
+  <data name="ItalyAbiCabMustBeDigits" xml:space="preserve">
+    <value>Italiaanse ABI/CAB moeten cijfers zijn.</value>
+  </data>
+  <data name="ItalyAccountNumberMustBeAlphanumeric" xml:space="preserve">
+    <value>Italiaans rekeningnummer moet alfanumeriek zijn.</value>
+  </data>
+  <data name="ItalyCinMustBeLetter" xml:space="preserve">
+    <value>Italiaanse CIN moet een letter zijn.</value>
+  </data>
+  <data name="KennitalaCannotBeEmpty" xml:space="preserve">
+    <value>Kennitala mag niet leeg zijn.</value>
+  </data>
+  <data name="LatviaIbanMustBeAlphanumeric" xml:space="preserve">
+    <value>Lets IBAN moet alfanumeriek zijn.</value>
+  </data>
+  <data name="RegistrikoodCannotBeEmpty" xml:space="preserve">
+    <value>Registrikood mag niet leeg zijn.</value>
+  </data>
+  <data name="BelgiumIbanMustBeDigits" xml:space="preserve">
+    <value>Belgisch IBAN moet alleen cijfers bevatten na de landcode.</value>
+  </data>
+  <data name="InvalidBelgiumBbanStructure" xml:space="preserve">
+    <value>Ongeldige Belgische BBAN-structuur.</value>
+  </data>
+  <data name="BulgariaIbanInvalidAccount" xml:space="preserve">
+    <value>Ongeldig Bulgaars IBAN-rekeningnummer.</value>
+  </data>
+  <data name="BulgariaIbanInvalidBranchCode" xml:space="preserve">
+    <value>Ongeldige Bulgaarse IBAN-filiaalcode.</value>
+  </data>
+  <data name="BulgariaIbanInvalidControlChar" xml:space="preserve">
+    <value>Ongeldig Bulgaars IBAN-controleteken.</value>
+  </data>
+  <data name="InvalidLengthDigit" xml:space="preserve">
+    <value>Ongeldig lengtecijfer.</value>
+  </data>
+  <data name="InvalidPvmLength" xml:space="preserve">
+    <value>PVM moet 9 cijfers zijn.</value>
+  </data>
+  <data name="InvalidSwedishOcrLength" xml:space="preserve">
+    <value>Zweedse OCR-referentie moet tussen 2 en 25 cijfers zijn.</value>
   </data>
 </root>

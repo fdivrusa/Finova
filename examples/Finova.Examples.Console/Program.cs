@@ -24,7 +24,10 @@ BbanValidationScenario.Run();
 // 7. National ID Scenario
 NationalIdScenario.Run();
 
-// 8. Capabilities Overview
+// 8. Securities Identifiers Scenario (ISIN, CUSIP, SEDOL, Currency)
+SecuritiesValidationScenario.Run();
+
+// 9. Capabilities Overview
 CapabilitiesScenario.Run();
 
 Console.WriteLine();

@@ -341,7 +341,7 @@ public class PaymentCardValidatorTests
     }
 
     [Theory]
-    [InlineData(12, 25)] // Two digit year (should be normalized to 2025)
+    [InlineData(12, 28)] // Two digit year (should be normalized to 2028)
     [InlineData(12, 30)] // Two digit year (should be normalized to 2030)
     public void IsValidExpiration_WithTwoDigitYear_NormalizesCorrectly(int month, int year)
     {

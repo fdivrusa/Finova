@@ -410,4 +410,17 @@ public static class ValidationMessages
     public static string InvalidPvmLength => GetString("InvalidPvmLength");
     public static string InvalidSwedishOcrLength => GetString("InvalidSwedishOcrLength");
     public static string InvalidLengthDigit => GetString("InvalidLengthDigit");
+
+    // Securities Identifiers
+    public static string InvalidIsinLength => GetString("InvalidIsinLength");
+    public static string InvalidIsinFormat => GetString("InvalidIsinFormat");
+    public static string InvalidIsinChecksum => GetString("InvalidIsinChecksum");
+    public static string InvalidCusipLength => GetString("InvalidCusipLength");
+    public static string InvalidCusipFormat => GetString("InvalidCusipFormat");
+    public static string InvalidCusipChecksum => GetString("InvalidCusipChecksum");
+    public static string InvalidSedolLength => GetString("InvalidSedolLength");
+    public static string InvalidSedolFormat => GetString("InvalidSedolFormat");
+    public static string InvalidSedolChecksum => GetString("InvalidSedolChecksum");
+    public static string InvalidCurrencyLength => GetString("InvalidCurrencyLength");
+    public static string InvalidCurrencyCode => GetString("InvalidCurrencyCode");
 }

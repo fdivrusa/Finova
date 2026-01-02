@@ -4,13 +4,16 @@
         <IsPackable>true</IsPackable>
 
         <PackageId>Finova.Core</PackageId>
+        <Version>1.4.0-alpha.4</Version>
         <Title>Finova.Core: Financial Primitives &amp; Algorithms</Title>
         <Description>
             Core interfaces and algorithms for the Finova financial toolkit.
-            Contains Mod97, Luhn, ISO 7064, and base models for IBAN/BIC/Card/Enterprise/NationalID validation.
+            Contains Mod97, Luhn, ISO 7064, and base models for IBAN/BIC/Card/Enterprise/NationalID
+            validation.
             Zero dependencies.
         </Description>
-        <PackageTags>finova;core;algorithms;math;checksums;financial;primitives;iban;luhn;mod97;iso7064;iso11649;iso9362;validation</PackageTags>
+        <PackageTags>
+            finova;core;algorithms;math;checksums;financial;primitives;iban;luhn;mod97;iso7064;iso11649;iso9362;validation</PackageTags>
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <IncludeSymbols>true</IncludeSymbols>
