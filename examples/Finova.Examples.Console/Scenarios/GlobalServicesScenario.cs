@@ -21,6 +21,7 @@ public static class GlobalServicesScenario
         RunGlobalTaxIdService(serviceProvider);
         RunGlobalBankAccountService(serviceProvider);
         RunEuropeIbanValidator(serviceProvider);
+        RunGlobalIbanValidator();
         RunGlobalAdaptersForEurope(serviceProvider);
         RunRegionalBankValidators(serviceProvider);
         RunGlobalBankValidatorFacade();
@@ -87,6 +88,147 @@ public static class GlobalServicesScenario
         {
             Console.WriteLine("EuropeIbanValidator not found in DI.");
         }
+    }
+
+    private static void RunGlobalIbanValidator()
+    {
+        ConsoleHelper.WriteSubHeader("26b", "Global IBAN Validator (Static - All Regions)");
+        ConsoleHelper.WriteCode("GlobalIbanValidator.ValidateIban(iban)");
+
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
+        Console.WriteLine("      Validating IBANs from all supported regions:");
+        Console.ResetColor();
+        Console.WriteLine();
+
+        // Middle East IBANs
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("      === MIDDLE EAST ===");
+        Console.ResetColor();
+
+        var middleEastIbans = new[]
+        {
+            new { Iban = "AE070331234567890123456", Country = "United Arab Emirates", Valid = true },
+            new { Iban = "BH67BMAG00001299123456", Country = "Bahrain", Valid = true },
+            new { Iban = "IL620108000000099999999", Country = "Israel", Valid = true },
+            new { Iban = "JO94CBJO0010000000000131000302", Country = "Jordan", Valid = true },
+            new { Iban = "KW81CBKU0000000000001234560101", Country = "Kuwait", Valid = true },
+            new { Iban = "LB62099900000001001901229114", Country = "Lebanon", Valid = true },
+            new { Iban = "QA58DOHB00001234567890ABCDEFG", Country = "Qatar", Valid = true },
+            new { Iban = "SA0380000000608010167519", Country = "Saudi Arabia", Valid = true }
+        };
+
+        foreach (var test in middleEastIbans)
+        {
+            var result = GlobalIbanValidator.ValidateIban(test.Iban);
+            ConsoleHelper.WriteSimpleResult($"{test.Country}: {test.Iban}", result.IsValid,
+                result.IsValid ? "Valid" : (result.Errors.FirstOrDefault()?.Message ?? "Invalid"));
+        }
+        Console.WriteLine();
+
+        // Africa IBANs
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("      === AFRICA ===");
+        Console.ResetColor();
+
+        var africaIbans = new[]
+        {
+            new { Iban = "EG380019000500000000263180002", Country = "Egypt", Valid = true },
+            new { Iban = "MR1300020001010000123456753", Country = "Mauritania", Valid = true },
+            new { Iban = "TN5910006035183598478831", Country = "Tunisia (Europe validator)", Valid = true }
+        };
+
+        foreach (var test in africaIbans)
+        {
+            var result = GlobalIbanValidator.ValidateIban(test.Iban);
+            ConsoleHelper.WriteSimpleResult($"{test.Country}: {test.Iban}", result.IsValid,
+                result.IsValid ? "Valid" : (result.Errors.FirstOrDefault()?.Message ?? "Invalid"));
+        }
+        Console.WriteLine();
+
+        // Americas IBANs
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("      === AMERICAS ===");
+        Console.ResetColor();
+
+        var americasIbans = new[]
+        {
+            new { Iban = "BR1500000000000010932840814P2", Country = "Brazil", Valid = true },
+            new { Iban = "CR05015202001026284066", Country = "Costa Rica", Valid = true },
+            new { Iban = "DO28BAGR00000001212453611324", Country = "Dominican Republic", Valid = true },
+            new { Iban = "SV62CENR00000000000000700025", Country = "El Salvador", Valid = true },
+            new { Iban = "GT82TRAJ01020000001210029690", Country = "Guatemala", Valid = true },
+            new { Iban = "VG96VPVG0000012345678901", Country = "Virgin Islands (British)", Valid = true }
+        };
+
+        foreach (var test in americasIbans)
+        {
+            var result = GlobalIbanValidator.ValidateIban(test.Iban);
+            ConsoleHelper.WriteSimpleResult($"{test.Country}: {test.Iban}", result.IsValid,
+                result.IsValid ? "Valid" : (result.Errors.FirstOrDefault()?.Message ?? "Invalid"));
+        }
+        Console.WriteLine();
+
+        // Asia & Pacific IBANs
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("      === ASIA & PACIFIC ===");
+        Console.ResetColor();
+
+        var asiaIbans = new[]
+        {
+            new { Iban = "KZ86125KZT5004100100", Country = "Kazakhstan", Valid = true },
+            new { Iban = "PK36SCBL0000001123456702", Country = "Pakistan", Valid = true },
+            new { Iban = "TL380080012345678910157", Country = "Timor-Leste", Valid = true }
+        };
+
+        foreach (var test in asiaIbans)
+        {
+            var result = GlobalIbanValidator.ValidateIban(test.Iban);
+            ConsoleHelper.WriteSimpleResult($"{test.Country}: {test.Iban}", result.IsValid,
+                result.IsValid ? "Valid" : (result.Errors.FirstOrDefault()?.Message ?? "Invalid"));
+        }
+        Console.WriteLine();
+
+        // European IBANs (via GlobalIbanValidator routing)
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("      === EUROPE (via GlobalIbanValidator) ===");
+        Console.ResetColor();
+
+        var europeIbans = new[]
+        {
+            new { Iban = "DE89370400440532013000", Country = "Germany", Valid = true },
+            new { Iban = "FR7630006000011234567890189", Country = "France", Valid = true },
+            new { Iban = "GB29NWBK60161331926819", Country = "United Kingdom", Valid = true },
+            new { Iban = "NL91ABNA0417164300", Country = "Netherlands", Valid = true }
+        };
+
+        foreach (var test in europeIbans)
+        {
+            var result = GlobalIbanValidator.ValidateIban(test.Iban);
+            ConsoleHelper.WriteSimpleResult($"{test.Country}: {test.Iban}", result.IsValid,
+                result.IsValid ? "Valid" : (result.Errors.FirstOrDefault()?.Message ?? "Invalid"));
+        }
+        Console.WriteLine();
+
+        // Invalid IBANs
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("      === INVALID IBANS (Various Errors) ===");
+        Console.ResetColor();
+
+        var invalidIbans = new[]
+        {
+            new { Iban = "XX123456789012345", Country = "Unknown Country Code", Error = "Unsupported country" },
+            new { Iban = "DE89370400440532013001", Country = "Germany (Wrong Checksum)", Error = "Checksum error" },
+            new { Iban = "BH67BMAG000012991234", Country = "Bahrain (Too Short)", Error = "Length error" },
+            new { Iban = "", Country = "Empty Input", Error = "Empty input" }
+        };
+
+        foreach (var test in invalidIbans)
+        {
+            var result = GlobalIbanValidator.ValidateIban(test.Iban);
+            ConsoleHelper.WriteSimpleResult($"{test.Country}: {(string.IsNullOrEmpty(test.Iban) ? "(empty)" : test.Iban)}", result.IsValid,
+                result.IsValid ? "Valid" : (result.Errors.FirstOrDefault()?.Message ?? test.Error));
+        }
+        Console.WriteLine();
     }
 
     private static void RunGlobalAdaptersForEurope(ServiceProvider provider)

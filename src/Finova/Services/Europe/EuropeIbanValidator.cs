@@ -1,6 +1,8 @@
 using Finova.Core.Iban;
 using Finova.Countries.Europe.Andorra.Validators;
 using Finova.Countries.Europe.Austria.Validators;
+using Finova.Countries.Europe.Azerbaijan.Validators;
+using Finova.Countries.Europe.Belarus.Validators;
 using Finova.Countries.Europe.Belgium.Validators;
 using Finova.Countries.Europe.Bulgaria.Validators;
 using Finova.Countries.Europe.Croatia.Validators;
@@ -8,19 +10,23 @@ using Finova.Countries.Europe.Cyprus.Validators;
 using Finova.Countries.Europe.CzechRepublic.Validators;
 using Finova.Countries.Europe.Denmark.Validators;
 using Finova.Countries.Europe.Estonia.Validators;
+using Finova.Countries.Europe.FaroeIslands.Validators;
 using Finova.Countries.Europe.Finland.Validators;
 using Finova.Countries.Europe.France.Validators;
 using Finova.Countries.Europe.Germany.Validators;
 using Finova.Countries.Europe.Gibraltar.Validators;
 using Finova.Countries.Europe.Greece.Validators;
+using Finova.Countries.Europe.Greenland.Validators;
 using Finova.Countries.Europe.Hungary.Validators;
 using Finova.Countries.Europe.Iceland.Validators;
 using Finova.Countries.Europe.Ireland.Validators;
 using Finova.Countries.Europe.Italy.Validators;
+using Finova.Countries.Europe.Kosovo.Validators;
 using Finova.Countries.Europe.Latvia.Validators;
 using Finova.Countries.Europe.Lithuania.Validators;
 using Finova.Countries.Europe.Luxembourg.Validators;
 using Finova.Countries.Europe.Malta.Validators;
+using Finova.Countries.Europe.Moldova.Validators;
 using Finova.Countries.Europe.Monaco.Validators;
 using Finova.Countries.Europe.Netherlands.Validators;
 using Finova.Countries.Europe.Norway.Validators;
@@ -173,10 +179,17 @@ public class EuropeIbanValidator : IIbanValidator
             "MK" => NorthMacedoniaIbanValidator.ValidateNorthMacedoniaIban(iban),
             "BA" => BosniaAndHerzegovinaIbanValidator.ValidateBosniaAndHerzegovinaIban(iban),
             "GE" => GeorgiaIbanValidator.ValidateGeorgiaIban(iban),
+            // Additional European territories and countries
+            "FO" => FaroeIslandsIbanValidator.ValidateFaroeIslandsIban(iban),
+            "GL" => GreenlandIbanValidator.ValidateGreenlandIban(iban),
+            "XK" => KosovoIbanValidator.ValidateKosovoIban(iban),
+            "MD" => MoldovaIbanValidator.ValidateMoldovaIban(iban),
+            "BY" => BelarusIbanValidator.ValidateBelarusIban(iban),
+            "AZ" => AzerbaijanIbanValidator.ValidateAzerbaijanIban(iban),
 
             _ => IbanHelper.IsValidIban(iban)
                 ? ValidationResult.Success()
-                : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {country} is not supported or IBAN is invalid.")
+                : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, ValidationMessages.UnsupportedCountryOrInvalidIban)
         };
     }
 }

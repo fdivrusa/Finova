@@ -28,7 +28,7 @@
 | ⚙️ **Enterprise Ready** | Production-grade validation trusted by financial institutions |
 | 🔒 **Privacy First** | All validations run locally — your data never leaves your servers |
 | ⚡ **Lightning Fast** | Optimized algorithms with zero network latency |
-| 🌍 **Global Coverage** | 70+ countries across 6 continents |
+| 🌍 **Global Coverage** | 80+ countries across 6 continents |
 | 🧩 **Easy Integration** | FluentValidation support, dependency injection ready |
 
 ---
@@ -122,15 +122,33 @@ dotnet add package Finova.Extensions.FluentValidation
 |--------|---------|--------|--------------|--------------|
 | **North America** | 🇺🇸 USA | EIN ✓ | — | ABA Routing ✓ |
 | | 🇨🇦 Canada | BN ✓ | — | Transit Number ✓ |
-| **South America** | 🇧🇷 Brazil | CNPJ/CPF ✓ | — | — |
+| **Caribbean/Central America** | 🇨🇷 Costa Rica | — | IBAN ✓ | — |
+| | 🇩🇴 Dominican Republic | — | IBAN ✓ | — |
+| | 🇸🇻 El Salvador | — | IBAN ✓ | — |
+| | 🇬🇹 Guatemala | — | IBAN ✓ | — |
+| | 🇻🇬 Virgin Islands (British) | — | IBAN ✓ | — |
+| **South America** | 🇧🇷 Brazil | CNPJ/CPF ✓ | IBAN ✓ | — |
 | | 🇲🇽 Mexico | RFC ✓ | — | — |
 | | 🇦🇷 Argentina | CUIT/CUIL ✓ | — | — |
 | | 🇨🇱 Chile | RUT ✓ | — | — |
 | | 🇨🇴 Colombia | NIT ✓ | — | — |
+| **Middle East** | 🇧🇭 Bahrain | — | IBAN ✓ | — |
+| | 🇮🇱 Israel | — | IBAN ✓ | — |
+| | 🇯🇴 Jordan | — | IBAN ✓ | — |
+| | 🇰🇼 Kuwait | — | IBAN ✓ | — |
+| | 🇱🇧 Lebanon | — | IBAN ✓ | — |
+| | 🇶🇦 Qatar | — | IBAN ✓ | — |
+| | 🇸🇦 Saudi Arabia | — | IBAN ✓ | — |
+| | 🇦🇪 UAE | — | IBAN ✓ | — |
+| **Africa** | 🇪🇬 Egypt | — | IBAN ✓ | — |
+| | 🇲🇷 Mauritania | — | IBAN ✓ | — |
 | **Asia** | 🇨🇳 China | USCC ✓ | — | — |
 | | 🇯🇵 Japan | Corporate Number ✓ | — | — |
 | | 🇮🇳 India | GSTIN/PAN ✓ | — | — |
 | | 🇸🇬 Singapore | UEN ✓ | — | — |
+| | 🇰🇿 Kazakhstan | — | IBAN ✓ | — |
+| | 🇵🇰 Pakistan | — | IBAN ✓ | — |
+| | 🇹🇱 Timor-Leste | — | IBAN ✓ | — |
 | **Southeast Asia** | 🇮🇩 Indonesia | NPWP ✓ | — | — |
 | | 🇲🇾 Malaysia | TIN ✓ | — | — |
 | | 🇹🇭 Thailand | TIN ✓ | — | — |
@@ -147,8 +165,16 @@ dotnet add package Finova.Extensions.FluentValidation
 using Finova.Core.Iban;
 using Finova.Core.PaymentCard;
 using Finova.Core.Identifiers;
+using Finova.Services;
 
-// IBAN Validation
+// Global IBAN Validation (supports all IBAN-enabled countries worldwide)
+var result = GlobalIbanValidator.ValidateIban("BR1800360305000010009795493C1");
+if (result.IsValid)
+{
+    Console.WriteLine("Valid Brazilian IBAN!");
+}
+
+// Country-specific IBAN Validation
 var ibanService = new IbanService();
 var result = ibanService.Validate("BE68 5390 0754 7034");
 

@@ -79,6 +79,9 @@
   <data name="UnsupportedCountry" xml:space="preserve">
     <value>Land nicht unterstützt.</value>
   </data>
+  <data name="UnsupportedCountryOrInvalidIban" xml:space="preserve">
+    <value>Land nicht unterstützt oder IBAN ist ungültig.</value>
+  </data>
   <data name="InvalidCheckDigit" xml:space="preserve">
     <value>Ungültige Prüfziffern.</value>
   </data>

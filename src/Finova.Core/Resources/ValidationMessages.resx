@@ -79,6 +79,9 @@
   <data name="UnsupportedCountry" xml:space="preserve">
     <value>Country not supported.</value>
   </data>
+  <data name="UnsupportedCountryOrInvalidIban" xml:space="preserve">
+    <value>Country not supported or IBAN is invalid.</value>
+  </data>
   <data name="InvalidCheckDigit" xml:space="preserve">
     <value>Invalid check digits.</value>
   </data>
@@ -1228,11 +1231,12 @@
   <data name="InvalidSwedishOcrLength" xml:space="preserve">
     <value>Swedish OCR reference must be between 2 and 25 digits.</value>
   </data>
+  <!-- Securities Identifiers -->
   <data name="InvalidIsinLength" xml:space="preserve">
     <value>ISIN must be exactly 12 characters.</value>
   </data>
   <data name="InvalidIsinFormat" xml:space="preserve">
-    <value>ISIN must start with 2 letters followed by 9 alphanumeric characters and 1 check digit.</value>
+    <value>ISIN must start with 2 letters, followed by 9 alphanumeric characters and 1 check digit.</value>
   </data>
   <data name="InvalidIsinChecksum" xml:space="preserve">
     <value>Invalid ISIN checksum.</value>

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -77,6 +78,9 @@
   </data>
   <data name="UnsupportedCountry" xml:space="preserve">
     <value>Land niet ondersteund.</value>
+  </data>
+  <data name="UnsupportedCountryOrInvalidIban" xml:space="preserve">
+    <value>Land niet ondersteund of IBAN is ongeldig.</value>
   </data>
   <data name="InvalidCheckDigit" xml:space="preserve">
     <value>Ongeldige controlecijfers.</value>
@@ -1227,26 +1231,27 @@
   <data name="InvalidSwedishOcrLength" xml:space="preserve">
     <value>Zweedse OCR-referentie moet tussen 2 en 25 cijfers zijn.</value>
   </data>
+  <!-- Securities Identifiers -->
   <data name="InvalidIsinLength" xml:space="preserve">
-    <value>ISIN moet exact 12 tekens bevatten.</value>
+    <value>ISIN moet precies 12 tekens bevatten.</value>
   </data>
   <data name="InvalidIsinFormat" xml:space="preserve">
-    <value>ISIN moet beginnen met 2 letters gevolgd door 9 alfanumerieke tekens en 1 controlecijfer.</value>
+    <value>ISIN moet beginnen met 2 letters, gevolgd door 9 alfanumerieke tekens en 1 controlecijfer.</value>
   </data>
   <data name="InvalidIsinChecksum" xml:space="preserve">
     <value>Ongeldige ISIN-controlesom.</value>
   </data>
   <data name="InvalidCusipLength" xml:space="preserve">
-    <value>CUSIP moet exact 9 tekens bevatten.</value>
+    <value>CUSIP moet precies 9 tekens bevatten.</value>
   </data>
   <data name="InvalidCusipFormat" xml:space="preserve">
-    <value>CUSIP moet 8 alfanumerieke tekens gevolgd door 1 controlecijfer bevatten.</value>
+    <value>CUSIP moet 8 alfanumerieke tekens bevatten gevolgd door 1 controlecijfer.</value>
   </data>
   <data name="InvalidCusipChecksum" xml:space="preserve">
     <value>Ongeldige CUSIP-controlesom.</value>
   </data>
   <data name="InvalidSedolLength" xml:space="preserve">
-    <value>SEDOL moet exact 7 tekens bevatten.</value>
+    <value>SEDOL moet precies 7 tekens bevatten.</value>
   </data>
   <data name="InvalidSedolFormat" xml:space="preserve">
     <value>SEDOL bevat ongeldige tekens. Klinkers (A, E, I, O, U) zijn niet toegestaan.</value>
@@ -1255,7 +1260,7 @@
     <value>Ongeldige SEDOL-controlesom.</value>
   </data>
   <data name="InvalidCurrencyLength" xml:space="preserve">
-    <value>Valutacode moet exact 3 tekens bevatten.</value>
+    <value>Valutacode moet precies 3 tekens bevatten.</value>
   </data>
   <data name="InvalidCurrencyCode" xml:space="preserve">
     <value>Onbekende valutacode.</value>

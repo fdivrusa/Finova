@@ -18,6 +18,7 @@ public static class ValidationMessages
     public static string InvalidLength => GetString("InvalidLength");
     public static string InvalidCountryCode => GetString("InvalidCountryCode");
     public static string UnsupportedCountry => GetString("UnsupportedCountry");
+    public static string UnsupportedCountryOrInvalidIban => GetString("UnsupportedCountryOrInvalidIban");
     public static string UnsupportedFormat => GetString("UnsupportedFormat");
     public static string InvalidCheckDigit => GetString("InvalidCheckDigit");
     public static string MustContainOnlyDigits => GetString("MustContainOnlyDigits");
