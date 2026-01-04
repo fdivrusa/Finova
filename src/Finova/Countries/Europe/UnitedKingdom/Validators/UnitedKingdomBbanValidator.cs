@@ -67,7 +67,28 @@ public class UnitedKingdomBbanValidator : IBbanValidator
     public string? Parse(string? input)
     {
         if (string.IsNullOrWhiteSpace(input)) return null;
-        string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
+        string sanitized = input.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
         return Validate(sanitized).IsValid ? sanitized : null;
+    }
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        if (string.IsNullOrWhiteSpace(bban)) return null;
+        
+        string sanitized = bban.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
+        
+        if (!Validate(sanitized).IsValid) return null;
+
+        // UK BBAN: 4-letter bank code + 6-digit sort code + 8-digit account number
+        return new BbanDetails
+        {
+            Bban = sanitized,
+            CountryCode = CountryCode,
+            BankCode = sanitized[..4],           // Bank code (4 letters)
+            BranchCode = sanitized[4..10],       // Sort code (6 digits)
+            AccountNumber = sanitized[10..],     // Account number (8 digits)
+            NationalCheckDigits = null           // UK doesn't have a separate check digit
+        };
     }
 }

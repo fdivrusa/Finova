@@ -5,6 +5,8 @@ namespace Finova.Countries.Europe.Belgium.Validators;
 
 /// <summary>
 /// Validator for Belgian BBAN (Basic Bank Account Number).
+/// Format: 3-digit bank code + 7-digit account number + 2-digit check digits = 12 digits total.
+/// Often displayed as XXX-XXXXXXX-YY.
 /// </summary>
 public class BelgiumBbanValidator : IBbanValidator
 {
@@ -43,20 +45,20 @@ public class BelgiumBbanValidator : IBbanValidator
         {
             if (!char.IsDigit(c))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BelgiumIbanMustBeDigits);
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.MustContainOnlyDigits);
             }
         }
 
         // Split into Data (10 digits) and Check (2 digits)
         // Using ReadOnlySpan for performance
         ReadOnlySpan<char> bbanSpan = bban.AsSpan();
-        ReadOnlySpan<char> dataPart = bbanSpan.Slice(0, 10);
-        ReadOnlySpan<char> checkPart = bbanSpan.Slice(10, 2);
+        ReadOnlySpan<char> dataPart = bbanSpan[..10];
+        ReadOnlySpan<char> checkPart = bbanSpan[10..];
 
         if (!long.TryParse(dataPart, out long dataValue) ||
             !int.TryParse(checkPart, out int checkValue))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BelgiumIbanMustBeDigits);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.MustContainOnlyDigits);
         }
 
         // Calculate Modulo
@@ -84,5 +86,26 @@ public class BelgiumBbanValidator : IBbanValidator
         if (string.IsNullOrWhiteSpace(input)) return null;
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
         return Validate(sanitized).IsValid ? sanitized : null;
+    }
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        if (string.IsNullOrWhiteSpace(bban)) return null;
+        
+        string sanitized = bban.Replace(" ", "").Replace("-", "").Trim();
+        
+        if (!Validate(sanitized).IsValid) return null;
+
+        // Belgian BBAN: 3-digit bank code + 7-digit account + 2-digit check
+        return new BbanDetails
+        {
+            Bban = sanitized,
+            CountryCode = CountryCode,
+            BankCode = sanitized[..3],           // Code Banque (3 digits)
+            BranchCode = null,                    // Belgium doesn't have separate branch codes
+            AccountNumber = sanitized[3..10],     // Account number (7 digits)
+            NationalCheckDigits = sanitized[10..] // Clef de contrôle (2 digits)
+        };
     }
 }

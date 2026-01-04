@@ -49,4 +49,25 @@ public class GermanyBbanValidator : IBbanValidator
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
         return Validate(sanitized).IsValid ? sanitized : null;
     }
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        if (string.IsNullOrWhiteSpace(bban)) return null;
+        
+        string sanitized = bban.Replace(" ", "").Replace("-", "").Trim();
+        
+        if (!Validate(sanitized).IsValid) return null;
+
+        // German BBAN: 8-digit bank code (BLZ) + 10-digit account number
+        return new BbanDetails
+        {
+            Bban = sanitized,
+            CountryCode = CountryCode,
+            BankCode = sanitized[..8],           // Bankleitzahl (8 digits)
+            BranchCode = null,                    // Germany doesn't have separate branch codes
+            AccountNumber = sanitized[8..],       // Kontonummer (10 digits)
+            NationalCheckDigits = null            // Check digit is embedded in account number
+        };
+    }
 }

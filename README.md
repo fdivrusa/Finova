@@ -186,6 +186,17 @@ if (result.IsValid)
     Console.WriteLine($"Check Digits: {details.CheckDigits}");
 }
 
+// BBAN Validation (Basic Bank Account Number)
+var bbanService = serviceProvider.GetRequiredService<IBbanService>();
+var bbanResult = bbanService.Validate("BE", "539007547034");
+
+if (bbanResult.IsValid)
+{
+    var bbanDetails = bbanService.Parse("BE", "539007547034");
+    Console.WriteLine($"Country: {bbanDetails.CountryCode}"); // BE
+    Console.WriteLine($"BBAN: {bbanDetails.Bban}");           // 539007547034
+}
+
 // Payment Card Validation
 var cardValidator = new PaymentCardValidator();
 var cardResult = cardValidator.Validate("4111111111111111");

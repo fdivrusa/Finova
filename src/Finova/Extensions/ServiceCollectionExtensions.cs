@@ -32,6 +32,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<INationalIdService, NationalIdService>();
         services.AddSingleton<IBankRoutingService, BankRoutingService>();
         services.AddSingleton<IBankAccountService, BankAccountService>();
+        services.AddSingleton<IBbanService, BbanService>();
         services.AddSingleton<BatchValidationService>();
 
         // Register continent-specific validators

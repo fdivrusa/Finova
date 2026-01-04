@@ -30,6 +30,7 @@ using Finova.Countries.Europe.Switzerland.Validators;
 using Finova.Countries.Europe.UnitedKingdom.Validators;
 using Finova.Examples.ConsoleApp.Helpers;
 using Finova.Extensions;
+using Finova.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Examples.ConsoleApp.Scenarios;
@@ -253,5 +254,30 @@ public static class BbanValidationScenario
                 Console.WriteLine($"No test data for {validator.CountryCode}");
             }
         }
+
+        // Demonstrate the new IBbanService
+        ConsoleHelper.WriteSubHeader("36", "IBbanService (Global BBAN Service)");
+        ConsoleHelper.WriteCode("bbanService.Validate(countryCode, bban)");
+        
+        var bbanService = provider.GetRequiredService<IBbanService>();
+
+        // Validate Belgian BBAN
+        var beResult = bbanService.Validate("BE", "539007547034");
+        ConsoleHelper.WriteResult("IBbanService BE", "539007547034", beResult.IsValid, beResult.Errors.FirstOrDefault()?.Message);
+
+        // Parse Belgian BBAN
+        var beDetails = bbanService.Parse("BE", "539007547034");
+        if (beDetails != null)
+        {
+            Console.WriteLine($"  -> Parsed: Country={beDetails.CountryCode}, BBAN={beDetails.Bban}");
+        }
+
+        // Validate French BBAN
+        var frResult = bbanService.Validate("FR", "30006000011234567890189");
+        ConsoleHelper.WriteResult("IBbanService FR", "30006000011234567890189", frResult.IsValid, frResult.Errors.FirstOrDefault()?.Message);
+
+        // Test unsupported country
+        var xxResult = bbanService.Validate("XX", "123456789");
+        ConsoleHelper.WriteResult("IBbanService XX", "123456789", xxResult.IsValid, xxResult.Errors.FirstOrDefault()?.Message);
     }
 }

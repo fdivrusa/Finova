@@ -1,0 +1,74 @@
+using Finova.Core.Common;
+using Finova.Core.Identifiers;
+
+namespace Finova.Services;
+
+/// <summary>
+/// Default implementation of <see cref="IBbanService"/>.
+/// Validates BBAN (Basic Bank Account Number) by delegating to registered <see cref="IBbanValidator"/> implementations.
+/// </summary>
+public class BbanService : IBbanService
+{
+    private readonly IEnumerable<IBbanValidator> _validators;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BbanService"/> class.
+    /// </summary>
+    /// <param name="validators">The collection of registered BBAN validators.</param>
+    public BbanService(IEnumerable<IBbanValidator> validators)
+    {
+        _validators = validators;
+    }
+
+    /// <inheritdoc/>
+    public ValidationResult Validate(string countryCode, string? bban)
+    {
+        if (string.IsNullOrWhiteSpace(countryCode))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        }
+
+        var validators = _validators.Where(v => v.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        if (validators.Count == 0)
+        {
+            return ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, string.Format(ValidationMessages.NoBbanValidatorRegistered, countryCode));
+        }
+
+        List<ValidationError> errors = [];
+        foreach (var validator in validators)
+        {
+            var result = validator.Validate(bban);
+            if (result.IsValid)
+            {
+                return result;
+            }
+            errors.AddRange(result.Errors);
+        }
+
+        if (validators.Count == 1)
+        {
+            return ValidationResult.Failure(errors);
+        }
+
+        return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBban);
+    }
+
+    /// <inheritdoc/>
+    public BbanDetails? Parse(string countryCode, string? bban)
+    {
+        if (string.IsNullOrWhiteSpace(countryCode) || string.IsNullOrWhiteSpace(bban))
+        {
+            return null;
+        }
+
+        var validator = _validators.FirstOrDefault(v => v.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase));
+        if (validator == null)
+        {
+            return null;
+        }
+
+        // Use ParseDetails if available for structured data
+        return validator.ParseDetails(bban);
+    }
+}

@@ -125,4 +125,25 @@ public class FranceBbanValidator : IBbanValidator
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
         return Validate(sanitized).IsValid ? sanitized : null;
     }
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        if (string.IsNullOrWhiteSpace(bban)) return null;
+        
+        string sanitized = bban.Replace(" ", "").Replace("-", "").Trim();
+        
+        if (!Validate(sanitized).IsValid) return null;
+
+        // French BBAN: 5-digit bank code + 5-digit branch code (code guichet) + 11-char account + 2-digit key
+        return new BbanDetails
+        {
+            Bban = sanitized,
+            CountryCode = CountryCode,
+            BankCode = sanitized[..5],            // Code Banque (5 digits)
+            BranchCode = sanitized[5..10],        // Code Guichet (5 digits)
+            AccountNumber = sanitized[10..21],    // Account number (11 characters)
+            NationalCheckDigits = sanitized[21..] // Clé RIB (2 digits)
+        };
+    }
 }

@@ -424,4 +424,27 @@ public static class ValidationMessages
     public static string InvalidSedolChecksum => GetString("InvalidSedolChecksum");
     public static string InvalidCurrencyLength => GetString("InvalidCurrencyLength");
     public static string InvalidCurrencyCode => GetString("InvalidCurrencyCode");
+    public static string NoBbanValidatorRegistered => GetString("NoBbanValidatorRegistered");
+    public static string InvalidBban => GetString("InvalidBban");
+
+    // Japan Zengin Code
+    public static string InvalidJapanZenginCodeFormat => GetString("InvalidJapanZenginCodeFormat");
+    public static string InvalidJapanZenginCodeLength => GetString("InvalidJapanZenginCodeLength");
+
+    // Singapore Bank Code
+    public static string InvalidSingaporeBankCodeFormat => GetString("InvalidSingaporeBankCodeFormat");
+    public static string InvalidSingaporeBankCodeLength => GetString("InvalidSingaporeBankCodeLength");
+
+    // Mexico CLABE
+    public static string InvalidMexicoClabeLength => GetString("InvalidMexicoClabeLength");
+    public static string InvalidMexicoClabeFormat => GetString("InvalidMexicoClabeFormat");
+    public static string InvalidMexicoClabeChecksum => GetString("InvalidMexicoClabeChecksum");
+
+    // Argentina CBU
+    public static string InvalidArgentinaCbuLength => GetString("InvalidArgentinaCbuLength");
+    public static string InvalidArgentinaCbuFormat => GetString("InvalidArgentinaCbuFormat");
+    public static string InvalidArgentinaCbuChecksum => GetString("InvalidArgentinaCbuChecksum");
+
+    // South Korea Bank Code
+    public static string InvalidSouthKoreaBankCodeFormat => GetString("InvalidSouthKoreaBankCodeFormat");
 }

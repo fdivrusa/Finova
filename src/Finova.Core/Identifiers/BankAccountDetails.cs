@@ -16,6 +16,11 @@ public record BankAccountDetails
     public required string CountryCode { get; init; }
 
     /// <summary>
+    /// The bank code (e.g., Code Banque in France/Belgium, BLZ in Germany).
+    /// </summary>
+    public string? BankCode { get; init; }
+
+    /// <summary>
     /// The core account number (excluding check digits or branch codes if they are embedded).
     /// </summary>
     public string? CoreAccountNumber { get; init; }
@@ -27,6 +32,7 @@ public record BankAccountDetails
 
     /// <summary>
     /// The branch code extracted from the account number (if applicable).
+    /// Also known as "Code Guichet" in France.
     /// </summary>
     public string? BranchCode { get; init; }
 
