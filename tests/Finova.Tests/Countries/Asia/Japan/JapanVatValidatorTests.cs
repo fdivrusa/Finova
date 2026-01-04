@@ -34,7 +34,7 @@ public class JapanVatValidatorTests
         // For now, test the structure of the response
         var vat = "T1234567890123";
         var result = JapanVatValidator.GetVatDetails(vat);
-        
+
         if (result != null)
         {
             result.CountryCode.Should().Be("JP");

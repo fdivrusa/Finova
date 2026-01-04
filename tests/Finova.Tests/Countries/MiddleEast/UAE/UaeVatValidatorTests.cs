@@ -14,7 +14,7 @@ public class UaeVatValidatorTests
         // Format check passes, checksum might fail depending on algorithm
         result.Should().NotBeNull();
     }
-    
+
     [Fact]
     public void Validate_WithCorrectFormat_ReturnsResult()
     {
@@ -42,7 +42,7 @@ public class UaeVatValidatorTests
     {
         var vat = "100123456789012";
         var result = UaeVatValidator.GetVatDetails(vat);
-        
+
         if (result != null)
         {
             result.CountryCode.Should().Be("AE");

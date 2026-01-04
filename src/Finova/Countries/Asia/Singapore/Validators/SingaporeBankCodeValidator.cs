@@ -23,7 +23,7 @@ public class SingaporeBankCodeValidator : IBankRoutingValidator, IBankRoutingPar
 
         string sanitized = input.Replace(" ", "").Replace("-", "");
 
-        // Singapore bank codes: 
+        // Singapore bank codes:
         // - Bank code: 4 digits (SWIFT bank identifier)
         // - Branch code: 3 digits
         // - Combined: 7 digits (typically in format BBBB-BBB)

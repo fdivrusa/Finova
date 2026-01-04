@@ -6,7 +6,7 @@ namespace Finova.Countries.SouthAmerica.Mexico.Validators;
 /// <summary>
 /// Validates Mexican CLABE (Clave Bancaria Estandarizada).
 /// Format: 18 digits - BBB-BBB-AAAAAAAAAAA-C
-/// Where: BBB = Bank code (3 digits), BBB = Branch code (3 digits), 
+/// Where: BBB = Bank code (3 digits), BBB = Branch code (3 digits),
 /// AAAAAAAAAAA = Account number (11 digits), C = Check digit (1 digit).
 /// </summary>
 public class MexicoClabeValidator : IBankRoutingValidator, IBankRoutingParser, IBankAccountValidator, IBankAccountParser

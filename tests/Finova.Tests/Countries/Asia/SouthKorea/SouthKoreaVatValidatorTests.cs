@@ -11,7 +11,7 @@ public class SouthKoreaVatValidatorTests
     {
         // Valid BRN with correct checksum
         // Format: 10 digits, weights: 1,3,7,1,3,7,1,3,5
-        // Example: 1234567893 
+        // Example: 1234567893
         // Calculation: 1*1 + 2*3 + 3*7 + 4*1 + 5*3 + 6*7 + 7*1 + 8*3 + 9*5 + floor((9*5)/10)
         //           = 1 + 6 + 21 + 4 + 15 + 42 + 7 + 24 + 45 + 4 = 169
         // Check: (10 - 169%10) % 10 = (10 - 9) % 10 = 1
@@ -52,7 +52,7 @@ public class SouthKoreaVatValidatorTests
     public void GetVatDetails_ReturnsCorrectProperties()
     {
         var result = SouthKoreaVatValidator.GetVatDetails("1234567891");
-        
+
         result.Should().NotBeNull();
         result!.CountryCode.Should().Be("KR");
         result.IdentifierKind.Should().Be("BRN");

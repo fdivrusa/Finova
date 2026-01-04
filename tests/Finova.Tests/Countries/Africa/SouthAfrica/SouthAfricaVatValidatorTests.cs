@@ -54,7 +54,7 @@ public class SouthAfricaVatValidatorTests
         // Verify the format check (must start with 4)
         var result1 = SouthAfricaVatValidator.Validate("3123456789");
         result1.IsValid.Should().BeFalse();
-        
+
         var result2 = SouthAfricaVatValidator.Validate("5123456789");
         result2.IsValid.Should().BeFalse();
     }

@@ -92,9 +92,9 @@ public class BelgiumBbanValidator : IBbanValidator
     public BbanDetails? ParseDetails(string? bban)
     {
         if (string.IsNullOrWhiteSpace(bban)) return null;
-        
+
         string sanitized = bban.Replace(" ", "").Replace("-", "").Trim();
-        
+
         if (!Validate(sanitized).IsValid) return null;
 
         // Belgian BBAN: 3-digit bank code + 7-digit account + 2-digit check

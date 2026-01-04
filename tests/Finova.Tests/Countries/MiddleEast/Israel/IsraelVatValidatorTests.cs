@@ -34,7 +34,7 @@ public class IsraelVatValidatorTests
         // Need a valid 9-digit number with correct checksum
         var vat = "123456782"; // Example - may need valid checksum
         var result = IsraelVatValidator.GetVatDetails(vat);
-        
+
         if (result != null)
         {
             result.CountryCode.Should().Be("IL");

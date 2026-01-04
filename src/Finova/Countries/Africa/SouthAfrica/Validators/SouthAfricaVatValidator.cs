@@ -47,13 +47,13 @@ public partial class SouthAfricaVatValidator : IVatValidator
 
         if (clean.Length != 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, 
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength,
                 "South African VAT number must be 10 digits.");
         }
 
         if (!VatRegex().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, 
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat,
                 "South African VAT number must start with 4 followed by 9 digits.");
         }
 

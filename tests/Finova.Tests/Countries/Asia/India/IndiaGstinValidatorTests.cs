@@ -38,7 +38,7 @@ public class IndiaGstinValidatorTests
         // Test that IN prefix is stripped
         var result1 = IndiaGstinValidator.Validate("IN22AAAAA0000A1Z5");
         var result2 = IndiaGstinValidator.Validate("22AAAAA0000A1Z5");
-        
+
         // Both should have same validity
         result1.IsValid.Should().Be(result2.IsValid);
     }
@@ -49,7 +49,7 @@ public class IndiaGstinValidatorTests
         // State code must be 01-37
         var result1 = IndiaGstinValidator.Validate("00AAAAA0000A1Z5"); // Invalid: 00
         var result2 = IndiaGstinValidator.Validate("38AAAAA0000A1Z5"); // Invalid: 38
-        
+
         result1.IsValid.Should().BeFalse();
         result2.IsValid.Should().BeFalse();
     }

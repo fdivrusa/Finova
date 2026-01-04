@@ -40,7 +40,7 @@ public class ColombiaVatValidatorTests
     {
         var vat = "123456789";
         var result = ColombiaVatValidator.GetVatDetails(vat);
-        
+
         result.Should().NotBeNull();
         result!.CountryCode.Should().Be("CO");
         result.IdentifierKind.Should().Be("NIT");

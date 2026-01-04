@@ -56,7 +56,7 @@ public class UnitedKingdomBbanValidator : IBbanValidator
             {
                 // Reusing sort code message or generic format message?
                 // The original code grouped sort code and account number check.
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUkSortCodeFormat); 
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUkSortCodeFormat);
             }
         }
 
@@ -75,9 +75,9 @@ public class UnitedKingdomBbanValidator : IBbanValidator
     public BbanDetails? ParseDetails(string? bban)
     {
         if (string.IsNullOrWhiteSpace(bban)) return null;
-        
+
         string sanitized = bban.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
-        
+
         if (!Validate(sanitized).IsValid) return null;
 
         // UK BBAN: 4-letter bank code + 6-digit sort code + 8-digit account number

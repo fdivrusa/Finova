@@ -5,7 +5,7 @@ namespace Finova.Countries.NorthAmerica.Canada.Validators;
 
 /// <summary>
 /// Validates Canadian Goods and Services Tax (GST) / Harmonized Sales Tax (HST) number.
-/// The GST/HST number consists of the 9-digit Business Number (BN) followed by "RT" 
+/// The GST/HST number consists of the 9-digit Business Number (BN) followed by "RT"
 /// and a 4-digit program account number (e.g., 123456789RT0001).
 /// </summary>
 public class CanadaGstValidator : IVatValidator
@@ -43,18 +43,18 @@ public class CanadaGstValidator : IVatValidator
 
         // Full GST number format: 123456789RT0001 (15 characters)
         // BN root only: 123456789 (9 characters)
-        
+
         string bnRoot;
-        
+
         if (clean.Length == 15)
         {
             // Full format: BN + RT + account
             bnRoot = clean[..9];
-            
+
             // Check for RT suffix
             if (clean.Substring(9, 2) != "RT")
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, 
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat,
                     "GST/HST number must have 'RT' after the 9-digit BN.");
             }
 
@@ -62,7 +62,7 @@ public class CanadaGstValidator : IVatValidator
             string account = clean.Substring(11, 4);
             if (!account.All(char.IsDigit))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, 
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat,
                     "GST/HST account number must be 4 digits.");
             }
         }
@@ -79,7 +79,7 @@ public class CanadaGstValidator : IVatValidator
         }
         else
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, 
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength,
                 "GST/HST number must be 9 digits (BN) or 15 characters (full format).");
         }
 

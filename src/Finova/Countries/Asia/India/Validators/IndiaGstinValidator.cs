@@ -126,7 +126,7 @@ public partial class IndiaGstinValidator : IVatValidator
         {
             int codePoint = charSet.IndexOf(input[i]);
             int addend = factor * codePoint;
-            
+
             factor = factor == 2 ? 1 : 2;
             addend = (addend / mod) + (addend % mod);
             sum += addend;
@@ -134,7 +134,7 @@ public partial class IndiaGstinValidator : IVatValidator
 
         int remainder = sum % mod;
         int checkCodePoint = (mod - remainder) % mod;
-        
+
         return charSet[checkCodePoint];
     }
 

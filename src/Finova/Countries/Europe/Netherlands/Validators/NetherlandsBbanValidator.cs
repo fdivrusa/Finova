@@ -98,9 +98,9 @@ public class NetherlandsBbanValidator : IBbanValidator
     public BbanDetails? ParseDetails(string? bban)
     {
         if (string.IsNullOrWhiteSpace(bban)) return null;
-        
+
         string sanitized = bban.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
-        
+
         if (!Validate(sanitized).IsValid) return null;
 
         // Dutch BBAN: 4-letter bank code + 10-digit account number

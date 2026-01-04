@@ -33,7 +33,7 @@ public class ChileVatValidatorTests
     {
         var vat = "12345678K";
         var result = ChileVatValidator.GetVatDetails(vat);
-        
+
         if (result != null)
         {
             result.CountryCode.Should().Be("CL");

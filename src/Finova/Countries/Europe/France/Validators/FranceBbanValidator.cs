@@ -105,7 +105,7 @@ public class FranceBbanValidator : IBbanValidator
         // 3. Subtract from 97
         // 4. Compare with key
 
-        // Using BigInteger or careful long arithmetic to avoid overflow is good, 
+        // Using BigInteger or careful long arithmetic to avoid overflow is good,
         // but standard long is enough here because:
         // Bank(5) ~ 99999 * 89 ~ 8.9M
         // Branch(5) ~ 99999 * 15 ~ 1.5M
@@ -130,9 +130,9 @@ public class FranceBbanValidator : IBbanValidator
     public BbanDetails? ParseDetails(string? bban)
     {
         if (string.IsNullOrWhiteSpace(bban)) return null;
-        
+
         string sanitized = bban.Replace(" ", "").Replace("-", "").Trim();
-        
+
         if (!Validate(sanitized).IsValid) return null;
 
         // French BBAN: 5-digit bank code + 5-digit branch code (code guichet) + 11-char account + 2-digit key

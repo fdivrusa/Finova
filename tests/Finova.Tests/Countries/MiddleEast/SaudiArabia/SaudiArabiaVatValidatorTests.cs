@@ -14,7 +14,7 @@ public class SaudiArabiaVatValidatorTests
         // Format check passes, Luhn checksum might fail
         result.Should().NotBeNull();
     }
-    
+
     [Fact]
     public void Validate_WithPrefix_ParsesCorrectly()
     {
@@ -42,7 +42,7 @@ public class SaudiArabiaVatValidatorTests
     {
         var vat = "300000000000003";
         var result = SaudiArabiaVatValidator.GetVatDetails(vat);
-        
+
         if (result != null)
         {
             result.CountryCode.Should().Be("SA");

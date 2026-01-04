@@ -34,7 +34,7 @@ public class ArgentinaVatValidatorTests
     {
         var vat = "20123456786";
         var result = ArgentinaVatValidator.GetVatDetails(vat);
-        
+
         if (result != null)
         {
             result.CountryCode.Should().Be("AR");
@@ -49,7 +49,7 @@ public class ArgentinaVatValidatorTests
     public void GetVatDetails_ReturnsCorrectEntityType(string vat, string expectedType)
     {
         var result = ArgentinaVatValidator.GetVatDetails(vat);
-        
+
         if (result != null)
         {
             result.Notes.Should().Contain(expectedType);

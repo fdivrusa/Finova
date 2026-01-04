@@ -35,7 +35,7 @@ public class MexicoVatValidatorTests
     public void GetVatDetails_ReturnsCorrectEntityType(string vat, string expectedType)
     {
         var result = MexicoVatValidator.GetVatDetails(vat);
-        
+
         if (result != null)
         {
             result.CountryCode.Should().Be("MX");

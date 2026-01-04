@@ -33,7 +33,7 @@ public class BrazilVatValidatorTests
     {
         var vat = "11222333000181";
         var result = BrazilVatValidator.GetVatDetails(vat);
-        
+
         if (result != null)
         {
             result.CountryCode.Should().Be("BR");

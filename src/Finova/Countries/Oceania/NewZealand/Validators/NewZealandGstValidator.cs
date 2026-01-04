@@ -84,7 +84,7 @@ public partial class NewZealandGstValidator : IVatValidator
             {
                 secondarySum += (clean[i] - '0') * secondaryWeights[i];
             }
-            
+
             int secondaryRemainder = secondarySum % 11;
             if (secondaryRemainder == 0)
             {
@@ -94,7 +94,7 @@ public partial class NewZealandGstValidator : IVatValidator
             {
                 checkDigit = 11 - secondaryRemainder;
             }
-            
+
             // If check digit is 10 after secondary, it's invalid
             if (checkDigit == 10)
             {
@@ -108,7 +108,7 @@ public partial class NewZealandGstValidator : IVatValidator
         }
 
         int actualCheckDigit = clean[8] - '0';
-        
+
         // Also try the simpler mod11 calculation
         int simpleSum = 0;
         for (int i = 0; i < 8; i++)

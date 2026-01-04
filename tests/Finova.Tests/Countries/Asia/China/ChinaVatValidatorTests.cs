@@ -15,7 +15,7 @@ public class ChinaVatValidatorTests
         // Result depends on USCC checksum (Mod 31)
         result.Should().NotBeNull();
     }
-    
+
     [Fact]
     public void Validate_WithFormatTest_ReturnsResult()
     {
@@ -41,7 +41,7 @@ public class ChinaVatValidatorTests
     {
         var vat = "91110000MA001234X5";
         var result = ChinaVatValidator.GetVatDetails(vat);
-        
+
         if (result != null)
         {
             result.CountryCode.Should().Be("CN");
