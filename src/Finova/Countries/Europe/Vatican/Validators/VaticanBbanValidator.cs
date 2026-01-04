@@ -19,7 +19,7 @@ public class VaticanBbanValidator : IBbanValidator
 
         if (bban.Length != 18)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         for (int i = 0; i < 18; i++)

@@ -22,7 +22,7 @@ public class SloveniaBbanValidator : IBbanValidator
 
         if (bban.Length != 15)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // Structure check: Digits only

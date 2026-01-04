@@ -44,4 +44,5 @@ public static class ValidationMessages
     public static string InvalidCanadaRoutingNumberFormat => GetString("InvalidCanadaRoutingNumberFormat");
     public static string InvalidBsbFormat => GetString("InvalidBsbFormat");
     public static string InvalidIfscFormat => GetString("InvalidIfscFormat");
+    public static string InvalidBbanLength => GetString("InvalidBbanLength");
 }

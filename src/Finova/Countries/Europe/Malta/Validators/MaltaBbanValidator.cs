@@ -28,7 +28,7 @@ public class MaltaBbanValidator : IBbanValidator
 
         if (bban.Length != 27)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // 1. Bank BIC (Pos 0-4): Must be letters

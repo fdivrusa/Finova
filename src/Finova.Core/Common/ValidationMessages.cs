@@ -30,6 +30,7 @@ public static class ValidationMessages
     public static string InvalidVatFormat => GetString("InvalidVatFormat");
     public static string InvalidVatChecksum => GetString("InvalidVatChecksum");
     public static string InvalidIbanLength => GetString("InvalidIbanLength");
+    public static string InvalidBbanLength => GetString("InvalidBbanLength");
     public static string InvalidIbanCountryCode => GetString("InvalidIbanCountryCode");
     public static string InvalidIbanFormatDigits => GetString("InvalidIbanFormatDigits");
     public static string InvalidIbanFormatAlphanumeric => GetString("InvalidIbanFormatAlphanumeric");

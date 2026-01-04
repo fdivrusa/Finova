@@ -22,7 +22,7 @@ public class SerbiaBbanValidator : IBbanValidator
 
         if (bban.Length != 18)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // Structure check: All digits

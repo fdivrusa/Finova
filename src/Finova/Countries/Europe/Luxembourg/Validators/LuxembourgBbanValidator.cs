@@ -22,7 +22,7 @@ public class LuxembourgBbanValidator : IBbanValidator
 
         if (bban.Length != 16)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // Bank Code (indices 0-3) must be numeric.

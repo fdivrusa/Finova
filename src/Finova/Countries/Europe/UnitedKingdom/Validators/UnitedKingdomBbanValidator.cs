@@ -23,7 +23,7 @@ public class UnitedKingdomBbanValidator : IBbanValidator
 
         if (bban.Length != 18)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // 1. Bank Code (Pos 0-4): 4 letters

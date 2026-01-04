@@ -106,6 +106,9 @@
   <data name="InvalidIbanLength" xml:space="preserve">
     <value>Longueur invalide. Attendu {0}, reçu {1}.</value>
   </data>
+  <data name="InvalidBbanLength" xml:space="preserve">
+    <value>Longueur BBAN invalide.</value>
+  </data>
   <data name="InvalidIbanCountryCode" xml:space="preserve">
     <value>Code pays invalide. Attendu {0}.</value>
   </data>
