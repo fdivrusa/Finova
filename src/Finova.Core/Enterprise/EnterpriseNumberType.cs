@@ -92,5 +92,5 @@ public enum EnterpriseNumberType
     SwedenMoms,
     TurkeyVkn,
     UkraineEdrpou,
-    VaticanCityVat
+
 }

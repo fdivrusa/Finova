@@ -5,7 +5,7 @@ namespace Finova.Core.Internals
 {
     internal static class ValidationMessages
     {
-        private static readonly ResourceManager ResourceManager = new ResourceManager("Finova.Core.Internals.ValidationMessages", typeof(ValidationMessages).Assembly);
+        private static readonly ResourceManager ResourceManager = new("Finova.Core.Internals.ValidationMessages", typeof(ValidationMessages).Assembly);
 
         public static string VatTooShortForCountryCode => ResourceManager.GetString("VatTooShortForCountryCode", CultureInfo.CurrentUICulture) ?? "VAT number is too short to extract country code.";
         public static string InvalidCountryCodeExpected => ResourceManager.GetString("InvalidCountryCodeExpected", CultureInfo.CurrentUICulture) ?? "Invalid country code. Expected {0}.";

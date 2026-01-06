@@ -28,7 +28,7 @@ public class LiechtensteinBbanValidator : IBbanValidator
 
         if (bban.Length != 17)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // 1. Bank Code (Pos 0-5): 5 digits

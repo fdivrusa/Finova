@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Finova.Core.Iban;
 using Finova.Core.Common;
+using Finova.Core.Iban;
 
 namespace Finova.Countries.Europe.Portugal.Validators;
 

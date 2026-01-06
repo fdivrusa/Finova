@@ -28,7 +28,7 @@ public class UkraineBbanValidator : IBbanValidator
 
         if (bban.Length != 25)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // 1. Bank Code (MFO) (Pos 0-6): 6 digits

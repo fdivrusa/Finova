@@ -1,5 +1,4 @@
 using Finova.Countries.Europe.France.Validators;
-using Finova.Core.Common;
 using Xunit;
 
 namespace Finova.Tests.Countries.Europe.France.Validators;

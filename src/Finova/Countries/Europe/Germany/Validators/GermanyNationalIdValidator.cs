@@ -31,7 +31,7 @@ public class GermanyNationalIdValidator : INationalIdValidator
         string? sanitized = InputSanitizer.Sanitize(input);
         if (string.IsNullOrEmpty(sanitized))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         if (sanitized.Length != 9)

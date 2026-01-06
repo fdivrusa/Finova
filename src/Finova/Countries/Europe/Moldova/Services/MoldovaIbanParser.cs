@@ -22,7 +22,7 @@ public class MoldovaIbanParser(IIbanValidator validator) : IIbanParser
     /// Creates a new instance of the parser with a default validator.
     /// </summary>
     /// <returns>A new <see cref="MoldovaIbanParser"/> instance.</returns>
-    public static MoldovaIbanParser Create() => new MoldovaIbanParser(new MoldovaIbanValidator());
+    public static MoldovaIbanParser Create() => new(new MoldovaIbanValidator());
 
     /// <summary>
     /// Parses the Moldovan IBAN.

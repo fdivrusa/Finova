@@ -1,15 +1,14 @@
-using Finova.Core.Iban;
 using Finova.Core.Bic;
+using Finova.Core.Enterprise;
+using Finova.Core.Identifiers;
 using Finova.Core.PaymentCard;
 using Finova.Core.PaymentReference;
-using Finova.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Finova.Generators;
-using Finova.Validators;
-using Finova.Core.Vat;
 using Finova.Extensions.DependencyInjection;
-using Finova.Core.Identifiers;
+using Finova.Generators;
+using Finova.Services;
 using Finova.Services.Global;
+using Finova.Validators;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Extensions;
 
@@ -32,7 +31,13 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<INationalIdService, NationalIdService>();
         services.AddSingleton<IBankRoutingService, BankRoutingService>();
         services.AddSingleton<IBankAccountService, BankAccountService>();
+        services.AddSingleton<IBbanService, BbanService>();
         services.AddSingleton<BatchValidationService>();
+
+        // Register Global Regional Routers
+        services.AddSingleton<GlobalVatValidator>();
+        services.AddSingleton<GlobalEnterpriseValidator>();
+        services.AddSingleton<IGlobalEnterpriseValidator, GlobalEnterpriseValidator>();
 
         // Register continent-specific validators
         services.AddFinovaEurope();

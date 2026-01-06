@@ -1,7 +1,7 @@
+using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.PaymentReference;
 using Finova.Core.PaymentReference.Internals;
-using System.Text.RegularExpressions;
 
 namespace Finova.Countries.Europe.Italy.Services;
 
@@ -29,10 +29,14 @@ public partial class ItalyPaymentReferenceService : IPaymentReferenceGenerator
     public static ValidationResult ValidateStatic(string communication)
     {
         if (string.IsNullOrWhiteSpace(communication))
+        {
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        }
 
         if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
             return IsoReferenceValidator.Validate(communication);
+        }
 
         return ValidateIuv(communication);
     }
@@ -42,7 +46,10 @@ public partial class ItalyPaymentReferenceService : IPaymentReferenceGenerator
     private static string GenerateIuv(string rawReference)
     {
         var cleanRef = DigitsOnlyRegex().Replace(rawReference, "");
-        if (string.IsNullOrEmpty(cleanRef)) throw new ArgumentException("Reference cannot be empty.");
+        if (string.IsNullOrEmpty(cleanRef))
+        {
+            throw new ArgumentException("Reference cannot be empty.");
+        }
 
         // IUV is typically 18 digits.
         // If shorter, we might need to pad or calculate check digit.
@@ -58,10 +65,14 @@ public partial class ItalyPaymentReferenceService : IPaymentReferenceGenerator
 
         // IUV is usually 15, 17 or 18 digits
         if (clean.Length < 15 || clean.Length > 18)
+        {
             return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidItalyIuvLength);
+        }
 
         if (ChecksumHelper.ValidateLuhn(clean))
+        {
             return ValidationResult.Success();
+        }
 
         return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidItalyIuvCheckDigit);
     }

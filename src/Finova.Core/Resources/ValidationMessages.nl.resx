@@ -106,6 +106,9 @@
   <data name="InvalidIbanLength" xml:space="preserve">
     <value>Ongeldige lengte. Verwacht {0}, ontvangen {1}.</value>
   </data>
+  <data name="InvalidBbanLength" xml:space="preserve">
+    <value>Ongeldige BBAN-lengte.</value>
+  </data>
   <data name="InvalidIbanCountryCode" xml:space="preserve">
     <value>Ongeldige landcode. Verwacht {0}.</value>
   </data>
@@ -1264,5 +1267,11 @@
   </data>
   <data name="InvalidCurrencyCode" xml:space="preserve">
     <value>Onbekende valutacode.</value>
+  </data>
+  <data name="InvalidSouthAfricaVatLength" xml:space="preserve">
+    <value>Zuid-Afrikaans btw-nummer moet 10 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidSouthAfricaVatFormat" xml:space="preserve">
+    <value>Zuid-Afrikaans btw-nummer moet beginnen met 4 gevolgd door 9 cijfers.</value>
   </data>
 </root>

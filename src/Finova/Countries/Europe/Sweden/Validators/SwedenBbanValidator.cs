@@ -22,7 +22,7 @@ public class SwedenBbanValidator : IBbanValidator
 
         if (bban.Length != 20)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // Structure check: Digits only

@@ -1,10 +1,9 @@
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Finova.Core.Identifiers;
 using Finova.Core.Iban;
-using Finova.Services;
-using Finova.Services.Adapters;
+using Finova.Core.Identifiers;
 using Finova.Countries.SouthAmerica.Colombia.Validators;
+using Finova.Services.Adapters;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Extensions.DependencyInjection;
 
@@ -25,14 +24,14 @@ public static class SouthAmericaServiceCollectionExtensions
                 // Special handling for IBAN validators to register IBankAccountValidator adapter
                 if (typeof(IIbanValidator).IsAssignableFrom(type))
                 {
-                    s.AddSingleton<IBankAccountValidator>(sp =>
-                        new EuropeIbanBankAccountAdapter((IIbanValidator)sp.GetRequiredService(type)));
+                    s.AddSingleton<IBankAccountValidator>(sp => new IbanBankAccountAdapter((IIbanValidator)sp.GetRequiredService(type)));
                 }
             },
             typeof(ITaxIdValidator),
             typeof(INationalIdValidator),
             typeof(IBankRoutingValidator),
-            typeof(IIbanValidator)
+            typeof(IIbanValidator),
+            typeof(IBbanValidator)
         );
 
         services.AddSingleton<INationalIdValidator, ColombiaCedulaValidator>();

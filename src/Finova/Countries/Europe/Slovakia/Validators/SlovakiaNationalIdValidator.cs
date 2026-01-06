@@ -48,17 +48,21 @@ public class SlovakiaNationalIdValidator : INationalIdValidator
 
         // Date validation logic is complex (YYMMDD, women +50 month, etc.)
         // For now, we focus on checksum and basic structure.
-        
+
         int year = int.Parse(sanitized.Substring(0, 2));
         int month = int.Parse(sanitized.Substring(2, 2));
         int day = int.Parse(sanitized.Substring(4, 2));
 
         // Basic month check (women have +50)
-        if (month > 50) month -= 50;
+        if (month > 50)
+        {
+            month -= 50;
+        }
+
         if (month > 20) // Special case for extra month offset? (RČ has +20 sometimes?)
         {
-             // Some systems use +20 for special cases, but standard is +50 for women.
-             // Let's stick to standard +50 check.
+            // Some systems use +20 for special cases, but standard is +50 for women.
+            // Let's stick to standard +50 check.
         }
 
         // Checksum

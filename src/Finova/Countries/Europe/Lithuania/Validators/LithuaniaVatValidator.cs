@@ -48,7 +48,10 @@ public partial class LithuaniaVatValidator : IVatValidator
                 int[] weights2 = { 3, 4, 5, 6, 7, 8, 9, 1 };
                 sum = ChecksumHelper.CalculateWeightedSum(cleaned.Substring(0, 8), weights2);
                 remainder = sum % 11;
-                if (remainder == 10) remainder = 0;
+                if (remainder == 10)
+                {
+                    remainder = 0;
+                }
             }
 
             int checkDigit = cleaned[8] - '0';
@@ -68,7 +71,10 @@ public partial class LithuaniaVatValidator : IVatValidator
                 int[] weights2 = { 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4 };
                 sum = ChecksumHelper.CalculateWeightedSum(cleaned.Substring(0, 11), weights2);
                 remainder = sum % 11;
-                if (remainder == 10) remainder = 0;
+                if (remainder == 10)
+                {
+                    remainder = 0;
+                }
             }
 
             int checkDigit = cleaned[11] - '0';

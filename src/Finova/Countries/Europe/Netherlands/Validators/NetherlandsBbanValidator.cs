@@ -89,6 +89,39 @@ public class NetherlandsBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public string? Parse(string? input)
     {
-        return Validate(input).IsValid ? input : null;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
+        string sanitized = input.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
+        return Validate(sanitized).IsValid ? sanitized : null;
+    }
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        if (string.IsNullOrWhiteSpace(bban))
+        {
+            return null;
+        }
+
+        string sanitized = bban.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
+
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
+
+        // Dutch BBAN: 4-letter bank code + 10-digit account number
+        return new BbanDetails
+        {
+            Bban = sanitized,
+            CountryCode = CountryCode,
+            BankCode = sanitized[..4],           // Bank code (4 letters, e.g., INGB, ABNA)
+            BranchCode = null,                    // Netherlands doesn't have separate branch codes
+            AccountNumber = sanitized[4..],       // Account number (10 digits)
+            NationalCheckDigits = null            // Check is embedded via Elfproef
+        };
     }
 }

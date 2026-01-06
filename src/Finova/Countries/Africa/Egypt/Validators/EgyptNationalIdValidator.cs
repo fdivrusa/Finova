@@ -1,6 +1,6 @@
+using System.Globalization;
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
-using System.Globalization;
 
 namespace Finova.Countries.Africa.Egypt.Validators;
 
@@ -74,9 +74,16 @@ public class EgyptNationalIdValidator : INationalIdValidator
 
         int remainder = sum % 11;
         int checkDigit = 11 - remainder;
-        if (checkDigit == 10) checkDigit = 0;
+        if (checkDigit == 10)
+        {
+            checkDigit = 0;
+        }
 
-        if (checkDigit == 11) checkDigit = 0;
+        if (checkDigit == 11)
+        {
+            checkDigit = 0;
+        }
+
         if (checkDigit == 10)
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);

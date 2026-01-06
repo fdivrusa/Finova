@@ -228,7 +228,10 @@ public class PaymentCardValidator : IPaymentCardValidator
     {
         // Range 51-55
         int firstTwo = int.Parse(number.Substring(0, 2));
-        if (firstTwo >= 51 && firstTwo <= 55) return true;
+        if (firstTwo >= 51 && firstTwo <= 55)
+        {
+            return true;
+        }
 
         // Range 2221-2720
         int firstFour = int.Parse(number.Substring(0, 4));
@@ -237,10 +240,16 @@ public class PaymentCardValidator : IPaymentCardValidator
 
     private static bool IsDiscover(string number)
     {
-        if (number.StartsWith("6011") || number.StartsWith("65")) return true;
+        if (number.StartsWith("6011") || number.StartsWith("65"))
+        {
+            return true;
+        }
 
         int firstThree = int.Parse(number.Substring(0, 3));
-        if (firstThree >= 644 && firstThree <= 649) return true;
+        if (firstThree >= 644 && firstThree <= 649)
+        {
+            return true;
+        }
 
         int firstSix = int.Parse(number.Substring(0, 6));
         return firstSix >= 622126 && firstSix <= 622925;
@@ -254,31 +263,59 @@ public class PaymentCardValidator : IPaymentCardValidator
 
     private static bool IsDiners(string number)
     {
-        if (number.Length < 3) return false;
+        if (number.Length < 3)
+        {
+            return false;
+        }
 
         int firstThree = int.Parse(number.Substring(0, 3));
-        if (firstThree >= 300 && firstThree <= 305) return true;
-        if (firstThree == 309) return true;
+        if (firstThree >= 300 && firstThree <= 305)
+        {
+            return true;
+        }
 
-        if (number.StartsWith("36") || number.StartsWith("38") || number.StartsWith("39")) return true;
+        if (firstThree == 309)
+        {
+            return true;
+        }
+
+        if (number.StartsWith("36") || number.StartsWith("38") || number.StartsWith("39"))
+        {
+            return true;
+        }
 
         return false;
     }
 
     private static bool IsMir(string number)
     {
-        if (number.Length < 4) return false;
+        if (number.Length < 4)
+        {
+            return false;
+        }
+
         int firstFour = int.Parse(number.Substring(0, 4));
         return firstFour >= 2200 && firstFour <= 2204;
     }
 
     private static bool IsVerve(string number)
     {
-        if (number.Length < 6) return false;
+        if (number.Length < 6)
+        {
+            return false;
+        }
+
         int firstSix = int.Parse(number.Substring(0, 6));
 
-        if (firstSix >= 506099 && firstSix <= 506198) return true;
-        if (firstSix >= 650002 && firstSix <= 650027) return true;
+        if (firstSix >= 506099 && firstSix <= 506198)
+        {
+            return true;
+        }
+
+        if (firstSix >= 650002 && firstSix <= 650027)
+        {
+            return true;
+        }
 
         return false;
     }
@@ -287,7 +324,10 @@ public class PaymentCardValidator : IPaymentCardValidator
     {
         foreach (char c in s)
         {
-            if (!char.IsDigit(c)) return false;
+            if (!char.IsDigit(c))
+            {
+                return false;
+            }
         }
         return true;
     }

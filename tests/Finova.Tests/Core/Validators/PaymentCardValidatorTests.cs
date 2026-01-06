@@ -1,6 +1,6 @@
 
-using Finova.Core.PaymentCard;
 using Finova.Core.Common;
+using Finova.Core.PaymentCard;
 using FluentAssertions;
 using Xunit;
 
@@ -29,7 +29,7 @@ public class PaymentCardValidatorTests
     public void IsValidLuhn_WithValidCardNumbers_ReturnsTrue(string cardNumber)
     {
         PaymentCardValidator.Validate(cardNumber).IsValid.Should().BeTrue();
-        ((IPaymentCardValidator)_validator).ValidateLuhn(cardNumber).IsValid.Should().BeTrue();
+        _validator.ValidateLuhn(cardNumber).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -82,7 +82,7 @@ public class PaymentCardValidatorTests
     public void GetBrand_WithVisaCards_ReturnsVisa(string cardNumber)
     {
         PaymentCardValidator.GetBrand(cardNumber).Should().Be(PaymentCardBrand.Visa);
-        ((IPaymentCardValidator)_validator).GetBrand(cardNumber).Should().Be(PaymentCardBrand.Visa);
+        _validator.GetBrand(cardNumber).Should().Be(PaymentCardBrand.Visa);
     }
 
     #endregion
@@ -231,7 +231,7 @@ public class PaymentCardValidatorTests
     public void IsValidCvv_WithThreeDigitCvv_ForStandardCards_ReturnsTrue(string cvv, PaymentCardBrand brand)
     {
         PaymentCardValidator.ValidateCvv(cvv, brand).IsValid.Should().BeTrue();
-        ((IPaymentCardValidator)_validator).ValidateCvv(cvv, brand).IsValid.Should().BeTrue();
+        _validator.ValidateCvv(cvv, brand).IsValid.Should().BeTrue();
     }
 
     [Theory]
@@ -302,7 +302,7 @@ public class PaymentCardValidatorTests
     {
         var futureYear = DateTime.UtcNow.Year + 2;
         PaymentCardValidator.ValidateExpiration(12, futureYear).IsValid.Should().BeTrue();
-        ((IPaymentCardValidator)_validator).ValidateExpiration(12, futureYear).IsValid.Should().BeTrue();
+        _validator.ValidateExpiration(12, futureYear).IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -388,7 +388,7 @@ public class PaymentCardValidatorTests
     [Fact]
     public void IPaymentCardValidator_ValidateLuhn_DelegatesToStaticMethod()
     {
-        var validator = (IPaymentCardValidator)_validator;
+        var validator = _validator;
         var cardNumber = "4532015112830366";
 
         var staticResult = PaymentCardValidator.Validate(cardNumber);
@@ -400,7 +400,7 @@ public class PaymentCardValidatorTests
     [Fact]
     public void IPaymentCardValidator_GetBrand_DelegatesToStaticMethod()
     {
-        var validator = (IPaymentCardValidator)_validator;
+        var validator = _validator;
         var cardNumber = "4532015112830366";
 
         var staticResult = PaymentCardValidator.GetBrand(cardNumber);
@@ -412,7 +412,7 @@ public class PaymentCardValidatorTests
     [Fact]
     public void IPaymentCardValidator_ValidateCvv_DelegatesToStaticMethod()
     {
-        var validator = (IPaymentCardValidator)_validator;
+        var validator = _validator;
         var cvv = "123";
         var brand = PaymentCardBrand.Visa;
 
@@ -425,7 +425,7 @@ public class PaymentCardValidatorTests
     [Fact]
     public void IPaymentCardValidator_ValidateExpiration_DelegatesToStaticMethod()
     {
-        var validator = (IPaymentCardValidator)_validator;
+        var validator = _validator;
         var month = 12;
         var year = DateTime.UtcNow.Year + 1;
 

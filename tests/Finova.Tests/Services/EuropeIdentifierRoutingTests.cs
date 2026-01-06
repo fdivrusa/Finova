@@ -11,7 +11,6 @@ public class EuropeIdentifierRoutingTests
     [InlineData("CH", true, true, IdentifierKind.Vat)] // VAT supported, but not EU/VIES
     [InlineData("GB", true, true, IdentifierKind.Vat)]
     [InlineData("TR", true, true, IdentifierKind.BusinessTaxId)] // VAT supported (as VKN), but it's a Tax ID
-    [InlineData("VA", true, true, IdentifierKind.InvoicingSchemeIdentifier)] // VAT supported (as invoicing id), not Enterprise
     [InlineData("US", false, false, IdentifierKind.NotApplicable)] // Unknown
     public void GetSupport_ReturnsCorrectMetadata(
         string countryCode,
@@ -70,20 +69,5 @@ public class EuropeIdentifierRoutingTests
         Assert.False(details.IsEuVat);
         Assert.False(details.IsViesEligible);
         Assert.Equal("BusinessTaxId", details.IdentifierKind);
-    }
-
-    [Fact]
-    public void GetVatDetails_EnrichesMetadata_Vatican()
-    {
-        // Arrange
-        // VA VAT is 11 digits (Italian format).
-        // VA00462350018
-        var details = EuropeVatValidator.GetVatDetails("VA00462350018");
-
-        // Assert
-        Assert.NotNull(details);
-        Assert.False(details.IsEuVat);
-        Assert.False(details.IsViesEligible);
-        Assert.Equal("InvoicingSchemeIdentifier", details.IdentifierKind);
     }
 }

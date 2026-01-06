@@ -1,5 +1,4 @@
 using Finova.Core.Enterprise;
-using Finova.Core.Vat;
 using Finova.Core.PaymentReference;
 
 namespace Finova.Services;
@@ -93,9 +92,6 @@ public static class EuropeCountryIdentifierMetadata
         { "UA", new("UA", IdentifierScope.Both, IdentifierKind.BusinessTaxId, false, false, "EDRPOU is a registry number", DefaultEnterpriseType: EnterpriseNumberType.UkraineEdrpou, EnterpriseNumberEnglishName: "Unified State Register Code", EnterpriseNumberLocalName: "ЄДРПОУ (EDRPOU)") },
         { "SM", new("SM", IdentifierScope.Both, IdentifierKind.BusinessTaxId, false, false, "COE is a tax ID", DefaultEnterpriseType: EnterpriseNumberType.SanMarinoCoe, EnterpriseNumberEnglishName: "Economic Operator Code", EnterpriseNumberLocalName: "COE (Codice Operatore Economico)") },
         
-        // Vatican (Invoicing Scheme)
-        { "VA", new("VA", IdentifierScope.Both, IdentifierKind.InvoicingSchemeIdentifier, false, false, "Use for e-invoicing participant ID; not a legal VAT registration number", DefaultEnterpriseType: EnterpriseNumberType.VaticanCityVat, EnterpriseNumberEnglishName: "Vatican ID", EnterpriseNumberLocalName: "N/A") },
-
         // Others
         { "AL", new("AL", IdentifierScope.Both, IdentifierKind.Vat, false, false, DefaultEnterpriseType: EnterpriseNumberType.AlbaniaNipt, EnterpriseNumberEnglishName: "Tax ID", EnterpriseNumberLocalName: "NIPT") },
         { "AD", new("AD", IdentifierScope.Both, IdentifierKind.Vat, false, false, DefaultEnterpriseType: EnterpriseNumberType.AndorraNrt, EnterpriseNumberEnglishName: "Tax Register Number", EnterpriseNumberLocalName: "NRT (Número de Registre Tributari)") },
@@ -114,7 +110,11 @@ public static class EuropeCountryIdentifierMetadata
 
     public static CountryMetadata? For(string countryCode)
     {
-        if (string.IsNullOrWhiteSpace(countryCode)) return null;
+        if (string.IsNullOrWhiteSpace(countryCode))
+        {
+            return null;
+        }
+
         return Metadata.TryGetValue(countryCode, out var metadata) ? metadata : null;
     }
 }

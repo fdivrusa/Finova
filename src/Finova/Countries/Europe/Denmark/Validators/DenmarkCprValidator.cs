@@ -54,14 +54,14 @@ public class DenmarkCprValidator : INationalIdValidator
 
         if (month < 1 || month > 12 || day < 1 || day > 31)
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
         }
 
         // Mod 11 Checksum
         // Note: Since 2007, CPR numbers without modulus 11 check exist, but they are rare/specific.
         // Standard validation usually requires Mod 11.
         // If the remainder is 0, it's valid.
-        
+
         int sum = 0;
         for (int i = 0; i < 10; i++)
         {

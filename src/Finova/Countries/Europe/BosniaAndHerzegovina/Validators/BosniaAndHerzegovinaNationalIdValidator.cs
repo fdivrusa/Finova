@@ -53,8 +53,14 @@ public class BosniaAndHerzegovinaNationalIdValidator : INationalIdValidator
         int yearPart = int.Parse(sanitized.Substring(4, 3));
 
         int fullYear;
-        if (yearPart >= 800) fullYear = 1000 + yearPart; // 1800-1999
-        else fullYear = 2000 + yearPart; // 2000-2xxx
+        if (yearPart >= 800)
+        {
+            fullYear = 1000 + yearPart; // 1800-1999
+        }
+        else
+        {
+            fullYear = 2000 + yearPart; // 2000-2xxx
+        }
 
         if (!DateHelper.IsValidDate(fullYear, month, day))
         {

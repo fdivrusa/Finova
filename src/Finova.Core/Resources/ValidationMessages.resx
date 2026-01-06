@@ -106,6 +106,9 @@
   <data name="InvalidIbanLength" xml:space="preserve">
     <value>Invalid length. Expected {0}, got {1}.</value>
   </data>
+  <data name="InvalidBbanLength" xml:space="preserve">
+    <value>Invalid BBAN length.</value>
+  </data>
   <data name="InvalidIbanCountryCode" xml:space="preserve">
     <value>Invalid country code. Expected {0}.</value>
   </data>
@@ -370,6 +373,9 @@
   <data name="InvalidJapanMyNumberChecksum" xml:space="preserve">
     <value>Invalid My Number checksum.</value>
   </data>
+  <data name="InvalidJapanVatFormat" xml:space="preserve">
+    <value>Japanese consumption tax number must start with 'T' followed by 13 digits.</value>
+  </data>
   <data name="InvalidIndiaPanLength" xml:space="preserve">
     <value>PAN must be 10 characters.</value>
   </data>
@@ -387,6 +393,21 @@
   </data>
   <data name="InvalidIndiaAadhaarChecksum" xml:space="preserve">
     <value>Invalid Aadhaar checksum.</value>
+  </data>
+  <data name="InvalidIndiaGstinLength" xml:space="preserve">
+    <value>GSTIN must be 15 characters.</value>
+  </data>
+  <data name="InvalidIndiaGstinFormat" xml:space="preserve">
+    <value>Invalid GSTIN format.</value>
+  </data>
+  <data name="InvalidIndiaGstinStateCode" xml:space="preserve">
+    <value>Invalid state code in GSTIN.</value>
+  </data>
+  <data name="InvalidIndiaGstinPan" xml:space="preserve">
+    <value>Invalid PAN embedded in GSTIN.</value>
+  </data>
+  <data name="InvalidIndiaGstinPosition14" xml:space="preserve">
+    <value>Position 14 in GSTIN must be 'Z'.</value>
   </data>
   <data name="InvalidIcelandVatFormat" xml:space="preserve">
     <value>Invalid Iceland VAT format.</value>
@@ -1264,5 +1285,62 @@
   </data>
   <data name="InvalidCurrencyCode" xml:space="preserve">
     <value>Unknown currency code.</value>
+  </data>
+  <data name="NoBbanValidatorRegistered" xml:space="preserve">
+    <value>No BBAN validator registered for country {0}.</value>
+  </data>
+  <data name="InvalidBban" xml:space="preserve">
+    <value>Invalid BBAN.</value>
+  </data>
+  <data name="InvalidJapanZenginCodeFormat" xml:space="preserve">
+    <value>Invalid Japan Zengin code format. Must be 3, 4, or 7 digits.</value>
+  </data>
+  <data name="InvalidJapanZenginCodeLength" xml:space="preserve">
+    <value>Invalid Japan Zengin code length. Must be 3 (branch), 4 (bank), or 7 (combined) digits.</value>
+  </data>
+  <data name="InvalidSingaporeBankCodeFormat" xml:space="preserve">
+    <value>Invalid Singapore bank code format. Must be 3, 4, or 7 digits.</value>
+  </data>
+  <data name="InvalidSingaporeBankCodeLength" xml:space="preserve">
+    <value>Invalid Singapore bank code length. Must be 3 (branch), 4 (bank), or 7 (combined) digits.</value>
+  </data>
+  <data name="InvalidMexicoClabeLength" xml:space="preserve">
+    <value>Invalid CLABE length. Must be exactly 18 digits.</value>
+  </data>
+  <data name="InvalidMexicoClabeFormat" xml:space="preserve">
+    <value>Invalid CLABE format. Must contain only digits.</value>
+  </data>
+  <data name="InvalidMexicoClabeChecksum" xml:space="preserve">
+    <value>Invalid CLABE check digit.</value>
+  </data>
+  <data name="InvalidArgentinaCbuLength" xml:space="preserve">
+    <value>Invalid CBU length. Must be exactly 22 digits.</value>
+  </data>
+  <data name="InvalidArgentinaCbuFormat" xml:space="preserve">
+    <value>Invalid CBU format. Must contain only digits.</value>
+  </data>
+  <data name="InvalidArgentinaCbuChecksum" xml:space="preserve">
+    <value>Invalid CBU check digits.</value>
+  </data>
+  <data name="InvalidSouthKoreaBankCodeFormat" xml:space="preserve">
+    <value>Invalid South Korea bank code format. Must be exactly 3 digits.</value>
+  </data>
+  <data name="InvalidSouthKoreaVatFormat" xml:space="preserve">
+    <value>South Korean BRN must be 10 digits.</value>
+  </data>
+  <data name="InvalidSouthKoreaVatChecksum" xml:space="preserve">
+    <value>Invalid South Korean BRN checksum.</value>
+  </data>
+  <data name="BbanMustStartWithLetter" xml:space="preserve">
+    <value>BBAN must start with a letter.</value>
+  </data>
+  <data name="BbanMustContainDigitsAfterLetter" xml:space="preserve">
+    <value>BBAN must contain digits after the first letter.</value>
+  </data>
+  <data name="InvalidSouthAfricaVatLength" xml:space="preserve">
+    <value>South African VAT number must be 10 digits.</value>
+  </data>
+  <data name="InvalidSouthAfricaVatFormat" xml:space="preserve">
+    <value>South African VAT number must start with 4 followed by 9 digits.</value>
   </data>
 </root>

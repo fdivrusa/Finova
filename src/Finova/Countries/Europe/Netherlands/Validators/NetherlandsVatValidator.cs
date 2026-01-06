@@ -1,6 +1,5 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
-using Finova.Core.Enterprise;
 using Finova.Core.Identifiers;
 using Finova.Core.Vat;
 
@@ -57,7 +56,7 @@ public partial class NetherlandsVatValidator : IVatValidator, ITaxIdValidator
             }
             else
             {
-                sb.Append((int)(c - 'A' + 10));
+                sb.Append(c - 'A' + 10);
             }
         }
         string mod97Str = sb.ToString();

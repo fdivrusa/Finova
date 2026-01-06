@@ -46,7 +46,10 @@ public partial class NorthMacedoniaVatValidator : IVatValidator
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidNorthMacedoniaVatChecksumForbidden);
         }
-        if (checkDigit == 11) checkDigit = 0;
+        if (checkDigit == 11)
+        {
+            checkDigit = 0;
+        }
 
         if (checkDigit != (cleaned[12] - '0'))
         {

@@ -48,7 +48,7 @@ public class CyprusNationalIdValidator : INationalIdValidator
         }
 
         // No known public checksum algorithm for the ID number itself.
-        
+
         return ValidationResult.Success();
     }
 

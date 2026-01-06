@@ -32,7 +32,11 @@ public partial class MonacoVatValidator : IVatValidator
         var cleaned = vat.Trim().ToUpperInvariant();
         string frenchFormatVat;
 
-        if (cleaned.StartsWith(CountryCodePrefix))
+        if (cleaned.StartsWith("MCFR"))
+        {
+            frenchFormatVat = cleaned[2..]; // Remove MC, keep FR
+        }
+        else if (cleaned.StartsWith(CountryCodePrefix))
         {
             frenchFormatVat = string.Concat(FrenchPrefix, cleaned.AsSpan(2));
         }

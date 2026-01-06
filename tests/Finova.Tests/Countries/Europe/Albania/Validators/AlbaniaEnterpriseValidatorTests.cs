@@ -1,6 +1,5 @@
 
 using Finova.Countries.Europe.Albania.Validators;
-using Finova.Core.Common;
 using Xunit;
 
 namespace Finova.Tests.Countries.Europe.Albania.Validators;

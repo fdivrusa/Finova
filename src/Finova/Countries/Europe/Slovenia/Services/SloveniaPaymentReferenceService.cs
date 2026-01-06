@@ -1,8 +1,7 @@
-using Finova.Core.PaymentReference;
 using System.Text.RegularExpressions;
-
-using Finova.Core.PaymentReference.Internals;
 using Finova.Core.Common;
+using Finova.Core.PaymentReference;
+using Finova.Core.PaymentReference.Internals;
 
 
 namespace Finova.Countries.Europe.Slovenia.Services;

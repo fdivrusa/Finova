@@ -1,9 +1,9 @@
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Finova.Core.Identifiers;
 using Finova.Core.Iban;
+using Finova.Core.Identifiers;
 using Finova.Services;
 using Finova.Services.Adapters;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Extensions.DependencyInjection;
 
@@ -27,14 +27,15 @@ public static class NorthAmericaServiceCollectionExtensions
                 if (typeof(IIbanValidator).IsAssignableFrom(type))
                 {
                     s.AddSingleton<IBankAccountValidator>(sp =>
-                        new EuropeIbanBankAccountAdapter((IIbanValidator)sp.GetRequiredService(type)));
+                        new IbanBankAccountAdapter((IIbanValidator)sp.GetRequiredService(type)));
                 }
             },
             typeof(ITaxIdValidator),
             typeof(INationalIdValidator),
             typeof(IBankRoutingValidator),
             typeof(IBankRoutingParser),
-            typeof(IIbanValidator)
+            typeof(IIbanValidator),
+            typeof(IBbanValidator)
         );
 
         return services;

@@ -1,6 +1,6 @@
 using Finova.Belgium.Services;
-using Finova.Core.PaymentReference.Internals;
 using Finova.Core.PaymentReference;
+using Finova.Core.PaymentReference.Internals;
 using FluentAssertions;
 using Xunit;
 

@@ -1,9 +1,5 @@
 using Finova.Core.Common;
-using Finova.Core.Iban;
-using Finova.Core.Bic;
-using Finova.Core.PaymentCard;
 using Finova.Core.PaymentReference;
-using Finova.Core.Vat;
 
 using Finova.Countries.Europe.Finland.Services;
 
@@ -17,7 +13,9 @@ public class FinlandPaymentReferenceValidator : IValidator<PaymentReferenceDetai
     public ValidationResult Validate(string? reference)
     {
         if (string.IsNullOrWhiteSpace(reference))
+        {
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.FinlandPaymentReferenceEmpty);
+        }
 
         return FinlandPaymentReferenceService.ValidateStatic(reference).IsValid
             ? ValidationResult.Success()

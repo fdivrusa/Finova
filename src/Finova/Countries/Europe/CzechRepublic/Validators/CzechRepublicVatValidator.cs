@@ -51,8 +51,15 @@ public partial class CzechRepublicVatValidator : IVatValidator
 
             int remainder = sum % 11;
             int checkDigit = 11 - remainder;
-            if (checkDigit == 10) checkDigit = 0;
-            if (checkDigit == 11) checkDigit = 1;
+            if (checkDigit == 10)
+            {
+                checkDigit = 0;
+            }
+
+            if (checkDigit == 11)
+            {
+                checkDigit = 1;
+            }
 
             int lastDigit = cleaned[7] - '0';
             if (checkDigit != lastDigit)

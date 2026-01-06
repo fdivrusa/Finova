@@ -1,8 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
-using Finova.Core.Iban;
 using Finova.Core.Bic;
+using Finova.Core.Iban;
 using Finova.Core.PaymentCard;
 using Finova.Core.PaymentReference;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Core.Extensions;
 

@@ -1,5 +1,5 @@
-using Finova.Countries.Asia.Singapore.Validators;
 using Finova.Core.Common;
+using Finova.Countries.Asia.Singapore.Validators;
 using Xunit;
 
 namespace Finova.Tests.Countries.Asia.Singapore;
@@ -57,7 +57,7 @@ public class SingaporeBankAccountValidatorTests
     public void ParseBankAccount_ValidInput_ReturnsCorrectDetails(string input, string? expectedBranch, string expectedCoreAccount)
     {
         var result = _validator.ParseBankAccount(input);
-        
+
         Assert.NotNull(result);
         Assert.Equal("SG", result.CountryCode);
         Assert.Equal(expectedCoreAccount, result.CoreAccountNumber);

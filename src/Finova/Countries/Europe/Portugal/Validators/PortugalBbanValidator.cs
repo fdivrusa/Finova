@@ -50,7 +50,7 @@ public class PortugalBbanValidator : IBbanValidator
 
         if (!decimal.TryParse(nibBody, out decimal bodyValue))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Portugal"));
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Portugal"));
         }
 
         // Calculate remainder
@@ -63,7 +63,7 @@ public class PortugalBbanValidator : IBbanValidator
         // We can compare integers directly instead of strings
         if (!int.TryParse(nibKey, out int expectedCheckValue))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Portugal"));
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidIbanDigitsOnly, "Portugal"));
         }
 
         return checkValue == expectedCheckValue

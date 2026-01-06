@@ -1,7 +1,7 @@
+using System.Collections.Concurrent;
+using Finova.Core.Bic;
 using Finova.Core.Common;
 using Finova.Core.Iban;
-using Finova.Core.Bic;
-using System.Collections.Concurrent;
 
 namespace Finova.Services.Global;
 
@@ -27,13 +27,13 @@ public class BatchValidationService
         {
             // 1. Sanitize
             var sanitized = IbanHelper.NormalizeIban(iban);
-            
+
             // 2. Validate
             // We use IbanHelper.IsValidIban for a quick check, but we want detailed errors.
             // We don't have a global "GetErrors" static method easily accessible without instantiating specific validators.
             // However, for the SaaS MVP, IsValid + Sanitized is often enough.
             // If we want detailed errors, we need to resolve the specific country validator.
-            
+
             bool isValid = IbanHelper.IsValidIban(sanitized);
             var result = isValid ? ValidationResult.Success() : ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid IBAN");
 
@@ -54,7 +54,7 @@ public class BatchValidationService
         {
             var result = BicValidator.Validate(bic);
             string? sanitized = null;
-            
+
             if (result.IsValid)
             {
                 var details = BicValidator.Parse(bic);

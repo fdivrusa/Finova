@@ -1,5 +1,5 @@
-using Finova.Countries.Europe.Latvia.Validators;
 using Finova.Core.Common;
+using Finova.Countries.Europe.Latvia.Validators;
 using FluentAssertions;
 using Xunit;
 

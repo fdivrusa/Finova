@@ -61,9 +61,12 @@ public class TurkeyNationalIdValidator : INationalIdValidator
         // d10 = ((d1+d3+d5+d7+d9)*7 - (d2+d4+d6+d8)) % 10
         int sumOdd = digits[0] + digits[2] + digits[4] + digits[6] + digits[8];
         int sumEven = digits[1] + digits[3] + digits[5] + digits[7];
-        
+
         int d10 = ((sumOdd * 7) - sumEven) % 10;
-        if (d10 < 0) d10 += 10;
+        if (d10 < 0)
+        {
+            d10 += 10;
+        }
 
         if (digits[9] != d10)
         {

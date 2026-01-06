@@ -236,7 +236,10 @@ public static class FluentValidationScenario
             new GlobalTaxIdRequest { Country = "US", TaxId = "123456789", Description = "Valid US EIN" },
             new GlobalTaxIdRequest { Country = "US", TaxId = "123", Description = "Invalid US EIN" },
             new GlobalTaxIdRequest { Country = "BR", TaxId = "12345678000195", Description = "Valid Brazil CNPJ" }, // Example CNPJ
-            new GlobalTaxIdRequest { Country = "AU", TaxId = "51824753556", Description = "Valid Australia ABN" } // Example ABN
+            new GlobalTaxIdRequest { Country = "AU", TaxId = "51824753556", Description = "Valid Australia ABN" }, // Example ABN
+            new GlobalTaxIdRequest { Country = "RU", TaxId = "7707083893", Description = "Valid Russia INN" },
+            new GlobalTaxIdRequest { Country = "MA", TaxId = "001525487000088", Description = "Valid Morocco ICE" },
+            new GlobalTaxIdRequest { Country = "KZ", TaxId = "980540003232", Description = "Valid Kazakhstan BIN" }
         };
 
         foreach (var req in requests)
@@ -399,8 +402,10 @@ public static class FluentValidationScenario
             RuleFor(x => x.TaxId)
                 .MustBeValidNorthAmericaTaxId(x => x.Country).When(x => x.Country == "US" || x.Country == "CA")
                 .MustBeValidSouthAmericaTaxId(x => x.Country).When(x => x.Country == "BR" || x.Country == "MX")
-                .MustBeValidAsiaTaxId(x => x.Country).When(x => x.Country == "CN" || x.Country == "IN" || x.Country == "JP" || x.Country == "SG")
-                .MustBeValidOceaniaTaxId(x => x.Country).When(x => x.Country == "AU");
+                .MustBeValidAsiaTaxId(x => x.Country).When(x => x.Country == "CN" || x.Country == "IN" || x.Country == "JP" || x.Country == "SG" || x.Country == "KZ")
+                .MustBeValidOceaniaTaxId(x => x.Country).When(x => x.Country == "AU")
+                .MustBeValidAfricaTaxId(x => x.Country).When(x => x.Country == "MA" || x.Country == "DZ" || x.Country == "EG")
+                .MustBeValidEuropeTaxId(x => x.Country).When(x => x.Country == "RU" || x.Country == "GB");
         }
     }
 

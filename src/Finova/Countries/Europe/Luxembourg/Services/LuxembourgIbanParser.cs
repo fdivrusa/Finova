@@ -13,7 +13,7 @@ public class LuxembourgIbanParser(LuxembourgIbanValidator validator) : IIbanPars
     public string? CountryCode => _validator.CountryCode;
 
     //static method
-    public static LuxembourgIbanParser Create() => new LuxembourgIbanParser(new LuxembourgIbanValidator());
+    public static LuxembourgIbanParser Create() => new(new LuxembourgIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {

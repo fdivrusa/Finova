@@ -90,15 +90,22 @@ public static class CapabilitiesScenario
 
         var globalCapabilities = new[]
         {
+            ("Algeria", "DZ", "NIF", "-"),
             ("Australia", "AU", "TFN", "ABN"),
             ("Brazil", "BR", "CPF", "CNPJ"),
             ("Canada", "CA", "SIN", "BN"),
             ("China", "CN", "RIC", "USCC"),
+            ("Egypt", "EG", "TRN", "-"),
             ("India", "IN", "Aadhaar/PAN", "PAN"),
             ("Japan", "JP", "My Number", "Corp. Num"),
+            ("Kazakhstan", "KZ", "IIN", "BIN"),
             ("Mexico", "MX", "CURP/RFC", "RFC"),
+            ("Morocco", "MA", "CNIE", "ICE"),
+            ("Russia", "RU", "INN", "INN"),
             ("Singapore", "SG", "NRIC", "UEN"),
-            ("United States", "US", "EIN/SSN", "EIN")
+            ("Tunisia", "TN", "Matricule", "-"),
+            ("United States", "US", "EIN/SSN", "EIN"),
+            ("Vietnam", "VN", "MST", "-")
         };
 
         foreach (var (name, code, tax, ent) in globalCapabilities)

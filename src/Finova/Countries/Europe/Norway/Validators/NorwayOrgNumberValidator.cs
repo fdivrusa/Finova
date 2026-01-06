@@ -57,7 +57,11 @@ public partial class NorwayOrgNumberValidator : ITaxIdValidator
 
     public static string? Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return null;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return null;
+        }
+
         var cleaned = number.ToUpperInvariant().Replace("NO", "").Replace(" ", "");
         return OrgRegex().IsMatch(cleaned) ? cleaned : null;
     }

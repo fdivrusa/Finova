@@ -106,6 +106,9 @@
   <data name="InvalidIbanLength" xml:space="preserve">
     <value>Longueur invalide. Attendu {0}, reçu {1}.</value>
   </data>
+  <data name="InvalidBbanLength" xml:space="preserve">
+    <value>Longueur BBAN invalide.</value>
+  </data>
   <data name="InvalidIbanCountryCode" xml:space="preserve">
     <value>Code pays invalide. Attendu {0}.</value>
   </data>
@@ -1264,5 +1267,11 @@
   </data>
   <data name="InvalidCurrencyCode" xml:space="preserve">
     <value>Code devise inconnu.</value>
+  </data>
+  <data name="InvalidSouthAfricaVatLength" xml:space="preserve">
+    <value>Le numéro de TVA sud-africain doit contenir 10 chiffres.</value>
+  </data>
+  <data name="InvalidSouthAfricaVatFormat" xml:space="preserve">
+    <value>Le numéro de TVA sud-africain doit commencer par 4 suivi de 9 chiffres.</value>
   </data>
 </root>

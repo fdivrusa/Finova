@@ -29,7 +29,7 @@ public class JapanCorporateNumberValidator : ITaxIdValidator
         var clean = InputSanitizer.Sanitize(corporateNumber);
         if (string.IsNullOrEmpty(clean))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         if (clean.Length != 13)

@@ -56,7 +56,10 @@ public class NorwayNationalIdValidator : INationalIdValidator
         }
         int remainder1 = sum1 % 11;
         int checkDigit1 = (remainder1 == 0) ? 0 : 11 - remainder1;
-        if (checkDigit1 == 10) return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
+        if (checkDigit1 == 10)
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
+        }
 
         if (checkDigit1 != (sanitized[9] - '0'))
         {
@@ -73,7 +76,10 @@ public class NorwayNationalIdValidator : INationalIdValidator
         }
         int remainder2 = sum2 % 11;
         int checkDigit2 = (remainder2 == 0) ? 0 : 11 - remainder2;
-        if (checkDigit2 == 10) return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
+        if (checkDigit2 == 10)
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
+        }
 
         if (checkDigit2 != (sanitized[10] - '0'))
         {

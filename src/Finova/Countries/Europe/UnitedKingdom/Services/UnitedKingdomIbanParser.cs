@@ -25,7 +25,7 @@ public class UnitedKingdomIbanParser(UnitedKingdomIbanValidator validator) : IIb
     /// var details = parser.ParseIban("GB29MIDL40051512345678");
     /// </code>
     /// </example>
-    public static UnitedKingdomIbanParser Create() => new UnitedKingdomIbanParser(new UnitedKingdomIbanValidator());
+    public static UnitedKingdomIbanParser Create() => new(new UnitedKingdomIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {

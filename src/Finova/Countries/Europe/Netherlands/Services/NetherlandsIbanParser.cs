@@ -25,7 +25,7 @@ public class NetherlandsIbanParser(NetherlandsIbanValidator validator) : IIbanPa
     /// var details = parser.ParseIban("NL91ABNA0417164300");
     /// </code>
     /// </example>
-    public static NetherlandsIbanParser Create() => new NetherlandsIbanParser(new NetherlandsIbanValidator());
+    public static NetherlandsIbanParser Create() => new(new NetherlandsIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {

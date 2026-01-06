@@ -1,6 +1,6 @@
-using Finova.Core.PaymentReference;
-using Finova.Core.Common;
 using System.Text.RegularExpressions;
+using Finova.Core.Common;
+using Finova.Core.PaymentReference;
 using Finova.Core.PaymentReference.Internals;
 
 namespace Finova.Countries.Europe.Norway.Services;
@@ -168,7 +168,10 @@ public partial class NorwayPaymentReferenceService : IPaymentReferenceGenerator
             if (doubleDigit)
             {
                 digit *= 2;
-                if (digit > 9) digit -= 9;
+                if (digit > 9)
+                {
+                    digit -= 9;
+                }
             }
             sum += digit;
             doubleDigit = !doubleDigit;
@@ -187,7 +190,10 @@ public partial class NorwayPaymentReferenceService : IPaymentReferenceGenerator
             int digit = int.Parse(data[i].ToString());
             sum += digit * weight;
             weight++;
-            if (weight > 7) weight = 2;
+            if (weight > 7)
+            {
+                weight = 2;
+            }
         }
 
         int remainder = sum % 11;

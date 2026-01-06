@@ -15,7 +15,7 @@ public class ItalyIbanParser(ItalyIbanValidator validator) : IIbanParser
     /// Creates a new parser instance with a default validator.
     /// Use this for non-DI scenarios or quick one-off parsing.
     /// </summary>
-    public static ItalyIbanParser Create() => new ItalyIbanParser(new ItalyIbanValidator());
+    public static ItalyIbanParser Create() => new(new ItalyIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {

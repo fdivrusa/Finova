@@ -8,9 +8,11 @@ public class GlobalBankValidatorTests
     [Theory]
     [InlineData("US", "121000248", true)] // Valid ABA
     [InlineData("US", "123456789", false)] // Invalid Checksum
-    [InlineData("CA", "000112345", true)] // Valid CA Routing (0 + Inst + Transit)
-    [InlineData("CA", "000000000", true)] // Valid Format (though likely invalid bank)
-    [InlineData("CA", "12345-001", false)] // Invalid Format (missing leading 0)
+    [InlineData("CA", "000112345", true)] // Valid CA Routing (EFT: 0 + Inst + Transit)
+    [InlineData("CA", "000000000", true)] // Valid EFT Format
+    [InlineData("CA", "12345-001", true)] // Valid MICR Format (XXXXX-YYY)
+    [InlineData("CA", "12345001", true)] // Valid MICR Format without hyphen
+    [InlineData("CA", "1234-001", false)] // Invalid Format (wrong length)
     [InlineData("GB", "12-34-56", true)] // Valid UK Sort Code
     [InlineData("UK", "123456", true)] // Valid UK Sort Code (Alias)
     [InlineData("AU", "032-001", true)] // Valid AU BSB

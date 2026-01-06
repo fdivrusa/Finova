@@ -23,7 +23,7 @@ public class UnitedKingdomBbanValidator : IBbanValidator
 
         if (bban.Length != 18)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // 1. Bank Code (Pos 0-4): 4 letters
@@ -56,7 +56,7 @@ public class UnitedKingdomBbanValidator : IBbanValidator
             {
                 // Reusing sort code message or generic format message?
                 // The original code grouped sort code and account number check.
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUkSortCodeFormat); 
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUkSortCodeFormat);
             }
         }
 
@@ -66,8 +66,39 @@ public class UnitedKingdomBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public string? Parse(string? input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return null;
-        string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
+        string sanitized = input.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
         return Validate(sanitized).IsValid ? sanitized : null;
+    }
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        if (string.IsNullOrWhiteSpace(bban))
+        {
+            return null;
+        }
+
+        string sanitized = bban.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
+
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
+
+        // UK BBAN: 4-letter bank code + 6-digit sort code + 8-digit account number
+        return new BbanDetails
+        {
+            Bban = sanitized,
+            CountryCode = CountryCode,
+            BankCode = sanitized[..4],           // Bank code (4 letters)
+            BranchCode = sanitized[4..10],       // Sort code (6 digits)
+            AccountNumber = sanitized[10..],     // Account number (8 digits)
+            NationalCheckDigits = null           // UK doesn't have a separate check digit
+        };
     }
 }

@@ -1,5 +1,5 @@
-using Finova.Countries.Europe.Portugal.Validators;
 using Finova.Core.Common;
+using Finova.Countries.Europe.Portugal.Validators;
 using FluentAssertions;
 using Xunit;
 
@@ -10,7 +10,7 @@ public class PortugalNationalIdValidatorTests
     private readonly PortugalNationalIdValidator _validator = new();
 
     [Theory]
-    [InlineData("123456789")] 
+    [InlineData("123456789")]
     public void Validate_ValidNif_ReturnsSuccess(string id)
     {
         var result = _validator.Validate(id);

@@ -59,7 +59,7 @@ public class UnitedKingdomNationalIdValidator : INationalIdValidator
         // Second letter cannot be O
         if (sanitized[1] == 'O')
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
         }
 
         return ValidationResult.Success();

@@ -36,7 +36,11 @@ public partial class UnitedKingdomVatValidator : IVatValidator
         if (cleaned.StartsWith("GD") || cleaned.StartsWith("HA"))
         {
             // Government departments / Health authorities - 5 chars total
-            if (cleaned.Length != 5) return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidVatFormat, "UK"));
+            if (cleaned.Length != 5)
+            {
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.InvalidVatFormat, "UK"));
+            }
+
             return ValidationResult.Success(); // No checksum for these
         }
 
@@ -62,10 +66,16 @@ public partial class UnitedKingdomVatValidator : IVatValidator
         int checkDigits = int.Parse(block.Substring(7, 2));
         long totalSum = sum + checkDigits;
 
-        if (totalSum % 97 == 0) return ValidationResult.Success();
+        if (totalSum % 97 == 0)
+        {
+            return ValidationResult.Success();
+        }
 
         // UK has a secondary algorithm (add 55 to sum)
-        if ((totalSum + 55) % 97 == 0) return ValidationResult.Success();
+        if ((totalSum + 55) % 97 == 0)
+        {
+            return ValidationResult.Success();
+        }
 
         // If both fail
         return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "UK"));

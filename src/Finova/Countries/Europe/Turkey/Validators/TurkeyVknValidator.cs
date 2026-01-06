@@ -1,6 +1,5 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
-using Finova.Core.Enterprise;
 using Finova.Core.Identifiers;
 using Finova.Core.Vat;
 
@@ -99,7 +98,11 @@ public partial class TurkeyVknValidator : IVatValidator, ITaxIdValidator
 
     public static string? Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return null;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return null;
+        }
+
         var cleaned = number.ToUpperInvariant().Replace(CountryCodeVal, "").Replace(" ", "");
         return VknRegex().IsMatch(cleaned) ? cleaned : null;
     }

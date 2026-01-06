@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.Vat;

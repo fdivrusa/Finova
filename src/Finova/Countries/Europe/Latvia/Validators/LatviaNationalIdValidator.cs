@@ -68,9 +68,18 @@ public class LatviaNationalIdValidator : INationalIdValidator
         // 2 -> 2000
         int centuryDigit = sanitized[6] - '0';
         int fullYear = 0;
-        if (centuryDigit == 0) fullYear = 1800 + year;
-        else if (centuryDigit == 1) fullYear = 1900 + year;
-        else if (centuryDigit == 2) fullYear = 2000 + year;
+        if (centuryDigit == 0)
+        {
+            fullYear = 1800 + year;
+        }
+        else if (centuryDigit == 1)
+        {
+            fullYear = 1900 + year;
+        }
+        else if (centuryDigit == 2)
+        {
+            fullYear = 2000 + year;
+        }
         else
         {
             // If century digit is not 0,1,2, it might be invalid or different logic.
@@ -87,10 +96,10 @@ public class LatviaNationalIdValidator : INationalIdValidator
         else
         {
             // Fallback date check without year
-             if (month < 1 || month > 12 || day < 1 || day > 31)
-             {
-                 return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
-             }
+            if (month < 1 || month > 12 || day < 1 || day > 31)
+            {
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
+            }
         }
 
         // Checksum for old format

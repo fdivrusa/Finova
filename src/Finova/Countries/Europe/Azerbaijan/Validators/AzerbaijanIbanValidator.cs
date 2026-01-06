@@ -1,11 +1,7 @@
 
+using System.Diagnostics.CodeAnalysis;
 using Finova.Core.Common;
 using Finova.Core.Iban;
-using Finova.Core.Bic;
-using Finova.Core.PaymentCard;
-using Finova.Core.PaymentReference;
-using Finova.Core.Vat;
-using System.Diagnostics.CodeAnalysis;
 
 
 

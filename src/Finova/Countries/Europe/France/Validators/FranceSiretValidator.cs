@@ -55,7 +55,11 @@ public partial class FranceSiretValidator : ITaxIdValidator
             if ((digits.Length - i) % 2 == 0) // Even position from right (14th, 12th...) -> Index 0, 2...
             {
                 int doubled = digit * 2;
-                if (doubled > 9) doubled -= 9;
+                if (doubled > 9)
+                {
+                    doubled -= 9;
+                }
+
                 sum += doubled;
             }
             else // Odd position from right -> Index 1, 3...

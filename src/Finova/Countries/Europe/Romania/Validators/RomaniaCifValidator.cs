@@ -72,7 +72,11 @@ public partial class RomaniaCifValidator : ITaxIdValidator
 
     public string? Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return null;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return null;
+        }
+
         var cleaned = number.ToUpperInvariant().Replace("RO", "").Replace(" ", "");
         return CifRegex().IsMatch(cleaned) ? cleaned : null;
     }

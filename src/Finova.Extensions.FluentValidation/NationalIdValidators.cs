@@ -26,7 +26,11 @@ public static class NationalIdValidators
             .Must((rootObject, nationalId) =>
             {
                 var countryCode = countryCodeSelector(rootObject);
-                if (string.IsNullOrWhiteSpace(countryCode)) return false;
+                if (string.IsNullOrWhiteSpace(countryCode))
+                {
+                    return false;
+                }
+
                 return ValidateNationalId(countryCode, nationalId).IsValid;
             })
             .WithMessage("'{PropertyName}' is not a valid National ID.");
@@ -36,7 +40,7 @@ public static class NationalIdValidators
     {
         // Try Europe first
         var europeResult = EuropeNationalIdValidator.Validate(countryCode, nationalId);
-        
+
         // If it's an unsupported country in Europe, try Global
         if (!europeResult.IsValid && europeResult.Errors.Any(e => e.Code == Core.Common.ValidationErrorCode.UnsupportedCountry))
         {

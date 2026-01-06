@@ -69,7 +69,11 @@ public partial class GermanyHandelsregisternummerValidator : ITaxIdValidator
     /// </summary>
     public static string Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return string.Empty;
+        }
+
         var noSpaces = WhitespaceRegex().Replace(number, "").ToUpperInvariant();
         return noSpaces;
     }

@@ -18,14 +18,21 @@ internal static class AssemblyScanningExtensions
     /// <param name="extraRegistration">Optional action to perform extra registrations for a found type.</param>
     /// <param name="interfacesToRegister">Interfaces to look for on concrete types.</param>
     public static void RegisterValidatorsFromNamespace(
-        this IServiceCollection services, 
-        Assembly assembly, 
-        string namespacePrefix, 
+        this IServiceCollection services,
+        Assembly assembly,
+        string namespacePrefix,
         Action<IServiceCollection, Type>? extraRegistration,
         params Type[] interfacesToRegister)
     {
-        if (services is null) throw new ArgumentNullException(nameof(services));
-        if (assembly is null) throw new ArgumentNullException(nameof(assembly));
+        if (services is null)
+        {
+            throw new ArgumentNullException(nameof(services));
+        }
+
+        if (assembly is null)
+        {
+            throw new ArgumentNullException(nameof(assembly));
+        }
 
         var types = assembly.GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && t.Namespace != null && t.Namespace.StartsWith(namespacePrefix, StringComparison.Ordinal));

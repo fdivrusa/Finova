@@ -42,7 +42,10 @@ public partial class PortugalVatValidator : IVatValidator
         int remainder = ChecksumHelper.CalculateWeightedModulo11(cleaned.Substring(0, 8), weights);
 
         int checkDigit = 11 - remainder;
-        if (checkDigit > 9) checkDigit = 0;
+        if (checkDigit > 9)
+        {
+            checkDigit = 0;
+        }
 
         int lastDigit = cleaned[8] - '0';
         if (checkDigit != lastDigit)

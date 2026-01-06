@@ -1,7 +1,7 @@
+using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.PaymentReference;
 using Finova.Core.PaymentReference.Internals;
-using System.Text.RegularExpressions;
 
 
 
@@ -174,7 +174,10 @@ public partial class SwedenPaymentReferenceService : IPaymentReferenceGenerator
             if (doubleDigit)
             {
                 digit *= 2;
-                if (digit > 9) digit -= 9;
+                if (digit > 9)
+                {
+                    digit -= 9;
+                }
             }
             sum += digit;
             doubleDigit = !doubleDigit;

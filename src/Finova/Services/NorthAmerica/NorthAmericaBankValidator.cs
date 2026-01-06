@@ -1,6 +1,6 @@
 using Finova.Core.Common;
-using Finova.Countries.NorthAmerica.UnitedStates.Validators;
 using Finova.Countries.NorthAmerica.Canada.Validators;
+using Finova.Countries.NorthAmerica.UnitedStates.Validators;
 
 namespace Finova.Services;
 

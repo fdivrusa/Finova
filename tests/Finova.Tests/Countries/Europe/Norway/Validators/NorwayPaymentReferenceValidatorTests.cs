@@ -1,4 +1,3 @@
-using Finova.Core.Common;
 using Finova.Core.PaymentReference;
 using Finova.Countries.Europe.Norway.Validators;
 using FluentAssertions;

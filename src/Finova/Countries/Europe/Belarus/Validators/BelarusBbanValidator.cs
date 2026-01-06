@@ -27,7 +27,7 @@ public class BelarusBbanValidator : IBbanValidator
 
         if (bban.Length != 24)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // Structure check: Alphanumeric

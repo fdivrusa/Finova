@@ -1,5 +1,5 @@
-using System.Resources;
 using System.Globalization;
+using System.Resources;
 
 namespace Finova.Core.Common;
 
@@ -8,7 +8,7 @@ namespace Finova.Core.Common;
 /// </summary>
 public static class ValidationMessages
 {
-    private static readonly ResourceManager ResourceManager = new ResourceManager("Finova.Core.Resources.ValidationMessages", typeof(ValidationMessages).Assembly);
+    private static readonly ResourceManager ResourceManager = new("Finova.Core.Resources.ValidationMessages", typeof(ValidationMessages).Assembly);
 
     private static string GetString(string name) => ResourceManager.GetString(name, CultureInfo.CurrentCulture) ?? name;
 
@@ -30,6 +30,7 @@ public static class ValidationMessages
     public static string InvalidVatFormat => GetString("InvalidVatFormat");
     public static string InvalidVatChecksum => GetString("InvalidVatChecksum");
     public static string InvalidIbanLength => GetString("InvalidIbanLength");
+    public static string InvalidBbanLength => GetString("InvalidBbanLength");
     public static string InvalidIbanCountryCode => GetString("InvalidIbanCountryCode");
     public static string InvalidIbanFormatDigits => GetString("InvalidIbanFormatDigits");
     public static string InvalidIbanFormatAlphanumeric => GetString("InvalidIbanFormatAlphanumeric");
@@ -117,12 +118,18 @@ public static class ValidationMessages
     public static string InvalidJapanMyNumberLength => GetString("InvalidJapanMyNumberLength");
     public static string InvalidJapanMyNumberFormat => GetString("InvalidJapanMyNumberFormat");
     public static string InvalidJapanMyNumberChecksum => GetString("InvalidJapanMyNumberChecksum");
+    public static string InvalidJapanVatFormat => GetString("InvalidJapanVatFormat");
     public static string InvalidIndiaPanLength => GetString("InvalidIndiaPanLength");
     public static string InvalidIndiaPanFormat => GetString("InvalidIndiaPanFormat");
     public static string InvalidIndiaPanStatus => GetString("InvalidIndiaPanStatus");
     public static string InvalidIndiaAadhaarLength => GetString("InvalidIndiaAadhaarLength");
     public static string InvalidIndiaAadhaarFormat => GetString("InvalidIndiaAadhaarFormat");
     public static string InvalidIndiaAadhaarChecksum => GetString("InvalidIndiaAadhaarChecksum");
+    public static string InvalidIndiaGstinLength => GetString("InvalidIndiaGstinLength");
+    public static string InvalidIndiaGstinFormat => GetString("InvalidIndiaGstinFormat");
+    public static string InvalidIndiaGstinStateCode => GetString("InvalidIndiaGstinStateCode");
+    public static string InvalidIndiaGstinPan => GetString("InvalidIndiaGstinPan");
+    public static string InvalidIndiaGstinPosition14 => GetString("InvalidIndiaGstinPosition14");
     public static string InvalidIcelandVatFormat => GetString("InvalidIcelandVatFormat");
     public static string InvalidCheckDigitsMod10Mod11 => GetString("InvalidCheckDigitsMod10Mod11");
     public static string InvalidSlovakiaVatFormat => GetString("InvalidSlovakiaVatFormat");
@@ -424,4 +431,36 @@ public static class ValidationMessages
     public static string InvalidSedolChecksum => GetString("InvalidSedolChecksum");
     public static string InvalidCurrencyLength => GetString("InvalidCurrencyLength");
     public static string InvalidCurrencyCode => GetString("InvalidCurrencyCode");
+    public static string NoBbanValidatorRegistered => GetString("NoBbanValidatorRegistered");
+    public static string InvalidBban => GetString("InvalidBban");
+
+    // Japan Zengin Code
+    public static string InvalidJapanZenginCodeFormat => GetString("InvalidJapanZenginCodeFormat");
+    public static string InvalidJapanZenginCodeLength => GetString("InvalidJapanZenginCodeLength");
+
+    // Singapore Bank Code
+    public static string InvalidSingaporeBankCodeFormat => GetString("InvalidSingaporeBankCodeFormat");
+    public static string InvalidSingaporeBankCodeLength => GetString("InvalidSingaporeBankCodeLength");
+
+    // Mexico CLABE
+    public static string InvalidMexicoClabeLength => GetString("InvalidMexicoClabeLength");
+    public static string InvalidMexicoClabeFormat => GetString("InvalidMexicoClabeFormat");
+    public static string InvalidMexicoClabeChecksum => GetString("InvalidMexicoClabeChecksum");
+
+    // Argentina CBU
+    public static string InvalidArgentinaCbuLength => GetString("InvalidArgentinaCbuLength");
+    public static string InvalidArgentinaCbuFormat => GetString("InvalidArgentinaCbuFormat");
+    public static string InvalidArgentinaCbuChecksum => GetString("InvalidArgentinaCbuChecksum");
+
+    // South Korea Bank Code
+    public static string InvalidSouthKoreaBankCodeFormat => GetString("InvalidSouthKoreaBankCodeFormat");
+    public static string InvalidSouthKoreaVatFormat => GetString("InvalidSouthKoreaVatFormat");
+    public static string InvalidSouthKoreaVatChecksum => GetString("InvalidSouthKoreaVatChecksum");
+
+    public static string BbanMustStartWithLetter => GetString("BbanMustStartWithLetter");
+    public static string BbanMustContainDigitsAfterLetter => GetString("BbanMustContainDigitsAfterLetter");
+
+    // South Africa VAT
+    public static string InvalidSouthAfricaVatLength => GetString("InvalidSouthAfricaVatLength");
+    public static string InvalidSouthAfricaVatFormat => GetString("InvalidSouthAfricaVatFormat");
 }

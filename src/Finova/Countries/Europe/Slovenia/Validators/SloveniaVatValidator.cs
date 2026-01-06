@@ -1,6 +1,5 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
-using Finova.Core.Enterprise;
 using Finova.Core.Identifiers;
 using Finova.Core.Vat;
 
@@ -91,7 +90,11 @@ public partial class SloveniaVatValidator : IVatValidator, ITaxIdValidator
 
     public static string? Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return null;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return null;
+        }
+
         var cleaned = number.ToUpperInvariant().Replace(VatPrefix, "").Replace(" ", "");
         return VatRegex().IsMatch(cleaned) ? cleaned : null;
     }

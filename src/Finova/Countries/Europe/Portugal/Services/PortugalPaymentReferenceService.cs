@@ -1,7 +1,7 @@
+using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.PaymentReference;
 using Finova.Core.PaymentReference.Internals;
-using System.Text.RegularExpressions;
 
 namespace Finova.Countries.Europe.Portugal.Services;
 
@@ -29,10 +29,14 @@ public partial class PortugalPaymentReferenceService : IPaymentReferenceGenerato
     public static ValidationResult ValidateStatic(string communication)
     {
         if (string.IsNullOrWhiteSpace(communication))
+        {
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        }
 
         if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
             return IsoReferenceValidator.Validate(communication);
+        }
 
         return ValidateMultibancoRef(communication);
     }
@@ -42,7 +46,10 @@ public partial class PortugalPaymentReferenceService : IPaymentReferenceGenerato
     private static string GenerateMultibancoRef(string rawReference)
     {
         var cleanRef = DigitsOnlyRegex().Replace(rawReference, "");
-        if (cleanRef.Length > 9) throw new ArgumentException("Multibanco reference cannot exceed 9 digits.");
+        if (cleanRef.Length > 9)
+        {
+            throw new ArgumentException("Multibanco reference cannot exceed 9 digits.");
+        }
 
         // Pad to 9 digits
         return cleanRef.PadLeft(9, '0');
@@ -54,7 +61,9 @@ public partial class PortugalPaymentReferenceService : IPaymentReferenceGenerato
 
         // Multibanco references are strictly 9 digits
         if (clean.Length != 9)
+        {
             return ValidationResult.Failure(ValidationErrorCode.InvalidLength, string.Format(ValidationMessages.InvalidLengthExpectedX, 9));
+        }
 
         return ValidationResult.Success();
     }

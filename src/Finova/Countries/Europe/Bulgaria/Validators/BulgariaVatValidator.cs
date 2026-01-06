@@ -85,7 +85,10 @@ public partial class BulgariaVatValidator : IVatValidator
         }
 
         remainder = sum % 11;
-        if (remainder == 10) remainder = 0;
+        if (remainder == 10)
+        {
+            remainder = 0;
+        }
 
         return remainder == (vat[8] - '0');
     }
@@ -99,9 +102,15 @@ public partial class BulgariaVatValidator : IVatValidator
             sum += (vat[i] - '0') * weightsEgn[i];
         }
         int remainder = sum % 11;
-        if (remainder == 10) remainder = 0;
+        if (remainder == 10)
+        {
+            remainder = 0;
+        }
 
-        if (remainder == (vat[9] - '0')) return true;
+        if (remainder == (vat[9] - '0'))
+        {
+            return true;
+        }
 
         int[] weightsPnf = { 21, 19, 17, 13, 11, 9, 7, 3, 1 };
         sum = 0;

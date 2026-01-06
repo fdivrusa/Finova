@@ -1,15 +1,11 @@
-using Finova.Core.PaymentReference;
 using Finova.Belgium.Services;
-
-
-
+using Finova.Core.PaymentReference;
+using Finova.Core.PaymentReference.Internals;
 using Finova.Countries.Europe.Finland.Services;
 using Finova.Countries.Europe.Norway.Services;
 using Finova.Countries.Europe.Slovenia.Services;
 using Finova.Countries.Europe.Sweden.Services;
 using Finova.Countries.Europe.Switzerland.Services;
-
-using Finova.Core.PaymentReference.Internals;
 
 namespace Finova.Generators;
 
@@ -48,12 +44,12 @@ public class PaymentReferenceGenerator : IPaymentReferenceGenerator, IIsoPayment
     {
         if (string.IsNullOrWhiteSpace(reference))
         {
-            return new PaymentReferenceDetails 
-            { 
-                Reference = reference, 
+            return new PaymentReferenceDetails
+            {
+                Reference = reference,
                 Content = string.Empty,
                 Format = PaymentReferenceFormat.Unknown,
-                IsValid = false 
+                IsValid = false
             };
         }
 

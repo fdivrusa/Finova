@@ -1,5 +1,4 @@
 using Finova.Countries.Europe.Italy.Validators;
-using Finova.Core.Common;
 using Xunit;
 
 namespace Finova.Tests.Countries.Europe.Italy;

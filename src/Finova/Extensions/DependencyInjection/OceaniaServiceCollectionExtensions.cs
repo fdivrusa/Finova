@@ -1,6 +1,7 @@
-using Microsoft.Extensions.DependencyInjection;
+using Finova.Core.Iban;
 using Finova.Core.Identifiers;
 using Finova.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Extensions.DependencyInjection;
 
@@ -20,7 +21,9 @@ public static class OceaniaServiceCollectionExtensions
             typeof(ITaxIdValidator),
             typeof(INationalIdValidator),
             typeof(IBankRoutingValidator),
-            typeof(IBankAccountValidator)
+            typeof(IBankAccountValidator),
+            typeof(IIbanValidator),
+            typeof(IBbanValidator)
         );
 
         return services;

@@ -36,7 +36,11 @@ public partial class SanMarinoCoeValidator : ITaxIdValidator
 
     public string? Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return null;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return null;
+        }
+
         var cleaned = number.Replace(" ", "");
         return CoeRegex().IsMatch(cleaned) ? cleaned : null;
     }

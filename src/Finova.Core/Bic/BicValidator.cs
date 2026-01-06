@@ -121,7 +121,10 @@ public class BicValidator : IBicValidator
         }
 
         var normalizedIban = iban.Trim();
-        if (normalizedIban.Length < 2) return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"{ValidationMessages.InvalidFormat} Invalid IBAN length.");
+        if (normalizedIban.Length < 2)
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"{ValidationMessages.InvalidFormat} Invalid IBAN length.");
+        }
 
         var countryCode = normalizedIban.Substring(0, 2);
         return ValidateConsistencyWithIban(bic, countryCode);

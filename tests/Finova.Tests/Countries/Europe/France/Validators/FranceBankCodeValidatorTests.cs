@@ -1,5 +1,5 @@
-using Finova.Countries.Europe.France.Validators;
 using Finova.Core.Common;
+using Finova.Countries.Europe.France.Validators;
 using FluentAssertions;
 using Xunit;
 

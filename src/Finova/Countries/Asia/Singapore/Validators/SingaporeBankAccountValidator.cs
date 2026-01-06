@@ -1,7 +1,6 @@
+using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Finova.Countries.Asia.Singapore.Validators;
 
@@ -26,7 +25,7 @@ public class SingaporeBankAccountValidator : IBankAccountValidator, IBankAccount
 
         if (!sanitized.All(char.IsDigit))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BankAccountMustBeDigits);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BankAccountMustBeDigits);
         }
 
         // Common length is 10 digits (including bank/branch codes often) or just account number.
@@ -43,7 +42,11 @@ public class SingaporeBankAccountValidator : IBankAccountValidator, IBankAccount
     public string? Parse(string? input)
     {
         var result = Validate(input);
-        if (!result.IsValid) return null;
+        if (!result.IsValid)
+        {
+            return null;
+        }
+
         return Regex.Replace(input!, @"[\s-]", "");
     }
 
@@ -61,7 +64,7 @@ public class SingaporeBankAccountValidator : IBankAccountValidator, IBankAccount
         // Singapore format varies by bank (DBS, OCBC, UOB).
         // Often: Branch (3) + Account (7-9).
         // Without specific bank context, we can try to extract branch if length permits.
-        
+
         string? branchCode = null;
         string? coreAccount = normalized;
 

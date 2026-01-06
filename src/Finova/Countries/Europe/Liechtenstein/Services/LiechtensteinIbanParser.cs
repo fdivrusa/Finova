@@ -22,7 +22,7 @@ public class LiechtensteinIbanParser(IIbanValidator validator) : IIbanParser
     /// Creates a new instance of the parser with a default validator.
     /// </summary>
     /// <returns>A new <see cref="LiechtensteinIbanParser"/> instance.</returns>
-    public static LiechtensteinIbanParser Create() => new LiechtensteinIbanParser(new LiechtensteinIbanValidator());
+    public static LiechtensteinIbanParser Create() => new(new LiechtensteinIbanValidator());
 
     /// <summary>
     /// Parses the Liechtenstein IBAN.

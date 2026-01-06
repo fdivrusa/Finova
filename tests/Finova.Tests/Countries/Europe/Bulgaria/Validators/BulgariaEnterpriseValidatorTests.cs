@@ -1,5 +1,4 @@
 using Finova.Countries.Europe.Bulgaria.Validators;
-using Finova.Core.Common;
 using Xunit;
 
 namespace Finova.Tests.Countries.Europe.Bulgaria.Validators;

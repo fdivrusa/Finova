@@ -1,6 +1,5 @@
 
 using Finova.Countries.Europe.Andorra.Validators;
-using Finova.Core.Common;
 using Xunit;
 
 namespace Finova.Tests.Countries.Europe.Andorra.Validators;

@@ -15,7 +15,7 @@ public static class SouthAmericaTaxIdValidator
 
         if (string.IsNullOrWhiteSpace(countryCode))
         {
-             if (taxId.Length < 2)
+            if (taxId.Length < 2)
             {
                 return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.VatTooShortForCountryCode);
             }

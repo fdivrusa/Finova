@@ -21,7 +21,7 @@ public class AlbaniaBbanValidator : IBbanValidator
 
         if (bban.Length != 24)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Invalid BBAN length.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBbanLength);
         }
 
         // 1. Bank Code (Pos 0-3): 3 digits

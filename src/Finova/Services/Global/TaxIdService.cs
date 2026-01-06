@@ -1,5 +1,9 @@
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
+using Finova.Services.Africa;
+using Finova.Services.Asia;
+using Finova.Services.NorthAmerica;
+using Finova.Services.SouthAmerica;
 
 namespace Finova.Services;
 
@@ -24,33 +28,40 @@ public class TaxIdService : ITaxIdService
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
-        var validators = _validators.Where(v => v.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase)).ToList();
+        // Try regional static validators first if no DI registered ones match or as primary
+        var country = countryCode.ToUpperInvariant();
 
-        if (validators.Count == 0)
-        {
-            return ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, string.Format(ValidationMessages.NoTaxIdValidatorRegistered, countryCode));
-        }
+        // This is a hybrid approach: prefer DI validators, fallback to static region routing
+        var registeredValidators = _validators.Where(v => v.CountryCode.Equals(country, StringComparison.OrdinalIgnoreCase)).ToList();
 
-        // If multiple validators exist for a country, we return Success if ANY of them passes.
-        // If all fail, we return the failure from the first one (or a generic failure).
-        List<ValidationError> errors = [];
-        foreach (var validator in validators)
+        if (registeredValidators.Count > 0)
         {
-            var result = validator.Validate(taxId);
-            if (result.IsValid)
+            List<ValidationError> errors = [];
+            foreach (var validator in registeredValidators)
             {
-                return result;
-            }
-            errors.AddRange(result.Errors);
-        }
+                var res = validator.Validate(taxId);
+                if (res.IsValid)
+                {
+                    return res;
+                }
 
-        // If we are here, all validators failed.
-        // If there was only one, return its result (with errors).
-        if (validators.Count == 1)
-        {
+                errors.AddRange(res.Errors);
+            }
             return ValidationResult.Failure(errors);
         }
 
-        return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidTaxId);
+        // Fallback to static regional routers
+        return country switch
+        {
+            "DZ" or "AO" or "EG" or "MA" or "NG" or "SN" or "CI" or "TN" or "ZA"
+                => AfricaTaxIdValidator.Validate(taxId, country),
+            "AR" or "BR" or "CL" or "CO" or "MX"
+                => SouthAmericaTaxIdValidator.Validate(taxId, country),
+            "US" or "CA" or "CR" or "DO" or "SV" or "GT" or "HN" or "NI"
+                => NorthAmericaTaxIdValidator.Validate(taxId, country),
+            "CN" or "IN" or "JP" or "KR" or "SG" or "KZ" or "VN"
+                => AsiaTaxIdValidator.Validate(taxId, country),
+            _ => ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, string.Format(ValidationMessages.NoTaxIdValidatorRegistered, countryCode))
+        };
     }
 }

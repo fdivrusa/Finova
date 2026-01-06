@@ -106,6 +106,9 @@
   <data name="InvalidIbanLength" xml:space="preserve">
     <value>Ungültige Länge. Erwartet {0}, erhalten {1}.</value>
   </data>
+  <data name="InvalidBbanLength" xml:space="preserve">
+    <value>Ungültige BBAN-Länge.</value>
+  </data>
   <data name="InvalidIbanCountryCode" xml:space="preserve">
     <value>Ungültiger Ländercode. Erwartet {0}.</value>
   </data>
@@ -1263,5 +1266,11 @@
   </data>
   <data name="InvalidCurrencyCode" xml:space="preserve">
     <value>Unbekannter Währungscode.</value>
+  </data>
+  <data name="InvalidSouthAfricaVatLength" xml:space="preserve">
+    <value>Südafrikanische USt-IdNr. muss 10 Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidSouthAfricaVatFormat" xml:space="preserve">
+    <value>Südafrikanische USt-IdNr. muss mit 4 beginnen, gefolgt von 9 Ziffern.</value>
   </data>
 </root>
