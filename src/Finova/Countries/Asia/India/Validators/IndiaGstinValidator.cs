@@ -46,31 +46,31 @@ public partial class IndiaGstinValidator : IVatValidator
 
         if (clean.Length != 15)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "GSTIN must be 15 characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidIndiaGstinLength);
         }
 
         if (!GstinRegex().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid GSTIN format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIndiaGstinFormat);
         }
 
         // Validate state code (01-37)
         if (!int.TryParse(clean[..2], out int stateCode) || stateCode < 1 || stateCode > 37)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid state code in GSTIN.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIndiaGstinStateCode);
         }
 
         // Extract the embedded PAN and validate its structure
         string embeddedPan = clean.Substring(2, 10);
         if (!ValidatePanStructure(embeddedPan))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid PAN embedded in GSTIN.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIndiaGstinPan);
         }
 
         // Position 14 must be 'Z' (default)
         if (clean[13] != 'Z')
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Position 14 in GSTIN must be 'Z'.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIndiaGstinPosition14);
         }
 
         // Validate checksum (position 15)

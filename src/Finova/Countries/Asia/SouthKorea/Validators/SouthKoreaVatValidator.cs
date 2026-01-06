@@ -47,7 +47,7 @@ public partial class SouthKoreaVatValidator : IVatValidator
 
         if (!BrnPattern().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "South Korean BRN must be 10 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSouthKoreaVatFormat);
         }
 
         // Validate checksum
@@ -67,7 +67,7 @@ public partial class SouthKoreaVatValidator : IVatValidator
 
         if (checkDigit != (clean[9] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid South Korean BRN checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSouthKoreaVatChecksum);
         }
 
         return ValidationResult.Success();
