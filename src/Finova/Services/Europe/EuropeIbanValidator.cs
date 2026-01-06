@@ -106,11 +106,18 @@ public class EuropeIbanValidator : IIbanValidator
         }
 
         string countryCode = iban[0..2].ToUpperInvariant();
-        var validator = GetValidators().FirstOrDefault(v => v.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase));
+        var validators = GetValidators().Where(v => v.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase)).ToList();
 
-        if (validator != null)
+        if (validators.Count > 0)
         {
-            return validator.Validate(iban);
+            foreach (var validator in validators)
+            {
+                var result = validator.Validate(iban);
+                if (result.IsValid)
+                {
+                    return result;
+                }
+            }
         }
 
         // Fallback to static logic if no specific validator is found in DI
