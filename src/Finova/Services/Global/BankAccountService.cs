@@ -15,18 +15,61 @@ public class BankAccountService(IEnumerable<IBankAccountValidator> validators, I
     /// <inheritdoc/>
     public ValidationResult Validate(string countryCode, string account)
     {
-        var validator = _validators.FirstOrDefault(v => v.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase));
-        if (validator == null)
+        if (string.IsNullOrWhiteSpace(countryCode))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        }
+
+        var validators = _validators.Where(v => v.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        if (validators.Count == 0)
         {
             return ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"No bank account validator found for country {countryCode}");
         }
-        return validator.Validate(account);
+
+        List<ValidationError> errors = [];
+        foreach (var validator in validators)
+        {
+            var result = validator.Validate(account);
+            if (result.IsValid)
+            {
+                return result;
+            }
+            errors.AddRange(result.Errors);
+        }
+
+        if (validators.Count == 1)
+        {
+            return ValidationResult.Failure(errors);
+        }
+
+        return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid bank account number");
     }
 
     /// <inheritdoc/>
     public BankAccountDetails? Parse(string countryCode, string account)
     {
-        var parser = _parsers.FirstOrDefault(p => p.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase));
-        return parser?.ParseBankAccount(account);
+        if (string.IsNullOrWhiteSpace(countryCode))
+        {
+            return null;
+        }
+
+        var parsers = _parsers.Where(p => p.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        if (parsers.Count == 0)
+        {
+            return null;
+        }
+
+        foreach (var parser in parsers)
+        {
+            var result = parser.ParseBankAccount(account);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+
+        return null;
     }
 }

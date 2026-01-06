@@ -60,7 +60,22 @@ public class BankRoutingService : IBankRoutingService
             return null;
         }
 
-        var parser = _parsers.FirstOrDefault(p => p.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase));
-        return parser?.ParseRoutingNumber(routingNumber);
+        var parsers = _parsers.Where(p => p.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        if (parsers.Count == 0)
+        {
+            return null;
+        }
+
+        foreach (var parser in parsers)
+        {
+            var result = parser.ParseRoutingNumber(routingNumber);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+
+        return null;
     }
 }
