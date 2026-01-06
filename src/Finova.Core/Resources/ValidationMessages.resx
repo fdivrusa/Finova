@@ -1313,4 +1313,10 @@
   <data name="BbanMustContainDigitsAfterLetter" xml:space="preserve">
     <value>BBAN must contain digits after the first letter.</value>
   </data>
+  <data name="InvalidSouthAfricaVatLength" xml:space="preserve">
+    <value>South African VAT number must be 10 digits.</value>
+  </data>
+  <data name="InvalidSouthAfricaVatFormat" xml:space="preserve">
+    <value>South African VAT number must start with 4 followed by 9 digits.</value>
+  </data>
 </root>
