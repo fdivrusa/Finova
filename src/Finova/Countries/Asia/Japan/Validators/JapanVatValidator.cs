@@ -75,14 +75,7 @@ public class JapanVatValidator : IVatValidator
         }
 
         // Ensure T prefix for standardized format
-        if (clean[0] is not 'T' and not 't')
-        {
-            clean = "T" + clean;
-        }
-        else
-        {
-            clean = "T" + clean[1..];
-        }
+        clean = "T" + (clean[0] is 'T' or 't' ? clean[1..] : clean);
 
         return new VatDetails
         {
