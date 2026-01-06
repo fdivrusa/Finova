@@ -45,7 +45,7 @@ public class JapanVatValidator : IVatValidator
         // Format: T + 13-digit corporate number
         if (clean.Length < 1)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidJapanVatFormat);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidJapanVatFormat);
         }
 
         // Check for T prefix (required for qualified invoice issuer)
