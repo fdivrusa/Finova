@@ -38,7 +38,12 @@ public static class GlobalServicesScenario
             "BR", "12.345.678/0001-95", // Brazil CNPJ
             "CN", "91350100M000100Y43", // China USCC
             "IN", "ABCPE1234F", // India PAN
-            "SG", "200812345M" // Singapore UEN
+            "SG", "200812345M", // Singapore UEN
+            "RU", "7707083893", // Russia INN
+            "MA", "001525487000088", // Morocco ICE
+            "DZ", "000016001275946", // Algeria NIF
+            "KZ", "980540003232", // Kazakhstan BIN
+            "EG", "100200300" // Egypt TRN
         ];
 
         for (int i = 0; i < taxIds.Length; i += 2)
@@ -198,7 +203,8 @@ public static class GlobalServicesScenario
             new { Iban = "DE89370400440532013000", Country = "Germany", Valid = true },
             new { Iban = "FR7630006000011234567890189", Country = "France", Valid = true },
             new { Iban = "GB29NWBK60161331926819", Country = "United Kingdom", Valid = true },
-            new { Iban = "NL91ABNA0417164300", Country = "Netherlands", Valid = true }
+            new { Iban = "NL91ABNA0417164300", Country = "Netherlands", Valid = true },
+            new { Iban = "RU1204452560040702810400000000012", Country = "Russia", Valid = true }
         };
 
         foreach (var test in europeIbans)

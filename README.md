@@ -28,7 +28,7 @@
 | ⚙️ **Enterprise Ready** | Production-grade validation trusted by financial institutions |
 | 🔒 **Privacy First** | All validations run locally — your data never leaves your servers |
 | ⚡ **Lightning Fast** | Optimized algorithms with zero network latency |
-| 🌍 **Global Coverage** | 80+ countries across 6 continents |
+| 🌍 **Global Coverage** | 110+ countries across 6 continents |
 | 🧩 **Easy Integration** | FluentValidation support, dependency injection ready |
 
 ---
@@ -121,38 +121,77 @@ dotnet add package Finova.Extensions.FluentValidation
 | Region | Country | Tax ID | Bank Account | Bank Routing |
 |--------|---------|--------|--------------|--------------|
 | **North America** | 🇺🇸 USA | EIN ✓ | — | ABA Routing ✓ |
-| | 🇨🇦 Canada | BN ✓ | — | Transit Number ✓ |
-| **Caribbean/Central America** | 🇨🇷 Costa Rica | — | IBAN ✓ | — |
-| | 🇩🇴 Dominican Republic | — | IBAN ✓ | — |
-| | 🇸🇻 El Salvador | — | IBAN ✓ | — |
-| | 🇬🇹 Guatemala | — | IBAN ✓ | — |
+| | 🇨🇦 Canada | BN/GST ✓ | — | Transit Number ✓ |
+| **Caribbean/Central America** | 🇨🇷 Costa Rica | NITE ✓ | IBAN ✓ | — |
+| | 🇩🇴 Dominican Republic | RNC ✓ | IBAN ✓ | — |
+| | 🇸🇻 El Salvador | NIT ✓ | IBAN ✓ | — |
+| | 🇬🇹 Guatemala | NIT ✓ | IBAN ✓ | — |
+| | 🇭🇳 Honduras | RTN ✓ | IBAN ✓ | — |
+| | 🇳🇮 Nicaragua | RUC ✓ | IBAN ✓ | — |
+| | 🇱🇨 Saint Lucia | Tax ID ✓ | IBAN ✓ | — |
 | | 🇻🇬 Virgin Islands (British) | — | IBAN ✓ | — |
+| | 🇧🇧 Barbados | Tax ID ✓ | IBAN ✓ | — |
 | **South America** | 🇧🇷 Brazil | CNPJ/CPF ✓ | IBAN ✓ | — |
 | | 🇲🇽 Mexico | RFC ✓ | — | — |
 | | 🇦🇷 Argentina | CUIT/CUIL ✓ | — | — |
 | | 🇨🇱 Chile | RUT ✓ | — | — |
 | | 🇨🇴 Colombia | NIT ✓ | — | — |
-| **Middle East** | 🇧🇭 Bahrain | — | IBAN ✓ | — |
-| | 🇮🇱 Israel | — | IBAN ✓ | — |
-| | 🇯🇴 Jordan | — | IBAN ✓ | — |
-| | 🇰🇼 Kuwait | — | IBAN ✓ | — |
-| | 🇱🇧 Lebanon | — | IBAN ✓ | — |
-| | 🇶🇦 Qatar | — | IBAN ✓ | — |
-| | 🇸🇦 Saudi Arabia | — | IBAN ✓ | — |
-| | 🇦🇪 UAE | — | IBAN ✓ | — |
-| **Africa** | 🇪🇬 Egypt | — | IBAN ✓ | — |
-| | 🇲🇷 Mauritania | — | IBAN ✓ | — |
+| | 🇫🇰 Falkland Islands | — | IBAN ✓ | — |
+| **Middle East** | 🇧🇭 Bahrain | VAT ✓ | IBAN ✓ | — |
+| | 🇮🇶 Iraq | TIN ✓ | IBAN ✓ | — |
+| | 🇮🇱 Israel | VAT ✓ | IBAN ✓ | — |
+| | 🇯🇴 Jordan | TIN ✓ | IBAN ✓ | — |
+| | 🇰🇼 Kuwait | TIN ✓ | IBAN ✓ | — |
+| | 🇱🇧 Lebanon | TIN ✓ | IBAN ✓ | — |
+| | 🇴🇲 Oman | VAT ✓ | IBAN ✓ | — |
+| | 🇶🇦 Qatar | TIN ✓ | IBAN ✓ | — |
+| | 🇸🇦 Saudi Arabia | VAT ✓ | IBAN ✓ | — |
+| | 🇦🇪 UAE | VAT ✓ | IBAN ✓ | — |
+| | 🇾🇪 Yemen | TIN ✓ | IBAN ✓ | — |
+| **Africa** | 🇩🇿 Algeria | NIF ✓ | IBAN ✓ | — |
+| | 🇦🇴 Angola | NIF ✓ | IBAN ✓ | — |
+| | 🇧🇯 Benin | IFU ✓ | IBAN ✓ | — |
+| | 🇧🇫 Burkina Faso | IFU ✓ | IBAN ✓ | — |
+| | 🇧🇮 Burundi | NIF ✓ | IBAN ✓ | — |
+| | 🇨🇲 Cameroon | NIU ✓ | IBAN ✓ | — |
+| | 🇨🇻 Cape Verde | NIF ✓ | IBAN ✓ | — |
+| | 🇨🇫 Central African Republic | NIF ✓ | IBAN ✓ | — |
+| | 🇹🇩 Chad | NIF ✓ | IBAN ✓ | — |
+| | 🇰🇲 Comoros | NIF ✓ | IBAN ✓ | — |
+| | 🇨🇬 Congo | NIU ✓ | IBAN ✓ | — |
+| | 🇨🇮 Côte d'Ivoire | NCC ✓ | IBAN ✓ | — |
+| | 🇩🇯 Djibouti | NIF ✓ | IBAN ✓ | — |
+| | 🇪🇬 Egypt | TRN ✓ | IBAN ✓ | — |
+| | 🇬🇶 Equatorial Guinea | NIF ✓ | IBAN ✓ | — |
+| | 🇬🇦 Gabon | NIF ✓ | IBAN ✓ | — |
+| | 🇬🇼 Guinea-Bissau | NIF ✓ | IBAN ✓ | — |
+| | 🇱🇾 Libya | Tax ID ✓ | IBAN ✓ | — |
+| | 🇲🇦 Morocco | ICE/IF ✓ | IBAN ✓ | — |
+| | 🇲🇬 Madagascar | NIF ✓ | IBAN ✓ | — |
+| | 🇲🇱 Mali | NIF ✓ | IBAN ✓ | — |
+| | 🇲🇷 Mauritania | NIF ✓ | IBAN ✓ | — |
+| | 🇲🇿 Mozambique | NUIT ✓ | IBAN ✓ | — |
+| | 🇳🇪 Niger | NIF ✓ | IBAN ✓ | — |
+| | 🇸🇹 Sao Tome and Principe | NIF ✓ | IBAN ✓ | — |
+| | 🇸🇳 Senegal | NINEA ✓ | IBAN ✓ | — |
+| | 🇸🇨 Seychelles | TIN ✓ | IBAN ✓ | — |
+| | 🇸🇴 Somalia | TIN ✓ | IBAN ✓ | — |
+| | 🇸🇩 Sudan | TIN ✓ | IBAN ✓ | — |
+| | 🇹🇬 Togo | NIF ✓ | IBAN ✓ | — |
+| | 🇹🇳 Tunisia | MF ✓ | IBAN ✓ | — |
 | **Asia** | 🇨🇳 China | USCC ✓ | — | — |
-| | 🇯🇵 Japan | Corporate Number ✓ | — | — |
+| | 🇯🇵 Japan | Corporate ✓ | — | — |
 | | 🇮🇳 India | GSTIN/PAN ✓ | — | — |
 | | 🇸🇬 Singapore | UEN ✓ | — | — |
-| | 🇰🇿 Kazakhstan | — | IBAN ✓ | — |
-| | 🇵🇰 Pakistan | — | IBAN ✓ | — |
-| | 🇹🇱 Timor-Leste | — | IBAN ✓ | — |
+| | 🇰🇿 Kazakhstan | BIN/IIN ✓ | IBAN ✓ | — |
+| | 🇲🇳 Mongolia | TIN ✓ | IBAN ✓ | — |
+| | 🇵🇰 Pakistan | NTN ✓ | — | — |
+| | 🇹🇱 Timor-Leste | TIN ✓ | IBAN ✓ | — |
+| **Europe (Non-SEPA)** | 🇷🇺 Russia | INN ✓ | IBAN ✓ | — |
 | **Southeast Asia** | 🇮🇩 Indonesia | NPWP ✓ | — | — |
 | | 🇲🇾 Malaysia | TIN ✓ | — | — |
 | | 🇹🇭 Thailand | TIN ✓ | — | — |
-| | 🇻🇳 Vietnam | TIN ✓ | — | — |
+| | 🇻🇳 Vietnam | MST ✓ | — | — |
 | **Oceania** | 🇦🇺 Australia | ABN/TFN ✓ | — | BSB ✓ |
 
 ---
@@ -339,10 +378,10 @@ usEin.Validate("12-3456789"); // ✓
 ## 📊 Test Coverage
 
 ```
-Total Tests: 4,145+
+Total Tests: 9,690+
 Passing: 100%
-Countries Covered: 70+
-Validators: 50+
+Countries Covered: 110+
+Validators: 100+
 ```
 
 ---

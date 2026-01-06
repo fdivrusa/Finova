@@ -42,7 +42,10 @@ public partial class FinlandVatValidator : IVatValidator
         int remainder = ChecksumHelper.CalculateWeightedModulo11(cleaned.Substring(0, 7), weights);
 
         int checkDigit = 11 - remainder;
-        if (checkDigit == 11) checkDigit = 0;
+        if (checkDigit == 11)
+        {
+            checkDigit = 0;
+        }
 
         if (checkDigit == 10)
         {

@@ -1,7 +1,6 @@
+using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Finova.Countries.Asia.Japan.Validators;
 
@@ -26,7 +25,7 @@ public class JapanBankAccountValidator : IBankAccountValidator, IBankAccountPars
 
         if (!sanitized.All(char.IsDigit))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BankAccountMustBeDigits);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.BankAccountMustBeDigits);
         }
 
         // Japan account numbers are typically 7 digits.
@@ -43,7 +42,11 @@ public class JapanBankAccountValidator : IBankAccountValidator, IBankAccountPars
     public string? Parse(string? input)
     {
         var result = Validate(input);
-        if (!result.IsValid) return null;
+        if (!result.IsValid)
+        {
+            return null;
+        }
+
         return Regex.Replace(input!, @"[\s-]", "");
     }
 
@@ -57,7 +60,7 @@ public class JapanBankAccountValidator : IBankAccountValidator, IBankAccountPars
         }
 
         var normalized = Regex.Replace(accountNumber, @"[\s-]", "");
-        
+
         // Japan format: usually 7 digits.
         // No embedded bank/branch code in the account number itself (usually separate).
         // So we just return the core account number.

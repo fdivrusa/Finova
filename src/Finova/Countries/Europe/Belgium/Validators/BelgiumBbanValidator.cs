@@ -83,7 +83,11 @@ public class BelgiumBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public string? Parse(string? input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return null;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
         return Validate(sanitized).IsValid ? sanitized : null;
     }
@@ -91,11 +95,17 @@ public class BelgiumBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public BbanDetails? ParseDetails(string? bban)
     {
-        if (string.IsNullOrWhiteSpace(bban)) return null;
+        if (string.IsNullOrWhiteSpace(bban))
+        {
+            return null;
+        }
 
         string sanitized = bban.Replace(" ", "").Replace("-", "").Trim();
 
-        if (!Validate(sanitized).IsValid) return null;
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
 
         // Belgian BBAN: 3-digit bank code + 7-digit account + 2-digit check
         return new BbanDetails

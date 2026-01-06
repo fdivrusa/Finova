@@ -42,7 +42,10 @@ public partial class EstoniaVatValidator : IVatValidator
         int sum = ChecksumHelper.CalculateWeightedSum(cleaned.Substring(0, 8), weights);
 
         int checkDigit = 10 - (sum % 10);
-        if (checkDigit == 10) checkDigit = 0;
+        if (checkDigit == 10)
+        {
+            checkDigit = 0;
+        }
 
         int lastDigit = cleaned[8] - '0';
         if (checkDigit != lastDigit)

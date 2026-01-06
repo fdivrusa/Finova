@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
 
@@ -57,11 +56,11 @@ public class GreenlandNationalIdValidator : INationalIdValidator
         // For simplicity, we'll just validate DD/MM and assume a valid year exists.
         // Denmark has complex century logic based on the 7th digit.
         // We can implement basic date check here.
-        
+
         // Basic check: Month 1-12, Day 1-31.
         if (month < 1 || month > 12 || day < 1 || day > 31)
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
         }
 
         // Mod 11 Checksum (Classic CPR)
@@ -70,7 +69,7 @@ public class GreenlandNationalIdValidator : INationalIdValidator
         // we might skip strict Mod 11 or make it optional.
         // But usually legacy systems enforce it.
         // Let's implement Mod 11 check as it's standard for CPR.
-        
+
         int[] weights = { 4, 3, 2, 7, 6, 5, 4, 3, 2, 1 };
         int sum = 0;
         for (int i = 0; i < 10; i++)

@@ -1,6 +1,5 @@
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Finova.Countries.Europe.Italy.Validators;
 
@@ -148,7 +147,11 @@ public class ItalyBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public string? Parse(string? input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return null;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
         return Validate(sanitized).IsValid ? sanitized : null;
     }

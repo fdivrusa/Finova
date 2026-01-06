@@ -63,15 +63,27 @@ public class ChileRutValidator : INationalIdValidator
         {
             sum += (body[i] - '0') * multiplier;
             multiplier++;
-            if (multiplier > 7) multiplier = 2;
+            if (multiplier > 7)
+            {
+                multiplier = 2;
+            }
         }
 
         int remainder = 11 - (sum % 11);
         char calculatedCheckDigit;
 
-        if (remainder == 11) calculatedCheckDigit = '0';
-        else if (remainder == 10) calculatedCheckDigit = 'K';
-        else calculatedCheckDigit = (char)(remainder + '0');
+        if (remainder == 11)
+        {
+            calculatedCheckDigit = '0';
+        }
+        else if (remainder == 10)
+        {
+            calculatedCheckDigit = 'K';
+        }
+        else
+        {
+            calculatedCheckDigit = (char)(remainder + '0');
+        }
 
         if (checkDigitChar != calculatedCheckDigit)
         {

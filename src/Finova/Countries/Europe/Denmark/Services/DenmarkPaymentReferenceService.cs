@@ -1,7 +1,7 @@
+using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.PaymentReference;
 using Finova.Core.PaymentReference.Internals;
-using System.Text.RegularExpressions;
 
 namespace Finova.Countries.Europe.Denmark.Services;
 
@@ -29,10 +29,14 @@ public partial class DenmarkPaymentReferenceService : IPaymentReferenceGenerator
     public static ValidationResult ValidateStatic(string communication)
     {
         if (string.IsNullOrWhiteSpace(communication))
+        {
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        }
 
         if (communication.Trim().StartsWith("RF", StringComparison.OrdinalIgnoreCase))
+        {
             return IsoReferenceValidator.Validate(communication);
+        }
 
         return ValidateFik(communication);
     }
@@ -42,7 +46,10 @@ public partial class DenmarkPaymentReferenceService : IPaymentReferenceGenerator
     private static string GenerateFik(string rawReference)
     {
         var cleanRef = DigitsOnlyRegex().Replace(rawReference, "");
-        if (string.IsNullOrEmpty(cleanRef)) throw new ArgumentException("Reference cannot be empty.");
+        if (string.IsNullOrEmpty(cleanRef))
+        {
+            throw new ArgumentException("Reference cannot be empty.");
+        }
 
         // FIK usually uses Mod10 (Luhn). We append the check digit.
         // Common length is 15 digits (Type 71).
@@ -68,10 +75,14 @@ public partial class DenmarkPaymentReferenceService : IPaymentReferenceGenerator
 
         // FIK references are usually between 10 and 16 digits
         if (clean.Length < 10 || clean.Length > 16)
+        {
             return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidDenmarkFikLength);
+        }
 
         if (ChecksumHelper.ValidateLuhn(clean))
+        {
             return ValidationResult.Success();
+        }
 
         return ValidationResult.Failure(ValidationErrorCode.InvalidCheckDigit, ValidationMessages.InvalidDenmarkFikCheckDigit);
     }

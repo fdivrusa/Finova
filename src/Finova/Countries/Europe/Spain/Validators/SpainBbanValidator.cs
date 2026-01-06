@@ -95,15 +95,27 @@ public class SpainBbanValidator : IBbanValidator
         }
 
         int remainder = 11 - (sum % 11);
-        if (remainder == 11) return 0;
-        if (remainder == 10) return 1;
+        if (remainder == 11)
+        {
+            return 0;
+        }
+
+        if (remainder == 10)
+        {
+            return 1;
+        }
+
         return remainder;
     }
 
     /// <inheritdoc/>
     public string? Parse(string? input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return null;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
         return Validate(sanitized).IsValid ? sanitized : null;
     }

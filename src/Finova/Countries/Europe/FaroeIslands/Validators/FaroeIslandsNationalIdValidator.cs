@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
 
@@ -59,7 +58,7 @@ public class FaroeIslandsNationalIdValidator : INationalIdValidator
         // P-tal system started in 1983.
         // Let's assume 1900+yearPart if yearPart > 20? Or just validate DD/MM.
         // We'll use a safe default century (e.g. 2000) just to validate day/month.
-        int fullYear = 2000 + yearPart; 
+        int fullYear = 2000 + yearPart;
 
         if (!DateHelper.IsValidDate(fullYear, month, day))
         {
@@ -76,11 +75,14 @@ public class FaroeIslandsNationalIdValidator : INationalIdValidator
         int remainder = sum % 11;
         int checkDigit = (remainder == 0) ? 0 : 11 - remainder;
 
-        if (checkDigit == 11) checkDigit = 0; // Should not happen if remainder != 0
+        if (checkDigit == 11)
+        {
+            checkDigit = 0; // Should not happen if remainder != 0
+        }
         // If remainder is 1, checkDigit is 10 -> Invalid P-tal.
         if (checkDigit == 10)
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
         }
 
         if (checkDigit != (sanitized[8] - '0'))

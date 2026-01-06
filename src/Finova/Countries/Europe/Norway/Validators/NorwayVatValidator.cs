@@ -49,7 +49,10 @@ public partial class NorwayVatValidator : IVatValidator
 
         int remainder = sum % 11;
         int checkDigit = 11 - remainder;
-        if (checkDigit == 11) checkDigit = 0;
+        if (checkDigit == 11)
+        {
+            checkDigit = 0;
+        }
 
         if (checkDigit == 10)
         {

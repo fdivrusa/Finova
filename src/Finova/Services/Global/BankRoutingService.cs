@@ -55,7 +55,10 @@ public class BankRoutingService : IBankRoutingService
     /// <inheritdoc/>
     public BankRoutingDetails? Parse(string countryCode, string? routingNumber)
     {
-        if (string.IsNullOrWhiteSpace(countryCode)) return null;
+        if (string.IsNullOrWhiteSpace(countryCode))
+        {
+            return null;
+        }
 
         var parser = _parsers.FirstOrDefault(p => p.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase));
         return parser?.ParseRoutingNumber(routingNumber);

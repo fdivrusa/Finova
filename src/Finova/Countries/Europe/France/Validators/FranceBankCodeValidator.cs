@@ -39,7 +39,11 @@ public class FranceBankCodeValidator : IBankRoutingValidator
     /// <inheritdoc/>
     public string? Parse(string? input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return null;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
         string sanitized = input.Replace(" ", "");
         return Validate(sanitized).IsValid ? sanitized : null;
     }

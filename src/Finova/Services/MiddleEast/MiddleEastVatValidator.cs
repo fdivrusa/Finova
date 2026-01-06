@@ -1,6 +1,8 @@
 using Finova.Core.Common;
 using Finova.Core.Vat;
+using Finova.Countries.MiddleEast.Bahrain.Validators;
 using Finova.Countries.MiddleEast.Israel.Validators;
+using Finova.Countries.MiddleEast.Oman.Validators;
 using Finova.Countries.MiddleEast.SaudiArabia.Validators;
 using Finova.Countries.MiddleEast.UAE.Validators;
 using Microsoft.Extensions.DependencyInjection;
@@ -113,7 +115,9 @@ public class MiddleEastVatValidator : IVatValidator
         return countryCode switch
         {
             "AE" => UaeVatValidator.Validate(vat),
+            "BH" => BahrainVatValidator.ValidateVat(vat),
             "IL" => IsraelVatValidator.Validate(vat),
+            "OM" => OmanVatValidator.ValidateVat(vat),
             "SA" => SaudiArabiaVatValidator.Validate(vat),
             _ => ValidationResult.Failure(ValidationErrorCode.InvalidInput, $"Unsupported country code: {countryCode}")
         };
@@ -145,7 +149,9 @@ public class MiddleEastVatValidator : IVatValidator
         return countryCode switch
         {
             "AE" => UaeVatValidator.GetVatDetails(vat),
+            "BH" => new VatDetails { VatNumber = vat!, CountryCode = "BH", IsValid = true, IdentifierKind = "VAT" },
             "IL" => IsraelVatValidator.GetVatDetails(vat),
+            "OM" => new VatDetails { VatNumber = vat!, CountryCode = "OM", IsValid = true, IdentifierKind = "VAT" },
             "SA" => SaudiArabiaVatValidator.GetVatDetails(vat),
             _ => null
         };

@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
 
@@ -56,11 +55,11 @@ public partial class SwedenPersonnummerValidator : INationalIdValidator
         // Validate Date (YYMMDD)
         if (!IsValidDate(normalized.Substring(0, 6)))
         {
-             // Coordination numbers (Samordningsnummer) add 60 to the day
-             if (!IsValidCoordinationDate(normalized.Substring(0, 6)))
-             {
-                 return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
-             }
+            // Coordination numbers (Samordningsnummer) add 60 to the day
+            if (!IsValidCoordinationDate(normalized.Substring(0, 6)))
+            {
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
+            }
         }
 
         // Luhn Check
@@ -88,9 +87,16 @@ public partial class SwedenPersonnummerValidator : INationalIdValidator
         int month = int.Parse(yymmdd.Substring(2, 2));
         int day = int.Parse(yymmdd.Substring(4, 2));
 
-        if (month < 1 || month > 12) return false;
-        if (day < 1 || day > 31) return false;
-        
+        if (month < 1 || month > 12)
+        {
+            return false;
+        }
+
+        if (day < 1 || day > 31)
+        {
+            return false;
+        }
+
         return true;
     }
 
@@ -101,8 +107,15 @@ public partial class SwedenPersonnummerValidator : INationalIdValidator
         int day = int.Parse(yymmdd.Substring(4, 2));
 
         // Coordination numbers: Day is between 61 and 91
-        if (month < 1 || month > 12) return false;
-        if (day < 61 || day > 91) return false;
+        if (month < 1 || month > 12)
+        {
+            return false;
+        }
+
+        if (day < 61 || day > 91)
+        {
+            return false;
+        }
 
         return true;
     }

@@ -1,14 +1,14 @@
 using Finova.Belgium.Services;
 using Finova.Core.Common;
 using Finova.Core.PaymentReference;
+using Finova.Countries.Europe.Denmark.Services;
 using Finova.Countries.Europe.Finland.Services;
+using Finova.Countries.Europe.Italy.Services;
 using Finova.Countries.Europe.Norway.Services;
+using Finova.Countries.Europe.Portugal.Services;
 using Finova.Countries.Europe.Slovenia.Services;
 using Finova.Countries.Europe.Sweden.Services;
 using Finova.Countries.Europe.Switzerland.Services;
-using Finova.Countries.Europe.Denmark.Services;
-using Finova.Countries.Europe.Italy.Services;
-using Finova.Countries.Europe.Portugal.Services;
 
 namespace Finova.Validators;
 
@@ -144,7 +144,7 @@ public class PaymentReferenceValidator : IPaymentReferenceValidator
         return null;
     }
 
-    private static PaymentReferenceDetails CreateDetails(string reference, PaymentReferenceFormat format) => new PaymentReferenceDetails
+    private static PaymentReferenceDetails CreateDetails(string reference, PaymentReferenceFormat format) => new()
     {
         Reference = reference,
         Content = reference, // For local formats, content is often the reference itself (simplified)

@@ -3,8 +3,10 @@ using Finova.Core.Vat;
 using Finova.Countries.Asia.China.Validators;
 using Finova.Countries.Asia.India.Validators;
 using Finova.Countries.Asia.Japan.Validators;
+using Finova.Countries.Asia.Kazakhstan.Validators;
 using Finova.Countries.Asia.Singapore.Validators;
 using Finova.Countries.Asia.SouthKorea.Validators;
+using Finova.Countries.SoutheastAsia.Vietnam.Validators;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Services;
@@ -119,6 +121,8 @@ public class AsiaVatValidator : IVatValidator
             "JP" => JapanVatValidator.Validate(vat),
             "KR" => SouthKoreaVatValidator.Validate(vat),
             "SG" => SingaporeGstValidator.Validate(vat),
+            "VN" => VietnamTaxIdValidator.ValidateMst(vat),
+            "KZ" => KazakhstanBinValidator.ValidateBin(vat),
             _ => ValidationResult.Failure(ValidationErrorCode.InvalidInput, $"Unsupported country code: {countryCode}")
         };
     }
@@ -153,6 +157,8 @@ public class AsiaVatValidator : IVatValidator
             "JP" => JapanVatValidator.GetVatDetails(vat),
             "KR" => SouthKoreaVatValidator.GetVatDetails(vat),
             "SG" => SingaporeGstValidator.GetVatDetails(vat),
+            "VN" => new VatDetails { VatNumber = vat!, CountryCode = "VN", IsValid = true, IdentifierKind = "MST" },
+            "KZ" => new VatDetails { VatNumber = vat!, CountryCode = "KZ", IsValid = true, IdentifierKind = "BIN" },
             _ => null
         };
     }

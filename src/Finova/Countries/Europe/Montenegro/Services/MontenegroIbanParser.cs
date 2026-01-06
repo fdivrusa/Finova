@@ -22,7 +22,7 @@ public class MontenegroIbanParser(IIbanValidator validator) : IIbanParser
     /// Creates a new instance of the parser with a default validator.
     /// </summary>
     /// <returns>A new <see cref="MontenegroIbanParser"/> instance.</returns>
-    public static MontenegroIbanParser Create() => new MontenegroIbanParser(new MontenegroIbanValidator());
+    public static MontenegroIbanParser Create() => new(new MontenegroIbanValidator());
 
     /// <summary>
     /// Parses the Montenegro IBAN.

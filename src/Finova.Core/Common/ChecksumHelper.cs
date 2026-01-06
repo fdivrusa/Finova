@@ -1,5 +1,3 @@
-using System.Numerics;
-
 namespace Finova.Core.Common;
 
 /// <summary>
@@ -51,6 +49,7 @@ public static class ChecksumHelper
 
         int sum = 0;
         bool doubleDigit = false;
+        bool anyDigit = false;
 
         for (int i = input.Length - 1; i >= 0; i--)
         {
@@ -59,6 +58,7 @@ public static class ChecksumHelper
                 continue;
             }
 
+            anyDigit = true;
             int digit = input[i] - '0';
 
             if (doubleDigit)
@@ -74,7 +74,7 @@ public static class ChecksumHelper
             doubleDigit = !doubleDigit;
         }
 
-        return (sum % 10) == 0;
+        return anyDigit && (sum % 10) == 0;
     }
 
     /// <summary>
@@ -248,12 +248,19 @@ public static class ChecksumHelper
 
             int digit = input[i] - '0';
             int sum = (digit + product) % 10;
-            if (sum == 0) sum = 10;
+            if (sum == 0)
+            {
+                sum = 10;
+            }
+
             product = (2 * sum) % 11;
         }
 
         int checkDigit = 11 - product;
-        if (checkDigit == 10) checkDigit = 0;
+        if (checkDigit == 10)
+        {
+            checkDigit = 0;
+        }
 
         int lastDigit = input[^1] - '0';
         return checkDigit == lastDigit;
@@ -308,7 +315,11 @@ public static class ChecksumHelper
     public static int CalculateWeightedModulo11(ReadOnlySpan<char> input, int[] weights)
     {
         int sum = CalculateWeightedSum(input, weights);
-        if (sum == -1) return -1;
+        if (sum == -1)
+        {
+            return -1;
+        }
+
         return sum % 11;
     }
 
@@ -330,7 +341,11 @@ public static class ChecksumHelper
     public static bool ValidateWeightedModulo11(ReadOnlySpan<char> input, int[] weights, Func<int, bool> remainderValidator)
     {
         int remainder = CalculateWeightedModulo11(input, weights);
-        if (remainder == -1) return false;
+        if (remainder == -1)
+        {
+            return false;
+        }
+
         return remainderValidator(remainder);
     }
 
@@ -387,7 +402,10 @@ public static class ChecksumHelper
     /// <returns>The converted string.</returns>
     public static string ConvertLettersToDigits(string input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return string.Empty;
+        }
 
         var sb = new System.Text.StringBuilder();
         foreach (char c in input)
@@ -559,7 +577,10 @@ public static class ChecksumHelper
     /// <returns>True if the input is valid; otherwise, false.</returns>
     public static bool ValidateMod11Weights2To7(ReadOnlySpan<char> input)
     {
-        if (input.Length < 2) return false;
+        if (input.Length < 2)
+        {
+            return false;
+        }
 
         int sum = 0;
         int weight = 2;
@@ -567,19 +588,28 @@ public static class ChecksumHelper
         // Iterate from the second to last digit (excluding check digit) backwards
         for (int i = input.Length - 2; i >= 0; i--)
         {
-            if (!char.IsDigit(input[i])) return false;
+            if (!char.IsDigit(input[i]))
+            {
+                return false;
+            }
 
             int digit = input[i] - '0';
             sum += digit * weight;
 
             weight++;
-            if (weight > 7) weight = 2;
+            if (weight > 7)
+            {
+                weight = 2;
+            }
         }
 
         int remainder = sum % 11;
         int calculatedCheckDigit = remainder == 0 ? 0 : 11 - remainder;
 
-        if (calculatedCheckDigit == 10) return false; // Mod11 cannot produce 10 as a single digit
+        if (calculatedCheckDigit == 10)
+        {
+            return false; // Mod11 cannot produce 10 as a single digit
+        }
 
         int checkDigit = input[input.Length - 1] - '0';
         return checkDigit == calculatedCheckDigit;

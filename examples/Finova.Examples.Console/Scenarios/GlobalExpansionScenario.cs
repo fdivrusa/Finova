@@ -7,6 +7,20 @@ using Finova.Countries.NorthAmerica.UnitedStates.Validators;
 using Finova.Countries.Oceania.Australia.Validators;
 using Finova.Countries.SouthAmerica.Brazil.Validators;
 using Finova.Countries.SouthAmerica.Mexico.Validators;
+// New additions
+using Finova.Countries.Europe.Russia.Validators;
+using Finova.Countries.Africa.Morocco.Validators;
+using Finova.Countries.Asia.Mongolia.Validators;
+using Finova.Countries.MiddleEast.Oman.Validators;
+using Finova.Countries.NorthAmerica.Barbados.Validators;
+using Finova.Countries.SouthAmerica.FalklandIslands.Validators;
+using Finova.Countries.Africa.Algeria.Validators;
+using Finova.Countries.Africa.Tunisia.Validators;
+using Finova.Countries.Africa.Egypt.Validators;
+using Finova.Countries.Africa.Nigeria.Validators;
+using Finova.Countries.Asia.Kazakhstan.Validators;
+using Finova.Countries.SoutheastAsia.Vietnam.Validators;
+
 using Finova.Examples.ConsoleApp.Helpers;
 using Finova.Extensions;
 using Finova.Extensions.DependencyInjection;
@@ -29,6 +43,55 @@ public static class GlobalExpansionScenario
         RunSouthAmerica(provider);
         RunAsia(provider);
         RunOceania(provider);
+        RunNewAdditions(provider);
+    }
+
+    private static void RunNewAdditions(ServiceProvider provider)
+    {
+        ConsoleHelper.WriteSubHeader("24", "New Additions (v1.4.0+)");
+
+        ConsoleHelper.WriteCountryHeader("🇷🇺", "Russia");
+        ConsoleHelper.WriteResult("INN (Tax ID)", "7707083893", new RussiaInnValidator().Validate("7707083893").IsValid);
+        ConsoleHelper.WriteResult("IBAN", "RU1204452560040702810400000000012", new RussiaIbanValidator().Validate("RU1204452560040702810400000000012").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇲🇦", "Morocco");
+        ConsoleHelper.WriteResult("ICE (Business)", "001525487000088", new MoroccoIceValidator().Validate("001525487000088").IsValid);
+        ConsoleHelper.WriteResult("IBAN", "MA64007810000252600000032955", new MoroccoIbanValidator().Validate("MA64007810000252600000032955").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇩🇿", "Algeria");
+        ConsoleHelper.WriteResult("NIF", "000016001275946", new AlgeriaNifValidator().Validate("000016001275946").IsValid);
+        ConsoleHelper.WriteResult("IBAN", "DZ8900100000000000000000", new AlgeriaIbanValidator().Validate("DZ8900100000000000000000").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇹🇳", "Tunisia");
+        ConsoleHelper.WriteResult("Matricule Fiscal", "1234567A/B/M/000", new TunisiaMatriculeFiscalValidator().Validate("1234567A/B/M/000").IsValid);
+        ConsoleHelper.WriteResult("IBAN", "TN5910006035183598478831", new TunisiaIbanValidator().Validate("TN5910006035183598478831").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇪🇬", "Egypt");
+        ConsoleHelper.WriteResult("TRN", "100-200-300", new EgyptTaxRegistrationNumberValidator().Validate("100-200-300").IsValid);
+        ConsoleHelper.WriteResult("IBAN", "EG380019000500000000263180002", new EgyptIbanValidator().Validate("EG380019000500000000263180002").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇰🇿", "Kazakhstan");
+        ConsoleHelper.WriteResult("BIN/IIN", "980540003232", new KazakhstanBinValidator().Validate("980540003232").IsValid);
+        ConsoleHelper.WriteResult("IBAN", "KZ86125KZT5004100100", new KazakhstanIbanValidator().Validate("KZ86125KZT5004100100").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇻🇳", "Vietnam");
+        ConsoleHelper.WriteResult("MST (Tax ID)", "0100109106", new VietnamTaxIdValidator().Validate("0100109106").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇳🇬", "Nigeria");
+        ConsoleHelper.WriteResult("TIN", "12345678", new NigeriaTinValidator().Validate("12345678").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇲🇳", "Mongolia");
+        ConsoleHelper.WriteResult("IBAN", "MN330001000000000000", new MongoliaIbanValidator().Validate("MN330001000000000000").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇴🇲", "Oman");
+        ConsoleHelper.WriteResult("VAT", "OM123456789012", new OmanVatValidator().Validate("OM123456789012").IsValid);
+        ConsoleHelper.WriteResult("IBAN", "OM121231234567890123", new OmanIbanValidator().Validate("OM121231234567890123").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇧🇧", "Barbados");
+        ConsoleHelper.WriteResult("IBAN", "BB00CITB00000000000012345678", new BarbadosIbanValidator().Validate("BB00CITB00000000000012345678").IsValid);
+
+        ConsoleHelper.WriteCountryHeader("🇫🇰", "Falkland Islands");
+        ConsoleHelper.WriteResult("IBAN", "FK00SC123456789012", new FalklandIslandsIbanValidator().Validate("FK00SC123456789012").IsValid);
     }
 
     private static void RunNorthAmerica(ServiceProvider provider)

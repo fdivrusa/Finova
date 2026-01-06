@@ -61,7 +61,7 @@ public class CzechRepublicNationalIdValidator : INationalIdValidator
         // Standard rule: The entire 10-digit number must be divisible by 11.
         // Exception: If remainder is 10, the check digit is 0.
         // Wait, if number % 11 == 0, it's valid.
-        
+
         if (number % 11 != 0)
         {
             // Special case: remainder 10 -> check digit 0

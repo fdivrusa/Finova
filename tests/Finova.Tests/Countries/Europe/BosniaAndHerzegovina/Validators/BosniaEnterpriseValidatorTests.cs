@@ -1,6 +1,5 @@
 
 using Finova.Countries.Europe.BosniaAndHerzegovina.Validators;
-using Finova.Core.Common;
 using Xunit;
 
 namespace Finova.Tests.Countries.Europe.BosniaAndHerzegovina.Validators;

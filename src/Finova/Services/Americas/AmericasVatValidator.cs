@@ -1,6 +1,12 @@
 using Finova.Core.Common;
 using Finova.Core.Vat;
 using Finova.Countries.NorthAmerica.Canada.Validators;
+using Finova.Countries.NorthAmerica.CostaRica.Validators;
+using Finova.Countries.NorthAmerica.DominicanRepublic.Validators;
+using Finova.Countries.NorthAmerica.ElSalvador.Validators;
+using Finova.Countries.NorthAmerica.Guatemala.Validators;
+using Finova.Countries.NorthAmerica.Honduras.Validators;
+using Finova.Countries.NorthAmerica.Nicaragua.Validators;
 using Finova.Countries.SouthAmerica.Argentina.Validators;
 using Finova.Countries.SouthAmerica.Brazil.Validators;
 using Finova.Countries.SouthAmerica.Chile.Validators;
@@ -121,6 +127,12 @@ public class AmericasVatValidator : IVatValidator
             "CL" => ChileVatValidator.Validate(vat),
             "CO" => ColombiaVatValidator.Validate(vat),
             "MX" => MexicoVatValidator.Validate(vat),
+            "CR" => CostaRicaNiteValidator.ValidateNite(vat),
+            "DO" => DominicanRepublicRncValidator.ValidateRnc(vat),
+            "SV" => ElSalvadorNitValidator.ValidateNit(vat),
+            "GT" => GuatemalaNitValidator.ValidateNit(vat),
+            "HN" => HondurasRtnValidator.ValidateRtn(vat),
+            "NI" => NicaraguaRucValidator.ValidateRuc(vat),
             _ => ValidationResult.Failure(ValidationErrorCode.InvalidInput, $"Unsupported country code: {countryCode}")
         };
     }
@@ -156,6 +168,12 @@ public class AmericasVatValidator : IVatValidator
             "CL" => ChileVatValidator.GetVatDetails(vat),
             "CO" => ColombiaVatValidator.GetVatDetails(vat),
             "MX" => MexicoVatValidator.GetVatDetails(vat),
+            "CR" => new VatDetails { VatNumber = vat!, CountryCode = "CR", IsValid = true, IdentifierKind = "NITE" },
+            "DO" => new VatDetails { VatNumber = vat!, CountryCode = "DO", IsValid = true, IdentifierKind = "RNC" },
+            "SV" => new VatDetails { VatNumber = vat!, CountryCode = "SV", IsValid = true, IdentifierKind = "NIT" },
+            "GT" => new VatDetails { VatNumber = vat!, CountryCode = "GT", IsValid = true, IdentifierKind = "NIT" },
+            "HN" => new VatDetails { VatNumber = vat!, CountryCode = "HN", IsValid = true, IdentifierKind = "RTN" },
+            "NI" => new VatDetails { VatNumber = vat!, CountryCode = "NI", IsValid = true, IdentifierKind = "RUC" },
             _ => null
         };
     }

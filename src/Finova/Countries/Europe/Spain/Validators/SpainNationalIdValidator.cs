@@ -1,6 +1,6 @@
+using System.Text.RegularExpressions;
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
-using System.Text.RegularExpressions;
 
 namespace Finova.Countries.Europe.Spain.Validators;
 
@@ -32,7 +32,7 @@ public class SpainNationalIdValidator : INationalIdValidator
         string? sanitized = InputSanitizer.Sanitize(input);
         if (string.IsNullOrEmpty(sanitized))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         if (sanitized.Length != 9)

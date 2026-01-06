@@ -89,7 +89,11 @@ public class NetherlandsBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public string? Parse(string? input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return null;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
         return Validate(sanitized).IsValid ? sanitized : null;
     }
@@ -97,11 +101,17 @@ public class NetherlandsBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public BbanDetails? ParseDetails(string? bban)
     {
-        if (string.IsNullOrWhiteSpace(bban)) return null;
+        if (string.IsNullOrWhiteSpace(bban))
+        {
+            return null;
+        }
 
         string sanitized = bban.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
 
-        if (!Validate(sanitized).IsValid) return null;
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
 
         // Dutch BBAN: 4-letter bank code + 10-digit account number
         return new BbanDetails

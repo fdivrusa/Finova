@@ -1,6 +1,14 @@
 using Finova.Core.Common;
 using Finova.Core.Vat;
+using Finova.Countries.Africa.Algeria.Validators;
+using Finova.Countries.Africa.Angola.Validators;
+using Finova.Countries.Africa.CoteDIvoire.Validators;
+using Finova.Countries.Africa.Egypt.Validators;
+using Finova.Countries.Africa.Morocco.Validators;
+using Finova.Countries.Africa.Nigeria.Validators;
+using Finova.Countries.Africa.Senegal.Validators;
 using Finova.Countries.Africa.SouthAfrica.Validators;
+using Finova.Countries.Africa.Tunisia.Validators;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Services;
@@ -82,12 +90,6 @@ public class AfricaVatValidator : IVatValidator
         return GetVatDetails(input);
     }
 
-    /// <summary>
-    /// Validates an African VAT number based on country code prefix.
-    /// </summary>
-    /// <param name="vat">The VAT number with country prefix.</param>
-    /// <param name="countryCode">Optional explicit country code.</param>
-    /// <returns>A ValidationResult indicating success or failure.</returns>
     public static ValidationResult ValidateVat(string? vat, string? countryCode = null)
     {
         vat = VatSanitizer.Sanitize(vat);
@@ -110,14 +112,19 @@ public class AfricaVatValidator : IVatValidator
 
         return countryCode switch
         {
+            "AO" => new AngolaNifValidator().Validate(vat),
+            "CI" => new IvoryCoastNccValidator().Validate(vat),
+            "DZ" => new AlgeriaNifValidator().Validate(vat),
+            "EG" => new EgyptTaxRegistrationNumberValidator().Validate(vat),
+            "MA" => new MoroccoIceValidator().Validate(vat),
+            "NG" => new NigeriaTinValidator().Validate(vat),
+            "SN" => new SenegalNineaValidator().Validate(vat),
+            "TN" => new TunisiaMatriculeFiscalValidator().Validate(vat),
             "ZA" => SouthAfricaVatValidator.Validate(vat),
             _ => ValidationResult.Failure(ValidationErrorCode.InvalidInput, $"Unsupported country code: {countryCode}")
         };
     }
 
-    /// <summary>
-    /// Gets details of a validated African VAT number.
-    /// </summary>
     public static VatDetails? GetVatDetails(string? vat, string? countryCode = null)
     {
         vat = VatSanitizer.Sanitize(vat);
@@ -140,6 +147,14 @@ public class AfricaVatValidator : IVatValidator
 
         return countryCode switch
         {
+            "AO" => new VatDetails { VatNumber = vat!, CountryCode = "AO", IsValid = true, IdentifierKind = "NIF" },
+            "CI" => new VatDetails { VatNumber = vat!, CountryCode = "CI", IsValid = true, IdentifierKind = "NCC" },
+            "DZ" => new VatDetails { VatNumber = vat!, CountryCode = "DZ", IsValid = true, IdentifierKind = "NIF" },
+            "EG" => new VatDetails { VatNumber = vat!, CountryCode = "EG", IsValid = true, IdentifierKind = "TRN" },
+            "MA" => new VatDetails { VatNumber = vat!, CountryCode = "MA", IsValid = true, IdentifierKind = "ICE" },
+            "NG" => new VatDetails { VatNumber = vat!, CountryCode = "NG", IsValid = true, IdentifierKind = "TIN" },
+            "SN" => new VatDetails { VatNumber = vat!, CountryCode = "SN", IsValid = true, IdentifierKind = "NINEA" },
+            "TN" => new VatDetails { VatNumber = vat!, CountryCode = "TN", IsValid = true, IdentifierKind = "Matricule" },
             "ZA" => SouthAfricaVatValidator.GetVatDetails(vat),
             _ => null
         };

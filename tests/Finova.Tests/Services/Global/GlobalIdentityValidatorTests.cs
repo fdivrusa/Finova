@@ -30,7 +30,7 @@ public class GlobalIdentityValidatorTests
         var result = GlobalIdentityValidator.ValidateTaxId("US", "12-3456789");
         result.IsValid.Should().BeTrue();
     }
-    
+
     [Fact]
     public void ValidateTaxId_ShouldReturnTrue_ForValidAustraliaAbn()
     {

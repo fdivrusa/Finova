@@ -1307,4 +1307,10 @@
   <data name="InvalidSouthKoreaBankCodeFormat" xml:space="preserve">
     <value>Invalid South Korea bank code format. Must be exactly 3 digits.</value>
   </data>
+  <data name="BbanMustStartWithLetter" xml:space="preserve">
+    <value>BBAN must start with a letter.</value>
+  </data>
+  <data name="BbanMustContainDigitsAfterLetter" xml:space="preserve">
+    <value>BBAN must contain digits after the first letter.</value>
+  </data>
 </root>

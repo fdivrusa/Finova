@@ -1,5 +1,3 @@
-using Finova.Core.Common;
-using Finova.Core.PaymentReference;
 using Finova.Countries.Europe.Portugal.Validators;
 using FluentAssertions;
 using Xunit;

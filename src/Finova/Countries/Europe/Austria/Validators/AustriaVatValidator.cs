@@ -20,7 +20,10 @@ public partial class AustriaVatValidator : IVatValidator
     public static ValidationResult Validate(string? vat)
     {
         vat = VatSanitizer.Sanitize(vat);
-        if (string.IsNullOrWhiteSpace(vat)) return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        if (string.IsNullOrWhiteSpace(vat))
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        }
 
         var normalized = vat.Trim().ToUpperInvariant();
         if (normalized.StartsWith("U") && normalized.Length == 9)

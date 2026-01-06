@@ -88,22 +88,34 @@ public partial class IndiaGstinValidator : IVatValidator
     /// </summary>
     private static bool ValidatePanStructure(string pan)
     {
-        if (pan.Length != 10) return false;
+        if (pan.Length != 10)
+        {
+            return false;
+        }
 
         // First 5 characters: letters
         for (int i = 0; i < 5; i++)
         {
-            if (!char.IsLetter(pan[i])) return false;
+            if (!char.IsLetter(pan[i]))
+            {
+                return false;
+            }
         }
 
         // Next 4 characters: digits
         for (int i = 5; i < 9; i++)
         {
-            if (!char.IsDigit(pan[i])) return false;
+            if (!char.IsDigit(pan[i]))
+            {
+                return false;
+            }
         }
 
         // Last character: letter
-        if (!char.IsLetter(pan[9])) return false;
+        if (!char.IsLetter(pan[9]))
+        {
+            return false;
+        }
 
         // 4th character validation (Status)
         char status = pan[3];

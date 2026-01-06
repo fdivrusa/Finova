@@ -29,7 +29,11 @@ public static class PaymentCardValidators
         return ruleBuilder
             .Must(x =>
             {
-                if (!PaymentCardValidator.Validate(x).IsValid) return false;
+                if (!PaymentCardValidator.Validate(x).IsValid)
+                {
+                    return false;
+                }
+
                 return PaymentCardValidator.GetBrand(x) == brand;
             })
             .WithMessage($"'{{PropertyName}}' is not a valid {brand} card number.");
@@ -45,7 +49,10 @@ public static class PaymentCardValidators
             .Must((rootObject, cvv) =>
             {
                 var cardNumber = cardNumberSelector(rootObject);
-                if (string.IsNullOrWhiteSpace(cardNumber)) return true; // Skip if card number is missing
+                if (string.IsNullOrWhiteSpace(cardNumber))
+                {
+                    return true; // Skip if card number is missing
+                }
 
                 var brand = PaymentCardValidator.GetBrand(cardNumber);
                 return PaymentCardValidator.ValidateCvv(cvv, brand).IsValid;

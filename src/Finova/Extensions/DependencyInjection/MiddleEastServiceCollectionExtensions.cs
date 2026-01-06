@@ -1,12 +1,11 @@
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Finova.Core.Identifiers;
 using Finova.Core.Iban;
-using Finova.Services;
-using Finova.Services.Adapters;
+using Finova.Core.Identifiers;
 using Finova.Countries.MiddleEast.Israel.Validators;
-using Finova.Countries.MiddleEast.UAE.Validators;
 using Finova.Countries.MiddleEast.SaudiArabia.Validators;
+using Finova.Countries.MiddleEast.UAE.Validators;
+using Finova.Services.Adapters;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Extensions.DependencyInjection;
 
@@ -28,13 +27,14 @@ public static class MiddleEastServiceCollectionExtensions
                 if (typeof(IIbanValidator).IsAssignableFrom(type))
                 {
                     s.AddSingleton<IBankAccountValidator>(sp =>
-                        new EuropeIbanBankAccountAdapter((IIbanValidator)sp.GetRequiredService(type)));
+                        new IbanBankAccountAdapter((IIbanValidator)sp.GetRequiredService(type)));
                 }
             },
             typeof(ITaxIdValidator),
             typeof(INationalIdValidator),
             typeof(IBankRoutingValidator),
-            typeof(IIbanValidator)
+            typeof(IIbanValidator),
+            typeof(IBbanValidator)
         );
 
         services.AddSingleton<INationalIdValidator, IsraelTeudatZehutValidator>();

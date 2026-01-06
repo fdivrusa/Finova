@@ -52,7 +52,10 @@ public partial class MontenegroVatValidator : IVatValidator
         }
 
         checkDigit = 11 - remainder;
-        if (checkDigit == 11) checkDigit = 0;
+        if (checkDigit == 11)
+        {
+            checkDigit = 0;
+        }
 
         if (checkDigit != (cleaned[7] - '0'))
         {

@@ -29,7 +29,7 @@ public class JapanMyNumberValidator : INationalIdValidator
         var clean = InputSanitizer.Sanitize(myNumber);
         if (string.IsNullOrEmpty(clean))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         if (clean.Length != 12)

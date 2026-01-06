@@ -54,7 +54,7 @@ public class AlbaniaNationalIdValidator : INationalIdValidator
         // YY: Year (last 2 digits)
         // MM: Month (01-12 Male, 51-62 Female)
         // DD: Day
-        
+
         char decadeChar = sanitized[0];
         int yearPart = int.Parse(sanitized.Substring(1, 2));
         int monthPart = int.Parse(sanitized.Substring(3, 2));
@@ -76,7 +76,7 @@ public class AlbaniaNationalIdValidator : INationalIdValidator
         // So yearPart must be between (DecadeYear % 100) and (DecadeYear % 100) + 9.
         // e.g. J=1990. Range 90-99.
         // K=2000. Range 00-09.
-        
+
         int expectedDecadeStart = decadeBase % 100;
         if (yearPart < expectedDecadeStart || yearPart > expectedDecadeStart + 9)
         {
@@ -87,28 +87,28 @@ public class AlbaniaNationalIdValidator : INationalIdValidator
         }
 
         int fullYear = decadeBase + (yearPart % 10); // Wait.
-        // If DecadeBase is 1990. YearPart is 95.
-        // FullYear = 1900 + 95 = 1995.
-        // So FullYear = (DecadeBase / 100) * 100 + YearPart?
-        // No.
-        // If DecadeBase is 1990.
-        // FullYear = 1990 + (yearPart - 90) = 1995.
-        // Or simply: FullYear = (DecadeBase / 10) * 10 + (yearPart % 10)?
-        // No.
-        // Let's just use: FullYear = (DecadeBase / 100) * 100 + YearPart.
-        // e.g. 1900 + 95 = 1995.
-        // But wait, if Decade is K (2000), YearPart is 05.
-        // FullYear = 2000 + 05 = 2005.
-        // This works IF the century is correct.
-        // Does A always mean 1900s?
-        // A=1900, B=1910... J=1990.
-        // K=2000, L=2010...
-        // So yes, the century is implied by the letter.
-        
+                                                     // If DecadeBase is 1990. YearPart is 95.
+                                                     // FullYear = 1900 + 95 = 1995.
+                                                     // So FullYear = (DecadeBase / 100) * 100 + YearPart?
+                                                     // No.
+                                                     // If DecadeBase is 1990.
+                                                     // FullYear = 1990 + (yearPart - 90) = 1995.
+                                                     // Or simply: FullYear = (DecadeBase / 10) * 10 + (yearPart % 10)?
+                                                     // No.
+                                                     // Let's just use: FullYear = (DecadeBase / 100) * 100 + YearPart.
+                                                     // e.g. 1900 + 95 = 1995.
+                                                     // But wait, if Decade is K (2000), YearPart is 05.
+                                                     // FullYear = 2000 + 05 = 2005.
+                                                     // This works IF the century is correct.
+                                                     // Does A always mean 1900s?
+                                                     // A=1900, B=1910... J=1990.
+                                                     // K=2000, L=2010...
+                                                     // So yes, the century is implied by the letter.
+
         // So:
         // If letter is A-J (1900-1999): Century is 1900.
         // If letter is K-T (2000-2099): Century is 2000.
-        
+
         int century = (decadeBase >= 2000) ? 2000 : 1900;
         fullYear = century + yearPart;
 

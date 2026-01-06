@@ -24,7 +24,7 @@ public class BelgiumIbanParser(BelgiumIbanValidator validator) : IIbanParser
     /// var details = parser.ParseIban("BE685 39007547034");
     /// </code>
     /// </example>
-    public static BelgiumIbanParser Create() => new BelgiumIbanParser(new BelgiumIbanValidator());
+    public static BelgiumIbanParser Create() => new(new BelgiumIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {

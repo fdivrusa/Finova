@@ -1,6 +1,5 @@
 using System.Text.RegularExpressions;
 using Finova.Core.Common;
-using Finova.Core.Enterprise;
 using Finova.Core.Identifiers;
 
 namespace Finova.Countries.Europe.Italy.Validators;

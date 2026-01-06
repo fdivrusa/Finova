@@ -22,7 +22,7 @@ public class GermanyIbanParser(GermanyIbanValidator validator) : IIbanParser
     /// var details = parser.ParseIban("DE89370400440532013000");
     /// </code>
     /// </example>
-    public static GermanyIbanParser Create() => new GermanyIbanParser(new GermanyIbanValidator());
+    public static GermanyIbanParser Create() => new(new GermanyIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {

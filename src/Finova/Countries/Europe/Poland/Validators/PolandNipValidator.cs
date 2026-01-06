@@ -51,7 +51,11 @@ public partial class PolandNipValidator : ITaxIdValidator
 
     public string? Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return null;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return null;
+        }
+
         var cleaned = number.ToUpperInvariant().Replace("PL", "").Replace("-", "").Replace(" ", "");
         return NipRegex().IsMatch(cleaned) ? cleaned : null;
     }

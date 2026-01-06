@@ -1,8 +1,9 @@
 using Finova.Services;
-using Finova.Services.NorthAmerica;
-using Finova.Services.SouthAmerica;
+using Finova.Services.Africa;
 using Finova.Services.Asia;
+using Finova.Services.NorthAmerica;
 using Finova.Services.Oceania;
+using Finova.Services.SouthAmerica;
 using FluentValidation;
 
 namespace Finova.Extensions.FluentValidation;
@@ -118,5 +119,55 @@ public static class TaxIdValidators
                 return OceaniaTaxIdValidator.Validate(taxId, countryCode).IsValid;
             })
             .WithMessage("'{PropertyName}' is not a valid Oceanian Tax ID.");
+    }
+
+    /// <summary>
+    /// Validates that the string is a valid African Tax ID.
+    /// </summary>
+    /// <param name="countryCode">The 2-letter ISO country code.</param>
+    public static IRuleBuilderOptions<T, string?> MustBeValidAfricaTaxId<T>(this IRuleBuilder<T, string?> ruleBuilder, string? countryCode = null)
+    {
+        return ruleBuilder
+            .Must(taxId => AfricaTaxIdValidator.Validate(taxId, countryCode).IsValid)
+            .WithMessage("'{PropertyName}' is not a valid African Tax ID.");
+    }
+
+    /// <summary>
+    /// Validates that the string is a valid African Tax ID, using a country code from another property.
+    /// </summary>
+    public static IRuleBuilderOptions<T, string?> MustBeValidAfricaTaxId<T>(this IRuleBuilder<T, string?> ruleBuilder, Func<T, string?> countryCodeSelector)
+    {
+        return ruleBuilder
+            .Must((rootObject, taxId) =>
+            {
+                var countryCode = countryCodeSelector(rootObject);
+                return AfricaTaxIdValidator.Validate(taxId, countryCode).IsValid;
+            })
+            .WithMessage("'{PropertyName}' is not a valid African Tax ID.");
+    }
+
+    /// <summary>
+    /// Validates that the string is a valid European Tax ID (e.g., INN for Russia).
+    /// </summary>
+    /// <param name="countryCode">The 2-letter ISO country code.</param>
+    public static IRuleBuilderOptions<T, string?> MustBeValidEuropeTaxId<T>(this IRuleBuilder<T, string?> ruleBuilder, string? countryCode = null)
+    {
+        return ruleBuilder
+            .Must(taxId => EuropeEnterpriseValidator.ValidateEnterpriseNumber(taxId, countryCode ?? "").IsValid)
+            .WithMessage("'{PropertyName}' is not a valid European Tax/Enterprise ID.");
+    }
+
+    /// <summary>
+    /// Validates that the string is a valid European Tax ID, using a country code from another property.
+    /// </summary>
+    public static IRuleBuilderOptions<T, string?> MustBeValidEuropeTaxId<T>(this IRuleBuilder<T, string?> ruleBuilder, Func<T, string?> countryCodeSelector)
+    {
+        return ruleBuilder
+            .Must((rootObject, taxId) =>
+            {
+                var countryCode = countryCodeSelector(rootObject);
+                return EuropeEnterpriseValidator.ValidateEnterpriseNumber(taxId, countryCode ?? "").IsValid;
+            })
+            .WithMessage("'{PropertyName}' is not a valid European Tax/Enterprise ID.");
     }
 }

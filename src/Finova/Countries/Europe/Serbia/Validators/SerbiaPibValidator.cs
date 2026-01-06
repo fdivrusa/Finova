@@ -37,7 +37,11 @@ public partial class SerbiaPibValidator : ITaxIdValidator
         {
             int digit = cleaned[i] - '0';
             m = (m + digit) % 10;
-            if (m == 0) m = 10;
+            if (m == 0)
+            {
+                m = 10;
+            }
+
             m = (m * 2) % 11;
         }
 
@@ -54,7 +58,11 @@ public partial class SerbiaPibValidator : ITaxIdValidator
 
     public string? Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return null;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return null;
+        }
+
         var cleaned = number.ToUpperInvariant().Replace("RS", "").Replace(" ", "");
         return PibRegex().IsMatch(cleaned) ? cleaned : null;
     }

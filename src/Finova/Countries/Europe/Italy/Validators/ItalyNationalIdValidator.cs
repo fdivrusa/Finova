@@ -1,7 +1,5 @@
-using System;
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
-using Finova.Core.Internals;
 
 namespace Finova.Countries.Europe.Italy.Validators;
 
@@ -43,7 +41,7 @@ public class ItalyNationalIdValidator : INationalIdValidator
 
         if (string.IsNullOrEmpty(sanitized))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         if (sanitized.Length != 16)
@@ -61,7 +59,7 @@ public class ItalyNationalIdValidator : INationalIdValidator
         char checkDigit = sanitized[15];
         if (!char.IsLetter(checkDigit))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
         }
 
         int total = 0;

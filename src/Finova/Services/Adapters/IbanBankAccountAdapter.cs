@@ -1,18 +1,18 @@
 using Finova.Core.Common;
-using Finova.Core.Identifiers;
 using Finova.Core.Iban;
+using Finova.Core.Identifiers;
 
 namespace Finova.Services.Adapters;
 
 /// <summary>
 /// Adapts an <see cref="IIbanValidator"/> to the <see cref="IBankAccountValidator"/> interface.
-/// Allows European IBAN validators to be used in the global Bank Account service.
+/// Allows IBAN validators to be used in the global Bank Account service.
 /// </summary>
-public class EuropeIbanBankAccountAdapter : IBankAccountValidator
+public class IbanBankAccountAdapter : IBankAccountValidator
 {
     private readonly IIbanValidator _ibanValidator;
 
-    public EuropeIbanBankAccountAdapter(IIbanValidator ibanValidator)
+    public IbanBankAccountAdapter(IIbanValidator ibanValidator)
     {
         _ibanValidator = ibanValidator;
     }

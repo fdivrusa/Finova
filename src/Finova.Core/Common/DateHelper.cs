@@ -1,5 +1,3 @@
-using System;
-
 namespace Finova.Core.Common;
 
 /// <summary>
@@ -16,9 +14,21 @@ public static class DateHelper
     /// <returns>True if valid, false otherwise.</returns>
     public static bool IsValidDate(int year, int month, int day)
     {
-        if (year < 1 || year > 9999) return false;
-        if (month < 1 || month > 12) return false;
-        if (day < 1 || day > DateTime.DaysInMonth(year, month)) return false;
+        if (year < 1 || year > 9999)
+        {
+            return false;
+        }
+
+        if (month < 1 || month > 12)
+        {
+            return false;
+        }
+
+        if (day < 1 || day > DateTime.DaysInMonth(year, month))
+        {
+            return false;
+        }
+
         return true;
     }
 }

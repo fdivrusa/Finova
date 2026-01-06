@@ -1,5 +1,5 @@
-using System.Resources;
 using System.Globalization;
+using System.Resources;
 
 namespace Finova.Core.Common;
 
@@ -8,7 +8,7 @@ namespace Finova.Core.Common;
 /// </summary>
 public static class ValidationMessages
 {
-    private static readonly ResourceManager ResourceManager = new ResourceManager("Finova.Core.Resources.ValidationMessages", typeof(ValidationMessages).Assembly);
+    private static readonly ResourceManager ResourceManager = new("Finova.Core.Resources.ValidationMessages", typeof(ValidationMessages).Assembly);
 
     private static string GetString(string name) => ResourceManager.GetString(name, CultureInfo.CurrentCulture) ?? name;
 
@@ -448,4 +448,7 @@ public static class ValidationMessages
 
     // South Korea Bank Code
     public static string InvalidSouthKoreaBankCodeFormat => GetString("InvalidSouthKoreaBankCodeFormat");
+
+    public static string BbanMustStartWithLetter => GetString("BbanMustStartWithLetter");
+    public static string BbanMustContainDigitsAfterLetter => GetString("BbanMustContainDigitsAfterLetter");
 }

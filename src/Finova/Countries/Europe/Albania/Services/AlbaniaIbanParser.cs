@@ -22,7 +22,7 @@ public class AlbaniaIbanParser(IIbanValidator validator) : IIbanParser
     /// Creates a new instance of the parser with a default validator.
     /// </summary>
     /// <returns>A new <see cref="AlbaniaIbanParser"/> instance.</returns>
-    public static AlbaniaIbanParser Create() => new AlbaniaIbanParser(new AlbaniaIbanValidator());
+    public static AlbaniaIbanParser Create() => new(new AlbaniaIbanValidator());
 
     /// <summary>
     /// Parses the Albanian IBAN.

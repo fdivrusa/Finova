@@ -56,14 +56,23 @@ public class SloveniaNationalIdValidator : INationalIdValidator
         int yearPart = int.Parse(sanitized.Substring(4, 3));
 
         int fullYear = 0;
-        if (yearPart >= 800) fullYear = 1000 + yearPart; // 1800-1999? No, usually 9xx is 19xx.
+        if (yearPart >= 800)
+        {
+            fullYear = 1000 + yearPart; // 1800-1999? No, usually 9xx is 19xx.
+        }
         // Wait, EMŠO introduced in 1976.
         // 9xx -> 19xx.
         // 0xx -> 20xx.
         // 8xx -> 18xx?
         // Let's assume:
-        if (yearPart >= 850) fullYear = 1000 + yearPart; // 1850-1999
-        else fullYear = 2000 + yearPart; // 2000-2849
+        if (yearPart >= 850)
+        {
+            fullYear = 1000 + yearPart; // 1850-1999
+        }
+        else
+        {
+            fullYear = 2000 + yearPart; // 2000-2849
+        }
 
         if (!DateHelper.IsValidDate(fullYear, month, day))
         {

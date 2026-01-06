@@ -37,8 +37,14 @@ public partial class LiechtensteinPeidValidator : ITaxIdValidator
         if (cleaned.StartsWith("CHE") || cleaned.StartsWith("LI"))
         {
             // CHE is 3 chars, LI is 2 chars.
-            if (cleaned.StartsWith("CHE")) cleaned = cleaned[3..];
-            else cleaned = cleaned[2..];
+            if (cleaned.StartsWith("CHE"))
+            {
+                cleaned = cleaned[3..];
+            }
+            else
+            {
+                cleaned = cleaned[2..];
+            }
         }
 
         var digits = DigitsOnlyRegex().Replace(cleaned, "");
@@ -105,8 +111,14 @@ public partial class LiechtensteinPeidValidator : ITaxIdValidator
         var cleaned = number.Trim().ToUpperInvariant();
         if (cleaned.StartsWith("CHE") || cleaned.StartsWith("LI"))
         {
-            if (cleaned.StartsWith("CHE")) cleaned = cleaned[3..];
-            else cleaned = cleaned[2..];
+            if (cleaned.StartsWith("CHE"))
+            {
+                cleaned = cleaned[3..];
+            }
+            else
+            {
+                cleaned = cleaned[2..];
+            }
         }
 
         return DigitsOnlyRegex().Replace(cleaned, "");

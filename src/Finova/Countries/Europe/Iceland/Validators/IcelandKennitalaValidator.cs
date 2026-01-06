@@ -62,7 +62,10 @@ public partial class IcelandKennitalaValidator : ITaxIdValidator, INationalIdVal
 
         int remainder = sum % 11;
         int checkDigit = 11 - remainder;
-        if (checkDigit == 11) checkDigit = 0;
+        if (checkDigit == 11)
+        {
+            checkDigit = 0;
+        }
 
         if (checkDigit == 10)
         {

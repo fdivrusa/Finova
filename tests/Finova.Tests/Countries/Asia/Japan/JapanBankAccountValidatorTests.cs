@@ -1,5 +1,5 @@
-using Finova.Countries.Asia.Japan.Validators;
 using Finova.Core.Common;
+using Finova.Countries.Asia.Japan.Validators;
 using Xunit;
 
 namespace Finova.Tests.Countries.Asia.Japan;
@@ -54,7 +54,7 @@ public class JapanBankAccountValidatorTests
     public void ParseBankAccount_ValidInput_ReturnsCorrectDetails(string input, string expectedCoreAccount)
     {
         var result = _validator.ParseBankAccount(input);
-        
+
         Assert.NotNull(result);
         Assert.Equal("JP", result.CountryCode);
         Assert.Equal(expectedCoreAccount, result.CoreAccountNumber);

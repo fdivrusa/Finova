@@ -1,13 +1,12 @@
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Finova.Core.Identifiers;
 using Finova.Core.Iban;
-using Finova.Services;
-using Finova.Services.Adapters;
-using Finova.Countries.Africa.SouthAfrica.Validators;
+using Finova.Core.Identifiers;
 using Finova.Countries.Africa.Egypt.Validators;
-using Finova.Countries.Africa.Nigeria.Validators;
 using Finova.Countries.Africa.Kenya.Validators;
+using Finova.Countries.Africa.Nigeria.Validators;
+using Finova.Countries.Africa.SouthAfrica.Validators;
+using Finova.Services.Adapters;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Extensions.DependencyInjection;
 
@@ -29,13 +28,14 @@ public static class AfricaServiceCollectionExtensions
                 if (typeof(IIbanValidator).IsAssignableFrom(type))
                 {
                     s.AddSingleton<IBankAccountValidator>(sp =>
-                        new EuropeIbanBankAccountAdapter((IIbanValidator)sp.GetRequiredService(type)));
+                        new IbanBankAccountAdapter((IIbanValidator)sp.GetRequiredService(type)));
                 }
             },
             typeof(ITaxIdValidator),
             typeof(INationalIdValidator),
             typeof(IBankRoutingValidator),
-            typeof(IIbanValidator)
+            typeof(IIbanValidator),
+            typeof(IBbanValidator)
         );
 
         services.AddSingleton<INationalIdValidator, SouthAfricaIdValidator>();

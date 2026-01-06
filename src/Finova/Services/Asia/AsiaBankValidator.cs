@@ -1,8 +1,8 @@
 using Finova.Core.Common;
-using Finova.Countries.Asia.Singapore.Validators;
-using Finova.Countries.Asia.Japan.Validators;
 using Finova.Countries.Asia.China.Validators;
 using Finova.Countries.Asia.India.Validators;
+using Finova.Countries.Asia.Japan.Validators;
+using Finova.Countries.Asia.Singapore.Validators;
 
 namespace Finova.Services;
 

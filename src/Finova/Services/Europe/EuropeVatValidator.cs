@@ -47,9 +47,8 @@ using Finova.Countries.Europe.Switzerland.Validators;
 using Finova.Countries.Europe.Turkey.Validators;
 using Finova.Countries.Europe.Ukraine.Validators;
 using Finova.Countries.Europe.UnitedKingdom.Validators;
-using Finova.Countries.Europe.Vatican.Validators;
+
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Finova.Services;
 
@@ -201,7 +200,8 @@ public class EuropeVatValidator : IVatValidator
             "SM" => SanMarinoVatValidator.Validate(vat),
             "TR" => TurkeyVknValidator.ValidateVkn(vat),
             "UA" => UkraineVatValidator.Validate(vat),
-            "VA" => VaticanCityVatValidator.ValidateVat(vat),
+            "RU" => new Finova.Countries.Europe.Russia.Validators.RussiaInnValidator().Validate(vat),
+
 
             _ => ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Country code {countryCode} is not supported.")
         };
@@ -277,7 +277,8 @@ public class EuropeVatValidator : IVatValidator
             "SM" => SanMarinoVatValidator.GetVatDetails(vat),
             "TR" => TurkeyVknValidator.GetVatDetails(vat),
             "UA" => UkraineVatValidator.GetVatDetails(vat),
-            "VA" => VaticanCityVatValidator.GetVatDetails(vat),
+            "RU" => (new Finova.Countries.Europe.Russia.Validators.RussiaInnValidator() as Finova.Core.Common.IValidator<Finova.Core.Vat.VatDetails>).Parse(vat),
+
 
             _ => null
         };

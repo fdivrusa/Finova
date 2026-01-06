@@ -65,7 +65,11 @@ public partial class UkraineEdrpouValidator : ITaxIdValidator
 
     public static string? Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return null;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return null;
+        }
+
         var cleaned = number.ToUpperInvariant().Replace("UA", "").Replace(" ", "");
         return EdrpouRegex().IsMatch(cleaned) ? cleaned : null;
     }

@@ -52,25 +52,34 @@ public class NorwayFodselsnummerValidator : INationalIdValidator
         // D-numbers add 4 to the first digit of the day (Day + 40)
         int day = int.Parse(normalized.Substring(0, 2));
         int month = int.Parse(normalized.Substring(2, 2));
-        
+
         bool isDNumber = day > 40;
-        if (isDNumber) day -= 40;
+        if (isDNumber)
+        {
+            day -= 40;
+        }
 
         // H-numbers add 4 to the first digit of the month (Month + 40)
         bool isHNumber = month > 40;
-        if (isHNumber) month -= 40;
+        if (isHNumber)
+        {
+            month -= 40;
+        }
 
         if (month < 1 || month > 12 || day < 1 || day > 31)
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
         }
 
         // Checksum 1 (10th digit)
         int remainder1 = ChecksumHelper.CalculateWeightedModulo11(normalized.Substring(0, 9), Weights1);
         int checkDigit1 = remainder1 == 0 ? 0 : 11 - remainder1;
-        
-        if (checkDigit1 == 10) return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
-        
+
+        if (checkDigit1 == 10)
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
+        }
+
         if (checkDigit1 != (normalized[9] - '0'))
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
@@ -80,7 +89,10 @@ public class NorwayFodselsnummerValidator : INationalIdValidator
         int remainder2 = ChecksumHelper.CalculateWeightedModulo11(normalized.Substring(0, 10), Weights2);
         int checkDigit2 = remainder2 == 0 ? 0 : 11 - remainder2;
 
-        if (checkDigit2 == 10) return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
+        if (checkDigit2 == 10)
+        {
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidChecksum);
+        }
 
         if (checkDigit2 != (normalized[10] - '0'))
         {

@@ -66,7 +66,11 @@ public class UnitedKingdomBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public string? Parse(string? input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return null;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
         return Validate(sanitized).IsValid ? sanitized : null;
     }
@@ -74,11 +78,17 @@ public class UnitedKingdomBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public BbanDetails? ParseDetails(string? bban)
     {
-        if (string.IsNullOrWhiteSpace(bban)) return null;
+        if (string.IsNullOrWhiteSpace(bban))
+        {
+            return null;
+        }
 
         string sanitized = bban.Replace(" ", "").Replace("-", "").Trim().ToUpperInvariant();
 
-        if (!Validate(sanitized).IsValid) return null;
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
 
         // UK BBAN: 4-letter bank code + 6-digit sort code + 8-digit account number
         return new BbanDetails

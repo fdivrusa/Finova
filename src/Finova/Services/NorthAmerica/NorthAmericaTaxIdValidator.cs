@@ -1,5 +1,11 @@
 using Finova.Core.Common;
 using Finova.Countries.NorthAmerica.Canada.Validators;
+using Finova.Countries.NorthAmerica.CostaRica.Validators;
+using Finova.Countries.NorthAmerica.DominicanRepublic.Validators;
+using Finova.Countries.NorthAmerica.ElSalvador.Validators;
+using Finova.Countries.NorthAmerica.Guatemala.Validators;
+using Finova.Countries.NorthAmerica.Honduras.Validators;
+using Finova.Countries.NorthAmerica.Nicaragua.Validators;
 using Finova.Countries.NorthAmerica.UnitedStates.Validators;
 
 namespace Finova.Services.NorthAmerica;
@@ -15,7 +21,7 @@ public static class NorthAmericaTaxIdValidator
 
         if (string.IsNullOrWhiteSpace(countryCode))
         {
-             if (taxId.Length < 2)
+            if (taxId.Length < 2)
             {
                 return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.VatTooShortForCountryCode);
             }
@@ -26,6 +32,12 @@ public static class NorthAmericaTaxIdValidator
         {
             "CA" => new CanadaBusinessNumberValidator().Validate(taxId),
             "US" => new UnitedStatesEinValidator().Validate(taxId),
+            "CR" => new CostaRicaNiteValidator().Validate(taxId),
+            "DO" => new DominicanRepublicRncValidator().Validate(taxId),
+            "SV" => new ElSalvadorNitValidator().Validate(taxId),
+            "GT" => new GuatemalaNitValidator().Validate(taxId),
+            "HN" => new HondurasRtnValidator().Validate(taxId),
+            "NI" => new NicaraguaRucValidator().Validate(taxId),
             _ => ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, ValidationMessages.UnsupportedCountry)
         };
     }

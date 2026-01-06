@@ -29,7 +29,7 @@ public class SingaporeNricValidator : INationalIdValidator
         var clean = InputSanitizer.Sanitize(nric);
         if (string.IsNullOrEmpty(clean))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         if (clean.Length != 9)

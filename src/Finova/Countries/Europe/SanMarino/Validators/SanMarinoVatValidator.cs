@@ -22,13 +22,20 @@ public partial class SanMarinoVatValidator : IVatValidator
         vat = VatSanitizer.Sanitize(vat);
 
         if (string.IsNullOrWhiteSpace(vat))
+        {
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+        }
 
         var cleaned = vat.Trim().ToUpperInvariant();
-        if (cleaned.StartsWith(VatPrefix)) cleaned = cleaned[2..];
+        if (cleaned.StartsWith(VatPrefix))
+        {
+            cleaned = cleaned[2..];
+        }
 
         if (!VatRegex().IsMatch(cleaned))
+        {
             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSanMarinoVatFormat);
+        }
 
         // No public checksum available.
         return ValidationResult.Success();
@@ -37,10 +44,16 @@ public partial class SanMarinoVatValidator : IVatValidator
     public static VatDetails? GetVatDetails(string? vat)
     {
         var result = Validate(vat);
-        if (!result.IsValid) return null;
+        if (!result.IsValid)
+        {
+            return null;
+        }
 
         var cleaned = VatSanitizer.Sanitize(vat)!.Trim().ToUpperInvariant();
-        if (cleaned.StartsWith(VatPrefix)) cleaned = cleaned[2..];
+        if (cleaned.StartsWith(VatPrefix))
+        {
+            cleaned = cleaned[2..];
+        }
 
         return new VatDetails { CountryCode = VatPrefix, VatNumber = cleaned, IsValid = true };
     }

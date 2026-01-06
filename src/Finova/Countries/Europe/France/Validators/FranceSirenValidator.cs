@@ -56,7 +56,11 @@ public partial class FranceSirenValidator : ITaxIdValidator
             if ((digits.Length - i) % 2 == 0)
             {
                 int doubled = digit * 2;
-                if (doubled > 9) doubled -= 9;
+                if (doubled > 9)
+                {
+                    doubled -= 9;
+                }
+
                 sum += doubled;
             }
             else

@@ -11,7 +11,7 @@ public class SpainIbanParser(SpainIbanValidator validator) : IIbanParser
     private readonly SpainIbanValidator _validator = validator;
     public string? CountryCode => _validator.CountryCode;
 
-    public static SpainIbanParser Create() => new SpainIbanParser(new SpainIbanValidator());
+    public static SpainIbanParser Create() => new(new SpainIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {

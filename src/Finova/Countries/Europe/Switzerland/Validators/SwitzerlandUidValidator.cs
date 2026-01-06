@@ -1,6 +1,5 @@
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
-using Finova.Countries.Europe.Switzerland.Validators;
 
 namespace Finova.Countries.Europe.Switzerland.Validators;
 
@@ -39,7 +38,10 @@ public class SwitzerlandUidValidator : ITaxIdValidator
 
     public static string Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return string.Empty;
+        }
 
         // Reuse normalization logic or implement specific one if needed.
         // SwitzerlandVatValidator sanitizes and removes CHE/CH prefix.

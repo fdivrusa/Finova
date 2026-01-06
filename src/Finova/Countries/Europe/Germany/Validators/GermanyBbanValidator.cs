@@ -45,7 +45,11 @@ public class GermanyBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public string? Parse(string? input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return null;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
         return Validate(sanitized).IsValid ? sanitized : null;
     }
@@ -53,11 +57,17 @@ public class GermanyBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public BbanDetails? ParseDetails(string? bban)
     {
-        if (string.IsNullOrWhiteSpace(bban)) return null;
+        if (string.IsNullOrWhiteSpace(bban))
+        {
+            return null;
+        }
 
         string sanitized = bban.Replace(" ", "").Replace("-", "").Trim();
 
-        if (!Validate(sanitized).IsValid) return null;
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
 
         // German BBAN: 8-digit bank code (BLZ) + 10-digit account number
         return new BbanDetails

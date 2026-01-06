@@ -43,7 +43,10 @@ public partial class LatviaVatValidator : IVatValidator
 
         int remainder = sum % 11;
         int checkDigit = 3 - remainder;
-        if (checkDigit < -1) checkDigit += 11;
+        if (checkDigit < -1)
+        {
+            checkDigit += 11;
+        }
 
         if (checkDigit == -1)
         {

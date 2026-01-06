@@ -1,6 +1,5 @@
 
 using Finova.Countries.Europe.Azerbaijan.Validators;
-using Finova.Core.Common;
 using Xunit;
 
 namespace Finova.Tests.Countries.Europe.Azerbaijan.Validators;

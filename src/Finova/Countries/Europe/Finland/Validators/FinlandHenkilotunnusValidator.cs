@@ -52,7 +52,7 @@ public class FinlandHenkilotunnusValidator : INationalIdValidator
 
         // Extract date and individual number
         string dateAndIndividual = normalized.Substring(0, 6) + normalized.Substring(7, 3);
-        
+
         if (!long.TryParse(dateAndIndividual, out long number))
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFormat);
@@ -61,10 +61,10 @@ public class FinlandHenkilotunnusValidator : INationalIdValidator
         // Validate Date
         int day = int.Parse(normalized.Substring(0, 2));
         int month = int.Parse(normalized.Substring(2, 2));
-        
+
         if (month < 1 || month > 12 || day < 1 || day > 31)
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
         }
 
         // Calculate Checksum (Mod 31)

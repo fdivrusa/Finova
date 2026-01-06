@@ -10,7 +10,7 @@ public class FranceIbanParser(FranceIbanValidator validator) : IIbanParser
 
     public string? CountryCode => _validator.CountryCode;
 
-    public static FranceIbanParser Create() => new FranceIbanParser(new FranceIbanValidator());
+    public static FranceIbanParser Create() => new(new FranceIbanValidator());
 
     public IbanDetails? ParseIban(string? iban)
     {

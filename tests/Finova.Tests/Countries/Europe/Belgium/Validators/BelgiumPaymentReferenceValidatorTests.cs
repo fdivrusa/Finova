@@ -1,6 +1,4 @@
 using Finova.Belgium.Validators;
-using Finova.Core.Common;
-using Finova.Core.PaymentReference;
 using FluentAssertions;
 using Xunit;
 

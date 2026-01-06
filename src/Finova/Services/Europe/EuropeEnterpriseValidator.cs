@@ -43,15 +43,14 @@ using Finova.Countries.Europe.Romania.Validators;
 using Finova.Countries.Europe.SanMarino.Validators;
 using Finova.Countries.Europe.Serbia.Validators;
 using Finova.Countries.Europe.Slovakia.Validators;
-using Finova.Countries.Europe.Spain.Validators;
-using Finova.Countries.Europe.Switzerland.Validators;
-using Finova.Countries.Europe.UnitedKingdom.Validators;
-
 using Finova.Countries.Europe.Slovenia.Validators;
+using Finova.Countries.Europe.Spain.Validators;
 using Finova.Countries.Europe.Sweden.Validators;
+using Finova.Countries.Europe.Switzerland.Validators;
 using Finova.Countries.Europe.Turkey.Validators;
 using Finova.Countries.Europe.Ukraine.Validators;
-using Finova.Countries.Europe.Vatican.Validators;
+using Finova.Countries.Europe.UnitedKingdom.Validators;
+
 
 
 namespace Finova.Services;
@@ -81,6 +80,7 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
 
     public static ValidationResult ValidateEnterpriseNumber(string? number, EnterpriseNumberType type)
     {
+
         if (string.IsNullOrWhiteSpace(number))
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
@@ -140,7 +140,7 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             EnterpriseNumberType.TurkeyVkn => TurkeyVknValidator.ValidateVkn(number),
             EnterpriseNumberType.UkraineEdrpou => UkraineEdrpouValidator.ValidateEdrpou(number),
             EnterpriseNumberType.UnitedKingdomCompanyNumber => UnitedKingdomCompanyNumberValidator.ValidateCompanyNumber(number),
-            EnterpriseNumberType.VaticanCityVat => VaticanCityVatValidator.ValidateVat(number),
+
             _ => ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, $"Enterprise number type {type} is not supported.")
         };
     }
@@ -198,7 +198,9 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
                     frNumber = number[2..];
                 }
 
-                if (frNumber.Length == 9)
+                var cleanFr = frNumber?.Replace(" ", "").Replace(".", "").Trim();
+
+                if (cleanFr?.Length == 9)
                 {
                     return ValidateEnterpriseNumber(frNumber, EnterpriseNumberType.FranceSiren);
                 }
@@ -282,8 +284,9 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             case "GB":
             case "UK":
                 return ValidateEnterpriseNumber(number, EnterpriseNumberType.UnitedKingdomCompanyNumber);
-            case "VA":
-                return ValidateEnterpriseNumber(number, EnterpriseNumberType.VaticanCityVat);
+            case "RU":
+                return new Finova.Countries.Europe.Russia.Validators.RussiaInnValidator().Validate(number);
+
             default:
                 return ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, string.Format(ValidationMessages.UnsupportedCountryCode, country));
         }
@@ -345,7 +348,7 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             "TR" => TurkeyVknValidator.Normalize(number),
             "UA" => UkraineEdrpouValidator.Normalize(number),
             "GB" or "UK" => new UnitedKingdomCompanyNumberValidator().Parse(number),
-            "VA" => VaticanCityVatValidator.Normalize(number),
+
             _ => null
         };
     }
@@ -406,14 +409,17 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             EnterpriseNumberType.TurkeyVkn => TurkeyVknValidator.Normalize(number),
             EnterpriseNumberType.UkraineEdrpou => UkraineEdrpouValidator.Normalize(number),
             EnterpriseNumberType.UnitedKingdomCompanyNumber => new UnitedKingdomCompanyNumberValidator().Parse(number),
-            EnterpriseNumberType.VaticanCityVat => VaticanCityVatValidator.Normalize(number),
+
             _ => null
         };
     }
 
     private static string? ParseFranceNumber(string? number)
     {
-        if (number == null) return null;
+        if (number == null)
+        {
+            return null;
+        }
 
         string cleanNumber = number;
         if (number.StartsWith("FR", StringComparison.OrdinalIgnoreCase) && number.Length > 2)

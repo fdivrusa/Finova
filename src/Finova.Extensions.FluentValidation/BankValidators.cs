@@ -25,7 +25,11 @@ public static class BankValidators
             .Must((rootObject, routingNumber) =>
             {
                 var countryCode = countryCodeSelector(rootObject);
-                if (string.IsNullOrWhiteSpace(countryCode)) return false;
+                if (string.IsNullOrWhiteSpace(countryCode))
+                {
+                    return false;
+                }
+
                 return GlobalBankValidator.ValidateRoutingNumber(countryCode, routingNumber).IsValid;
             })
             .WithMessage("'{PropertyName}' is not a valid Bank Routing Number for the specified country.");
@@ -51,7 +55,11 @@ public static class BankValidators
             .Must((rootObject, accountNumber) =>
             {
                 var countryCode = countryCodeSelector(rootObject);
-                if (string.IsNullOrWhiteSpace(countryCode)) return false;
+                if (string.IsNullOrWhiteSpace(countryCode))
+                {
+                    return false;
+                }
+
                 return GlobalBankValidator.ValidateBankAccount(countryCode, accountNumber).IsValid;
             })
             .WithMessage("'{PropertyName}' is not a valid Bank Account Number for the specified country.");

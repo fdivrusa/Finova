@@ -75,10 +75,10 @@ public class SlovakiaBbanValidator : IBbanValidator
     {
         // Weights array is fixed size 10
         ReadOnlySpan<int> weights = [6, 3, 7, 9, 10, 5, 8, 4, 2, 1];
-        
+
         int sum = 0;
         int inputLength = input.Length;
-        
+
         // If it's a prefix (6 digits), we use the last 6 weights (indices 4-9)
         // If it's an account (10 digits), we use all 10 weights (indices 0-9)
         int weightStartIndex = isPrefix ? 4 : 0;

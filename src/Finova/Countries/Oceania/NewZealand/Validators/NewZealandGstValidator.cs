@@ -116,7 +116,11 @@ public partial class NewZealandGstValidator : IVatValidator
             simpleSum += (clean[i] - '0') * primaryWeights[i];
         }
         int simpleCheckDigit = 11 - (simpleSum % 11);
-        if (simpleCheckDigit == 11) simpleCheckDigit = 0;
+        if (simpleCheckDigit == 11)
+        {
+            simpleCheckDigit = 0;
+        }
+
         if (simpleCheckDigit == 10)
         {
             // Use secondary weights
@@ -126,7 +130,10 @@ public partial class NewZealandGstValidator : IVatValidator
                 secSum += (clean[i] - '0') * secondaryWeights[i];
             }
             simpleCheckDigit = 11 - (secSum % 11);
-            if (simpleCheckDigit == 11) simpleCheckDigit = 0;
+            if (simpleCheckDigit == 11)
+            {
+                simpleCheckDigit = 0;
+            }
         }
 
         if (actualCheckDigit != simpleCheckDigit)

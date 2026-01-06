@@ -73,12 +73,12 @@ public partial class IsraelVatValidator : IVatValidator
             int digit = number[i] - '0';
             int weight = (i % 2 == 0) ? 1 : 2;
             int product = digit * weight;
-            
+
             if (product > 9)
             {
                 product -= 9;
             }
-            
+
             sum += product;
         }
 

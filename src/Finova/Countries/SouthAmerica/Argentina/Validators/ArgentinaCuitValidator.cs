@@ -64,7 +64,10 @@ public class ArgentinaCuitValidator : ITaxIdValidator
         int remainder = sum % 11;
         int checkDigit = 11 - remainder;
 
-        if (checkDigit == 11) checkDigit = 0;
+        if (checkDigit == 11)
+        {
+            checkDigit = 0;
+        }
 
         // If checkDigit is 10, the number is invalid (CUITs cannot have 10 as check digit)
         if (checkDigit == 10)

@@ -1,6 +1,3 @@
-using Finova.Core.Bic;
-using Finova.Core.Iban;
-using Finova.Core.PaymentCard;
 using Finova.Extensions.FluentValidation;
 using FluentAssertions;
 using FluentValidation;

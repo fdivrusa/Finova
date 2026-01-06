@@ -22,7 +22,7 @@ public class NorthMacedoniaIbanParser(IIbanValidator validator) : IIbanParser
     /// Creates a new instance of the parser with a default validator.
     /// </summary>
     /// <returns>A new <see cref="NorthMacedoniaIbanParser"/> instance.</returns>
-    public static NorthMacedoniaIbanParser Create() => new NorthMacedoniaIbanParser(new NorthMacedoniaIbanValidator());
+    public static NorthMacedoniaIbanParser Create() => new(new NorthMacedoniaIbanValidator());
 
     /// <summary>
     /// Parses the North Macedonia IBAN.

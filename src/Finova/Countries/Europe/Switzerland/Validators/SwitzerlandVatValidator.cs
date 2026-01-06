@@ -54,7 +54,11 @@ public partial class SwitzerlandVatValidator : IVatValidator
         int remainder = sum % 11;
         int checkDigit = 11 - remainder;
 
-        if (checkDigit == 11) checkDigit = 0;
+        if (checkDigit == 11)
+        {
+            checkDigit = 0;
+        }
+
         if (checkDigit == 10)
         {
             return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, string.Format(ValidationMessages.InvalidVatChecksum, "Switzerland"));

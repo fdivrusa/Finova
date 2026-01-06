@@ -62,9 +62,18 @@ public class LithuaniaNationalIdValidator : INationalIdValidator
 
         // Determine full year
         int fullYear = 0;
-        if (genderCentury == 1 || genderCentury == 2) fullYear = 1800 + year;
-        else if (genderCentury == 3 || genderCentury == 4) fullYear = 1900 + year;
-        else if (genderCentury == 5 || genderCentury == 6) fullYear = 2000 + year;
+        if (genderCentury == 1 || genderCentury == 2)
+        {
+            fullYear = 1800 + year;
+        }
+        else if (genderCentury == 3 || genderCentury == 4)
+        {
+            fullYear = 1900 + year;
+        }
+        else if (genderCentury == 5 || genderCentury == 6)
+        {
+            fullYear = 2000 + year;
+        }
 
         if (!DateHelper.IsValidDate(fullYear, month, day))
         {

@@ -100,7 +100,11 @@ public class IrelandNationalIdValidator : INationalIdValidator
     private static char GetCheckChar(int remainder)
     {
         // 0=W, 1=A, 2=B ...
-        if (remainder == 0) return 'W';
+        if (remainder == 0)
+        {
+            return 'W';
+        }
+
         return (char)('A' + remainder - 1);
     }
 

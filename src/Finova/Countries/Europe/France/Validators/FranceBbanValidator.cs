@@ -121,7 +121,11 @@ public class FranceBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public string? Parse(string? input)
     {
-        if (string.IsNullOrWhiteSpace(input)) return null;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
         return Validate(sanitized).IsValid ? sanitized : null;
     }
@@ -129,11 +133,17 @@ public class FranceBbanValidator : IBbanValidator
     /// <inheritdoc/>
     public BbanDetails? ParseDetails(string? bban)
     {
-        if (string.IsNullOrWhiteSpace(bban)) return null;
+        if (string.IsNullOrWhiteSpace(bban))
+        {
+            return null;
+        }
 
         string sanitized = bban.Replace(" ", "").Replace("-", "").Trim();
 
-        if (!Validate(sanitized).IsValid) return null;
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
 
         // French BBAN: 5-digit bank code + 5-digit branch code (code guichet) + 11-char account + 2-digit key
         return new BbanDetails

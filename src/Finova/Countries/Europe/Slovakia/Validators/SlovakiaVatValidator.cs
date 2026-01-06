@@ -81,7 +81,11 @@ public partial class SlovakiaVatValidator : IVatValidator, ITaxIdValidator
 
     public string? Normalize(string? number)
     {
-        if (string.IsNullOrWhiteSpace(number)) return null;
+        if (string.IsNullOrWhiteSpace(number))
+        {
+            return null;
+        }
+
         var cleaned = number.ToUpperInvariant().Replace(VatPrefix, "").Replace(" ", "");
         return VatRegex().IsMatch(cleaned) ? cleaned : null;
     }

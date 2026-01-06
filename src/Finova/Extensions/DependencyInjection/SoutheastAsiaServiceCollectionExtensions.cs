@@ -1,8 +1,8 @@
-using Finova.Countries.SoutheastAsia.Thailand.Validators;
-using Finova.Countries.SoutheastAsia.Malaysia.Validators;
-using Finova.Countries.SoutheastAsia.Indonesia.Validators;
-using Finova.Countries.SoutheastAsia.Vietnam.Validators;
 using Finova.Core.Identifiers;
+using Finova.Countries.SoutheastAsia.Indonesia.Validators;
+using Finova.Countries.SoutheastAsia.Malaysia.Validators;
+using Finova.Countries.SoutheastAsia.Thailand.Validators;
+using Finova.Countries.SoutheastAsia.Vietnam.Validators;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Finova.Extensions.DependencyInjection;
@@ -23,6 +23,7 @@ public static class SoutheastAsiaServiceCollectionExtensions
         services.AddSingleton<INationalIdValidator, MalaysiaMyKadValidator>();
         services.AddSingleton<INationalIdValidator, IndonesiaNikValidator>();
         services.AddSingleton<INationalIdValidator, VietnamCitizenIdValidator>();
+        services.AddSingleton<ITaxIdValidator, VietnamTaxIdValidator>();
         return services;
     }
 }

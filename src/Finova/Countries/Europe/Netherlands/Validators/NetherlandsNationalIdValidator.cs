@@ -1,4 +1,3 @@
-using System;
 using Finova.Core.Common;
 using Finova.Core.Identifiers;
 
@@ -37,7 +36,7 @@ public class NetherlandsNationalIdValidator : INationalIdValidator
         string? sanitized = InputSanitizer.Sanitize(bsn);
         if (string.IsNullOrEmpty(sanitized))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
+            return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
         // BSN must be 8 or 9 digits
