@@ -1268,4 +1268,10 @@
   <data name="InvalidCurrencyCode" xml:space="preserve">
     <value>Onbekende valutacode.</value>
   </data>
+  <data name="InvalidSouthAfricaVatLength" xml:space="preserve">
+    <value>Zuid-Afrikaans btw-nummer moet 10 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidSouthAfricaVatFormat" xml:space="preserve">
+    <value>Zuid-Afrikaans btw-nummer moet beginnen met 4 gevolgd door 9 cijfers.</value>
+  </data>
 </root>
