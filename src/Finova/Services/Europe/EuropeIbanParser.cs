@@ -90,11 +90,18 @@ public class EuropeIbanParser : IIbanParser
         }
 
         string countryCode = iban[0..2].ToUpperInvariant();
-        var parser = GetParsers().FirstOrDefault(p => p.CountryCode != null && p.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase));
+        var parsers = GetParsers().Where(p => p.CountryCode != null && p.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase)).ToList();
 
-        if (parser != null)
+        if (parsers.Count > 0)
         {
-            return parser.ParseIban(iban);
+            foreach (var parser in parsers)
+            {
+                var result = parser.ParseIban(iban);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
         }
 
         return Parse(iban);

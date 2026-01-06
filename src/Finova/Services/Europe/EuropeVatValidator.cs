@@ -120,11 +120,18 @@ public class EuropeVatValidator : IVatValidator
         }
 
         string countryCode = input[0..2].ToUpperInvariant();
-        var validator = GetValidators().FirstOrDefault(v => v.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase));
+        var validators = GetValidators().Where(v => v.CountryCode.Equals(countryCode, StringComparison.OrdinalIgnoreCase)).ToList();
 
-        if (validator != null)
+        if (validators.Count > 0)
         {
-            return validator.Parse(input);
+            foreach (var validator in validators)
+            {
+                var result = validator.Parse(input);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
         }
 
         return GetVatDetails(input);
