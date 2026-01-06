@@ -451,4 +451,8 @@ public static class ValidationMessages
 
     public static string BbanMustStartWithLetter => GetString("BbanMustStartWithLetter");
     public static string BbanMustContainDigitsAfterLetter => GetString("BbanMustContainDigitsAfterLetter");
+
+    // South Africa VAT
+    public static string InvalidSouthAfricaVatLength => GetString("InvalidSouthAfricaVatLength");
+    public static string InvalidSouthAfricaVatFormat => GetString("InvalidSouthAfricaVatFormat");
 }

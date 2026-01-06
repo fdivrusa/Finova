@@ -19,6 +19,24 @@ public partial class SouthAfricaVatValidator : IVatValidator
     /// <inheritdoc/>
     public string CountryCode => CountryCodePrefix;
 
+    /// <summary>
+    /// Cleans and normalizes a VAT number by removing whitespace, hyphens, and the ZA prefix.
+    /// </summary>
+    /// <param name="vat">The VAT number to clean.</param>
+    /// <returns>The cleaned VAT number.</returns>
+    private static string CleanVatNumber(string vat)
+    {
+        var clean = vat.Trim().Replace(" ", "").Replace("-", "");
+
+        // Remove ZA prefix if present
+        if (clean.StartsWith("ZA", StringComparison.OrdinalIgnoreCase))
+        {
+            clean = clean[2..];
+        }
+
+        return clean;
+    }
+
     /// <inheritdoc/>
     ValidationResult IValidator<VatDetails>.Validate(string? instance) => Validate(instance);
 
@@ -37,24 +55,16 @@ public partial class SouthAfricaVatValidator : IVatValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InputCannotBeEmpty);
         }
 
-        var clean = vat.Trim().Replace(" ", "").Replace("-", "");
-
-        // Remove ZA prefix if present
-        if (clean.StartsWith("ZA", StringComparison.OrdinalIgnoreCase))
-        {
-            clean = clean[2..];
-        }
+        var clean = CleanVatNumber(vat);
 
         if (clean.Length != 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength,
-                "South African VAT number must be 10 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidSouthAfricaVatLength);
         }
 
         if (!VatRegex().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat,
-                "South African VAT number must start with 4 followed by 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSouthAfricaVatFormat);
         }
 
         // Validate using Luhn algorithm
@@ -76,13 +86,7 @@ public partial class SouthAfricaVatValidator : IVatValidator
             return null;
         }
 
-        var clean = vat!.Trim().Replace(" ", "").Replace("-", "");
-
-        // Remove ZA prefix if present
-        if (clean.StartsWith("ZA", StringComparison.OrdinalIgnoreCase))
-        {
-            clean = clean[2..];
-        }
+        var clean = CleanVatNumber(vat!);
 
         return new VatDetails
         {
