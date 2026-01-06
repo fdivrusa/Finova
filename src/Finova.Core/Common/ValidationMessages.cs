@@ -118,12 +118,18 @@ public static class ValidationMessages
     public static string InvalidJapanMyNumberLength => GetString("InvalidJapanMyNumberLength");
     public static string InvalidJapanMyNumberFormat => GetString("InvalidJapanMyNumberFormat");
     public static string InvalidJapanMyNumberChecksum => GetString("InvalidJapanMyNumberChecksum");
+    public static string InvalidJapanVatFormat => GetString("InvalidJapanVatFormat");
     public static string InvalidIndiaPanLength => GetString("InvalidIndiaPanLength");
     public static string InvalidIndiaPanFormat => GetString("InvalidIndiaPanFormat");
     public static string InvalidIndiaPanStatus => GetString("InvalidIndiaPanStatus");
     public static string InvalidIndiaAadhaarLength => GetString("InvalidIndiaAadhaarLength");
     public static string InvalidIndiaAadhaarFormat => GetString("InvalidIndiaAadhaarFormat");
     public static string InvalidIndiaAadhaarChecksum => GetString("InvalidIndiaAadhaarChecksum");
+    public static string InvalidIndiaGstinLength => GetString("InvalidIndiaGstinLength");
+    public static string InvalidIndiaGstinFormat => GetString("InvalidIndiaGstinFormat");
+    public static string InvalidIndiaGstinStateCode => GetString("InvalidIndiaGstinStateCode");
+    public static string InvalidIndiaGstinPan => GetString("InvalidIndiaGstinPan");
+    public static string InvalidIndiaGstinPosition14 => GetString("InvalidIndiaGstinPosition14");
     public static string InvalidIcelandVatFormat => GetString("InvalidIcelandVatFormat");
     public static string InvalidCheckDigitsMod10Mod11 => GetString("InvalidCheckDigitsMod10Mod11");
     public static string InvalidSlovakiaVatFormat => GetString("InvalidSlovakiaVatFormat");
@@ -448,6 +454,8 @@ public static class ValidationMessages
 
     // South Korea Bank Code
     public static string InvalidSouthKoreaBankCodeFormat => GetString("InvalidSouthKoreaBankCodeFormat");
+    public static string InvalidSouthKoreaVatFormat => GetString("InvalidSouthKoreaVatFormat");
+    public static string InvalidSouthKoreaVatChecksum => GetString("InvalidSouthKoreaVatChecksum");
 
     public static string BbanMustStartWithLetter => GetString("BbanMustStartWithLetter");
     public static string BbanMustContainDigitsAfterLetter => GetString("BbanMustContainDigitsAfterLetter");

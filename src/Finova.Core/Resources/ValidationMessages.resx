@@ -373,6 +373,9 @@
   <data name="InvalidJapanMyNumberChecksum" xml:space="preserve">
     <value>Invalid My Number checksum.</value>
   </data>
+  <data name="InvalidJapanVatFormat" xml:space="preserve">
+    <value>Japanese consumption tax number must start with 'T' followed by 13 digits.</value>
+  </data>
   <data name="InvalidIndiaPanLength" xml:space="preserve">
     <value>PAN must be 10 characters.</value>
   </data>
@@ -390,6 +393,21 @@
   </data>
   <data name="InvalidIndiaAadhaarChecksum" xml:space="preserve">
     <value>Invalid Aadhaar checksum.</value>
+  </data>
+  <data name="InvalidIndiaGstinLength" xml:space="preserve">
+    <value>GSTIN must be 15 characters.</value>
+  </data>
+  <data name="InvalidIndiaGstinFormat" xml:space="preserve">
+    <value>Invalid GSTIN format.</value>
+  </data>
+  <data name="InvalidIndiaGstinStateCode" xml:space="preserve">
+    <value>Invalid state code in GSTIN.</value>
+  </data>
+  <data name="InvalidIndiaGstinPan" xml:space="preserve">
+    <value>Invalid PAN embedded in GSTIN.</value>
+  </data>
+  <data name="InvalidIndiaGstinPosition14" xml:space="preserve">
+    <value>Position 14 in GSTIN must be 'Z'.</value>
   </data>
   <data name="InvalidIcelandVatFormat" xml:space="preserve">
     <value>Invalid Iceland VAT format.</value>
@@ -1306,6 +1324,12 @@
   </data>
   <data name="InvalidSouthKoreaBankCodeFormat" xml:space="preserve">
     <value>Invalid South Korea bank code format. Must be exactly 3 digits.</value>
+  </data>
+  <data name="InvalidSouthKoreaVatFormat" xml:space="preserve">
+    <value>South Korean BRN must be 10 digits.</value>
+  </data>
+  <data name="InvalidSouthKoreaVatChecksum" xml:space="preserve">
+    <value>Invalid South Korean BRN checksum.</value>
   </data>
   <data name="BbanMustStartWithLetter" xml:space="preserve">
     <value>BBAN must start with a letter.</value>
