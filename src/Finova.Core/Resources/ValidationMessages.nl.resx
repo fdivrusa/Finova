@@ -1274,4 +1274,34 @@
   <data name="InvalidSouthAfricaVatFormat" xml:space="preserve">
     <value>Zuid-Afrikaans btw-nummer moet beginnen met 4 gevolgd door 9 cijfers.</value>
   </data>
+  <data name="InvalidLuxembourgRcsFormat" xml:space="preserve">
+    <value>Luxemburgs RCS-nummer moet een letter zijn (A, B, C, D, E, F, G, H, J, R, S of T) gevolgd door 1-6 cijfers.</value>
+  </data>
+  <data name="InvalidNetherlandsKvkFormat" xml:space="preserve">
+    <value>Nederlands KvK-nummer moet exact 8 cijfers bevatten en kan niet beginnen met 0.</value>
+  </data>
+  <data name="InvalidIrelandCroFormat" xml:space="preserve">
+    <value>Iers CRO-nummer moet een nummer zijn (1-6 cijfers), optioneel voorafgegaan door een letter (bijv. 123456 of A12345).</value>
+  </data>
+  <data name="InvalidMaltaCompanyNumberFormat" xml:space="preserve">
+    <value>Maltees bedrijfsnummer moet een voorvoegsel letter zijn (C, P, F, O of E) gevolgd door 5-6 cijfers (bijv. C12345).</value>
+  </data>
+  <data name="InvalidSlovakiaIcoFormat" xml:space="preserve">
+    <value>Slowaaks IČO-nummer moet exact 8 cijfers bevatten en kan niet beginnen met 0.</value>
+  </data>
+  <data name="InvalidSlovakiaIcoCheckDigit" xml:space="preserve">
+    <value>Slowaaks IČO-nummer heeft een ongeldig controlecijfer.</value>
+  </data>
+  <data name="InvalidSloveniaMaticnaStevilkaFormat" xml:space="preserve">
+    <value>Sloveens Matična številka-nummer moet exact 10 cijfers bevatten en kan niet beginnen met 0.</value>
+  </data>
+  <data name="InvalidSloveniaMaticnaStevilkaCheckDigit" xml:space="preserve">
+    <value>Sloveens Matična številka-nummer heeft een ongeldig controlecijfer.</value>
+  </data>
+  <data name="InvalidSwedenOrganisationsnummerFormat" xml:space="preserve">
+    <value>Zweeds organisatienummer moet 10 cijfers bevatten in formaat NNNNNN-NNNN.</value>
+  </data>
+  <data name="InvalidSwedenOrganisationsnummerCheckDigit" xml:space="preserve">
+    <value>Zweeds organisatienummer heeft een ongeldig Luhn-controlecijfer.</value>
+  </data>
 </root>
