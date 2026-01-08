@@ -77,7 +77,7 @@ dotnet add package Finova.Extensions.FluentValidation
 | Validator | Description | Countries |
 |-----------|-------------|-----------|
 | **VAT Number** | Value Added Tax ID | All 27 EU countries + UK, CH, NO |
-| **Enterprise Number** | Business registration | Belgium (BCE/KBO), etc. |
+| **Enterprise Number** | Business registration | 🇧🇪 Belgium (BCE/KBO), 🇱🇺 Luxembourg (RCS), 🇳🇱 Netherlands (KvK), 🇮🇪 Ireland (CRO), 🇲🇹 Malta (Company No.), 🇸🇰 Slovakia (IČO), 🇸🇮 Slovenia (Matična), 🇸🇪 Sweden (Org.nr) |
 | **EIN** | Employer Identification Number | 🇺🇸 USA |
 | **LEI** | Legal Entity Identifier | 🌍 ISO 17442 worldwide |
 

@@ -515,6 +515,71 @@ public static class StaticValidationScenario
         {
             ConsoleHelper.WriteError(ex.Message);
         }
+
+        // Add Enterprise Number validation examples
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
+        Console.WriteLine("      Enterprise Number Validation (Business ID, distinct from VAT):");
+        Console.ResetColor();
+        ConsoleHelper.WriteCode("EuropeEnterpriseValidator.ValidateEnterpriseNumber(number, countryCode)");
+
+        var enterpriseExamples = new (string Country, string Code, string Number)[]
+        {
+            ("Belgium", "BE", "0202.239.951"),       // BCE/KBO
+            ("Luxembourg", "LU", "B123456"),          // RCS (letter + digits)
+            ("Netherlands", "NL", "12345678"),        // KvK (8 digits)
+            ("Ireland", "IE", "123456"),              // CRO (6 digits)
+            ("Malta", "MT", "C12345"),                // Company Number
+            ("Slovakia", "SK", "35780622"),           // IČO (8 digits)
+            ("Slovenia", "SI", "1234567400"),         // Matična številka (10 digits)
+            ("Sweden", "SE", "5560360793"),           // Organisationsnummer (IKEA)
+            ("France", "FR", "732 829 320"),          // SIREN
+            ("Germany", "DE", "HRB 12345"),           // Handelsregister
+            ("Austria", "AT", "FN 123456x"),          // Firmenbuch
+            ("Finland", "FI", "2058430-6"),           // Y-tunnus
+            ("Denmark", "DK", "47458714"),            // CVR
+            ("UK", "GB", "02204302"),                 // Companies House
+        };
+
+        foreach (var (country, code, number) in enterpriseExamples)
+        {
+            var result = EuropeEnterpriseValidator.ValidateEnterpriseNumber(number, code);
+            ConsoleHelper.WriteSimpleResult($"{country} ({number})", result.IsValid, result.IsValid ? "Valid" : result.Errors.FirstOrDefault()?.Message);
+        }
+
+        // Add Global Enterprise Number validation examples (non-European)
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
+        Console.WriteLine("      Global Enterprise Number Validation (Tax ID as Business ID):");
+        Console.ResetColor();
+        ConsoleHelper.WriteCode("GlobalEnterpriseValidator.Validate(number, countryCode)");
+
+        var globalValidator = new GlobalEnterpriseValidator();
+        var globalEnterpriseExamples = new (string Country, string Code, string Number)[]
+        {
+            ("United States", "US", "12-3456789"),     // EIN
+            ("Canada", "CA", "123456782"),             // BN (9 digits)
+            ("Brazil", "BR", "11.222.333/0001-81"),    // CNPJ
+            ("Mexico", "MX", "GODE561231GR8"),         // RFC
+            ("India", "IN", "BZPRP1123P"),             // PAN
+            ("China", "CN", "91110000600037367K"),     // USCC
+            ("Japan", "JP", "1234567890123"),          // Corporate Number (13 digits)
+            ("Singapore", "SG", "123456789A"),         // UEN
+            ("Australia", "AU", "53004085616"),        // ABN
+            ("Algeria", "DZ", "000012345678901"),      // NIF
+            ("Morocco", "MA", "001234567890123"),      // ICE
+            ("Nigeria", "NG", "12345678"),             // TIN
+            ("Egypt", "EG", "123456789"),              // TRN
+            ("Tunisia", "TN", "1234567APM000"),        // Matricule Fiscal
+            ("Vietnam", "VN", "0100109106"),           // MST
+            ("Kazakhstan", "KZ", "600900563762"),      // BIN
+        };
+
+        foreach (var (country, code, number) in globalEnterpriseExamples)
+        {
+            var result = globalValidator.Validate(number, code);
+            ConsoleHelper.WriteSimpleResult($"{country} ({number})", result.IsValid, result.IsValid ? "Valid" : result.Errors.FirstOrDefault()?.Message);
+        }
     }
 
     private static void RunNationalIdValidation()

@@ -1273,4 +1273,34 @@
   <data name="InvalidSouthAfricaVatFormat" xml:space="preserve">
     <value>Südafrikanische USt-IdNr. muss mit 4 beginnen, gefolgt von 9 Ziffern.</value>
   </data>
+  <data name="InvalidLuxembourgRcsFormat" xml:space="preserve">
+    <value>Luxemburgische RCS-Nummer muss ein Buchstabe (A, B, C, D, E, F, G, H, J, R, S oder T) gefolgt von 1-6 Ziffern sein.</value>
+  </data>
+  <data name="InvalidNetherlandsKvkFormat" xml:space="preserve">
+    <value>Niederländische KvK-Nummer muss genau 8 Ziffern enthalten und darf nicht mit 0 beginnen.</value>
+  </data>
+  <data name="InvalidIrelandCroFormat" xml:space="preserve">
+    <value>Irische CRO-Nummer muss eine Zahl (1-6 Ziffern) sein, optional mit einem Buchstaben als Präfix (z.B. 123456 oder A12345).</value>
+  </data>
+  <data name="InvalidMaltaCompanyNumberFormat" xml:space="preserve">
+    <value>Maltesische Firmennummer muss ein Präfix-Buchstabe (C, P, F, O oder E) gefolgt von 5-6 Ziffern sein (z.B. C12345).</value>
+  </data>
+  <data name="InvalidSlovakiaIcoFormat" xml:space="preserve">
+    <value>Slowakische IČO-Nummer muss genau 8 Ziffern enthalten und darf nicht mit 0 beginnen.</value>
+  </data>
+  <data name="InvalidSlovakiaIcoCheckDigit" xml:space="preserve">
+    <value>Slowakische IČO-Nummer hat eine ungültige Prüfziffer.</value>
+  </data>
+  <data name="InvalidSloveniaMaticnaStevilkaFormat" xml:space="preserve">
+    <value>Slowenische Matična številka-Nummer muss genau 10 Ziffern enthalten und darf nicht mit 0 beginnen.</value>
+  </data>
+  <data name="InvalidSloveniaMaticnaStevilkaCheckDigit" xml:space="preserve">
+    <value>Slowenische Matična številka-Nummer hat eine ungültige Prüfziffer.</value>
+  </data>
+  <data name="InvalidSwedenOrganisationsnummerFormat" xml:space="preserve">
+    <value>Schwedische Organisationsnummer muss 10 Ziffern im Format NNNNNN-NNNN enthalten.</value>
+  </data>
+  <data name="InvalidSwedenOrganisationsnummerCheckDigit" xml:space="preserve">
+    <value>Schwedische Organisationsnummer hat eine ungültige Luhn-Prüfziffer.</value>
+  </data>
 </root>

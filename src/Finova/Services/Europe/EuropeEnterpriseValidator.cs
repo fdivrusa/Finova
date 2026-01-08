@@ -113,18 +113,18 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             EnterpriseNumberType.GreenlandCvr => GreenlandCvrValidator.ValidateCvr(number),
             EnterpriseNumberType.HungaryAdoszam => HungaryAdoszamValidator.ValidateAdoszam(number),
             EnterpriseNumberType.IcelandKennitala => IcelandKennitalaValidator.ValidateKennitala(number),
-            EnterpriseNumberType.IrelandVat => IrelandVatNumberValidator.ValidateVatNumber(number),
+            EnterpriseNumberType.IrelandCro => IrelandCroValidator.ValidateCro(number),
             EnterpriseNumberType.ItalyCodiceFiscale => ItalyPartitaIvaValidator.ValidatePartitaIvaStatic(number),
             EnterpriseNumberType.KosovoFiscalNumber => KosovoFiscalNumberValidator.ValidateFiscalNumber(number),
             EnterpriseNumberType.LatviaPvn => LatviaPvnValidator.ValidatePvn(number),
             EnterpriseNumberType.LiechtensteinPeid => LiechtensteinPeidValidator.ValidatePeid(number),
             EnterpriseNumberType.LithuaniaPvm => LithuaniaPvmValidator.ValidatePvm(number),
-            EnterpriseNumberType.LuxembourgTva => LuxembourgVatValidator.ValidateVat(number),
-            EnterpriseNumberType.MaltaVat => MaltaVatValidator.ValidateVat(number),
+            EnterpriseNumberType.LuxembourgRcs => LuxembourgRcsValidator.ValidateRcs(number),
+            EnterpriseNumberType.MaltaCompanyNumber => MaltaCompanyNumberValidator.ValidateCompanyNumber(number),
             EnterpriseNumberType.MoldovaIdno => MoldovaIdnoValidator.ValidateIdno(number),
             EnterpriseNumberType.MonacoRci => MonacoRciValidator.ValidateRci(number),
             EnterpriseNumberType.MontenegroPib => MontenegroPibValidator.ValidatePib(number),
-            EnterpriseNumberType.NetherlandsBtw => NetherlandsVatValidator.ValidateBtw(number),
+            EnterpriseNumberType.NetherlandsKvk => NetherlandsKvkValidator.ValidateKvk(number),
             EnterpriseNumberType.NorthMacedoniaEdb => NorthMacedoniaEdbValidator.ValidateEdb(number),
             EnterpriseNumberType.NorwayOrgNumber => NorwayOrgNumberValidator.ValidateOrgNumber(number),
             EnterpriseNumberType.PolandNip => PolandNipValidator.ValidateNip(number),
@@ -132,10 +132,10 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             EnterpriseNumberType.RomaniaCif => RomaniaCifValidator.ValidateCif(number),
             EnterpriseNumberType.SanMarinoCoe => SanMarinoCoeValidator.ValidateCoe(number),
             EnterpriseNumberType.SerbiaPib => SerbiaPibValidator.ValidatePib(number),
-            EnterpriseNumberType.SlovakiaVat => SlovakiaVatValidator.ValidateVat(number),
-            EnterpriseNumberType.SloveniaTaxNumber => SloveniaVatValidator.ValidateVat(number),
+            EnterpriseNumberType.SlovakiaIco => SlovakiaIcoValidator.ValidateIco(number),
+            EnterpriseNumberType.SloveniaMaticnaStevilka => SloveniaMaticnaStevilkaValidator.ValidateMaticnaStevilka(number),
             EnterpriseNumberType.SpainCif => SpainCifValidator.ValidateCif(number),
-            EnterpriseNumberType.SwedenMoms => SwedenVatValidator.ValidateVat(number),
+            EnterpriseNumberType.SwedenOrganisationsnummer => SwedenOrganisationsnummerValidator.ValidateOrganisationsnummer(number),
             EnterpriseNumberType.SwitzerlandUid => SwitzerlandUidValidator.ValidateUid(number),
             EnterpriseNumberType.TurkeyVkn => TurkeyVknValidator.ValidateVkn(number),
             EnterpriseNumberType.UkraineEdrpou => UkraineEdrpouValidator.ValidateEdrpou(number),
@@ -230,7 +230,7 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             case "IS":
                 return ValidateEnterpriseNumber(number, EnterpriseNumberType.IcelandKennitala);
             case "IE":
-                return ValidateEnterpriseNumber(number, EnterpriseNumberType.IrelandVat);
+                return ValidateEnterpriseNumber(number, EnterpriseNumberType.IrelandCro);
             case "IT":
                 return ValidateEnterpriseNumber(number, EnterpriseNumberType.ItalyCodiceFiscale);
             case "XK":
@@ -242,9 +242,9 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             case "LT":
                 return ValidateEnterpriseNumber(number, EnterpriseNumberType.LithuaniaPvm);
             case "LU":
-                return ValidateEnterpriseNumber(number, EnterpriseNumberType.LuxembourgTva);
+                return ValidateEnterpriseNumber(number, EnterpriseNumberType.LuxembourgRcs);
             case "MT":
-                return ValidateEnterpriseNumber(number, EnterpriseNumberType.MaltaVat);
+                return ValidateEnterpriseNumber(number, EnterpriseNumberType.MaltaCompanyNumber);
             case "MD":
                 return ValidateEnterpriseNumber(number, EnterpriseNumberType.MoldovaIdno);
             case "MC":
@@ -252,7 +252,7 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             case "ME":
                 return ValidateEnterpriseNumber(number, EnterpriseNumberType.MontenegroPib);
             case "NL":
-                return ValidateEnterpriseNumber(number, EnterpriseNumberType.NetherlandsBtw);
+                return ValidateEnterpriseNumber(number, EnterpriseNumberType.NetherlandsKvk);
             case "MK":
                 return ValidateEnterpriseNumber(number, EnterpriseNumberType.NorthMacedoniaEdb);
             case "NO":
@@ -268,13 +268,13 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             case "RS":
                 return ValidateEnterpriseNumber(number, EnterpriseNumberType.SerbiaPib);
             case "SK":
-                return ValidateEnterpriseNumber(number, EnterpriseNumberType.SlovakiaVat);
+                return ValidateEnterpriseNumber(number, EnterpriseNumberType.SlovakiaIco);
             case "SI":
-                return ValidateEnterpriseNumber(number, EnterpriseNumberType.SloveniaTaxNumber);
+                return ValidateEnterpriseNumber(number, EnterpriseNumberType.SloveniaMaticnaStevilka);
             case "ES":
                 return ValidateEnterpriseNumber(number, EnterpriseNumberType.SpainCif);
             case "SE":
-                return ValidateEnterpriseNumber(number, EnterpriseNumberType.SwedenMoms);
+                return ValidateEnterpriseNumber(number, EnterpriseNumberType.SwedenOrganisationsnummer);
             case "CH":
                 return ValidateEnterpriseNumber(number, EnterpriseNumberType.SwitzerlandUid);
             case "TR":
@@ -321,18 +321,18 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             "GL" => new GreenlandCvrValidator().Parse(number),
             "HU" => new HungaryAdoszamValidator().Parse(number),
             "IS" => new IcelandKennitalaValidator().Parse(number),
-            "IE" => new IrelandVatNumberValidator().Parse(number),
+            "IE" => IrelandCroValidator.Normalize(number),
             "IT" => ItalyPartitaIvaValidator.Normalize(number),
             "XK" => new KosovoFiscalNumberValidator().Parse(number),
             "LV" => new LatviaPvnValidator().Parse(number),
             "LI" => new LiechtensteinPeidValidator().Parse(number),
             "LT" => new LithuaniaPvmValidator().Parse(number),
-            "LU" => LuxembourgVatValidator.Normalize(number),
-            "MT" => MaltaVatValidator.Normalize(number),
+            "LU" => LuxembourgRcsValidator.Normalize(number),
+            "MT" => MaltaCompanyNumberValidator.Normalize(number),
             "MD" => new MoldovaIdnoValidator().Parse(number),
             "MC" => new MonacoRciValidator().Parse(number),
             "ME" => new MontenegroPibValidator().Parse(number),
-            "NL" => NetherlandsVatValidator.Normalize(number),
+            "NL" => NetherlandsKvkValidator.Normalize(number),
             "MK" => new NorthMacedoniaEdbValidator().Normalize(number),
             "NO" => NorwayOrgNumberValidator.Normalize(number),
             "PL" => new PolandNipValidator().Normalize(number),
@@ -340,10 +340,10 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             "RO" => new RomaniaCifValidator().Normalize(number),
             "SM" => new SanMarinoCoeValidator().Normalize(number),
             "RS" => new SerbiaPibValidator().Normalize(number),
-            "SK" => new SlovakiaVatValidator().Normalize(number),
-            "SI" => SloveniaVatValidator.Normalize(number),
+            "SK" => SlovakiaIcoValidator.Normalize(number),
+            "SI" => SloveniaMaticnaStevilkaValidator.Normalize(number),
             "ES" => SpainCifValidator.Normalize(number),
-            "SE" => SwedenVatValidator.Normalize(number),
+            "SE" => SwedenOrganisationsnummerValidator.Normalize(number),
             "CH" => new SwitzerlandUidValidator().Parse(number),
             "TR" => TurkeyVknValidator.Normalize(number),
             "UA" => UkraineEdrpouValidator.Normalize(number),
@@ -382,18 +382,18 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             EnterpriseNumberType.GreenlandCvr => new GreenlandCvrValidator().Parse(number),
             EnterpriseNumberType.HungaryAdoszam => new HungaryAdoszamValidator().Parse(number),
             EnterpriseNumberType.IcelandKennitala => new IcelandKennitalaValidator().Parse(number),
-            EnterpriseNumberType.IrelandVat => new IrelandVatNumberValidator().Parse(number),
+            EnterpriseNumberType.IrelandCro => IrelandCroValidator.Normalize(number),
             EnterpriseNumberType.ItalyCodiceFiscale => ItalyPartitaIvaValidator.Normalize(number),
             EnterpriseNumberType.KosovoFiscalNumber => new KosovoFiscalNumberValidator().Parse(number),
             EnterpriseNumberType.LatviaPvn => new LatviaPvnValidator().Parse(number),
             EnterpriseNumberType.LiechtensteinPeid => new LiechtensteinPeidValidator().Parse(number),
             EnterpriseNumberType.LithuaniaPvm => new LithuaniaPvmValidator().Parse(number),
-            EnterpriseNumberType.LuxembourgTva => LuxembourgVatValidator.Normalize(number),
-            EnterpriseNumberType.MaltaVat => MaltaVatValidator.Normalize(number),
+            EnterpriseNumberType.LuxembourgRcs => LuxembourgRcsValidator.Normalize(number),
+            EnterpriseNumberType.MaltaCompanyNumber => MaltaCompanyNumberValidator.Normalize(number),
             EnterpriseNumberType.MoldovaIdno => new MoldovaIdnoValidator().Parse(number),
             EnterpriseNumberType.MonacoRci => new MonacoRciValidator().Parse(number),
             EnterpriseNumberType.MontenegroPib => new MontenegroPibValidator().Parse(number),
-            EnterpriseNumberType.NetherlandsBtw => NetherlandsVatValidator.Normalize(number),
+            EnterpriseNumberType.NetherlandsKvk => NetherlandsKvkValidator.Normalize(number),
             EnterpriseNumberType.NorthMacedoniaEdb => new NorthMacedoniaEdbValidator().Normalize(number),
             EnterpriseNumberType.NorwayOrgNumber => NorwayOrgNumberValidator.Normalize(number),
             EnterpriseNumberType.PolandNip => new PolandNipValidator().Normalize(number),
@@ -401,10 +401,10 @@ public class EuropeEnterpriseValidator : IEuropeEnterpriseValidator
             EnterpriseNumberType.RomaniaCif => new RomaniaCifValidator().Normalize(number),
             EnterpriseNumberType.SanMarinoCoe => new SanMarinoCoeValidator().Normalize(number),
             EnterpriseNumberType.SerbiaPib => new SerbiaPibValidator().Normalize(number),
-            EnterpriseNumberType.SlovakiaVat => new SlovakiaVatValidator().Normalize(number),
-            EnterpriseNumberType.SloveniaTaxNumber => SloveniaVatValidator.Normalize(number),
+            EnterpriseNumberType.SlovakiaIco => SlovakiaIcoValidator.Normalize(number),
+            EnterpriseNumberType.SloveniaMaticnaStevilka => SloveniaMaticnaStevilkaValidator.Normalize(number),
             EnterpriseNumberType.SpainCif => SpainCifValidator.Normalize(number),
-            EnterpriseNumberType.SwedenMoms => SwedenVatValidator.Normalize(number),
+            EnterpriseNumberType.SwedenOrganisationsnummer => SwedenOrganisationsnummerValidator.Normalize(number),
             EnterpriseNumberType.SwitzerlandUid => new SwitzerlandUidValidator().Parse(number),
             EnterpriseNumberType.TurkeyVkn => TurkeyVknValidator.Normalize(number),
             EnterpriseNumberType.UkraineEdrpou => UkraineEdrpouValidator.Normalize(number),

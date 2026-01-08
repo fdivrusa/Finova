@@ -45,4 +45,37 @@ public class NetherlandsEnterpriseValidatorTests
         var result = NetherlandsVatValidator.ValidateBtw("123456782B01");
         Assert.True(result.IsValid);
     }
+
+    // KvK (Chamber of Commerce) Tests
+    [Theory]
+    // Valid KvK numbers (8 digits, not starting with 0)
+    [InlineData("12345678", true)]
+    [InlineData("87654321", true)]
+    [InlineData("10000001", true)]
+    [InlineData("99999999", true)]
+    // Invalid KvK numbers
+    [InlineData("", false)]         // Empty
+    [InlineData(null, false)]       // Null
+    [InlineData("1234567", false)]  // Too short (7 digits)
+    [InlineData("123456789", false)] // Too long (9 digits)
+    [InlineData("01234567", false)] // Cannot start with 0
+    [InlineData("ABCD1234", false)] // Contains letters
+    [InlineData("1234-5678", true)] // Hyphen is normalized away, results in valid 8 digits
+    public void Kvk_Validate_ReturnsExpectedResult(string? input, bool expectedIsValid)
+    {
+        var result = NetherlandsKvkValidator.ValidateKvk(input);
+        Assert.Equal(expectedIsValid, result.IsValid);
+    }
+
+    [Theory]
+    [InlineData("12345678", "12345678")]
+    [InlineData(" 12345678 ", "12345678")]
+    [InlineData("NL12345678", "12345678")]
+    [InlineData("KVK 12345678", "12345678")]
+    [InlineData("KVK12345678", "12345678")]
+    public void Kvk_Normalize_ReturnsExpectedResult(string input, string expected)
+    {
+        var result = NetherlandsKvkValidator.Normalize(input);
+        Assert.Equal(expected, result);
+    }
 }

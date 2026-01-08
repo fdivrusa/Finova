@@ -1274,4 +1274,34 @@
   <data name="InvalidSouthAfricaVatFormat" xml:space="preserve">
     <value>Le numéro de TVA sud-africain doit commencer par 4 suivi de 9 chiffres.</value>
   </data>
+  <data name="InvalidLuxembourgRcsFormat" xml:space="preserve">
+    <value>Le numéro RCS luxembourgeois doit être une lettre (A, B, C, D, E, F, G, H, J, R, S ou T) suivie de 1 à 6 chiffres.</value>
+  </data>
+  <data name="InvalidNetherlandsKvkFormat" xml:space="preserve">
+    <value>Le numéro KvK néerlandais doit comporter exactement 8 chiffres et ne peut pas commencer par 0.</value>
+  </data>
+  <data name="InvalidIrelandCroFormat" xml:space="preserve">
+    <value>Le numéro CRO irlandais doit être un nombre (1-6 chiffres), éventuellement préfixé d'une lettre (ex: 123456 ou A12345).</value>
+  </data>
+  <data name="InvalidMaltaCompanyNumberFormat" xml:space="preserve">
+    <value>Le numéro d'entreprise maltais doit être une lettre de préfixe (C, P, F, O ou E) suivie de 5-6 chiffres (ex: C12345).</value>
+  </data>
+  <data name="InvalidSlovakiaIcoFormat" xml:space="preserve">
+    <value>Le numéro IČO slovaque doit comporter exactement 8 chiffres et ne peut pas commencer par 0.</value>
+  </data>
+  <data name="InvalidSlovakiaIcoCheckDigit" xml:space="preserve">
+    <value>Le numéro IČO slovaque a un chiffre de contrôle invalide.</value>
+  </data>
+  <data name="InvalidSloveniaMaticnaStevilkaFormat" xml:space="preserve">
+    <value>Le numéro Matična številka slovène doit comporter exactement 10 chiffres et ne peut pas commencer par 0.</value>
+  </data>
+  <data name="InvalidSloveniaMaticnaStevilkaCheckDigit" xml:space="preserve">
+    <value>Le numéro Matična številka slovène a un chiffre de contrôle invalide.</value>
+  </data>
+  <data name="InvalidSwedenOrganisationsnummerFormat" xml:space="preserve">
+    <value>Le numéro d'organisation suédois doit comporter 10 chiffres au format NNNNNN-NNNN.</value>
+  </data>
+  <data name="InvalidSwedenOrganisationsnummerCheckDigit" xml:space="preserve">
+    <value>Le numéro d'organisation suédois a un chiffre de contrôle Luhn invalide.</value>
+  </data>
 </root>

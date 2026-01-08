@@ -463,4 +463,28 @@ public static class ValidationMessages
     // South Africa VAT
     public static string InvalidSouthAfricaVatLength => GetString("InvalidSouthAfricaVatLength");
     public static string InvalidSouthAfricaVatFormat => GetString("InvalidSouthAfricaVatFormat");
+
+    // Luxembourg RCS (Business Registry)
+    public static string InvalidLuxembourgRcsFormat => GetString("InvalidLuxembourgRcsFormat");
+
+    // Netherlands KvK (Chamber of Commerce)
+    public static string InvalidNetherlandsKvkFormat => GetString("InvalidNetherlandsKvkFormat");
+
+    // Ireland CRO (Companies Registration Office)
+    public static string InvalidIrelandCroFormat => GetString("InvalidIrelandCroFormat");
+
+    // Malta Company Number
+    public static string InvalidMaltaCompanyNumberFormat => GetString("InvalidMaltaCompanyNumberFormat");
+
+    // Slovakia IČO (Business Identification Number)
+    public static string InvalidSlovakiaIcoFormat => GetString("InvalidSlovakiaIcoFormat");
+    public static string InvalidSlovakiaIcoCheckDigit => GetString("InvalidSlovakiaIcoCheckDigit");
+
+    // Slovenia Matična številka (Registration Number)
+    public static string InvalidSloveniaMaticnaStevilkaFormat => GetString("InvalidSloveniaMaticnaStevilkaFormat");
+    public static string InvalidSloveniaMaticnaStevilkaCheckDigit => GetString("InvalidSloveniaMaticnaStevilkaCheckDigit");
+
+    // Sweden Organisationsnummer
+    public static string InvalidSwedenOrganisationsnummerFormat => GetString("InvalidSwedenOrganisationsnummerFormat");
+    public static string InvalidSwedenOrganisationsnummerCheckDigit => GetString("InvalidSwedenOrganisationsnummerCheckDigit");
 }

@@ -1343,4 +1343,34 @@
   <data name="InvalidSouthAfricaVatFormat" xml:space="preserve">
     <value>South African VAT number must start with 4 followed by 9 digits.</value>
   </data>
+  <data name="InvalidLuxembourgRcsFormat" xml:space="preserve">
+    <value>Luxembourg RCS number must be a letter (A, B, C, D, E, F, G, H, J, R, S, or T) followed by 1-6 digits.</value>
+  </data>
+  <data name="InvalidNetherlandsKvkFormat" xml:space="preserve">
+    <value>Netherlands KvK number must be exactly 8 digits and cannot start with 0.</value>
+  </data>
+  <data name="InvalidIrelandCroFormat" xml:space="preserve">
+    <value>Irish CRO number must be a number (1-6 digits), optionally prefixed with a letter (e.g., 123456 or A12345).</value>
+  </data>
+  <data name="InvalidMaltaCompanyNumberFormat" xml:space="preserve">
+    <value>Malta company number must be a prefix letter (C, P, F, O, or E) followed by 5-6 digits (e.g., C12345).</value>
+  </data>
+  <data name="InvalidSlovakiaIcoFormat" xml:space="preserve">
+    <value>Slovakia IČO must be exactly 8 digits and cannot start with 0.</value>
+  </data>
+  <data name="InvalidSlovakiaIcoCheckDigit" xml:space="preserve">
+    <value>Slovakia IČO has an invalid check digit.</value>
+  </data>
+  <data name="InvalidSloveniaMaticnaStevilkaFormat" xml:space="preserve">
+    <value>Slovenia Matična številka must be exactly 10 digits and cannot start with 0.</value>
+  </data>
+  <data name="InvalidSloveniaMaticnaStevilkaCheckDigit" xml:space="preserve">
+    <value>Slovenia Matična številka has an invalid check digit.</value>
+  </data>
+  <data name="InvalidSwedenOrganisationsnummerFormat" xml:space="preserve">
+    <value>Swedish organisation number must be 10 digits in format NNNNNN-NNNN.</value>
+  </data>
+  <data name="InvalidSwedenOrganisationsnummerCheckDigit" xml:space="preserve">
+    <value>Swedish organisation number has an invalid Luhn check digit.</value>
+  </data>
 </root>
