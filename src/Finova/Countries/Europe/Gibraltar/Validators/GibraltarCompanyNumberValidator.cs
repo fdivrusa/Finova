@@ -20,7 +20,11 @@ public partial class GibraltarCompanyNumberValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateCompanyNumber(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateCompanyNumber(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Gibraltar Company Registration Number.

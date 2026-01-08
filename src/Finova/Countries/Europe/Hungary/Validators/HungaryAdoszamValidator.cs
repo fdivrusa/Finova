@@ -17,7 +17,11 @@ public partial class HungaryAdoszamValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateAdoszam(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateAdoszam(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Hungary Adószám.

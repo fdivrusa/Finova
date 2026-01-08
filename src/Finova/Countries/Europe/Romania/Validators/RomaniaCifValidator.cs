@@ -17,7 +17,11 @@ public partial class RomaniaCifValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? number) => ValidateCif(number);
 
-    public string? Parse(string? number) => Normalize(number);
+    public string? Parse(string? number)
+    {
+        var normalized = Normalize(number);
+        return ValidateCif(normalized).IsValid ? normalized : null;
+    }
 
     public static ValidationResult ValidateCif(string? number)
     {

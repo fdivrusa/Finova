@@ -15,7 +15,11 @@ public partial class UkraineEdrpouValidator : ITaxIdValidator
     public string CountryCode => "UA";
     public ValidationResult Validate(string? number) => ValidateEdrpou(number);
 
-    public string? Parse(string? number) => Normalize(number);
+    public string? Parse(string? number)
+    {
+        var normalized = Normalize(number);
+        return ValidateEdrpou(normalized).IsValid ? normalized : null;
+    }
 
     public static ValidationResult ValidateEdrpou(string? number)
     {

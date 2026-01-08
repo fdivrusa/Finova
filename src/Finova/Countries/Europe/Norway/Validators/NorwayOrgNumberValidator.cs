@@ -17,7 +17,11 @@ public partial class NorwayOrgNumberValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? number) => ValidateOrgNumber(number);
 
-    public string? Parse(string? number) => Normalize(number);
+    public string? Parse(string? number)
+    {
+        var normalized = Normalize(number);
+        return ValidateOrgNumber(normalized).IsValid ? normalized : null;
+    }
 
     public static ValidationResult ValidateOrgNumber(string? number)
     {

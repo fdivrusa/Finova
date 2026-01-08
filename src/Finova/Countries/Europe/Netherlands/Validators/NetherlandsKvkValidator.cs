@@ -16,7 +16,11 @@ public partial class NetherlandsKvkValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateKvk(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateKvk(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Netherlands KvK number.

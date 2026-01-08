@@ -123,13 +123,12 @@ public class EuropeVatValidator : IVatValidator
 
         if (validators.Count > 0)
         {
-            foreach (var validator in validators)
+            var result = validators.Select(validator => validator.Parse(input))
+                                   .FirstOrDefault(r => r != null);
+
+            if (result != null)
             {
-                var result = validator.Parse(input);
-                if (result != null)
-                {
-                    return result;
-                }
+                return result;
             }
         }
 

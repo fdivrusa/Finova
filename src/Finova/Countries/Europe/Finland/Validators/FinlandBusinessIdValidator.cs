@@ -17,7 +17,11 @@ public partial class FinlandBusinessIdValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateBusinessId(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateBusinessId(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Finland Business ID (Y-tunnus).

@@ -19,7 +19,11 @@ public partial class ItalyPartitaIvaValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidatePartitaIvaStatic(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidatePartitaIvaStatic(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates an Italian Partita IVA.

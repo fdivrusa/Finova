@@ -34,9 +34,10 @@ public class BankRoutingService : IBankRoutingService
         }
 
         List<ValidationError> errors = [];
-        foreach (var validator in validators)
+        var results = validators.Select(v => v.Validate(routingNumber));
+
+        foreach (var result in results)
         {
-            var result = validator.Validate(routingNumber);
             if (result.IsValid)
             {
                 return result;
@@ -67,13 +68,12 @@ public class BankRoutingService : IBankRoutingService
             return null;
         }
 
-        foreach (var parser in parsers)
+        var result = parsers.Select(parser => parser.ParseRoutingNumber(routingNumber))
+                            .FirstOrDefault(r => r != null);
+
+        if (result != null)
         {
-            var result = parser.ParseRoutingNumber(routingNumber);
-            if (result != null)
-            {
-                return result;
-            }
+            return result;
         }
 
         return null;

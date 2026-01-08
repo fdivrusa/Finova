@@ -108,13 +108,12 @@ public class EuropeIbanValidator : IIbanValidator
 
         if (validators.Count > 0)
         {
-            foreach (var validator in validators)
+            var result = validators.Select(validator => validator.Validate(iban))
+                                   .FirstOrDefault(r => r.IsValid);
+
+            if (result != null)
             {
-                var result = validator.Validate(iban);
-                if (result.IsValid)
-                {
-                    return result;
-                }
+                return result;
             }
         }
 

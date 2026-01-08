@@ -17,7 +17,11 @@ public partial class NorthMacedoniaEdbValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? number) => ValidateEdb(number);
 
-    public string? Parse(string? number) => Normalize(number);
+    public string? Parse(string? number)
+    {
+        var normalized = Normalize(number);
+        return ValidateEdb(normalized).IsValid ? normalized : null;
+    }
 
     public static ValidationResult ValidateEdb(string? number)
     {

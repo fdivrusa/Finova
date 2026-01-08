@@ -93,13 +93,12 @@ public class EuropeIbanParser : IIbanParser
 
         if (parsers.Count > 0)
         {
-            foreach (var parser in parsers)
+            var result = parsers.Select(parser => parser.ParseIban(iban))
+                                .FirstOrDefault(r => r != null);
+
+            if (result != null)
             {
-                var result = parser.ParseIban(iban);
-                if (result != null)
-                {
-                    return result;
-                }
+                return result;
             }
         }
 

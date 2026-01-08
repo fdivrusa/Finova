@@ -17,7 +17,11 @@ public partial class MontenegroPibValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidatePib(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidatePib(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Montenegro PIB.

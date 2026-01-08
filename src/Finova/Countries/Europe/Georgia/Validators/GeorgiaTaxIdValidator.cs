@@ -17,7 +17,11 @@ public partial class GeorgiaTaxIdValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateTaxId(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateTaxId(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Georgia Tax Identification Number.

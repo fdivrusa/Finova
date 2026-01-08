@@ -17,7 +17,11 @@ public partial class LithuaniaPvmValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidatePvm(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidatePvm(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Lithuania PVM / Entity Code.

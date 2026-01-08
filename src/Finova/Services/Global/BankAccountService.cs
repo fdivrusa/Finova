@@ -28,9 +28,10 @@ public class BankAccountService(IEnumerable<IBankAccountValidator> validators, I
         }
 
         List<ValidationError> errors = [];
-        foreach (var validator in validators)
+        var results = validators.Select(v => v.Validate(account));
+
+        foreach (var result in results)
         {
-            var result = validator.Validate(account);
             if (result.IsValid)
             {
                 return result;
@@ -61,13 +62,12 @@ public class BankAccountService(IEnumerable<IBankAccountValidator> validators, I
             return null;
         }
 
-        foreach (var parser in parsers)
+        var result = parsers.Select(parser => parser.ParseBankAccount(account))
+                            .FirstOrDefault(r => r != null);
+
+        if (result != null)
         {
-            var result = parser.ParseBankAccount(account);
-            if (result != null)
-            {
-                return result;
-            }
+            return result;
         }
 
         return null;

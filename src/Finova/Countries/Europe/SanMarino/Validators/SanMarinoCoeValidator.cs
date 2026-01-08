@@ -15,7 +15,11 @@ public partial class SanMarinoCoeValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? input) => ValidateCoe(input);
 
-    public string? Parse(string? number) => Normalize(number);
+    public string? Parse(string? number)
+    {
+        var normalized = Normalize(number);
+        return ValidateCoe(normalized).IsValid ? normalized : null;
+    }
 
     public static ValidationResult ValidateCoe(string? number)
     {

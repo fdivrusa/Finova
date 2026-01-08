@@ -22,7 +22,11 @@ public partial class ItalyCodiceFiscaleValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateItalianIdentifier(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateItalianIdentifier(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates an Italian Codice Fiscale or Partita IVA.
