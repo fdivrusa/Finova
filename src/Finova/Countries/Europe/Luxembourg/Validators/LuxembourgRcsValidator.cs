@@ -16,7 +16,11 @@ public partial class LuxembourgRcsValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateRcs(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateRcs(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Luxembourg RCS number.

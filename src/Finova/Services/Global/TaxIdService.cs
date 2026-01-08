@@ -37,9 +37,10 @@ public class TaxIdService : ITaxIdService
         if (registeredValidators.Count > 0)
         {
             List<ValidationError> errors = [];
-            foreach (var validator in registeredValidators)
+            var results = registeredValidators.Select(v => v.Validate(taxId));
+
+            foreach (var res in results)
             {
-                var res = validator.Validate(taxId);
                 if (res.IsValid)
                 {
                     return res;

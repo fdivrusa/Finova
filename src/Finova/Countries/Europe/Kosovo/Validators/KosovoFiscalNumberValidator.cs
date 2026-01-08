@@ -17,7 +17,11 @@ public partial class KosovoFiscalNumberValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateFiscalNumber(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateFiscalNumber(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Kosovo Fiscal Number.

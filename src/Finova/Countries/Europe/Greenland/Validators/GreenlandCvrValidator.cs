@@ -17,7 +17,11 @@ public partial class GreenlandCvrValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateCvr(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateCvr(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Greenland CVR number.

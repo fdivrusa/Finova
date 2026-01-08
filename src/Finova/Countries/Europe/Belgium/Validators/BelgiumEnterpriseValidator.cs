@@ -20,7 +20,11 @@ public partial class BelgiumEnterpriseValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateEnterpriseNumber(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateEnterpriseNumber(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Belgian Enterprise Number (KBO/BCE).

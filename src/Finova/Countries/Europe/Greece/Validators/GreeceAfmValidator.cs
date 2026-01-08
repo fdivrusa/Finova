@@ -17,7 +17,11 @@ public partial class GreeceAfmValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateAfm(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateAfm(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Greece AFM.

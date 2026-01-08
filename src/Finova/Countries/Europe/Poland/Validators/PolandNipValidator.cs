@@ -17,7 +17,11 @@ public partial class PolandNipValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? number) => ValidateNip(number);
 
-    public string? Parse(string? number) => Normalize(number);
+    public string? Parse(string? number)
+    {
+        var normalized = Normalize(number);
+        return ValidateNip(normalized).IsValid ? normalized : null;
+    }
 
     public static ValidationResult ValidateNip(string? number)
     {

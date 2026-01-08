@@ -17,7 +17,11 @@ public partial class LatviaPvnValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidatePvn(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidatePvn(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Latvia PVN.

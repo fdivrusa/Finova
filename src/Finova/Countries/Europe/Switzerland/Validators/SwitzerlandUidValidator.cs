@@ -13,7 +13,11 @@ public class SwitzerlandUidValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateUid(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateUid(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Switzerland UID.

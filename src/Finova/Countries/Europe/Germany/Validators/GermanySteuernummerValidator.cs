@@ -20,7 +20,11 @@ public partial class GermanySteuernummerValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateSteuernummer(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateSteuernummer(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a German Steuernummer (Unified Federal Format).

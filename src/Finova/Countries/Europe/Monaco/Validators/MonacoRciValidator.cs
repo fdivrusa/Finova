@@ -20,7 +20,11 @@ public partial class MonacoRciValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateRci(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateRci(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a Monaco RCI.

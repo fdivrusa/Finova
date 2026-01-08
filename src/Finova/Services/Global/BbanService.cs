@@ -36,9 +36,10 @@ public class BbanService : IBbanService
         }
 
         List<ValidationError> errors = [];
-        foreach (var validator in validators)
+        var results = validators.Select(v => v.Validate(bban));
+
+        foreach (var result in results)
         {
-            var result = validator.Validate(bban);
             if (result.IsValid)
             {
                 return result;

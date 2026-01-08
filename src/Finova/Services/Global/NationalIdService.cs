@@ -32,9 +32,10 @@ public class NationalIdService : INationalIdService
         }
 
         List<ValidationError> errors = [];
-        foreach (var validator in validators)
+        var results = validators.Select(v => v.Validate(nationalId));
+
+        foreach (var result in results)
         {
-            var result = validator.Validate(nationalId);
             if (result.IsValid)
             {
                 return result;

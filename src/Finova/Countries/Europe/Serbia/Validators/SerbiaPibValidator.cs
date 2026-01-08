@@ -15,7 +15,11 @@ public partial class SerbiaPibValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? number) => ValidatePib(number);
 
-    public string? Parse(string? number) => Normalize(number);
+    public string? Parse(string? number)
+    {
+        var normalized = Normalize(number);
+        return ValidatePib(normalized).IsValid ? normalized : null;
+    }
 
     public static ValidationResult ValidatePib(string? number)
     {

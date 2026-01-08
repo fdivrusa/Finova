@@ -20,7 +20,11 @@ public partial class GermanyHandelsregisternummerValidator : ITaxIdValidator
 
     public ValidationResult Validate(string? instance) => ValidateHandelsregisternummer(instance);
 
-    public string? Parse(string? instance) => Normalize(instance);
+    public string? Parse(string? instance)
+    {
+        var normalized = Normalize(instance);
+        return ValidateHandelsregisternummer(normalized).IsValid ? normalized : null;
+    }
 
     /// <summary>
     /// Validates a German Handelsregisternummer.
