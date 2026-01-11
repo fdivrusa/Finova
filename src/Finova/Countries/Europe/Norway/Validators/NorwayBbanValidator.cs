@@ -89,4 +89,29 @@ public class NorwayBbanValidator : IBbanValidator
     {
         return Validate(input).IsValid ? input : null;
     }
+
+    /// <summary>
+    /// Parses the Norwegian BBAN and returns the structured details.
+    /// </summary>
+    /// <param name="bban">The BBAN string to parse.</param>
+    /// <returns>A BbanDetails object if valid; otherwise, null.</returns>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        bban = InputSanitizer.Sanitize(bban);
+
+        if (!Validate(bban).IsValid)
+        {
+            return null;
+        }
+
+        // BBAN format: 4 digits (Bank) + 6 digits (Account) + 1 digit (Check)
+        return new BbanDetails
+        {
+            Bban = bban!,
+            CountryCode = CountryCode,
+            BankCode = bban!.Substring(0, 4),
+            AccountNumber = bban.Substring(4, 6),
+            NationalCheckDigits = bban.Substring(10, 1)
+        };
+    }
 }

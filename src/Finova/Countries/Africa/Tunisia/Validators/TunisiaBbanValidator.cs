@@ -38,4 +38,25 @@ public class TunisiaBbanValidator : IBbanValidator
     }
 
     public string? Parse(string? input) => Validate(input).IsValid ? input : null;
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        var sanitized = InputSanitizer.Sanitize(bban);
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
+
+        // Tunisia: Bank(2) + Branch(3) + Account(13) + Key(2)
+        return new BbanDetails
+        {
+            Bban = sanitized!,
+            CountryCode = CountryCode,
+            BankCode = sanitized![..2],
+            BranchCode = sanitized.Substring(2, 3),
+            AccountNumber = sanitized.Substring(5, 13),
+            NationalCheckDigits = sanitized.Substring(18, 2)
+        };
+    }
 }

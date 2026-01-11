@@ -41,4 +41,29 @@ public class AndorraBbanValidator : IBbanValidator
     {
         return Validate(input).IsValid ? input : null;
     }
+
+    /// <summary>
+    /// Parses the Andorran BBAN and returns the structured details.
+    /// </summary>
+    /// <param name="bban">The BBAN string to parse.</param>
+    /// <returns>A BbanDetails object if valid; otherwise, null.</returns>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        bban = InputSanitizer.Sanitize(bban);
+
+        if (!Validate(bban).IsValid)
+        {
+            return null;
+        }
+
+        // BBAN format: 4 alphanumeric (Bank) + 4 alphanumeric (Branch) + 12 alphanumeric (Account)
+        return new BbanDetails
+        {
+            Bban = bban!,
+            CountryCode = CountryCode,
+            BankCode = bban!.Substring(0, 4),
+            BranchCode = bban.Substring(4, 4),
+            AccountNumber = bban.Substring(8, 12)
+        };
+    }
 }

@@ -38,4 +38,24 @@ public class AlgeriaBbanValidator : IBbanValidator
     }
 
     public string? Parse(string? input) => Validate(input).IsValid ? input : null;
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        var sanitized = InputSanitizer.Sanitize(bban);
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
+
+        return new BbanDetails
+        {
+            Bban = sanitized!,
+            CountryCode = CountryCode,
+            BankCode = sanitized![..3],
+            BranchCode = sanitized.Substring(3, 5),
+            AccountNumber = sanitized.Substring(8, 10),
+            NationalCheckDigits = sanitized.Substring(18, 2)
+        };
+    }
 }

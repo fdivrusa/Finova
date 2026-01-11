@@ -46,4 +46,28 @@ public class GreenlandBbanValidator : IBbanValidator
     {
         return Validate(input).IsValid ? input : null;
     }
+
+    /// <summary>
+    /// Parses the Greenland BBAN and returns the structured details.
+    /// </summary>
+    /// <param name="bban">The BBAN string to parse.</param>
+    /// <returns>A BbanDetails object if valid; otherwise, null.</returns>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        bban = InputSanitizer.Sanitize(bban);
+
+        if (!Validate(bban).IsValid)
+        {
+            return null;
+        }
+
+        // BBAN format: 4 digits (Bank) + 10 digits (Account, includes check digit at end)
+        return new BbanDetails
+        {
+            Bban = bban!,
+            CountryCode = CountryCode,
+            BankCode = bban!.Substring(0, 4),
+            AccountNumber = bban.Substring(4, 10)
+        };
+    }
 }

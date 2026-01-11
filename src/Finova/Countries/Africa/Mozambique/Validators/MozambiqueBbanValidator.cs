@@ -38,4 +38,25 @@ public class MozambiqueBbanValidator : IBbanValidator
     }
 
     public string? Parse(string? input) => Validate(input).IsValid ? input : null;
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        var sanitized = InputSanitizer.Sanitize(bban);
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
+
+        // Mozambique: Bank(4) + Branch(4) + Account(11) + Key(2)
+        return new BbanDetails
+        {
+            Bban = sanitized!,
+            CountryCode = CountryCode,
+            BankCode = sanitized![..4],
+            BranchCode = sanitized.Substring(4, 4),
+            AccountNumber = sanitized.Substring(8, 11),
+            NationalCheckDigits = sanitized.Substring(19, 2)
+        };
+    }
 }

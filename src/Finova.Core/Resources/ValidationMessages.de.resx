@@ -1303,4 +1303,25 @@
   <data name="InvalidSwedenOrganisationsnummerCheckDigit" xml:space="preserve">
     <value>Schwedische Organisationsnummer hat eine ungültige Luhn-Prüfziffer.</value>
   </data>
+  <data name="BankCodeMustBeDigits" xml:space="preserve">
+    <value>Bankleitzahl darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="BankCodeMustBeLetters" xml:space="preserve">
+    <value>Bankcode darf nur Buchstaben enthalten.</value>
+  </data>
+  <data name="BranchCodeMustBeDigits" xml:space="preserve">
+    <value>Filialnummer darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="AccountNumberMustBeDigits" xml:space="preserve">
+    <value>Kontonummer darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="ReserveDigitMustBeZero" xml:space="preserve">
+    <value>Reserveziffer muss 0 sein.</value>
+  </data>
+  <data name="InvalidAccountType" xml:space="preserve">
+    <value>Kontoart muss ein Buchstabe sein.</value>
+  </data>
+  <data name="InvalidOwnerIndicator" xml:space="preserve">
+    <value>Inhaberkennzeichen muss alphanumerisch sein.</value>
+  </data>
 </root>

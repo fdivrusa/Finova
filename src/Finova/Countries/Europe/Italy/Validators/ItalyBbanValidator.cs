@@ -155,4 +155,30 @@ public class ItalyBbanValidator : IBbanValidator
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
         return Validate(sanitized).IsValid ? sanitized : null;
     }
+
+    /// <summary>
+    /// Parses the Italian BBAN and returns the structured details.
+    /// </summary>
+    /// <param name="bban">The BBAN string to parse.</param>
+    /// <returns>A BbanDetails object if valid; otherwise, null.</returns>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        bban = InputSanitizer.Sanitize(bban);
+
+        if (!Validate(bban).IsValid)
+        {
+            return null;
+        }
+
+        // BBAN format: 1 letter (CIN) + 5 digits (ABI/Bank) + 5 digits (CAB/Branch) + 12 alphanumeric (Account)
+        return new BbanDetails
+        {
+            Bban = bban!,
+            CountryCode = CountryCode,
+            BankCode = bban!.Substring(1, 5),
+            BranchCode = bban.Substring(6, 5),
+            AccountNumber = bban.Substring(11, 12),
+            NationalCheckDigits = bban.Substring(0, 1)
+        };
+    }
 }

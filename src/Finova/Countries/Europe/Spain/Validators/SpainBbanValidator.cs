@@ -119,4 +119,30 @@ public class SpainBbanValidator : IBbanValidator
         string sanitized = input.Replace(" ", "").Replace("-", "").Trim();
         return Validate(sanitized).IsValid ? sanitized : null;
     }
+
+    /// <summary>
+    /// Parses the Spanish BBAN and returns the structured details.
+    /// </summary>
+    /// <param name="bban">The BBAN string to parse.</param>
+    /// <returns>A BbanDetails object if valid; otherwise, null.</returns>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        bban = InputSanitizer.Sanitize(bban);
+
+        if (!Validate(bban).IsValid)
+        {
+            return null;
+        }
+
+        // BBAN format: 4 digits (Bank) + 4 digits (Branch) + 2 digits (DC) + 10 digits (Account)
+        return new BbanDetails
+        {
+            Bban = bban!,
+            CountryCode = CountryCode,
+            BankCode = bban!.Substring(0, 4),
+            BranchCode = bban.Substring(4, 4),
+            AccountNumber = bban.Substring(10, 10),
+            NationalCheckDigits = bban.Substring(8, 2)
+        };
+    }
 }

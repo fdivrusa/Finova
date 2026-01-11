@@ -1304,4 +1304,25 @@
   <data name="InvalidSwedenOrganisationsnummerCheckDigit" xml:space="preserve">
     <value>Le numéro d'organisation suédois a un chiffre de contrôle Luhn invalide.</value>
   </data>
+  <data name="BankCodeMustBeDigits" xml:space="preserve">
+    <value>Le code banque doit contenir uniquement des chiffres.</value>
+  </data>
+  <data name="BankCodeMustBeLetters" xml:space="preserve">
+    <value>Le code banque doit contenir uniquement des lettres.</value>
+  </data>
+  <data name="BranchCodeMustBeDigits" xml:space="preserve">
+    <value>Le code guichet doit contenir uniquement des chiffres.</value>
+  </data>
+  <data name="AccountNumberMustBeDigits" xml:space="preserve">
+    <value>Le numéro de compte doit contenir uniquement des chiffres.</value>
+  </data>
+  <data name="ReserveDigitMustBeZero" xml:space="preserve">
+    <value>Le chiffre de réserve doit être 0.</value>
+  </data>
+  <data name="InvalidAccountType" xml:space="preserve">
+    <value>Le type de compte doit être une lettre.</value>
+  </data>
+  <data name="InvalidOwnerIndicator" xml:space="preserve">
+    <value>L'indicateur de propriétaire doit être alphanumérique.</value>
+  </data>
 </root>

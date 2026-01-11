@@ -50,4 +50,28 @@ public class AzerbaijanBbanValidator : IBbanValidator
     {
         return Validate(input).IsValid ? input : null;
     }
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        var sanitized = InputSanitizer.Sanitize(bban);
+        if (string.IsNullOrWhiteSpace(sanitized))
+        {
+            return null;
+        }
+
+        var result = Validate(sanitized);
+        if (!result.IsValid)
+        {
+            return null;
+        }
+
+        return new BbanDetails
+        {
+            Bban = sanitized,
+            CountryCode = CountryCode,
+            BankCode = sanitized[..4],
+            AccountNumber = sanitized.Substring(4)
+        };
+    }
 }

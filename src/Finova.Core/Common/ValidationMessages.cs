@@ -487,4 +487,13 @@ public static class ValidationMessages
     // Sweden Organisationsnummer
     public static string InvalidSwedenOrganisationsnummerFormat => GetString("InvalidSwedenOrganisationsnummerFormat");
     public static string InvalidSwedenOrganisationsnummerCheckDigit => GetString("InvalidSwedenOrganisationsnummerCheckDigit");
+
+    // Generic BBAN validation messages
+    public static string BankCodeMustBeDigits => GetString("BankCodeMustBeDigits");
+    public static string BankCodeMustBeLetters => GetString("BankCodeMustBeLetters");
+    public static string BranchCodeMustBeDigits => GetString("BranchCodeMustBeDigits");
+    public static string AccountNumberMustBeDigits => GetString("AccountNumberMustBeDigits");
+    public static string ReserveDigitMustBeZero => GetString("ReserveDigitMustBeZero");
+    public static string InvalidAccountType => GetString("InvalidAccountType");
+    public static string InvalidOwnerIndicator => GetString("InvalidOwnerIndicator");
 }

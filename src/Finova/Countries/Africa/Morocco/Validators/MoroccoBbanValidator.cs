@@ -38,4 +38,25 @@ public class MoroccoBbanValidator : IBbanValidator
     }
 
     public string? Parse(string? input) => Validate(input).IsValid ? input : null;
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        var sanitized = InputSanitizer.Sanitize(bban);
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
+
+        // Morocco: Bank(3) + Branch(4) + Account(15) + Key(2)
+        return new BbanDetails
+        {
+            Bban = sanitized!,
+            CountryCode = CountryCode,
+            BankCode = sanitized![..3],
+            BranchCode = sanitized.Substring(3, 4),
+            AccountNumber = sanitized.Substring(7, 15),
+            NationalCheckDigits = sanitized.Substring(22, 2)
+        };
+    }
 }
