@@ -1304,4 +1304,25 @@
   <data name="InvalidSwedenOrganisationsnummerCheckDigit" xml:space="preserve">
     <value>Zweeds organisatienummer heeft een ongeldig Luhn-controlecijfer.</value>
   </data>
+  <data name="BankCodeMustBeDigits" xml:space="preserve">
+    <value>Bankcode mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="BankCodeMustBeLetters" xml:space="preserve">
+    <value>Bankcode mag alleen letters bevatten.</value>
+  </data>
+  <data name="BranchCodeMustBeDigits" xml:space="preserve">
+    <value>Filiaalcode mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="AccountNumberMustBeDigits" xml:space="preserve">
+    <value>Rekeningnummer mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="ReserveDigitMustBeZero" xml:space="preserve">
+    <value>Reservecijfer moet 0 zijn.</value>
+  </data>
+  <data name="InvalidAccountType" xml:space="preserve">
+    <value>Rekeningtype moet een letter zijn.</value>
+  </data>
+  <data name="InvalidOwnerIndicator" xml:space="preserve">
+    <value>Eigenarindicator moet alfanumeriek zijn.</value>
+  </data>
 </root>

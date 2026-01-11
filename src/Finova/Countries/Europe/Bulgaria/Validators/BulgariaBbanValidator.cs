@@ -68,4 +68,30 @@ public class BulgariaBbanValidator : IBbanValidator
 
         return ValidationResult.Success();
     }
+
+    /// <summary>
+    /// Parses the Bulgarian BBAN and returns the structured details.
+    /// </summary>
+    /// <param name="bban">The BBAN string to parse.</param>
+    /// <returns>A BbanDetails object if valid; otherwise, null.</returns>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        bban = InputSanitizer.Sanitize(bban);
+
+        if (!Validate(bban).IsValid)
+        {
+            return null;
+        }
+
+        // BBAN format: 4 letters (Bank) + 4 digits (Branch) + 2 digits (Account Type) + 8 alphanumeric (Account)
+        return new BbanDetails
+        {
+            Bban = bban!,
+            CountryCode = CountryCode,
+            BankCode = bban!.Substring(0, 4),
+            BranchCode = bban.Substring(4, 4),
+            AccountNumber = bban.Substring(10, 8),
+            NationalCheckDigits = bban.Substring(8, 2)
+        };
+    }
 }

@@ -38,4 +38,23 @@ public class OmanBbanValidator : IBbanValidator
     }
 
     public string? Parse(string? input) => Validate(input).IsValid ? input : null;
+
+    /// <inheritdoc/>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        var sanitized = InputSanitizer.Sanitize(bban);
+        if (!Validate(sanitized).IsValid)
+        {
+            return null;
+        }
+
+        // Oman: Bank(3) + Account(16)
+        return new BbanDetails
+        {
+            Bban = sanitized!,
+            CountryCode = CountryCode,
+            BankCode = sanitized![..3],
+            AccountNumber = sanitized.Substring(3, 16)
+        };
+    }
 }

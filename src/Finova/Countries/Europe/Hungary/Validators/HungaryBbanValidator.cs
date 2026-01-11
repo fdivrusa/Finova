@@ -46,4 +46,30 @@ public class HungaryBbanValidator : IBbanValidator
     {
         return Validate(input).IsValid ? input : null;
     }
+
+    /// <summary>
+    /// Parses the Hungarian BBAN and returns the structured details.
+    /// </summary>
+    /// <param name="bban">The BBAN string to parse.</param>
+    /// <returns>A BbanDetails object if valid; otherwise, null.</returns>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        bban = InputSanitizer.Sanitize(bban);
+
+        if (!Validate(bban).IsValid)
+        {
+            return null;
+        }
+
+        // BBAN format: 3 digits (Bank) + 4 digits (Branch) + 1 digit (Check) + 15 digits (Account) + 1 digit (Check)
+        return new BbanDetails
+        {
+            Bban = bban!,
+            CountryCode = CountryCode,
+            BankCode = bban!.Substring(0, 3),
+            BranchCode = bban.Substring(3, 4),
+            AccountNumber = bban.Substring(8, 15),
+            NationalCheckDigits = bban.Substring(7, 1) + bban.Substring(23, 1)
+        };
+    }
 }

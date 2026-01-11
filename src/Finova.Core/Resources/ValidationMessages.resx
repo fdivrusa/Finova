@@ -1373,4 +1373,25 @@
   <data name="InvalidSwedenOrganisationsnummerCheckDigit" xml:space="preserve">
     <value>Swedish organisation number has an invalid Luhn check digit.</value>
   </data>
+  <data name="BankCodeMustBeDigits" xml:space="preserve">
+    <value>Bank code must contain only digits.</value>
+  </data>
+  <data name="BankCodeMustBeLetters" xml:space="preserve">
+    <value>Bank code must contain only letters.</value>
+  </data>
+  <data name="BranchCodeMustBeDigits" xml:space="preserve">
+    <value>Branch code must contain only digits.</value>
+  </data>
+  <data name="AccountNumberMustBeDigits" xml:space="preserve">
+    <value>Account number must contain only digits.</value>
+  </data>
+  <data name="ReserveDigitMustBeZero" xml:space="preserve">
+    <value>Reserve digit must be 0.</value>
+  </data>
+  <data name="InvalidAccountType" xml:space="preserve">
+    <value>Account type must be a letter.</value>
+  </data>
+  <data name="InvalidOwnerIndicator" xml:space="preserve">
+    <value>Owner indicator must be alphanumeric.</value>
+  </data>
 </root>

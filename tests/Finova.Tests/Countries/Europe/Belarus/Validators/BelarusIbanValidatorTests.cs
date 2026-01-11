@@ -23,14 +23,14 @@ public class BelarusIbanValidatorTests
     public void IsValidIban_WithValidBelarusIban_ReturnsTrue()
     {
         // Valid IBAN calculated
-        var iban = "BY0386AKBB101000000000296600";
+        var iban = "BY13NBRB3600900000002Z00AB00";
         _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 
     [Fact]
     public void IsValidIban_WithFormattedIban_ReturnsTrue()
     {
-        var iban = "BY03 86AK BB10 1000 0000 0029 6600";
+        var iban = "BY13 NBRB 3600 9000 0000 2Z00 AB00";
         _validator.Validate(iban).IsValid.Should().BeTrue();
     }
 

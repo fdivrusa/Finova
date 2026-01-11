@@ -42,4 +42,28 @@ public class PolandBbanValidator : IBbanValidator
 
         return ValidationResult.Success();
     }
+
+    /// <summary>
+    /// Parses the Polish BBAN and returns the structured details.
+    /// </summary>
+    /// <param name="bban">The BBAN string to parse.</param>
+    /// <returns>A BbanDetails object if valid; otherwise, null.</returns>
+    public BbanDetails? ParseDetails(string? bban)
+    {
+        bban = InputSanitizer.Sanitize(bban);
+
+        if (!Validate(bban).IsValid)
+        {
+            return null;
+        }
+
+        // BBAN format: 8 digits (Bank/Branch) + 16 digits (Account)
+        return new BbanDetails
+        {
+            Bban = bban!,
+            CountryCode = CountryCode,
+            BankCode = bban!.Substring(0, 8),
+            AccountNumber = bban.Substring(8, 16)
+        };
+    }
 }
