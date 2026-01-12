@@ -133,7 +133,7 @@ public class EuropeIbanValidator : IIbanValidator
             return ValidationResult.Failure(ValidationErrorCode.InvalidInput, ValidationMessages.InvalidLength);
         }
 
-        string country = iban[0..2].ToUpperInvariant();
+        string country = IbanHelper.NormalizeIban(iban)[0..2].ToUpperInvariant();
 
         return country switch
         {
@@ -191,9 +191,7 @@ public class EuropeIbanValidator : IIbanValidator
             "BY" => BelarusIbanValidator.ValidateBelarusIban(iban),
             "AZ" => AzerbaijanIbanValidator.ValidateAzerbaijanIban(iban),
 
-            _ => IbanHelper.IsValidIban(iban)
-                ? ValidationResult.Success()
-                : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, ValidationMessages.UnsupportedCountryOrInvalidIban)
+            _ => ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, ValidationMessages.UnsupportedCountryOrInvalidIban)
         };
     }
 }

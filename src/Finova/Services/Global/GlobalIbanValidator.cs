@@ -179,9 +179,7 @@ public static class GlobalIbanValidator
             "TL" => TimorLesteIbanValidator.ValidateTimorLesteIban(iban),
 
             // ===== FALLBACK =====
-            _ => IbanHelper.IsValidIban(iban)
-                ? ValidationResult.Success()
-                : ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, ValidationMessages.UnsupportedCountryOrInvalidIban)
+            _ => ValidationResult.Failure(ValidationErrorCode.UnsupportedCountry, ValidationMessages.UnsupportedCountryOrInvalidIban)
         };
     }
 }
