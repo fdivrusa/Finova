@@ -461,14 +461,14 @@ public static class StaticValidationScenario
             ("Faroe Islands", "FO123456"), // Format check
             ("Finland", "FI01080233"),
             ("France", "FR40303265045"),
-            ("Georgia", "GE123456789"), // Format check
+            ("Georgia", "GE204522229"), // Validated checksum
             ("Germany", "DE122119035"),
             ("Greece", "EL094014201"),
             ("Hungary", "HU12892312"),
             ("Iceland", "IS123456"), // Format check
             ("Ireland", "IE6388047V"),
             ("Italy", "IT00000010215"),
-            ("Kosovo", "XK100000009"),
+            ("Kosovo", "XK600000000"), // Validated checksum
             ("Latvia", "LV40003521600"),
             ("Liechtenstein", "LI107787577"),
             ("Lithuania", "LT100001911"),
@@ -539,6 +539,9 @@ public static class StaticValidationScenario
             ("Finland", "FI", "2058430-6"),           // Y-tunnus
             ("Denmark", "DK", "47458714"),            // CVR
             ("UK", "GB", "02204302"),                 // Companies House
+            ("Georgia", "GE", "204522229"),           // Tax ID
+            ("Greenland", "GL", "12345674"),          // CVR
+            ("Kosovo", "XK", "600000000"),            // Fiscal Number
         };
 
         foreach (var (country, code, number) in enterpriseExamples)
@@ -559,10 +562,10 @@ public static class StaticValidationScenario
         {
             ("United States", "US", "12-3456789"),     // EIN
             ("Canada", "CA", "123456782"),             // BN (9 digits)
-            ("Brazil", "BR", "11.222.333/0001-81"),    // CNPJ
+            ("Brazil", "BR", "00.000.000/0001-91"),    // CNPJ
             ("Mexico", "MX", "GODE561231GR8"),         // RFC
-            ("India", "IN", "BZPRP1123P"),             // PAN
-            ("China", "CN", "91110000600037367K"),     // USCC
+            ("India", "IN", "BZPPP1123P"),             // PAN
+            ("China", "CN", "91310000633518315Q"),     // USCC
             ("Japan", "JP", "1234567890123"),          // Corporate Number (13 digits)
             ("Singapore", "SG", "123456789A"),         // UEN
             ("Australia", "AU", "53004085616"),        // ABN
