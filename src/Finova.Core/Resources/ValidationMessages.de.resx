@@ -1324,4 +1324,10 @@
   <data name="InvalidOwnerIndicator" xml:space="preserve">
     <value>Inhaberkennzeichen muss alphanumerisch sein.</value>
   </data>
+  <data name="InvalidBelgiumOgmLength" xml:space="preserve">
+    <value>Belgische OGM-Referenzdaten dürfen 10 Ziffern nicht überschreiten.</value>
+  </data>
+  <data name="InvalidPaymentReference" xml:space="preserve">
+    <value>'{PropertyName}' ist keine gültige Zahlungsreferenz.</value>
+  </data>
 </root>

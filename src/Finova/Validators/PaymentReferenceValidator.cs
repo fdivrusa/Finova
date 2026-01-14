@@ -56,7 +56,7 @@ public class PaymentReferenceValidator : IPaymentReferenceValidator
             PaymentReferenceFormat.LocalDenmark => DenmarkPaymentReferenceService.ValidateStatic(communication),
             PaymentReferenceFormat.LocalItaly => ItalyPaymentReferenceService.ValidateStatic(communication),
             PaymentReferenceFormat.LocalPortugal => PortugalPaymentReferenceService.ValidateStatic(communication),
-            _ => ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Unsupported format: {format}")
+            _ => ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.UnsupportedFormat, format))
         };
     }
 

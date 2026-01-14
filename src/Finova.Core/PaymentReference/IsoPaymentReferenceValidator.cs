@@ -92,7 +92,7 @@ public class IsoPaymentReferenceValidator : IIsoPaymentReferenceValidator, IPaym
     {
         if (format != PaymentReferenceFormat.IsoRf)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, $"Format {format} is not supported by IsoPaymentReferenceValidator.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, string.Format(ValidationMessages.UnsupportedPaymentReferenceFormat, format));
         }
         return Validate(reference);
     }

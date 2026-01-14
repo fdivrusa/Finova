@@ -1325,4 +1325,10 @@
   <data name="InvalidOwnerIndicator" xml:space="preserve">
     <value>L'indicateur de propriétaire doit être alphanumérique.</value>
   </data>
+  <data name="InvalidBelgiumOgmLength" xml:space="preserve">
+    <value>Les données de référence OGM ne peuvent pas dépasser 10 chiffres.</value>
+  </data>
+  <data name="InvalidPaymentReference" xml:space="preserve">
+    <value>'{PropertyName}' n'est pas une référence de paiement valide.</value>
+  </data>
 </root>

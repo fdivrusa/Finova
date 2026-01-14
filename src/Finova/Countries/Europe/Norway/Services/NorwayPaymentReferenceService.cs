@@ -25,7 +25,7 @@ public partial class NorwayPaymentReferenceService : IPaymentReferenceGenerator
     {
         PaymentReferenceFormat.LocalNorway => GenerateKid(rawReference),
         PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
-        _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
+        _ => throw new NotSupportedException(string.Format(ValidationMessages.UnsupportedFormat, format))
     };
 
     public PaymentReferenceDetails Parse(string reference)
@@ -102,12 +102,12 @@ public partial class NorwayPaymentReferenceService : IPaymentReferenceGenerator
 
         if (string.IsNullOrEmpty(cleanRef))
         {
-            throw new ArgumentException("Reference cannot be empty.");
+            throw new ArgumentException(ValidationMessages.InputCannotBeEmpty);
         }
 
         if (cleanRef.Length < 2 || cleanRef.Length > 24)
         {
-            throw new ArgumentException("Norwegian KID reference data must be between 2 and 24 digits.");
+            throw new ArgumentException(ValidationMessages.InvalidNorwayKidLength);
         }
 
         if (useMod11)
@@ -115,7 +115,7 @@ public partial class NorwayPaymentReferenceService : IPaymentReferenceGenerator
             var checkDigit = CalculateMod11(cleanRef);
             if (checkDigit == "-")
             {
-                throw new ArgumentException("Invalid reference data for Modulo 11 (result is 10).");
+                throw new ArgumentException(ValidationMessages.InvalidCheckDigit);
             }
             return $"{cleanRef}{checkDigit}";
         }

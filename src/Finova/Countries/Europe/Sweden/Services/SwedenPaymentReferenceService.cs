@@ -27,7 +27,7 @@ public partial class SwedenPaymentReferenceService : IPaymentReferenceGenerator
     {
         PaymentReferenceFormat.LocalSweden => GenerateOcr(rawReference),
         PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
-        _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
+        _ => throw new NotSupportedException(string.Format(ValidationMessages.UnsupportedFormat, format))
     };
 
     public PaymentReferenceDetails Parse(string reference)
@@ -107,7 +107,7 @@ public partial class SwedenPaymentReferenceService : IPaymentReferenceGenerator
 
         if (cleanRef.Length > 23)
         {
-            throw new ArgumentException("Swedish OCR reference data cannot exceed 23 digits (to allow for 2 check digits).");
+            throw new ArgumentException(ValidationMessages.InvalidSwedishOcrLength);
         }
 
         // Calculate length digit

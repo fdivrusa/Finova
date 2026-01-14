@@ -114,6 +114,42 @@ public class PaymentReferenceGeneratorTests
         PaymentReferenceValidator.Validate(result, PaymentReferenceFormat.LocalSlovenia).IsValid.Should().BeTrue();
     }
 
+    [Theory]
+    [InlineData("1234567890")]
+    public void Generate_WithLocalDenmarkFormat_CreatesValidFik(string input)
+    {
+        // Act
+        var result = _generator.Generate(input, PaymentReferenceFormat.LocalDenmark);
+
+        // Assert
+        result.Should().StartWith("+71<");
+        PaymentReferenceValidator.Validate(result, PaymentReferenceFormat.LocalDenmark).IsValid.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData("12345678901234")]
+    public void Generate_WithLocalItalyFormat_CreatesValidIuv(string input)
+    {
+        // Act
+        var result = _generator.Generate(input, PaymentReferenceFormat.LocalItaly);
+
+        // Assert
+        result.Length.Should().BeGreaterThan(input.Length); // Should add check digit
+        PaymentReferenceValidator.Validate(result, PaymentReferenceFormat.LocalItaly).IsValid.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData("123456789")]
+    public void Generate_WithLocalPortugalFormat_CreatesValidMultibanco(string input)
+    {
+        // Act
+        var result = _generator.Generate(input, PaymentReferenceFormat.LocalPortugal);
+
+        // Assert
+        result.Should().HaveLength(9);
+        PaymentReferenceValidator.Validate(result, PaymentReferenceFormat.LocalPortugal).IsValid.Should().BeTrue();
+    }
+
     #endregion
 
     #region IsValid Tests
@@ -195,6 +231,9 @@ public class PaymentReferenceGeneratorTests
         generator.Generate("123456", PaymentReferenceFormat.LocalSweden).Should().NotBeNullOrEmpty();
         generator.Generate("12345678901234567890123456", PaymentReferenceFormat.LocalSwitzerland).Should().HaveLength(27);
         generator.Generate("123456789012", PaymentReferenceFormat.LocalSlovenia).Should().StartWith("SI12");
+        generator.Generate("1234567890", PaymentReferenceFormat.LocalDenmark).Should().StartWith("+71<");
+        generator.Generate("12345678901234", PaymentReferenceFormat.LocalItaly).Should().NotBeNullOrEmpty();
+        generator.Generate("123456789", PaymentReferenceFormat.LocalPortugal).Should().HaveLength(9);
     }
 
     #endregion
@@ -212,7 +251,7 @@ public class PaymentReferenceGeneratorTests
 
         // Assert
         act.Should().Throw<NotSupportedException>()
-           .WithMessage("*999*not supported*");
+           .WithMessage("*Unsupported format*");
     }
 
     [Theory]

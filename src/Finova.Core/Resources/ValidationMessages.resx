@@ -1394,4 +1394,10 @@
   <data name="InvalidOwnerIndicator" xml:space="preserve">
     <value>Owner indicator must be alphanumeric.</value>
   </data>
+  <data name="InvalidBelgiumOgmLength" xml:space="preserve">
+    <value>OGM reference data cannot exceed 10 digits.</value>
+  </data>
+  <data name="InvalidPaymentReference" xml:space="preserve">
+    <value>'{PropertyName}' is not a valid payment reference.</value>
+  </data>
 </root>

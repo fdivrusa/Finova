@@ -1325,4 +1325,10 @@
   <data name="InvalidOwnerIndicator" xml:space="preserve">
     <value>Eigenarindicator moet alfanumeriek zijn.</value>
   </data>
+  <data name="InvalidBelgiumOgmLength" xml:space="preserve">
+    <value>Belgische OGM-referentiegegevens mogen niet langer zijn dan 10 cijfers.</value>
+  </data>
+  <data name="InvalidPaymentReference" xml:space="preserve">
+    <value>'{PropertyName}' is geen geldige betalingsreferentie.</value>
+  </data>
 </root>
