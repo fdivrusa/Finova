@@ -36,7 +36,7 @@ public class AlgeriaNifValidator : ITaxIdValidator
 
         if (clean.Length != 15 && clean.Length != 20)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "NIF must be 15 or 20 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidAlgeriaNifLength);
         }
 
         return ValidationResult.Success();

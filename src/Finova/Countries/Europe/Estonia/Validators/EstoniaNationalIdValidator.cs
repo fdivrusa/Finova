@@ -54,7 +54,7 @@ public class EstoniaNationalIdValidator : INationalIdValidator
         {
             // 1-6 covers 1800-2099. 7,8 are for 2100+ (future proofing? usually 1-6 currently)
             // Actually 1-6 is standard.
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid gender/century digit.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidGenderCenturyDigit);
         }
 
         // Validate Date

@@ -52,7 +52,7 @@ public partial class UnitedKingdomNinoValidator : INationalIdValidator
         string prefix = normalized.Substring(0, 2);
         if (IsInvalidPrefix(prefix))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid NINO prefix.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUkNinoPrefix);
         }
 
         return ValidationResult.Success();

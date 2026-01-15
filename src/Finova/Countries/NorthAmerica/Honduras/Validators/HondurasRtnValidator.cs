@@ -31,7 +31,7 @@ public class HondurasRtnValidator : ITaxIdValidator
 
         if (clean.Length != 14)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "RTN must be 14 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidHondurasRtnLength);
         }
 
         return ValidationResult.Success();

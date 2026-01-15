@@ -47,7 +47,7 @@ public partial class ColombiaVatValidator : IVatValidator
 
         if (!NitPattern().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Colombian NIT must be 9-10 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidColombianNitFormat);
         }
 
         // If 9 digits, no check digit validation (just the base number)
@@ -71,7 +71,7 @@ public partial class ColombiaVatValidator : IVatValidator
 
         if (checkDigit != (clean[9] - '0'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Colombian NIT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidColombianNitChecksum);
         }
 
         return ValidationResult.Success();

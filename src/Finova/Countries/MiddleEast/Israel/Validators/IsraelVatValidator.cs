@@ -52,13 +52,13 @@ public partial class IsraelVatValidator : IVatValidator
 
         if (!VatPattern().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Israeli VAT must be 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIsraelVatFormat);
         }
 
         // Validate using Luhn algorithm variant
         if (!ValidateChecksum(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Israeli VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidIsraelVatChecksum);
         }
 
         return ValidationResult.Success();

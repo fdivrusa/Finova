@@ -1330,4 +1330,232 @@
   <data name="InvalidPaymentReference" xml:space="preserve">
     <value>'{PropertyName}' ist keine gültige Zahlungsreferenz.</value>
   </data>
+  <data name="InvalidColombianNitChecksum" xml:space="preserve">
+    <value>Ungültige kolumbianische NIT-Prüfsumme.</value>
+  </data>
+  <data name="InvalidOmanVatLength" xml:space="preserve">
+    <value>Omanische USt-IdNr. muss 15 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidUaeTrnFormat" xml:space="preserve">
+    <value>VAE TRN muss 15 Ziffern enthalten, beginnend mit 100.</value>
+  </data>
+  <data name="InvalidUaeBbanLength" xml:space="preserve">
+    <value>AE BBAN muss 19 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidUaeBbanFormat" xml:space="preserve">
+    <value>AE BBAN darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidUaeTrnChecksum" xml:space="preserve">
+    <value>Ungültige VAE TRN-Prüfsumme.</value>
+  </data>
+  <data name="InvalidSaudiArabiaVatFormat" xml:space="preserve">
+    <value>Saudi-arabische USt-IdNr. muss 15 Ziffern enthalten, beginnend mit 3.</value>
+  </data>
+  <data name="InvalidSaudiArabiaVatChecksum" xml:space="preserve">
+    <value>Ungültige saudi-arabische USt-Prüfsumme.</value>
+  </data>
+  <data name="InvalidSaudiArabiaBbanLength" xml:space="preserve">
+    <value>SA BBAN muss 20 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidSaudiArabiaBbanFormat" xml:space="preserve">
+    <value>SA BBAN muss alphanumerisch sein.</value>
+  </data>
+  <data name="InvalidQatarBbanLength" xml:space="preserve">
+    <value>QA BBAN muss 25 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidQatarBbanFormat" xml:space="preserve">
+    <value>QA BBAN muss alphanumerisch sein.</value>
+  </data>
+  <data name="InvalidQatarTinLength" xml:space="preserve">
+    <value>Qatar TIN muss 10 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidKuwaitBbanLength" xml:space="preserve">
+    <value>KW BBAN muss 26 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidKuwaitBbanFormat" xml:space="preserve">
+    <value>KW BBAN muss alphanumerisch sein.</value>
+  </data>
+  <data name="InvalidLebanonBbanLength" xml:space="preserve">
+    <value>LB BBAN muss 24 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidLebanonBbanFormat" xml:space="preserve">
+    <value>LB BBAN muss alphanumerisch sein.</value>
+  </data>
+  <data name="InvalidIsraelVatFormat" xml:space="preserve">
+    <value>Israelische USt-IdNr. muss 9 Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidIsraelVatChecksum" xml:space="preserve">
+    <value>Ungültige israelische USt-Prüfsumme.</value>
+  </data>
+  <data name="InvalidBahrainVatLength" xml:space="preserve">
+    <value>Bahrainische USt-IdNr. muss 15 Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidBahrainVatFormat" xml:space="preserve">
+    <value>Bahrainische USt-IdNr. beginnt normalerweise mit '3'.</value>
+  </data>
+  <data name="InvalidBelgiumNationalIdDate" xml:space="preserve">
+    <value>Ungültiges Geburtsdatum in der Nationalregisternummer.</value>
+  </data>
+  <data name="InvalidFranceNationalIdLength" xml:space="preserve">
+    <value>Französische Personalausweisnummer muss 15 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidFranceNationalIdFormat" xml:space="preserve">
+    <value>Ungültiges französisches Personalausweisnummer-Format.</value>
+  </data>
+  <data name="InvalidFranceNationalIdKeyFormat" xml:space="preserve">
+    <value>Ungültiges Schlüsselformat.</value>
+  </data>
+  <data name="InvalidFranceNationalIdNumeric" xml:space="preserve">
+    <value>Ungültiger numerischer Inhalt.</value>
+  </data>
+  <data name="InvalidFranceNationalIdChecksum" xml:space="preserve">
+    <value>Ungültige Prüfsumme.</value>
+  </data>
+  <data name="InvalidGermanyBlzLength" xml:space="preserve">
+    <value>Deutsche BLZ muss 8 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidGermanyBlzFormat" xml:space="preserve">
+    <value>Deutsche BLZ darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidItalyAbiLength" xml:space="preserve">
+    <value>Italienischer ABI-Code muss 5 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidItalyAbiFormat" xml:space="preserve">
+    <value>Italienischer ABI-Code darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidSpainBankCodeLength" xml:space="preserve">
+    <value>Spanischer Bankcode muss 4 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidSpainBankCodeFormat" xml:space="preserve">
+    <value>Spanischer Bankcode darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidFranceBankCodeLength" xml:space="preserve">
+    <value>Französischer Bankcode muss 5 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidFranceBankCodeFormat" xml:space="preserve">
+    <value>Französischer Bankcode darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidIrelandNationalIdFirst7" xml:space="preserve">
+    <value>Erste 7 Zeichen müssen Ziffern sein.</value>
+  </data>
+  <data name="InvalidIrelandNationalId8th" xml:space="preserve">
+    <value>8. Zeichen muss ein Buchstabe sein.</value>
+  </data>
+  <data name="InvalidIrelandNationalId9th" xml:space="preserve">
+    <value>9. Zeichen muss ein Buchstabe sein.</value>
+  </data>
+  <data name="InvalidUkNinoPrefix" xml:space="preserve">
+    <value>Ungültiges NINO-Präfix.</value>
+  </data>
+  <data name="InvalidAlgeriaNifLength" xml:space="preserve">
+    <value>NIF muss 15 oder 20 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidAngolaNifLength" xml:space="preserve">
+    <value>NIF muss 9 oder 10 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidIvoryCoastNccFormat" xml:space="preserve">
+    <value>Ungültiges NCC-Format. Erwartet 7 Ziffern gefolgt von 1 Buchstaben.</value>
+  </data>
+  <data name="InvalidEgyptBbanLength" xml:space="preserve">
+    <value>EG BBAN muss 25 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidEgyptBbanFormat" xml:space="preserve">
+    <value>EG BBAN darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidEgyptTrnLength" xml:space="preserve">
+    <value>TRN muss 9 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidMauritaniaBbanLength" xml:space="preserve">
+    <value>MR BBAN muss 23 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidMauritaniaBbanFormat" xml:space="preserve">
+    <value>MR BBAN darf nur Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidMoroccoIceLength" xml:space="preserve">
+    <value>ICE muss 15 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidNigeriaTinLength" xml:space="preserve">
+    <value>TIN muss zwischen 8 und 12 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidSenegalNineaLength" xml:space="preserve">
+    <value>NINEA muss 15 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidSeychellesBankCodeFormat" xml:space="preserve">
+    <value>Bankcode muss Buchstaben enthalten.</value>
+  </data>
+  <data name="InvalidSeychellesAccountFormat" xml:space="preserve">
+    <value>Kontonummer muss Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidSeychellesCurrencyFormat" xml:space="preserve">
+    <value>Währungscode muss Buchstaben enthalten.</value>
+  </data>
+  <data name="InvalidTunisiaMfFormat" xml:space="preserve">
+    <value>Ungültiges Matricule Fiscal Format.</value>
+  </data>
+  <data name="InvalidBarbadosBbanFormatLetters" xml:space="preserve">
+    <value>Erste 4 Zeichen müssen Buchstaben sein.</value>
+  </data>
+  <data name="InvalidBarbadosBbanFormatDigits" xml:space="preserve">
+    <value>Letzte 20 Zeichen müssen Ziffern sein.</value>
+  </data>
+  <data name="InvalidCostaRicaNiteLength" xml:space="preserve">
+    <value>NITE muss 10 oder 12 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidDominicanRepublicRncLength" xml:space="preserve">
+    <value>RNC muss 9 oder 11 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidElSalvadorNitLength" xml:space="preserve">
+    <value>NIT muss 14 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidGuatemalaNitLength" xml:space="preserve">
+    <value>NIT muss zwischen 2 und 12 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidHondurasRtnLength" xml:space="preserve">
+    <value>RTN muss 14 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidNicaraguaRucLength" xml:space="preserve">
+    <value>RUC muss 14 Zeichen lang sein.</value>
+  </data>
+  <data name="InvalidColombianNitFormat" xml:space="preserve">
+    <value>Kolumbianische NIT muss 9-10 Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidFalklandIslandsBbanFormatLetters" xml:space="preserve">
+    <value>Erste 2 Zeichen müssen Buchstaben sein.</value>
+  </data>
+  <data name="InvalidFalklandIslandsBbanFormatDigits" xml:space="preserve">
+    <value>Letzte 12 Zeichen müssen Ziffern sein.</value>
+  </data>
+  <data name="InvalidBulgariaBranchCode" xml:space="preserve">
+    <value>Bulgarischer Filialcode muss Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidBulgariaAccountType" xml:space="preserve">
+    <value>Bulgarischer Kontotyp muss Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidDatePart" xml:space="preserve">
+    <value>Ungültiger Datumsteil.</value>
+  </data>
+  <data name="InvalidGenderCenturyDigit" xml:space="preserve">
+    <value>Ungültige Geschlechts-/Jahrhundertziffer.</value>
+  </data>
+  <data name="InvalidCenturySign" xml:space="preserve">
+    <value>Ungültiges Jahrhundertzeichen.</value>
+  </data>
+  <data name="InvalidRussiaInnLength" xml:space="preserve">
+    <value>INN muss 10 oder 12 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidSwitzerlandNationalIdFormat" xml:space="preserve">
+    <value>Muss mit 756 beginnen.</value>
+  </data>
+  <data name="VaticanNationalIdNotSupported" xml:space="preserve">
+    <value>Vatikanstadt Personalausweisnummer-Validierung wird nicht unterstützt.</value>
+  </data>
+  <data name="InvalidKazakhstanBinLength" xml:space="preserve">
+    <value>BIN/IIN muss 12 Ziffern lang sein.</value>
+  </data>
+  <data name="InvalidNewZealandGstFormat" xml:space="preserve">
+    <value>IRD-Nummer muss 8 oder 9 Ziffern enthalten.</value>
+  </data>
+  <data name="InvalidVietnamMstLength" xml:space="preserve">
+    <value>MST muss 10 oder 13 Ziffern lang sein.</value>
+  </data>
 </root>

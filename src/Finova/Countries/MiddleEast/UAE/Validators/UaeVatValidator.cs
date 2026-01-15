@@ -47,14 +47,14 @@ public partial class UaeVatValidator : IVatValidator
 
         if (!TrnPattern().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "UAE TRN must be 15 digits starting with 100.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUaeTrnFormat);
         }
 
         // UAE TRN uses a Luhn-like checksum validation
         // The last digit is a check digit
         if (!ValidateTrnChecksum(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid UAE TRN checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidUaeTrnChecksum);
         }
 
         return ValidationResult.Success();

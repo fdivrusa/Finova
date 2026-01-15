@@ -39,14 +39,14 @@ public class FranceNationalIdValidator : INationalIdValidator
         // 2. Length Check: Must be 15 characters (13 digits + 2 key digits)
         if (sanitized.Length != 15)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "French National ID must be 15 characters long.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidFranceNationalIdLength);
         }
 
         // 3. Format Check: 13 chars (digits or 2A/2B) + 2 digits
         // Regex: First digit (1/2), then 12 digits OR specific Corsica pattern, then 2 digits key
         if (!Regex.IsMatch(sanitized, @"^[12]\d{14}$") && !Regex.IsMatch(sanitized, @"^[12]\d{4}(2A|2B)\d{6}\d{2}$"))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid French National ID format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFranceNationalIdFormat);
         }
 
         // 4. Checksum Calculation
@@ -55,7 +55,7 @@ public class FranceNationalIdValidator : INationalIdValidator
 
         if (!long.TryParse(keyPart, out long key))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid key format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFranceNationalIdKeyFormat);
         }
 
         // Handle Corsica (2A -> 19, 2B -> 18) for calculation
@@ -71,7 +71,7 @@ public class FranceNationalIdValidator : INationalIdValidator
 
         if (!BigInteger.TryParse(numericString, out BigInteger number))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid numeric content.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidFranceNationalIdNumeric);
         }
 
         // NIR Key Formula: 97 - (Number % 97)
@@ -79,7 +79,7 @@ public class FranceNationalIdValidator : INationalIdValidator
 
         if (calculatedKey != key)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidFranceNationalIdChecksum);
         }
 
         return ValidationResult.Success();

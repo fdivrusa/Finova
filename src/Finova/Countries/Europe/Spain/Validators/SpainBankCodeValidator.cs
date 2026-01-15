@@ -25,12 +25,12 @@ public class SpainBankCodeValidator : IBankRoutingValidator
 
         if (sanitized.Length != 4)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Spanish Bank Code must be 4 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidSpainBankCodeLength);
         }
 
         if (!Regex.IsMatch(sanitized, @"^\d{4}$"))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Spanish Bank Code must contain only digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSpainBankCodeFormat);
         }
 
         return ValidationResult.Success();

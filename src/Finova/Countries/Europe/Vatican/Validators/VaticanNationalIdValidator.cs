@@ -28,7 +28,7 @@ public class VaticanNationalIdValidator : INationalIdValidator
         // Since there is no standard public format, we will return failure for now
         // or maybe just check for non-empty.
         // Let's assume it's not supported for now to be safe.
-        return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Vatican City National ID validation is not supported.");
+        return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.VaticanNationalIdNotSupported);
     }
 
     /// <inheritdoc/>

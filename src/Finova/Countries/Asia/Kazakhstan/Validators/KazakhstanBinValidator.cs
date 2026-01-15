@@ -36,7 +36,7 @@ public class KazakhstanBinValidator : ITaxIdValidator
 
         if (clean.Length != 12)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "BIN/IIN must be 12 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidKazakhstanBinLength);
         }
 
         // Checksum calculation

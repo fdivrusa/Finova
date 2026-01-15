@@ -68,7 +68,7 @@ public class NorwayFodselsnummerValidator : INationalIdValidator
 
         if (month < 1 || month > 12 || day < 1 || day > 31)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidDatePart);
         }
 
         // Checksum 1 (10th digit)

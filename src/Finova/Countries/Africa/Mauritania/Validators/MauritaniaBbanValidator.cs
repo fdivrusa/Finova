@@ -17,12 +17,12 @@ public class MauritaniaBbanValidator : IBbanValidator
         // 23n -> 23 digits
         if (bban.Length != 23)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "MR BBAN must be 23 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidMauritaniaBbanLength);
         }
 
         if (!bban.All(char.IsDigit))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "MR BBAN must contain only digits.");
+             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidMauritaniaBbanFormat);
         }
 
         return ValidationResult.Success();

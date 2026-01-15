@@ -55,12 +55,12 @@ public class BahrainVatValidator : ITaxIdValidator, IVatValidator
 
         if (clean.Length != 15)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Bahrain VAT number must be 15 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidBahrainVatLength);
         }
 
         if (!clean.StartsWith('3'))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Bahrain VAT number typically starts with '3'.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBahrainVatFormat);
         }
 
         return ValidationResult.Success();

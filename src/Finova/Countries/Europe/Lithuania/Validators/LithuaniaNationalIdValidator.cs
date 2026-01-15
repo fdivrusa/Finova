@@ -52,7 +52,7 @@ public class LithuaniaNationalIdValidator : INationalIdValidator
         int genderCentury = sanitized[0] - '0';
         if (genderCentury < 1 || genderCentury > 6)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid gender/century digit.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidGenderCenturyDigit);
         }
 
         // Validate Date

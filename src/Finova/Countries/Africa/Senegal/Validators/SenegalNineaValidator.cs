@@ -31,7 +31,7 @@ public class SenegalNineaValidator : ITaxIdValidator
 
         if (clean.Length != 15)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "NINEA must be 15 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidSenegalNineaLength);
         }
 
         return ValidationResult.Success();

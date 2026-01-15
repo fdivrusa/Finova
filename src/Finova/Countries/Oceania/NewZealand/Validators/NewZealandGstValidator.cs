@@ -49,7 +49,7 @@ public partial class NewZealandGstValidator : IVatValidator
 
         if (!IrdRegex().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "IRD number must be 8 or 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidNewZealandGstFormat);
         }
 
         // Pad to 9 digits if 8 digits

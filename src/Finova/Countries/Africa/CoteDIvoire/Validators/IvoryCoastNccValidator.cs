@@ -30,7 +30,7 @@ public partial class IvoryCoastNccValidator : ITaxIdValidator
 
         if (!NccRegex().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid NCC format. Expected 7 digits followed by 1 letter.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIvoryCoastNccFormat);
         }
 
         return ValidationResult.Success();

@@ -48,13 +48,13 @@ public partial class SaudiArabiaVatValidator : IVatValidator
 
         if (!VatPattern().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Saudi Arabia VAT must be 15 digits starting with 3.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSaudiArabiaVatFormat);
         }
 
         // The last digit is a check digit using Luhn algorithm
         if (!ValidateLuhnChecksum(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, "Invalid Saudi Arabia VAT checksum.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidChecksum, ValidationMessages.InvalidSaudiArabiaVatChecksum);
         }
 
         return ValidationResult.Success();

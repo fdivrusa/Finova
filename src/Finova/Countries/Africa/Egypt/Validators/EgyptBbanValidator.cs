@@ -17,12 +17,12 @@ public class EgyptBbanValidator : IBbanValidator
         // 25n -> 25 digits
         if (bban.Length != 25)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "EG BBAN must be 25 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidEgyptBbanLength);
         }
 
         if (!bban.All(char.IsDigit))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "EG BBAN must contain only digits.");
+             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidEgyptBbanFormat);
         }
 
         return ValidationResult.Success();

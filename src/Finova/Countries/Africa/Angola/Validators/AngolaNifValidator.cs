@@ -31,7 +31,7 @@ public class AngolaNifValidator : ITaxIdValidator
 
         if (clean.Length != 9 && clean.Length != 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "NIF must be 9 or 10 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidAngolaNifLength);
         }
 
         return ValidationResult.Success();

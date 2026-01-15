@@ -31,7 +31,7 @@ public class QatarTinValidator : ITaxIdValidator
 
         if (clean.Length != 10)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Qatar TIN must be 10 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidQatarTinLength);
         }
 
         return ValidationResult.Success();

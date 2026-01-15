@@ -47,21 +47,21 @@ public class IrelandNationalIdValidator : INationalIdValidator
         string digitsPart = sanitized.Substring(0, 7);
         if (!long.TryParse(digitsPart, out _))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "First 7 characters must be digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIrelandNationalIdFirst7);
         }
 
         // 8th char must be a letter (Check Character)
         char checkChar = sanitized[7];
         if (!char.IsLetter(checkChar))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "8th character must be a letter.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIrelandNationalId8th);
         }
 
         // Optional 9th char must be a letter (W, T, X, etc.)
         char? lastChar = sanitized.Length == 9 ? sanitized[8] : null;
         if (lastChar.HasValue && !char.IsLetter(lastChar.Value))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "9th character must be a letter.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidIrelandNationalId9th);
         }
 
         // Calculate Sum

@@ -36,7 +36,7 @@ public class MoroccoIceValidator : ITaxIdValidator
 
         if (clean.Length != 15)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "ICE must be 15 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidMoroccoIceLength);
         }
 
         // ICE format: 9 digits (RC sequence) + 2 digits (RC city) + 4 digits (check/control)

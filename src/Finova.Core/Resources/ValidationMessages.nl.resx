@@ -1331,4 +1331,232 @@
   <data name="InvalidPaymentReference" xml:space="preserve">
     <value>'{PropertyName}' is geen geldige betalingsreferentie.</value>
   </data>
+  <data name="InvalidColombianNitChecksum" xml:space="preserve">
+    <value>Ongeldige Colombiaanse NIT-controlesom.</value>
+  </data>
+  <data name="InvalidOmanVatLength" xml:space="preserve">
+    <value>Omaans btw-nummer moet 15 tekens bevatten.</value>
+  </data>
+  <data name="InvalidUaeTrnFormat" xml:space="preserve">
+    <value>VAE TRN moet 15 cijfers bevatten beginnend met 100.</value>
+  </data>
+  <data name="InvalidUaeBbanLength" xml:space="preserve">
+    <value>AE BBAN moet 19 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidUaeBbanFormat" xml:space="preserve">
+    <value>AE BBAN mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="InvalidUaeTrnChecksum" xml:space="preserve">
+    <value>Ongeldige VAE TRN-controlesom.</value>
+  </data>
+  <data name="InvalidSaudiArabiaVatFormat" xml:space="preserve">
+    <value>Saoedi-Arabisch btw-nummer moet 15 cijfers bevatten beginnend met 3.</value>
+  </data>
+  <data name="InvalidSaudiArabiaVatChecksum" xml:space="preserve">
+    <value>Ongeldige Saoedi-Arabische btw-controlesom.</value>
+  </data>
+  <data name="InvalidSaudiArabiaBbanLength" xml:space="preserve">
+    <value>SA BBAN moet 20 tekens bevatten.</value>
+  </data>
+  <data name="InvalidSaudiArabiaBbanFormat" xml:space="preserve">
+    <value>SA BBAN moet alfanumeriek zijn.</value>
+  </data>
+  <data name="InvalidQatarBbanLength" xml:space="preserve">
+    <value>QA BBAN moet 25 tekens bevatten.</value>
+  </data>
+  <data name="InvalidQatarBbanFormat" xml:space="preserve">
+    <value>QA BBAN moet alfanumeriek zijn.</value>
+  </data>
+  <data name="InvalidQatarTinLength" xml:space="preserve">
+    <value>Qatar TIN moet 10 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidKuwaitBbanLength" xml:space="preserve">
+    <value>KW BBAN moet 26 tekens bevatten.</value>
+  </data>
+  <data name="InvalidKuwaitBbanFormat" xml:space="preserve">
+    <value>KW BBAN moet alfanumeriek zijn.</value>
+  </data>
+  <data name="InvalidLebanonBbanLength" xml:space="preserve">
+    <value>LB BBAN moet 24 tekens bevatten.</value>
+  </data>
+  <data name="InvalidLebanonBbanFormat" xml:space="preserve">
+    <value>LB BBAN moet alfanumeriek zijn.</value>
+  </data>
+  <data name="InvalidIsraelVatFormat" xml:space="preserve">
+    <value>Israëlisch btw-nummer moet 9 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidIsraelVatChecksum" xml:space="preserve">
+    <value>Ongeldige Israëlische btw-controlesom.</value>
+  </data>
+  <data name="InvalidBahrainVatLength" xml:space="preserve">
+    <value>Bahrein btw-nummer moet 15 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidBahrainVatFormat" xml:space="preserve">
+    <value>Bahrein btw-nummer begint doorgaans met '3'.</value>
+  </data>
+  <data name="InvalidBelgiumNationalIdDate" xml:space="preserve">
+    <value>Ongeldige geboortedatum in rijksregisternummer.</value>
+  </data>
+  <data name="InvalidFranceNationalIdLength" xml:space="preserve">
+    <value>Frans nationaal identificatienummer moet 15 tekens bevatten.</value>
+  </data>
+  <data name="InvalidFranceNationalIdFormat" xml:space="preserve">
+    <value>Ongeldig Frans nationaal identificatienummer formaat.</value>
+  </data>
+  <data name="InvalidFranceNationalIdKeyFormat" xml:space="preserve">
+    <value>Ongeldig sleutelformaat.</value>
+  </data>
+  <data name="InvalidFranceNationalIdNumeric" xml:space="preserve">
+    <value>Ongeldige numerieke inhoud.</value>
+  </data>
+  <data name="InvalidFranceNationalIdChecksum" xml:space="preserve">
+    <value>Ongeldige controlesom.</value>
+  </data>
+  <data name="InvalidGermanyBlzLength" xml:space="preserve">
+    <value>Duitse BLZ moet 8 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidGermanyBlzFormat" xml:space="preserve">
+    <value>Duitse BLZ mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="InvalidItalyAbiLength" xml:space="preserve">
+    <value>Italiaanse ABI-code moet 5 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidItalyAbiFormat" xml:space="preserve">
+    <value>Italiaanse ABI-code mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="InvalidSpainBankCodeLength" xml:space="preserve">
+    <value>Spaanse bankcode moet 4 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidSpainBankCodeFormat" xml:space="preserve">
+    <value>Spaanse bankcode mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="InvalidFranceBankCodeLength" xml:space="preserve">
+    <value>Franse bankcode moet 5 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidFranceBankCodeFormat" xml:space="preserve">
+    <value>Franse bankcode mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="InvalidIrelandNationalIdFirst7" xml:space="preserve">
+    <value>Eerste 7 tekens moeten cijfers zijn.</value>
+  </data>
+  <data name="InvalidIrelandNationalId8th" xml:space="preserve">
+    <value>8e teken moet een letter zijn.</value>
+  </data>
+  <data name="InvalidIrelandNationalId9th" xml:space="preserve">
+    <value>9e teken moet een letter zijn.</value>
+  </data>
+  <data name="InvalidUkNinoPrefix" xml:space="preserve">
+    <value>Ongeldig NINO-voorvoegsel.</value>
+  </data>
+  <data name="InvalidAlgeriaNifLength" xml:space="preserve">
+    <value>NIF moet 15 of 20 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidAngolaNifLength" xml:space="preserve">
+    <value>NIF moet 9 of 10 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidIvoryCoastNccFormat" xml:space="preserve">
+    <value>Ongeldig NCC-formaat. Verwacht 7 cijfers gevolgd door 1 letter.</value>
+  </data>
+  <data name="InvalidEgyptBbanLength" xml:space="preserve">
+    <value>EG BBAN moet 25 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidEgyptBbanFormat" xml:space="preserve">
+    <value>EG BBAN mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="InvalidEgyptTrnLength" xml:space="preserve">
+    <value>TRN moet 9 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidMauritaniaBbanLength" xml:space="preserve">
+    <value>MR BBAN moet 23 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidMauritaniaBbanFormat" xml:space="preserve">
+    <value>MR BBAN mag alleen cijfers bevatten.</value>
+  </data>
+  <data name="InvalidMoroccoIceLength" xml:space="preserve">
+    <value>ICE moet 15 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidNigeriaTinLength" xml:space="preserve">
+    <value>TIN moet tussen 8 en 12 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidSenegalNineaLength" xml:space="preserve">
+    <value>NINEA moet 15 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidSeychellesBankCodeFormat" xml:space="preserve">
+    <value>Bankcode moet letters bevatten.</value>
+  </data>
+  <data name="InvalidSeychellesAccountFormat" xml:space="preserve">
+    <value>Rekeningnummer moet cijfers bevatten.</value>
+  </data>
+  <data name="InvalidSeychellesCurrencyFormat" xml:space="preserve">
+    <value>Valutacode moet letters bevatten.</value>
+  </data>
+  <data name="InvalidTunisiaMfFormat" xml:space="preserve">
+    <value>Ongeldig Matricule Fiscal formaat.</value>
+  </data>
+  <data name="InvalidBarbadosBbanFormatLetters" xml:space="preserve">
+    <value>Eerste 4 tekens moeten letters zijn.</value>
+  </data>
+  <data name="InvalidBarbadosBbanFormatDigits" xml:space="preserve">
+    <value>Laatste 20 tekens moeten cijfers zijn.</value>
+  </data>
+  <data name="InvalidCostaRicaNiteLength" xml:space="preserve">
+    <value>NITE moet 10 of 12 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidDominicanRepublicRncLength" xml:space="preserve">
+    <value>RNC moet 9 of 11 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidElSalvadorNitLength" xml:space="preserve">
+    <value>NIT moet 14 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidGuatemalaNitLength" xml:space="preserve">
+    <value>NIT moet tussen 2 en 12 tekens bevatten.</value>
+  </data>
+  <data name="InvalidHondurasRtnLength" xml:space="preserve">
+    <value>RTN moet 14 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidNicaraguaRucLength" xml:space="preserve">
+    <value>RUC moet 14 tekens bevatten.</value>
+  </data>
+  <data name="InvalidColombianNitFormat" xml:space="preserve">
+    <value>Colombiaans NIT moet 9-10 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidFalklandIslandsBbanFormatLetters" xml:space="preserve">
+    <value>Eerste 2 tekens moeten letters zijn.</value>
+  </data>
+  <data name="InvalidFalklandIslandsBbanFormatDigits" xml:space="preserve">
+    <value>Laatste 12 tekens moeten cijfers zijn.</value>
+  </data>
+  <data name="InvalidBulgariaBranchCode" xml:space="preserve">
+    <value>Bulgaarse filiaalcode moet cijfers bevatten.</value>
+  </data>
+  <data name="InvalidBulgariaAccountType" xml:space="preserve">
+    <value>Bulgaars rekeningtype moet cijfers bevatten.</value>
+  </data>
+  <data name="InvalidDatePart" xml:space="preserve">
+    <value>Ongeldig datumdeel.</value>
+  </data>
+  <data name="InvalidGenderCenturyDigit" xml:space="preserve">
+    <value>Ongeldig geslacht/eeuw cijfer.</value>
+  </data>
+  <data name="InvalidCenturySign" xml:space="preserve">
+    <value>Ongeldig eeuwteken.</value>
+  </data>
+  <data name="InvalidRussiaInnLength" xml:space="preserve">
+    <value>INN moet 10 of 12 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidSwitzerlandNationalIdFormat" xml:space="preserve">
+    <value>Moet beginnen met 756.</value>
+  </data>
+  <data name="VaticanNationalIdNotSupported" xml:space="preserve">
+    <value>Vaticaanstad nationaal identificatienummer validatie wordt niet ondersteund.</value>
+  </data>
+  <data name="InvalidKazakhstanBinLength" xml:space="preserve">
+    <value>BIN/IIN moet 12 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidNewZealandGstFormat" xml:space="preserve">
+    <value>IRD-nummer moet 8 of 9 cijfers bevatten.</value>
+  </data>
+  <data name="InvalidVietnamMstLength" xml:space="preserve">
+    <value>MST moet 10 of 13 cijfers bevatten.</value>
+  </data>
 </root>

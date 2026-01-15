@@ -25,12 +25,12 @@ public class GermanyBankleitzahlValidator : IBankRoutingValidator
 
         if (sanitized.Length != 8)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "German BLZ must be 8 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidGermanyBlzLength);
         }
 
         if (!Regex.IsMatch(sanitized, @"^\d{8}$"))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "German BLZ must contain only digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidGermanyBlzFormat);
         }
 
         return ValidationResult.Success();

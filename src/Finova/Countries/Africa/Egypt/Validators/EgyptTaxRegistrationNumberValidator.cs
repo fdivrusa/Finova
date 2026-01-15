@@ -36,7 +36,7 @@ public class EgyptTaxRegistrationNumberValidator : ITaxIdValidator
 
         if (clean.Length != 9)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "TRN must be 9 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidEgyptTrnLength);
         }
 
         return ValidationResult.Success();

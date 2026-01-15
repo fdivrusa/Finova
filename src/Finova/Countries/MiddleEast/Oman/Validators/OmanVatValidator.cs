@@ -61,7 +61,7 @@ public class OmanVatValidator : ITaxIdValidator, IVatValidator
         {
             if (vat.Trim().Length != 15)
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Oman VAT number must be 15 characters.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidOmanVatLength);
             }
         }
 
