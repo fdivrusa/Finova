@@ -88,7 +88,7 @@ public partial class BelgiumPaymentReferenceService : IPaymentReferenceGenerator
         var cleanRef = DigitsOnlyRegex().Replace(rawReference, "");
         if (cleanRef.Length > 10)
         {
-            throw new ArgumentException("OGM reference data cannot exceed 10 digits.");
+            throw new ArgumentException(ValidationMessages.InvalidBelgiumOgmLength);
         }
 
         // Pad the reference to 10 digits

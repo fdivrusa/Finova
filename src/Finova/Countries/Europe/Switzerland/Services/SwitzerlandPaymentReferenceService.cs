@@ -26,7 +26,7 @@ public partial class SwitzerlandPaymentReferenceService : IPaymentReferenceGener
     {
         PaymentReferenceFormat.LocalSwitzerland => GenerateQrReference(rawReference),
         PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
-        _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
+        _ => throw new NotSupportedException(string.Format(ValidationMessages.UnsupportedFormat, format))
     };
 
     public PaymentReferenceDetails Parse(string reference)
@@ -106,7 +106,7 @@ public partial class SwitzerlandPaymentReferenceService : IPaymentReferenceGener
 
         if (cleanRef.Length > 26)
         {
-            throw new ArgumentException("Swiss QR reference data cannot exceed 26 digits.");
+            throw new ArgumentException(ValidationMessages.InvalidSwitzerlandQrReferenceLength);
         }
 
         var paddedRef = cleanRef.PadLeft(26, '0');

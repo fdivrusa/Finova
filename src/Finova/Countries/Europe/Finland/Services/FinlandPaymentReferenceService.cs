@@ -21,7 +21,7 @@ public partial class FinlandPaymentReferenceService : IPaymentReferenceGenerator
     {
         PaymentReferenceFormat.LocalFinland => GenerateFinnishReference(rawReference),
         PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
-        _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
+        _ => throw new NotSupportedException(string.Format(ValidationMessages.UnsupportedFormat, format))
     };
 
     public PaymentReferenceDetails Parse(string reference)
@@ -103,7 +103,7 @@ public partial class FinlandPaymentReferenceService : IPaymentReferenceGenerator
 
         if (cleanRef.Length < 3 || cleanRef.Length > 19)
         {
-            throw new ArgumentException("Finnish reference data must be between 3 and 19 digits.");
+            throw new ArgumentException(ValidationMessages.InvalidFinnishReferenceLength);
         }
 
         var checkDigit = CalculateCheckDigit731(cleanRef);

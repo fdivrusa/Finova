@@ -242,6 +242,7 @@ public static class ValidationMessages
     public static string LatviaIbanMustBeAlphanumeric => GetString("LatviaIbanMustBeAlphanumeric");
     public static string InvalidBelgiumVatFormat => GetString("InvalidBelgiumVatFormat");
     public static string InvalidBelgiumOgmVcsReference => GetString("InvalidBelgiumOgmVcsReference");
+    public static string InvalidBelgiumOgmLength => GetString("InvalidBelgiumOgmLength");
     public static string BelgiumIbanMustBeDigits => GetString("BelgiumIbanMustBeDigits");
     public static string InvalidBelgiumBbanStructure => GetString("InvalidBelgiumBbanStructure");
     public static string InvalidBosniaAndHerzegovinaVatFormat => GetString("InvalidBosniaAndHerzegovinaVatFormat");
@@ -496,4 +497,5 @@ public static class ValidationMessages
     public static string ReserveDigitMustBeZero => GetString("ReserveDigitMustBeZero");
     public static string InvalidAccountType => GetString("InvalidAccountType");
     public static string InvalidOwnerIndicator => GetString("InvalidOwnerIndicator");
+    public static string InvalidPaymentReference => GetString("InvalidPaymentReference");
 }

@@ -1,3 +1,4 @@
+using Finova.Core.Common;
 using Finova.Core.PaymentReference;
 using Finova.Validators;
 using FluentValidation;
@@ -15,6 +16,6 @@ public static class PaymentReferenceValidators
     {
         return ruleBuilder
             .Must(reference => PaymentReferenceValidator.Validate(reference, format).IsValid)
-            .WithMessage("'{PropertyName}' is not a valid payment reference.");
+            .WithMessage(ValidationMessages.InvalidPaymentReference);
     }
 }

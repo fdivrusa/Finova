@@ -1,8 +1,12 @@
 using Finova.Belgium.Services;
+using Finova.Core.Common;
 using Finova.Core.PaymentReference;
 using Finova.Core.PaymentReference.Internals;
+using Finova.Countries.Europe.Denmark.Services;
 using Finova.Countries.Europe.Finland.Services;
+using Finova.Countries.Europe.Italy.Services;
 using Finova.Countries.Europe.Norway.Services;
+using Finova.Countries.Europe.Portugal.Services;
 using Finova.Countries.Europe.Slovenia.Services;
 using Finova.Countries.Europe.Sweden.Services;
 using Finova.Countries.Europe.Switzerland.Services;
@@ -32,7 +36,10 @@ public class PaymentReferenceGenerator : IPaymentReferenceGenerator, IIsoPayment
         PaymentReferenceFormat.LocalSweden => SwedenPaymentReferenceService.GenerateStatic(rawReference),
         PaymentReferenceFormat.LocalSwitzerland => SwitzerlandPaymentReferenceService.GenerateStatic(rawReference),
         PaymentReferenceFormat.LocalSlovenia => SloveniaPaymentReferenceService.GenerateStatic(rawReference),
-        _ => throw new NotSupportedException($"Payment reference format {format} is not supported.")
+        PaymentReferenceFormat.LocalDenmark => DenmarkPaymentReferenceService.GenerateStatic(rawReference),
+        PaymentReferenceFormat.LocalItaly => ItalyPaymentReferenceService.GenerateStatic(rawReference),
+        PaymentReferenceFormat.LocalPortugal => PortugalPaymentReferenceService.GenerateStatic(rawReference),
+        _ => throw new NotSupportedException(string.Format(ValidationMessages.UnsupportedFormat, format))
     };
 
     /// <summary>

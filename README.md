@@ -378,7 +378,7 @@ usEin.Validate("12-3456789"); // ✓
 ## 📊 Test Coverage
 
 ```
-Total Tests: 9,690+
+Total Tests: 10,700+
 Passing: 100%
 Countries Covered: 110+
 Validators: 100+

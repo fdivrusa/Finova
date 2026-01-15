@@ -57,7 +57,7 @@ public class FinlandPaymentReferenceServiceTests
 
         // Assert
         act.Should().Throw<NotSupportedException>()
-           .WithMessage("*not supported by FI*");
+           .WithMessage("*Unsupported format*");
     }
 
     [Theory]

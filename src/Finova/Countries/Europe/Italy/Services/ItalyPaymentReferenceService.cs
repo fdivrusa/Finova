@@ -19,7 +19,7 @@ public partial class ItalyPaymentReferenceService : IPaymentReferenceGenerator
     {
         PaymentReferenceFormat.LocalItaly => GenerateIuv(rawReference),
         PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
-        _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
+        _ => throw new NotSupportedException(string.Format(ValidationMessages.UnsupportedFormat, format))
     };
 
     #region Static Methods
@@ -48,7 +48,7 @@ public partial class ItalyPaymentReferenceService : IPaymentReferenceGenerator
         var cleanRef = DigitsOnlyRegex().Replace(rawReference, "");
         if (string.IsNullOrEmpty(cleanRef))
         {
-            throw new ArgumentException("Reference cannot be empty.");
+            throw new ArgumentException(ValidationMessages.InputCannotBeEmpty);
         }
 
         // IUV is typically 18 digits.

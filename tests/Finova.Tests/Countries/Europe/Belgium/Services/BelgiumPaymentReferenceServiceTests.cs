@@ -1,4 +1,5 @@
 using Finova.Belgium.Services;
+using Finova.Core.Common;
 using Finova.Core.PaymentReference;
 using Finova.Core.PaymentReference.Internals;
 using FluentAssertions;
@@ -80,7 +81,7 @@ public class BelgiumPaymentReferenceServiceTests
 
         // Assert
         act.Should().Throw<ArgumentException>()
-            .WithMessage("OGM reference data cannot exceed 10 digits.");
+            .WithMessage(ValidationMessages.InvalidBelgiumOgmLength);
     }
 
     [Fact]

@@ -19,7 +19,7 @@ public partial class PortugalPaymentReferenceService : IPaymentReferenceGenerato
     {
         PaymentReferenceFormat.LocalPortugal => GenerateMultibancoRef(rawReference),
         PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
-        _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
+        _ => throw new NotSupportedException(string.Format(ValidationMessages.UnsupportedFormat, format))
     };
 
     #region Static Methods
@@ -48,7 +48,7 @@ public partial class PortugalPaymentReferenceService : IPaymentReferenceGenerato
         var cleanRef = DigitsOnlyRegex().Replace(rawReference, "");
         if (cleanRef.Length > 9)
         {
-            throw new ArgumentException("Multibanco reference cannot exceed 9 digits.");
+            throw new ArgumentException(string.Format(ValidationMessages.InvalidLengthExpectedX, 9));
         }
 
         // Pad to 9 digits

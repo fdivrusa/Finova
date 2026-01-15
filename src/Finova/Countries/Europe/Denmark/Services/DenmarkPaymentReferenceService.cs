@@ -19,7 +19,7 @@ public partial class DenmarkPaymentReferenceService : IPaymentReferenceGenerator
     {
         PaymentReferenceFormat.LocalDenmark => GenerateFik(rawReference),
         PaymentReferenceFormat.IsoRf => IsoReferenceHelper.Generate(rawReference),
-        _ => throw new NotSupportedException($"Format {format} is not supported by {CountryCode}")
+        _ => throw new NotSupportedException(string.Format(ValidationMessages.UnsupportedFormat, format))
     };
 
     #region Static Methods
@@ -48,7 +48,7 @@ public partial class DenmarkPaymentReferenceService : IPaymentReferenceGenerator
         var cleanRef = DigitsOnlyRegex().Replace(rawReference, "");
         if (string.IsNullOrEmpty(cleanRef))
         {
-            throw new ArgumentException("Reference cannot be empty.");
+            throw new ArgumentException(ValidationMessages.InputCannotBeEmpty);
         }
 
         // FIK usually uses Mod10 (Luhn). We append the check digit.
