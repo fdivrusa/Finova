@@ -31,7 +31,7 @@ public class DominicanRepublicRncValidator : ITaxIdValidator
 
         if (clean.Length != 9 && clean.Length != 11)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "RNC must be 9 or 11 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidDominicanRepublicRncLength);
         }
 
         return ValidationResult.Success();

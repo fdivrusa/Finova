@@ -36,7 +36,7 @@ public class VietnamTaxIdValidator : ITaxIdValidator
 
         if (clean.Length != 10 && clean.Length != 13)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "MST must be 10 or 13 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidVietnamMstLength);
         }
 
         // Validate first 10 digits

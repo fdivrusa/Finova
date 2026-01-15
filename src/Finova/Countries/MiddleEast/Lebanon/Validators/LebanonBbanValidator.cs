@@ -17,12 +17,12 @@ public class LebanonBbanValidator : IBbanValidator
         // 4n 20c -> 24 chars
         if (bban.Length != 24)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "LB BBAN must be 24 characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidLebanonBbanLength);
         }
 
         if (!bban.All(char.IsLetterOrDigit))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "LB BBAN must be alphanumeric.");
+             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidLebanonBbanFormat);
         }
 
         return ValidationResult.Success();

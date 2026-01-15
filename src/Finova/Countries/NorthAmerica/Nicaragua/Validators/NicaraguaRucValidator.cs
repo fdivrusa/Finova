@@ -26,7 +26,7 @@ public class NicaraguaRucValidator : ITaxIdValidator
 
         if (clean.Length != 14)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "RUC must be 14 characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidNicaraguaRucLength);
         }
 
         return ValidationResult.Success();

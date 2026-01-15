@@ -37,7 +37,7 @@ public class NigeriaTinValidator : ITaxIdValidator
         // Accepting 8 to 12 digits to be safe.
         if (clean.Length < 8 || clean.Length > 12)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "TIN must be between 8 and 12 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidNigeriaTinLength);
         }
 
         return ValidationResult.Success();

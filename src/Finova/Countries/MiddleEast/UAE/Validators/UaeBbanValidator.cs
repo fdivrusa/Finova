@@ -17,12 +17,12 @@ public class UaeBbanValidator : IBbanValidator
         // 3n 16n -> 19 digits
         if (bban.Length != 19)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "AE BBAN must be 19 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidUaeBbanLength);
         }
 
         if (!bban.All(char.IsDigit))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "AE BBAN must contain only digits.");
+             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidUaeBbanFormat);
         }
 
         return ValidationResult.Success();

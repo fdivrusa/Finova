@@ -43,7 +43,7 @@ public class SwitzerlandNationalIdValidator : INationalIdValidator
 
         if (!sanitized.StartsWith("756"))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Must start with 756.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSwitzerlandNationalIdFormat);
         }
 
         if (!long.TryParse(sanitized, out _))

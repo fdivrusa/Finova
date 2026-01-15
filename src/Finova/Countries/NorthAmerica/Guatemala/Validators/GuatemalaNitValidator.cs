@@ -26,7 +26,7 @@ public class GuatemalaNitValidator : ITaxIdValidator
 
         if (clean.Length < 2 || clean.Length > 12)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "NIT must be between 2 and 12 characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidGuatemalaNitLength);
         }
 
         return ValidationResult.Success();

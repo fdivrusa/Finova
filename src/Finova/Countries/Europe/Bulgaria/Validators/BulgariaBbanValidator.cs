@@ -44,7 +44,7 @@ public class BulgariaBbanValidator : IBbanValidator
         {
             if (!char.IsDigit(bban[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Bulgaria Branch Code must be digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBulgariaBranchCode);
             }
         }
 
@@ -53,7 +53,7 @@ public class BulgariaBbanValidator : IBbanValidator
         {
             if (!char.IsDigit(bban[i]))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Bulgaria Account Type must be digits.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBulgariaAccountType);
             }
         }
 

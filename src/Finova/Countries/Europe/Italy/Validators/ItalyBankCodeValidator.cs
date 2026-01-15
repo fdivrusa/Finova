@@ -25,12 +25,12 @@ public class ItalyBankCodeValidator : IBankRoutingValidator
 
         if (sanitized.Length != 5)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "Italian ABI Code must be 5 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidItalyAbiLength);
         }
 
         if (!Regex.IsMatch(sanitized, @"^\d{5}$"))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Italian ABI Code must contain only digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidItalyAbiFormat);
         }
 
         return ValidationResult.Success();

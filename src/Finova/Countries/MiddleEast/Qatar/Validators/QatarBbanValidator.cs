@@ -17,12 +17,12 @@ public class QatarBbanValidator : IBbanValidator
         // 4a 21c -> 25 chars
         if (bban.Length != 25)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "QA BBAN must be 25 characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidQatarBbanLength);
         }
 
         if (!bban.All(char.IsLetterOrDigit))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "QA BBAN must be alphanumeric.");
+             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidQatarBbanFormat);
         }
 
         return ValidationResult.Success();

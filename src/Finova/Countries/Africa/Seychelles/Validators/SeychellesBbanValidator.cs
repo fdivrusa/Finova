@@ -29,17 +29,17 @@ public class SeychellesBbanValidator : IBbanValidator
         // Format: 4 letters (Bank), 20 digits (Account), 3 letters (Currency)
         if (!bban.Substring(0, 4).All(char.IsLetter))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Bank code must be letters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSeychellesBankCodeFormat);
         }
 
         if (!bban.Substring(4, 20).All(char.IsDigit))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Account number must be digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSeychellesAccountFormat);
         }
 
         if (!bban.Substring(24, 3).All(char.IsLetter))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Currency code must be letters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSeychellesCurrencyFormat);
         }
 
         return ValidationResult.Success();

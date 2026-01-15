@@ -47,7 +47,7 @@ public class BelgiumNationalIdValidator : INationalIdValidator
         // Validate the date part (YYMMDD), accounting for Bis/Ter numbers
         if (!IsValidBelgianDate(sanitized[..6]))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid birth date in National Number.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidBelgiumNationalIdDate);
         }
 
         // Standard Check: Individuals born before 2000

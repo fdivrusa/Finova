@@ -47,7 +47,7 @@ public class FinlandHenkilotunnusValidator : INationalIdValidator
         char centurySign = normalized[6];
         if (centurySign != '+' && centurySign != '-' && centurySign != 'A')
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid century sign.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidCenturySign);
         }
 
         // Extract date and individual number
@@ -64,7 +64,7 @@ public class FinlandHenkilotunnusValidator : INationalIdValidator
 
         if (month < 1 || month > 12 || day < 1 || day > 31)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidDatePart);
         }
 
         // Calculate Checksum (Mod 31)

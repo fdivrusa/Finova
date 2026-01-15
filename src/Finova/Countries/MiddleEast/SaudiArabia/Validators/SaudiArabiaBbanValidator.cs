@@ -17,12 +17,12 @@ public class SaudiArabiaBbanValidator : IBbanValidator
         // 2n 18c -> 20 chars
         if (bban.Length != 20)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "SA BBAN must be 20 characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidSaudiArabiaBbanLength);
         }
 
         if (!bban.All(char.IsLetterOrDigit))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "SA BBAN must be alphanumeric.");
+             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidSaudiArabiaBbanFormat);
         }
 
         return ValidationResult.Success();

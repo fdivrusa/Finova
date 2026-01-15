@@ -63,7 +63,7 @@ public class RussiaInnValidator : ITaxIdValidator, IVatValidator
             return Validate12DigitInn(clean);
         }
 
-        return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "INN must be 10 or 12 digits.");
+        return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidRussiaInnLength);
     }
 
     private static ValidationResult Validate10DigitInn(string inn)

@@ -17,12 +17,12 @@ public class KuwaitBbanValidator : IBbanValidator
         // 4a 22c -> 26 chars
         if (bban.Length != 26)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "KW BBAN must be 26 characters.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidKuwaitBbanLength);
         }
 
         if (!bban.All(char.IsLetterOrDigit))
         {
-             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "KW BBAN must be alphanumeric.");
+             return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidKuwaitBbanFormat);
         }
 
         return ValidationResult.Success();

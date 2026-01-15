@@ -36,7 +36,7 @@ public partial class TunisiaMatriculeFiscalValidator : ITaxIdValidator
 
         if (!MfRegex().IsMatch(clean))
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid Matricule Fiscal format.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidTunisiaMfFormat);
         }
 
         return ValidationResult.Success();

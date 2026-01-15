@@ -31,7 +31,7 @@ public class ElSalvadorNitValidator : ITaxIdValidator
 
         if (clean.Length != 14)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "NIT must be 14 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidElSalvadorNitLength);
         }
 
         return ValidationResult.Success();

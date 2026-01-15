@@ -58,7 +58,7 @@ public partial class SwedenPersonnummerValidator : INationalIdValidator
             // Coordination numbers (Samordningsnummer) add 60 to the day
             if (!IsValidCoordinationDate(normalized.Substring(0, 6)))
             {
-                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, "Invalid date part.");
+                return ValidationResult.Failure(ValidationErrorCode.InvalidFormat, ValidationMessages.InvalidDatePart);
             }
         }
 

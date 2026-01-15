@@ -31,7 +31,7 @@ public class CostaRicaNiteValidator : ITaxIdValidator
 
         if (clean.Length != 10 && clean.Length != 12)
         {
-            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, "NITE must be 10 or 12 digits.");
+            return ValidationResult.Failure(ValidationErrorCode.InvalidLength, ValidationMessages.InvalidCostaRicaNiteLength);
         }
 
         return ValidationResult.Success();
